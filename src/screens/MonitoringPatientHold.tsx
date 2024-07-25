@@ -1,4 +1,10 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import React from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -6,7 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function MonitoringPatientHold() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.navbar}>
         <AntDesign name="arrowleft" size={28} color={'black'} />
         <Text style={styles.navbarTitle}>Monitored Patient</Text>
@@ -28,7 +34,7 @@ export default function MonitoringPatientHold() {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -5,27 +5,33 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
 import googleIcon from '../assets/image/googleicon.png';
 import facebookIcon from '../assets/image/fbIcon.png';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import arrow from '../assets/image/arrow_back.png';
 
-export default function Login() {
+export default function Login({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.navbar}>
-        <TouchableOpacity>
-          <AntDesign name="arrowleft" size={22} color={'black'} />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          {/* <AntDesign name="arrowleft" size={22} color={'black'} /> */}
+          <Image
+            source={arrow}
+            style={{height: 30, width: 30, paddingTop: 2}}
+          />
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
-          <Text style={styles.text}>Already Register?</Text>
-          <TouchableOpacity>
-            <Text style={styles.loginButton}>Log in</Text>
+          <Text style={styles.text}>Not Registered?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+            <Text style={styles.loginButton}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -50,7 +56,9 @@ export default function Login() {
               secureTextEntry={hidePassword}
             />
           </View>
-          <TouchableOpacity style={styles.forgotPassword}>
+          <TouchableOpacity
+            style={styles.forgotPassword}
+            onPress={() => navigation.navigate('ForgotPass')}>
             <Text style={{color: 'black'}}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
@@ -59,13 +67,25 @@ export default function Login() {
             styles.loginBtn,
             {backgroundColor: email && password ? '#00263E' : 'gray'},
           ]}
+          onPress={() => navigation.navigate('LoadingScreen')}
           disabled={!email || !password}>
           <Text style={styles.loginBtnText}>Log in</Text>
         </TouchableOpacity>
 
-        <Text style={styles.orText}>
+        {/* <Text style={styles.orText}>
           ------------------------------or-------------------------------
-        </Text>
+        </Text> */}
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginVertical: 40,
+          }}>
+          <View style={{width: '45%', height: 2, backgroundColor: '#E9E9E9'}} />
+          <Text>or</Text>
+          <View style={{width: '45%', height: 2, backgroundColor: '#E9E9E9'}} />
+        </View>
         <TouchableOpacity style={styles.socialBtn}>
           <Image source={googleIcon} style={styles.socialIcon} />
           <Text style={styles.socialBtnText}>Log in with Google</Text>
@@ -75,7 +95,7 @@ export default function Login() {
           <Text style={styles.socialBtnText}>Log in with Facebook</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

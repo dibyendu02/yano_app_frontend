@@ -1,11 +1,11 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
 import arrow from '../assets/image/arrow_back.png';
 import patientLogo from '../assets/image/healthLogo.png';
 import healthcare from '../assets/image/providerLogo.png';
 import Icons from '../assets/icon/Icon';
 
-export default function Usertype() {
+export default function Usertype({ navigation }) {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const handleSelection = userType => {
@@ -13,14 +13,18 @@ export default function Usertype() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.navbar}>
-        <TouchableOpacity>
-          <Icons.AntDesign name="arrowleft" size={30} color="black" />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          {/* <Icons.AntDesign name="arrowleft" size={30} color="black" /> */}
+          <Image
+            source={arrow}
+            style={{height: 30, width: 30, paddingTop: 2}}
+          />
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
           <Text style={styles.text}>Already Register ?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
             <Text style={styles.loginButton}>Log in</Text>
           </TouchableOpacity>
         </View>
@@ -55,7 +59,9 @@ export default function Usertype() {
                   color: 'black',
                   fontWeight: 'bold',
                   paddingTop: 8,
-                }}>{`Healthcare\n Provider`}</Text>
+                }}>
+                {'Healthcare\n Provider'}
+              </Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -76,11 +82,12 @@ export default function Usertype() {
             styles.ContinueButton,
             selectedUser ? styles.activeButton : styles.inactiveButton,
           ]}
-          disabled={!selectedUser}>
+          disabled={!selectedUser}
+          onPress={() => navigation.navigate('Signup')}>
           <Text style={styles.buttonText2}>Continue</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

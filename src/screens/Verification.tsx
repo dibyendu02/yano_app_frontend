@@ -1,8 +1,8 @@
-import {StyleSheet, Text, TouchableOpacity, View, Image} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View, Image, SafeAreaView} from 'react-native';
 import React, {useState} from 'react';
 import arrow from '../assets/image/arrow_back.png';
 
-export default function Verification() {
+export default function Verification({navigation}) {
   const [selectedMethod, setSelectedMethod] = useState(null);
 
   const toggleSelection = method => {
@@ -10,9 +10,9 @@ export default function Verification() {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.Navbar}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
             source={arrow}
             style={{height: 30, width: 30, paddingTop: 2}}
@@ -69,11 +69,12 @@ export default function Verification() {
             styles.sendCodeButton,
             {backgroundColor: selectedMethod ? '#00263E' : 'gray'},
           ]}
+          onPress={() => navigation.navigate('CodeVerification')}
           disabled={!selectedMethod}>
           <Text style={styles.sendCodeButtonText}>Send Code</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

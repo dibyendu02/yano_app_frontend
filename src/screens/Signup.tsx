@@ -7,14 +7,15 @@ import {
   Image,
   TextInput,
   Alert,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
-import arrow from '../assets/image/arrow_back.png';
 import userpic from '../assets/image/User.png';
 import {Dropdown} from 'react-native-element-dropdown';
 import Icons from '../assets/icon/Icon';
+import arrow from '../assets/image/arrow_back.png';
 
-export default function Signup() {
+export default function Signup({navigation}) {
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -50,18 +51,23 @@ export default function Signup() {
     } else {
       // Handle form submission
       Alert.alert('Success', 'Form submitted');
+      navigation.navigate('Verification');
     }
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.navbar}>
-        <TouchableOpacity>
-          <Icons.AntDesign name="arrowleft" size={30} color="black" />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          {/* <Icons.AntDesign name="arrowleft" size={30} color="black" /> */}
+          <Image
+            source={arrow}
+            style={{height: 30, width: 30, paddingTop: 2}}
+          />
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
           <Text style={styles.text}>Already Register ?</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
             <Text style={styles.loginButton}>Log in</Text>
           </TouchableOpacity>
         </View>
@@ -177,7 +183,7 @@ export default function Signup() {
           <Text style={styles.buttonText}>Continue</Text>
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
 

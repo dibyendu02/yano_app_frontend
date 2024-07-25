@@ -1,31 +1,25 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
-import Start from './src/screens/Start';
-import Usertype from './src/screens/Usertype';
-import Signup from './src/screens/Signup';
-import Verification from './src/screens/Verification';
-import CodeVerification from './src/screens/CodeVerification';
-import ForgotPass from './src/screens/ForgotPass';
-import ForgotPass2 from './src/screens/SecondForgotPassword';
-import Login from './src/screens/Login';
-import MonitoringFilled from './src/screens/MonitoringFilled';
-import PatientProfileWithoutparameter from './src/screens/PatientProfileWithoutparameter';
-import MonitoringPatientHold from './src/screens/MonitoringPatientHold';
+import {NavigationContainer} from '@react-navigation/native';
+import AuthStack from './src/navigation/AuthStack';
+import {useState} from 'react';
+import MainStack from './src/navigation/MainStack';
+import UserContext from './src/contexts/UserContext';
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const login = () => {
+    setIsLoggedIn(true);
+  };
+
+  const logout = () => {
+    setIsLoggedIn(false);
+  };
+
   return (
-    // <Start />
-    // <Usertype />
-    // <Signup />
-    // <Verification />
-    // <CodeVerification />
-    // <ForgotPass />
-    // <ForgotPass2 />
-    // <Login />
-    <MonitoringFilled />
-    // <PatientProfileWithoutparameter />
-    // <MonitoringPatientHold />
+    <NavigationContainer>
+      <UserContext.Provider value={{login, logout}}>
+        {isLoggedIn ? <MainStack /> : <AuthStack />}
+      </UserContext.Provider>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({});

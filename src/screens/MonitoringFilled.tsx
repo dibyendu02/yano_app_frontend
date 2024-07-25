@@ -4,19 +4,20 @@ import {
   View,
   TouchableOpacity,
   ScrollView,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import PatientDetails from '../component/PatientDetails';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import PatientDetails from '../components/PatientDetails';
+// import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-export default function MonitoringFilled() {
-  const [activeSection, setActiveSection] = useState('Monitoring'); // Default to 'Monitoring'
+export default function MonitoringFilled({navigation}) {
+  // const [activeSection, setActiveSection] = useState('Monitoring'); // Default to 'Monitoring'
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.navbar}>
         <Text style={styles.title}>Monitoring</Text>
         <Ionicons name="notifications" size={25} color={'#00263E'} />
@@ -60,14 +61,16 @@ export default function MonitoringFilled() {
             flexDirection: 'row',
             justifyContent: 'flex-end',
           }}>
-          <TouchableOpacity style={styles.addButton}>
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => navigation.navigate('AddPatients')}>
             <FontAwesome name="plus" size={15} color="white" />
             <Text style={styles.addButtonText}>Add Patient</Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      <View style={styles.footer}>
+      {/* <View style={styles.footer}>
         <TouchableOpacity
           style={styles.footerSection}
           onPress={() => setActiveSection('Monitoring')}>
@@ -100,8 +103,8 @@ export default function MonitoringFilled() {
             Profile
           </Text>
         </TouchableOpacity>
-      </View>
-    </View>
+      </View> */}
+    </SafeAreaView>
   );
 }
 
