@@ -1,26 +1,27 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
-import arrow from '../assets/image/arrow_back.png'
-import patientLogo from '../assets/image/healthLogo.png'
-import healthcare from '../assets/image/providerLogo.png'
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {useState} from 'react';
+import arrow from '../assets/image/arrow_back.png';
+import patientLogo from '../assets/image/healthLogo.png';
+import healthcare from '../assets/image/providerLogo.png';
+import Icons from '../assets/icon/Icon';
 
 export default function Usertype() {
   const [selectedUser, setSelectedUser] = useState(null);
 
-  const handleSelection = (userType) => {
+  const handleSelection = userType => {
     setSelectedUser(userType);
-  }
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.navbar}>
         <TouchableOpacity>
-          <Image source={arrow} style={{width : 34, height : 34, marginLeft : 20, marginTop : 5}}/>
+          <Icons.AntDesign name="arrowleft" size={30} color="black" />
         </TouchableOpacity>
-        <View style={{flexDirection : 'row'}}>
+        <View style={{flexDirection: 'row'}}>
           <Text style={styles.text}>Already Register ?</Text>
           <TouchableOpacity>
-            <Text style= {styles.loginButton}>Log in</Text>
+            <Text style={styles.loginButton}>Log in</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -30,41 +31,71 @@ export default function Usertype() {
 
         <View style={styles.subContainer}>
           <TouchableOpacity onPress={() => handleSelection('patient')}>
-            <View style={[styles.PatientDiv, selectedUser === 'patient' && styles.selected]}>
-              <Image source={patientLogo}/>
-              <Text style={{color : 'black', fontWeight : 'bold',paddingTop : 8}}>Patient</Text>
+            <View
+              style={[
+                styles.PatientDiv,
+                selectedUser === 'patient' && styles.selected,
+              ]}>
+              <Image source={patientLogo} />
+              <Text style={{color: 'black', fontWeight: 'bold', paddingTop: 8}}>
+                Patient
+              </Text>
             </View>
           </TouchableOpacity>
-       
+
           <TouchableOpacity onPress={() => handleSelection('healthcare')}>
-            <View style={[styles.healthCare, selectedUser === 'healthcare' && styles.selected]}>
-              <Image source={healthcare}/>
-              <Text style={{color : 'black', fontWeight : 'bold',paddingTop : 8}}>{`Healthcare\n Provider`}</Text>
+            <View
+              style={[
+                styles.healthCare,
+                selectedUser === 'healthcare' && styles.selected,
+              ]}>
+              <Image source={healthcare} />
+              <Text
+                style={{
+                  color: 'black',
+                  fontWeight: 'bold',
+                  paddingTop: 8,
+                }}>{`Healthcare\n Provider`}</Text>
             </View>
           </TouchableOpacity>
         </View>
+      </View>
 
-        <TouchableOpacity 
-          style={[styles.ContinueButton, selectedUser ? styles.activeButton : styles.inactiveButton]} 
-          disabled={!selectedUser}
-        >
+      <View
+        style={{
+          width: '100%',
+          backgroundColor: 'white',
+          paddingVertical: 10,
+          height: '10%',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <TouchableOpacity
+          style={[
+            styles.ContinueButton,
+            selectedUser ? styles.activeButton : styles.inactiveButton,
+          ]}
+          disabled={!selectedUser}>
           <Text style={styles.buttonText2}>Continue</Text>
         </TouchableOpacity>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+    backgroundColor: '#f5f5f5',
   },
   navbar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
-    marginBottom: 20,
+    alignItems: 'center',
+    paddingVertical: 15,
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
   },
   text: {
     fontSize: 16,
@@ -85,9 +116,11 @@ const styles = StyleSheet.create({
   },
   secondContainer: {
     backgroundColor: 'light-gray',
-    flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
+    // alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 10,
   },
   headerText: {
     color: 'black',
@@ -98,9 +131,9 @@ const styles = StyleSheet.create({
   },
   subContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     width: '100%',
-    
+    height: '74%',
   },
   PatientDiv: {
     flexDirection: 'column',
@@ -133,9 +166,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     width: 300,
-    marginTop: 360,
+    // marginTop: 360,
     alignSelf: 'center',
-    
   },
   inactiveButton: {
     backgroundColor: '#A9A9A9',
@@ -149,4 +181,4 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontWeight: 'bold',
   },
-})
+});

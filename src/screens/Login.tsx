@@ -1,8 +1,16 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from 'react-native';
-import React, { useState } from 'react';
-import googleIcon from '../assets/image/googleicon.png'
-import facebookIcon from '../assets/image/fbIcon.png'; 
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  TextInput,
+} from 'react-native';
+import React, {useState} from 'react';
+import googleIcon from '../assets/image/googleicon.png';
+import facebookIcon from '../assets/image/fbIcon.png';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,11 +20,10 @@ export default function Login() {
     <View style={styles.container}>
       <View style={styles.navbar}>
         <TouchableOpacity>
-          {/* <Image source={arrow} style={{ width: 34, height: 34, marginLeft: 20, marginTop: 5 }} /> */}
-          <AntDesign name="arrowleft" size={22} color={'black'}/>
+          <AntDesign name="arrowleft" size={22} color={'black'} />
         </TouchableOpacity>
-        <View style={{ flexDirection: 'row' }}>
-          <Text style={styles.text}>Already Register ?</Text>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={styles.text}>Already Register?</Text>
           <TouchableOpacity>
             <Text style={styles.loginButton}>Log in</Text>
           </TouchableOpacity>
@@ -24,36 +31,41 @@ export default function Login() {
       </View>
 
       <View style={styles.secondContainer}>
-        <Text style={{ color: 'black', fontSize: 24, fontWeight: 'bold',marginBottom : 25 }}>Log in</Text>
+        <Text style={styles.headerText}>Log in</Text>
         <View style={styles.inputField}>
-          <Text style={{ color: 'black', fontWeight: 'bold' }}>Email</Text>
-          <TextInput style={styles.inputBox} value={email} onChangeText={setEmail} />
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            style={styles.inputBox}
+            value={email}
+            onChangeText={setEmail}
+          />
         </View>
         <View style={styles.inputField}>
-          <Text style={{ color: 'black', fontWeight: 'bold' }}>Password</Text>
+          <Text style={styles.label}>Password</Text>
           <View style={styles.passwordContainer}>
             <TextInput
-              style={[styles.inputBox, { flex: 1 }]}
+              style={[styles.inputBox, {flex: 1}]}
               value={password}
               onChangeText={setPassword}
               secureTextEntry={hidePassword}
             />
-            {/* <TouchableOpacity onPress={() => setHidePassword(!hidePassword)}>
-              <Text style={styles.eyeIcon}>{hidePassword ? 'Show' : 'Hide'}</Text>
-            </TouchableOpacity> */}
           </View>
           <TouchableOpacity style={styles.forgotPassword}>
-            <Text style={{ color: 'black' }}>Forgot Password?</Text>
+            <Text style={{color: 'black'}}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
-          style={[styles.loginBtn, { backgroundColor: email && password ? '#00263E' : 'gray' }]}
-          disabled={!email || !password}
-        >
+          style={[
+            styles.loginBtn,
+            {backgroundColor: email && password ? '#00263E' : 'gray'},
+          ]}
+          disabled={!email || !password}>
           <Text style={styles.loginBtnText}>Log in</Text>
         </TouchableOpacity>
 
-        <Text style={{color : 'gray', fontSize : 15,alignSelf : 'center',marginBottom : 20}}>------------------------------or-------------------------------</Text>
+        <Text style={styles.orText}>
+          ------------------------------or-------------------------------
+        </Text>
         <TouchableOpacity style={styles.socialBtn}>
           <Image source={googleIcon} style={styles.socialIcon} />
           <Text style={styles.socialBtnText}>Log in with Google</Text>
@@ -70,14 +82,15 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F5F5F5',
   },
   navbar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 20,
-    marginBottom: 20,
-    marginLeft : 10,
-    alignItems :'center'
+    paddingTop: 20,
+    paddingBottom: 10,
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
   },
   text: {
     fontSize: 16,
@@ -97,28 +110,38 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   secondContainer: {
+    flex: 1,
     backgroundColor: '#F5F5F5',
-    padding: 10,
+    padding: 20,
+    // alignItems: 'center',
+  },
+  headerText: {
+    color: 'black',
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 25,
   },
   inputField: {
     marginBottom: 15,
+    width: '100%',
+  },
+  label: {
+    color: 'black',
+    fontWeight: 'bold',
   },
   inputBox: {
     height: 50,
-    // borderColor: 'white',
-    // borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
     marginTop: 5,
-    backgroundColor : 'white'
+    backgroundColor: 'white',
+    borderColor: '#E9E9E9',
+    borderWidth: 1,
+    width: '100%',
   },
   passwordContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  eyeIcon: {
-    padding: 10,
-    color: 'blue',
   },
   forgotPassword: {
     alignItems: 'flex-end',
@@ -130,12 +153,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 20,
     borderRadius: 5,
-    width : 339
+    width: '100%',
   },
   loginBtnText: {
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  orText: {
+    color: 'gray',
+    fontSize: 15,
+    alignSelf: 'center',
+    marginBottom: 20,
   },
   socialBtn: {
     flexDirection: 'row',
@@ -143,10 +172,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     height: 50,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: '#E9E9E9',
     borderRadius: 5,
     marginBottom: 10,
-    width : 339
+    width: '100%',
+    backgroundColor: 'white',
   },
   socialIcon: {
     width: 24,
@@ -156,6 +186,6 @@ const styles = StyleSheet.create({
   socialBtnText: {
     fontSize: 16,
     fontWeight: 'bold',
-    color : 'black'
+    color: 'black',
   },
 });

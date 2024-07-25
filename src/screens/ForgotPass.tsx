@@ -1,5 +1,12 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput } from 'react-native';
-import React, { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  TextInput,
+} from 'react-native';
+import React, {useState} from 'react';
 import arrow from '../assets/image/arrow_back.png';
 
 export default function ForgotPass() {
@@ -11,30 +18,30 @@ export default function ForgotPass() {
         <TouchableOpacity>
           <Image
             source={arrow}
-            style={{ height: 30, width: 30, paddingTop: 2 }}
+            style={{height: 30, width: 30, paddingTop: 2}}
           />
         </TouchableOpacity>
         <Text style={styles.navbarText}>Forgot Your Password?</Text>
       </View>
 
       <View style={styles.SecondContainer}>
-        <Text style={styles.instructionsText}>{`Enter your email and we will send an email\nwith the instructions to reestablish your password.`}</Text>
+        <Text
+          style={
+            styles.instructionsText
+          }>{`Enter your email and we will send an email\nwith the instructions to reestablish your password.`}</Text>
         <View style={styles.inputField}>
-          <Text style={{ color: 'black', fontWeight: 'bold' }}>Email</Text>
+          <Text style={{color: 'black', fontWeight: 'bold'}}>Email</Text>
           <TextInput
             style={styles.inputBox}
             value={email}
-            onChangeText={(text) => setEmail(text)}
+            onChangeText={text => setEmail(text)}
           />
         </View>
+        <TouchableOpacity
+          style={[styles.submitButton, {backgroundColor: '#00263E'}]}>
+          <Text style={styles.submitButtonText}>Send Instruction</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={[styles.submitButton, { backgroundColor: email ? '#00263E' : 'gray' }]}
-        disabled={!email}
-      >
-        <Text style={styles.submitButtonText}>Send Instruction</Text>
-      </TouchableOpacity>
-
     </View>
   );
 }
@@ -42,7 +49,7 @@ export default function ForgotPass() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+    backgroundColor: 'white',
   },
   Navbar: {
     flexDirection: 'row',
@@ -59,9 +66,11 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   SecondContainer: {
-    paddingLeft: 10,
+    paddingLeft: 18,
     backgroundColor: '#F5F5F5',
-    alignItems: 'center',
+    alignItems: 'flex-start', // Changed to 'flex-start' to avoid center alignment
+    paddingHorizontal: 20,
+    flex: 1,
   },
   instructionsText: {
     color: 'black',
@@ -71,11 +80,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   inputField: {
-    width: '90%',
+    width: '100%',
     marginBottom: 15,
   },
   inputBox: {
-    height: 40,
+    height: 50, // Increased height to 50
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 5,
@@ -86,10 +95,8 @@ const styles = StyleSheet.create({
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
-    marginHorizontal: 20,
     borderRadius: 5,
-    marginTop : 410
+    width: '100%', // Make the button span the full width of the container
   },
   submitButtonText: {
     color: 'white',

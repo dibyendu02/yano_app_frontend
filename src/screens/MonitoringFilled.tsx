@@ -1,65 +1,104 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
-import React, { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import React, {useState} from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import PatientDetails from '../component/PatientDetails';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
 export default function MonitoringFilled() {
-  const [activeSection, setActiveSection] = useState(null);
+  const [activeSection, setActiveSection] = useState('Monitoring'); // Default to 'Monitoring'
 
   return (
     <View style={styles.container}>
       <View style={styles.navbar}>
         <Text style={styles.title}>Monitoring</Text>
-        <Ionicons name='notifications' size={25} color={'#00263E'} />
+        <Ionicons name="notifications" size={25} color={'#00263E'} />
       </View>
 
       <View style={styles.secondContainer}>
         <ScrollView style={styles.patientDiv}>
-          <PatientDetails name="María Clemente" icon="circle-user" color={} />
-          <PatientDetails name="Juan Torres" icon="circle-user" color={}/>
-          <PatientDetails name="Jorge Pardo" icon="circle-user" color={}/>
-          <PatientDetails name="Jorge Pardo" icon="circle-user" color={}/>
-          <PatientDetails name="Jorge Pardo" icon="circle-user" color={}/>
-          <PatientDetails name="Jorge Pardo" icon="circle-user" color={}/>
-          <PatientDetails name="Jorge Pardo" icon="circle-user" color={}/>
-          <PatientDetails name="Jorge Pardo" icon="circle-user" color={} />
-          <PatientDetails name="Jorge Pardo" icon="circle-user"  color={}/>
-          <PatientDetails name="Jorge Pardo" icon="circle-user"  color={}/>
-          
+          <PatientDetails
+            name="María Clemente"
+            icon="circle-user"
+            color={'#00263E'}
+          />
+          <View style={styles.line} />
+          <PatientDetails
+            name="Juan Torres"
+            icon="circle-user"
+            color={'#00263E'}
+          />
+          <View style={styles.line} />
+          <PatientDetails
+            name="Jorge Pardo"
+            icon="circle-user"
+            color={'#00263E'}
+          />
+          <View style={styles.line} />
+          <PatientDetails
+            name="Jorge Pardo"
+            icon="circle-user"
+            color={'#00263E'}
+          />
+          <View style={styles.line} />
+          <PatientDetails
+            name="Jorge Pardo"
+            icon="circle-user"
+            color={'#00263E'}
+          />
         </ScrollView>
-        <View style={{width: "100%", flexDirection: "row", justifyContent: "flex-end"}}>
+        <View
+          style={{
+            width: '100%',
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+          }}>
           <TouchableOpacity style={styles.addButton}>
-          <FontAwesome name="plus" size={15} color="white" />
-          <Text style={styles.addButtonText}>Add Patient</Text>
-        </TouchableOpacity>
+            <FontAwesome name="plus" size={15} color="white" />
+            <Text style={styles.addButtonText}>Add Patient</Text>
+          </TouchableOpacity>
         </View>
-        
       </View>
 
       <View style={styles.footer}>
-        <TouchableOpacity 
-          style={styles.footerSection} 
-          onPress={() => setActiveSection('Monitoring')}
-        >
-          <MaterialIcons 
-            name='health-and-safety' 
-            size={25} 
-            color={activeSection === 'Monitoring' ? 'green' : 'black'} 
+        <TouchableOpacity
+          style={styles.footerSection}
+          onPress={() => setActiveSection('Monitoring')}>
+          <MaterialIcons
+            name="health-and-safety"
+            size={25}
+            color={activeSection === 'Monitoring' ? 'green' : 'black'}
           />
-          <Text style={[styles.footerText, { color: activeSection === 'Monitoring' ? 'green' : 'black' }]}>Monitoring</Text>
+          <Text
+            style={[
+              styles.footerText,
+              {color: activeSection === 'Monitoring' ? 'green' : 'black'},
+            ]}>
+            Monitoring
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-          style={styles.footerSection} 
-          onPress={() => setActiveSection('profile')}
-        >
-          <FontAwesome5 
-            name='user-circle' 
-            size={25} 
-            color={activeSection === 'profile' ? 'green' : 'black'} 
+        <TouchableOpacity
+          style={styles.footerSection}
+          onPress={() => setActiveSection('Profile')}>
+          <FontAwesome5
+            name="user-circle"
+            size={25}
+            color={activeSection === 'Profile' ? 'green' : 'black'}
           />
-          <Text style={[styles.footerText, { color: activeSection === 'profile' ? 'green' : 'black' }]}>Profile</Text>
+          <Text
+            style={[
+              styles.footerText,
+              {color: activeSection === 'Profile' ? 'green' : 'black'},
+            ]}>
+            Profile
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -91,15 +130,18 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     flex: 1,
-    width : '100%'
+    width: '100%',
   },
   patientDiv: {
     borderRadius: 8,
     overflow: 'hidden',
-    // backgroundColor: 'white',
-    
     marginBottom: 20,
-    height: "85%"
+    height: '85%',
+  },
+  line: {
+    height: 1,
+    backgroundColor: 'lightgray',
+    marginHorizontal: '10%',
   },
   addButton: {
     flexDirection: 'row',
@@ -108,7 +150,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#00263E',
     padding: 18,
     borderRadius: 8,
-    width : 120
+    width: 120,
   },
   addButtonText: {
     color: 'white',
