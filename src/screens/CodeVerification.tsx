@@ -1,6 +1,14 @@
-import {StyleSheet, Text, View, TouchableOpacity, Image,TextInput} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  TextInput,
+} from 'react-native';
 import React from 'react';
 import arrow from '../assets/image/arrow_back.png';
+
 export default function CodeVerification() {
   return (
     <View style={styles.container}>
@@ -15,17 +23,23 @@ export default function CodeVerification() {
       </View>
 
       <View style={styles.SecondContainer}>
-        <Text style={{color : 'black', fontSize : 16 , fontFamily : 'Roboto', marginTop : 20, marginBottom : 20}}>{`Please enter the 6-digit verification code that\nwas sent to 0412-6808909`}</Text>
+        <Text style={styles.verificationText}>
+          Please enter the 6-digit verification code that\nwas sent to{' '}
+          <Text style={{fontWeight: 'bold'}}>0412-6808909</Text>
+        </Text>
         <View style={styles.inputField}>
-          <Text style={{color : 'black',fontWeight : 'bold'}}>Verification Code</Text>
+          <Text style={{color: 'black', fontWeight: 'bold'}}>
+            Verification Code
+          </Text>
           <TextInput style={styles.inputBox} />
-          <View style={{marginTop:  450 , justifyContent : 'center', alignItems : 'center'}}>
-            <Text>Didn't you receive the text message?</Text>
-            <TouchableOpacity>
-                <Text style={{color :'#00263E',textDecorationLine :'underline'}}>{`Re-Send Code`}</Text>
-            </TouchableOpacity>
-          </View>
         </View>
+      </View>
+
+      <View style={styles.bottomView}>
+        <Text>Didn't you receive the text message?</Text>
+        <TouchableOpacity>
+          <Text style={styles.resendText}>{`Re-Send Code`}</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -39,9 +53,9 @@ const styles = StyleSheet.create({
   Navbar: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 20,
-    marginLeft: 10,
-    marginBottom: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
   },
   navbarText: {
     color: 'black',
@@ -50,22 +64,48 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     paddingLeft: 20,
   },
-  SecondContainer : {
-    paddingLeft : 10,
-    backgroundColor : '#F5F5F5',
-    alignItems : 'center'
+  SecondContainer: {
+    flexDirection: 'column',
+    backgroundColor: '#F5F5F5',
+    // alignItems: 'center',
+    flex: 1,
+
+    paddingHorizontal: 18,
+  },
+  verificationText: {
+    color: 'black',
+    fontSize: 16,
+    fontFamily: 'Roboto',
+    marginTop: 20,
+    marginBottom: 20,
+    // textAlign: 'start',
   },
   inputField: {
-    width: '90%',
+    width: '100%',
     marginBottom: 15,
   },
   inputBox: {
-    height: 40,
-    borderColor: 'gray',
+    height: 50,
+    borderColor: '#E9E9E9',
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
     marginTop: 5,
-    
+    backgroundColor: 'white',
+  },
+  bottomView: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    alignItems: 'center',
+  },
+  resendText: {
+    color: '#00263E',
+    textDecorationLine: 'underline',
+    marginTop: 5,
   },
 });
