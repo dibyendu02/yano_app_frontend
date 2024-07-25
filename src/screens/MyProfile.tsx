@@ -1,11 +1,11 @@
-import {Text, View} from 'react-native';
+import {SafeAreaView, Text, View} from 'react-native';
 import React from 'react';
 
 const MyProfile = () => {
   return (
-    <View>
+    <SafeAreaView style={{flex: 1}}>
       <Text>Profile</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 
