@@ -10,11 +10,13 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function MonitoringPatientHold() {
+export default function MonitoringPatientHold({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.navbar}>
-        <AntDesign name="arrowleft" size={28} color={'black'} />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <AntDesign name="arrowleft" size={28} color={'black'} />
+        </TouchableOpacity>
         <Text style={styles.navbarTitle}>Monitored Patient</Text>
       </View>
 
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-    padding: 10,
+    alignItems: 'center',
   },
   navbar: {
     flexDirection: 'row',
@@ -51,6 +53,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     paddingHorizontal: 10,
     backgroundColor: 'white',
+    width: '100%',
   },
   navbarTitle: {
     color: 'black',
@@ -65,7 +68,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     backgroundColor: 'white',
-    width: '100%',
+    width: '90%',
     marginTop: 40,
   },
   patientName: {
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'red',
     padding: 10,
-    width: '100%',
+    width: '90%',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,

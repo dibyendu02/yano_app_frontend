@@ -13,12 +13,16 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PatientDetails from '../components/PatientDetails';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import PatientElements from '../components/PatientElements';
 
-export default function PatientProfileWithoutparameter() {
+export default function PatientProfileWithoutparameter({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.navbar}>
-        <AntDesign name="arrowleft" size={28} color={'black'} />
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <AntDesign name="arrowleft" size={28} color={'black'} />
+        </TouchableOpacity>
+
         <Text style={styles.navbarTitle}>Monitored Patient</Text>
       </View>
 
@@ -58,17 +62,24 @@ export default function PatientProfileWithoutparameter() {
 
         <View style={styles.measurmentDetails}>
           {/* Add measurement details here */}
-          <PatientDetails
+          <PatientElements
             name="Medical history"
             icon="file-medical"
-            color={'#76BC21'}
+            iconsname="FontAwesome5"
+            color="#76BC21"
           />
-          <PatientDetails
+          <PatientElements
             name="Health thresholds"
             icon="history-edu"
-            color={'#76BC21'}
+            iconsname="MaterialIcons"
+            color="#76BC21"
           />
-          <PatientDetails name="Reminders" icon="reminder" color={'#76BC21'} />
+          <PatientElements
+            name="Reminders"
+            icon="bell-plus"
+            iconsname="MaterialCommunityIcons"
+            color="#76BC21"
+          />
         </View>
 
         <View style={styles.basicDetails}>

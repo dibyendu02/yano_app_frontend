@@ -69,41 +69,6 @@ export default function MonitoringFilled({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
-
-      {/* <View style={styles.footer}>
-        <TouchableOpacity
-          style={styles.footerSection}
-          onPress={() => setActiveSection('Monitoring')}>
-          <MaterialIcons
-            name="health-and-safety"
-            size={25}
-            color={activeSection === 'Monitoring' ? 'green' : 'black'}
-          />
-          <Text
-            style={[
-              styles.footerText,
-              {color: activeSection === 'Monitoring' ? 'green' : 'black'},
-            ]}>
-            Monitoring
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.footerSection}
-          onPress={() => setActiveSection('Profile')}>
-          <FontAwesome5
-            name="user-circle"
-            size={25}
-            color={activeSection === 'Profile' ? 'green' : 'black'}
-          />
-          <Text
-            style={[
-              styles.footerText,
-              {color: activeSection === 'Profile' ? 'green' : 'black'},
-            ]}>
-            Profile
-          </Text>
-        </TouchableOpacity>
-      </View> */}
     </SafeAreaView>
   );
 }
