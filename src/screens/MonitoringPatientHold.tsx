@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   navbarTitle: {
-    color: 'black',
+    color: '#00263E',
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
