@@ -11,7 +11,7 @@ import {
 import arrow from '../assets/image/arrow_back.png';
 import PatientElements from '../components/PatientElements';
 
-const AddPatients = ({navigation}) => {
+const EmailNotFoundPatient = ({navigation}) => {
   const [email, setEmail] = useState('');
 
   return (
@@ -32,22 +32,21 @@ const AddPatients = ({navigation}) => {
             styles.findButton,
             {backgroundColor: email ? '#00263E' : '#99a8b2'},
           ]}
-          onPress={() => navigation.navigate('EmailNotFoundPatient')}
           disabled={!email}>
           <Text style={{color: 'white', fontWeight: '600'}}>Find</Text>
         </TouchableOpacity>
       </View>
       <View style={{paddingHorizontal: 10, marginTop: 15}}>
-        <View style={styles.inputField}>
-          <Text style={styles.label}>Email</Text>
-          <TextInput
-            style={styles.inputBox}
-            value={email}
-            onChangeText={setEmail}
-            placeholder="john@gmail.com"
-            placeholderTextColor="gray"
-          />
-        </View>
+        <Text
+          style={{
+            color: '#00263E',
+            textAlign: 'center',
+            marginBottom: 20,
+            paddingHorizontal: 16,
+            fontSize: 16,
+          }}>
+          No patient found associated with: 'maria.clemente@gmail.com'
+        </Text>
       </View>
 
       <View
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   label: {
-    color: '#00263E',
+    color: 'black',
     fontWeight: 'bold',
   },
   inputBox: {
@@ -134,4 +133,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddPatients;
+export default EmailNotFoundPatient;

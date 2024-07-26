@@ -81,7 +81,7 @@ export default function Signup({navigation}) {
           <Image source={userpic} style={styles.userPic} />
         </View>
         <View style={styles.inputField}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>Name</Text>
+          <Text style={{color: '#00263E', fontWeight: 'bold'}}>Name</Text>
           <TextInput
             style={styles.inputBox}
             value={name}
@@ -89,7 +89,7 @@ export default function Signup({navigation}) {
           />
         </View>
         <View style={styles.inputField}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>Last Name</Text>
+          <Text style={{color: '#00263E', fontWeight: 'bold'}}>Last Name</Text>
           <TextInput
             style={styles.inputBox}
             value={lastName}
@@ -97,7 +97,7 @@ export default function Signup({navigation}) {
           />
         </View>
         <View style={styles.inputField}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>Email</Text>
+          <Text style={{color: '#00263E', fontWeight: 'bold'}}>Email</Text>
           <TextInput
             style={styles.inputBox}
             value={email}
@@ -105,7 +105,9 @@ export default function Signup({navigation}) {
           />
         </View>
         <View style={styles.inputField}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>Phone Number</Text>
+          <Text style={{color: '#00263E', fontWeight: 'bold'}}>
+            Phone Number
+          </Text>
           <TextInput
             style={styles.inputBox}
             value={phoneNumber}
@@ -113,7 +115,7 @@ export default function Signup({navigation}) {
           />
         </View>
         <View style={styles.inputField}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>Gender</Text>
+          <Text style={{color: '#00263E', fontWeight: 'bold'}}>Gender</Text>
           <Dropdown
             style={styles.dropdown}
             data={genderOptions}
@@ -125,7 +127,7 @@ export default function Signup({navigation}) {
           />
         </View>
         <View style={styles.inputField}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>
+          <Text style={{color: '#00263E', fontWeight: 'bold'}}>
             Date of Birth
           </Text>
           <TextInput
@@ -135,7 +137,7 @@ export default function Signup({navigation}) {
           />
         </View>
         <View style={styles.inputField}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>Speciality</Text>
+          <Text style={{color: '#00263E', fontWeight: 'bold'}}>Speciality</Text>
           <TextInput
             style={styles.inputBox}
             value={speciality}
@@ -143,7 +145,7 @@ export default function Signup({navigation}) {
           />
         </View>
         <View style={styles.inputField}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>Password</Text>
+          <Text style={{color: '#00263E', fontWeight: 'bold'}}>Password</Text>
           <TextInput
             style={styles.inputBox}
             secureTextEntry={true}
@@ -153,7 +155,7 @@ export default function Signup({navigation}) {
           <Text>Must be at least 8 characters</Text>
         </View>
         <View style={styles.inputField}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>
+          <Text style={{color: '#00263E', fontWeight: 'bold'}}>
             Repeat Password
           </Text>
           <TextInput
@@ -165,7 +167,7 @@ export default function Signup({navigation}) {
         </View>
         <Text
           style={{
-            color: 'black',
+            color: '#00263E',
             fontSize: 15,
             textAlign: 'center',
           }}>{`When registering you are accepting our Terms and\nconditions and Privacy policies`}</Text>
@@ -202,7 +204,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'black',
+    color: '#00263E',
     paddingTop: 10,
     paddingRight: 15,
   },
@@ -231,7 +233,7 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
   headerText: {
-    color: 'black',
+    color: '#00263E',
     fontSize: 24,
     fontFamily: 'Roboto',
     fontWeight: 'bold',
@@ -245,6 +247,7 @@ const styles = StyleSheet.create({
   inputField: {
     width: '90%',
     marginBottom: 15,
+    color: '#00263E',
   },
   inputBox: {
     height: 50,
@@ -262,6 +265,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginTop: 5,
+    color: '#00263E',
   },
   continueButton: {
     marginTop: 20,
