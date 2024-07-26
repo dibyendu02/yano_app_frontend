@@ -1,12 +1,19 @@
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  SafeAreaView,
+} from 'react-native';
 import React from 'react';
 import arrow from '../assets/image/arrow_back.png';
 
-export default function SecondForgotPassword() {
+export default function SecondForgotPassword({navigation}) {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.Navbar}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
             source={arrow}
             style={{height: 30, width: 30, paddingTop: 2}}
@@ -20,11 +27,13 @@ export default function SecondForgotPassword() {
         <Text style={styles.descriptionText}>
           Soon you will receive an email with the link for password change.
         </Text>
-        <TouchableOpacity style={styles.submitButton}>
+        <TouchableOpacity
+          style={styles.submitButton}
+          onPress={() => navigation.navigate('Login')}>
           <Text style={styles.submitButtonText}>Back to Login</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

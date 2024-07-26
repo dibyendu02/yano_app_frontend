@@ -1,17 +1,22 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  SafeAreaView,
+} from 'react-native';
 import React from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import PatientDetails from '../component/PatientDetails';
+import PatientDetails from '../components/PatientDetails';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function PatientProfileWithoutparameter() {
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.navbar}>
         <AntDesign name="arrowleft" size={28} color={'black'} />
         <Text style={styles.navbarTitle}>Monitored Patient</Text>
@@ -76,7 +81,7 @@ export default function PatientProfileWithoutparameter() {
           </View>
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

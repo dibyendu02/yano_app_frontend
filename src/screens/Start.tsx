@@ -2,7 +2,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import picture1 from '../assets/image/singup.png';
 import logo from '../assets/image/logo.png';
-export default function Start() {
+export default function Start({navigation}) {
   return (
     <View style={styles.Container}>
       <View style={styles.SecondContainer}>
@@ -21,11 +21,15 @@ export default function Start() {
                 You are no longer alone.
               </Text>
             </View>
-            <TouchableOpacity style={styles.signUpButton}>
+            <TouchableOpacity
+              style={styles.signUpButton}
+              onPress={() => navigation.navigate('Usertype')}>
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.LoginButton}>
+            <TouchableOpacity
+              style={styles.LoginButton}
+              onPress={() => navigation.navigate('Login')}>
               <Text style={styles.buttonText2}>Log in</Text>
             </TouchableOpacity>
           </View>

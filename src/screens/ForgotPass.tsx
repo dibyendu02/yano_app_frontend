@@ -5,17 +5,18 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
 import arrow from '../assets/image/arrow_back.png';
 
-export default function ForgotPass() {
+export default function ForgotPass({navigation}) {
   const [email, setEmail] = useState('');
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.Navbar}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
             source={arrow}
             style={{height: 30, width: 30, paddingTop: 2}}
@@ -38,11 +39,12 @@ export default function ForgotPass() {
           />
         </View>
         <TouchableOpacity
+          onPress={() => navigation.navigate('SecondForgotPassword')}
           style={[styles.submitButton, {backgroundColor: '#00263E'}]}>
           <Text style={styles.submitButtonText}>Send Instruction</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

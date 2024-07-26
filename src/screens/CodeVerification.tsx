@@ -5,15 +5,21 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  SafeAreaView,
 } from 'react-native';
 import React from 'react';
 import arrow from '../assets/image/arrow_back.png';
 
-export default function CodeVerification() {
+export default function CodeVerification({navigation}) {
+  const onChangeText = (e: string) => {
+    if (e?.length === 6) {
+      navigation.navigate('LoadingScreen');
+    }
+  };
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.Navbar}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
             source={arrow}
             style={{height: 30, width: 30, paddingTop: 2}}
@@ -31,7 +37,7 @@ export default function CodeVerification() {
           <Text style={{color: 'black', fontWeight: 'bold'}}>
             Verification Code
           </Text>
-          <TextInput style={styles.inputBox} />
+          <TextInput style={styles.inputBox} onChangeText={onChangeText} />
         </View>
       </View>
 
@@ -41,7 +47,7 @@ export default function CodeVerification() {
           <Text style={styles.resendText}>{`Re-Send Code`}</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
