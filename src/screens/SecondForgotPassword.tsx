@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   navbarText: {
-    color: 'black',
+    color: '#00263E',
     fontFamily: 'Roboto',
     fontSize: 20,
     fontWeight: 'bold',
@@ -58,19 +58,19 @@ const styles = StyleSheet.create({
   },
   SecondContainer: {
     flex: 1,
-    padding: 20,
+    padding: 15,
     backgroundColor: '#F5F5F5',
     alignItems: 'flex-start',
   },
   headingText: {
-    color: 'black',
+    color: '#00263E',
     fontSize: 22,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
   },
   descriptionText: {
     marginTop: 5,
-    color: 'black',
+    color: '#3D5A6C',
     fontSize: 16,
     fontFamily: 'Roboto',
   },

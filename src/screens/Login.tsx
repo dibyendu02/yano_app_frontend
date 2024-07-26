@@ -22,11 +22,7 @@ export default function Login({navigation}) {
     <SafeAreaView style={styles.container}>
       <View style={styles.navbar}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          {/* <AntDesign name="arrowleft" size={22} color={'black'} /> */}
-          <Image
-            source={arrow}
-            style={{height: 30, width: 30, paddingTop: 2}}
-          />
+          <AntDesign name="arrowleft" size={30} color={'#00263E'} />
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
           <Text style={styles.text}>Not Registered?</Text>
@@ -59,7 +55,7 @@ export default function Login({navigation}) {
           <TouchableOpacity
             style={styles.forgotPassword}
             onPress={() => navigation.navigate('ForgotPass')}>
-            <Text style={{color: 'black'}}>Forgot Password?</Text>
+            <Text style={{color: '#00263E'}}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
@@ -113,7 +109,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'black',
+    color: '#00263E',
     paddingTop: 10,
     paddingRight: 15,
   },
@@ -122,7 +118,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderRadius: 8,
     fontSize: 14,
-    color: 'black',
+    color: '#00263E',
     fontWeight: 'bold',
     padding: 10,
     marginRight: 15,
@@ -134,7 +130,7 @@ const styles = StyleSheet.create({
     // alignItems: 'center',
   },
   headerText: {
-    color: 'black',
+    color: '#00263E',
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 25,
@@ -144,7 +140,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   label: {
-    color: 'black',
+    color: '#00263E',
     fontWeight: 'bold',
   },
   inputBox: {

@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: 'black',
+    color: '#00263E',
     paddingTop: 10,
     paddingRight: 15,
   },
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderRadius: 8,
     fontSize: 14,
-    color: 'black',
+    color: '#00263E',
     fontWeight: 'bold',
     padding: 10,
     marginRight: 15,
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
   },
   headerText: {
-    color: 'black',
+    color: '#00263E',
     fontWeight: 'bold',
     fontSize: 24,
     fontFamily: 'Roboto',

@@ -26,21 +26,25 @@ export default function ForgotPass({navigation}) {
       </View>
 
       <View style={styles.SecondContainer}>
-        <Text
-          style={
-            styles.instructionsText
-          }>{`Enter your email and we will send an email\nwith the instructions to reestablish your password.`}</Text>
+        <Text style={styles.instructionsText}>
+          {`Enter your email and we will send an email\nwith the instructions to reestablish your password.`}
+        </Text>
         <View style={styles.inputField}>
-          <Text style={{color: 'black', fontWeight: 'bold'}}>Email</Text>
+          <Text style={{color: '#00263E', fontWeight: 'bold'}}>Email</Text>
           <TextInput
             style={styles.inputBox}
             value={email}
             onChangeText={text => setEmail(text)}
+            placeholder="john@gmail.com"
           />
         </View>
         <TouchableOpacity
           onPress={() => navigation.navigate('SecondForgotPassword')}
-          style={[styles.submitButton, {backgroundColor: '#00263E'}]}>
+          style={[
+            styles.submitButton,
+            {backgroundColor: email ? '#00263E' : '#93a2ac'},
+          ]}
+          disabled={!email}>
           <Text style={styles.submitButtonText}>Send Instruction</Text>
         </TouchableOpacity>
       </View>
@@ -61,7 +65,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   navbarText: {
-    color: 'black',
+    color: '#00263E',
     fontFamily: 'Roboto',
     fontSize: 20,
     fontWeight: 'bold',
@@ -75,7 +79,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   instructionsText: {
-    color: 'black',
+    color: '#3D5A6C',
     fontSize: 16,
     fontFamily: 'Roboto',
     marginTop: 20,
@@ -92,6 +96,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginTop: 5,
+    color: '#00263E',
   },
   submitButton: {
     height: 50,

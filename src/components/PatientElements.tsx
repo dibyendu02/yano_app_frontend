@@ -23,7 +23,7 @@ const PatientElements: React.FC<PatientElementsProps> = ({
   const IconComponent = Icons[iconsname];
 
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('PatientProfile')}>
+    <TouchableOpacity>
       <View style={styles.container}>
         {IconComponent && <IconComponent name={icon} size={25} color={color} />}
         <Text style={styles.name}>{name}</Text>
