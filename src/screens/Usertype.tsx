@@ -1,11 +1,18 @@
-import { Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import {
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useState} from 'react';
 import arrow from '../assets/image/arrow_back.png';
 import patientLogo from '../assets/image/healthLogo.png';
 import healthcare from '../assets/image/providerLogo.png';
 import Icons from '../assets/icon/Icon';
 
-export default function Usertype({ navigation }) {
+export default function Usertype({navigation}) {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const handleSelection = userType => {
@@ -122,12 +129,12 @@ const styles = StyleSheet.create({
     marginRight: 15,
   },
   secondContainer: {
-    backgroundColor: 'light-gray',
+    backgroundColor: '#f5f5f5',
     flexDirection: 'column',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     // alignItems: 'center',
     paddingHorizontal: 20,
-    paddingTop: 10,
+    paddingTop: 15,
   },
   headerText: {
     color: 'black',
@@ -172,7 +179,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',
-    width: 300,
+    width: '90%',
     // marginTop: 360,
     alignSelf: 'center',
   },

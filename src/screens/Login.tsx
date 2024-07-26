@@ -68,13 +68,11 @@ export default function Login({navigation}) {
             {backgroundColor: email && password ? '#00263E' : 'gray'},
           ]}
           onPress={() => navigation.navigate('LoadingScreen')}
-          disabled={!email || !password}>
+          // disabled={!email || !password}
+        >
           <Text style={styles.loginBtnText}>Log in</Text>
         </TouchableOpacity>
 
-        {/* <Text style={styles.orText}>
-          ------------------------------or-------------------------------
-        </Text> */}
         <View
           style={{
             flexDirection: 'row',
