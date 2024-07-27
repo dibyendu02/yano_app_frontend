@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MonitoringPatientHold from '../../screens/MonitoringPatientHold';
@@ -9,6 +10,7 @@ import MyProfile from '../../screens/MyProfile';
 import AddPatients from '../../screens/AddPatients';
 import Icons from '../../assets/icon/Icon';
 import EmailNotFoundPatient from '../../screens/EmailNotFoundPatient';
+import PatientMonitoringList from '../../screens/main/monitoring/PatientMonitoringList';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,8 +24,8 @@ const Tabs = () => {
         tabBarInactiveTintColor: 'black',
       }}>
       <Tab.Screen
-        name="Monitor"
-        component={MonitoringFilled}
+        name="Home"
+        component={PatientMonitoringList}
         options={{
           headerShown: false,
           tabBarIcon: ({color, size}) => (
@@ -58,7 +60,6 @@ const MainStack = () => {
         component={Tabs}
         options={{headerShown: false}}
       />
-      {/* AddPatients */}
       <Stack.Screen
         name="AddPatients"
         component={AddPatients}
@@ -69,13 +70,6 @@ const MainStack = () => {
         component={EmailNotFoundPatient}
         options={{headerShown: false}}
       />
-      {/* MonitoringFilled */}
-      {/* <Stack.Screen
-        name="MonitoringFilled"
-        component={MonitoringFilled}
-        options={{headerShown: false}}
-      /> */}
-      {/* PatientProfileWithoutparameter */}
       <Stack.Screen
         name="PatientProfile"
         component={PatientProfileWithoutparameter}

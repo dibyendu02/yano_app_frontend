@@ -5,6 +5,7 @@ export const Colors = {
   Green: '#0DAB76',
   SteelBlue: '#3D5A6C',
   GhostWhite: '#f5f5f5',
+  Grey: '#888888',
   LightGray: '#E9E9E9',
   Black: '#000',
 };
