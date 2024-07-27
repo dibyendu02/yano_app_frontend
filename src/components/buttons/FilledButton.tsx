@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
   GestureResponderEvent,
+
   StyleProp,
   StyleSheet,
   Text,
@@ -9,6 +10,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import {Colors} from '../../constants/Colors';
+
 
 export enum ButtonType {
   Blue = 'blue',
@@ -31,23 +33,25 @@ const ButtonColors = {
   },
 };
 interface ButtonProps {
-  type: 'blue' | 'red' | 'white';
+
+  type?: 'blue' | 'red' | 'white';
   label: string;
-  icon?: React.ReactNode;
-  onPress?: (event: GestureResponderEvent) => void;
+  onPress: (event: GestureResponderEvent) => void;
   disabled?: boolean;
-  style?: StyleProp<ViewStyle>;
-  activeOpacity?: number;
+  icon?: React.ReactNode,
+  style?: any
+
 }
 
 const FilledButton: React.FC<ButtonProps> = ({
   type = ButtonType.Blue,
   label,
-  icon,
+
   onPress,
   disabled = false,
-  activeOpacity = 0.5,
-  style,
+  icon,
+  style
+
 }) => {
   return (
     <TouchableOpacity
@@ -56,14 +60,15 @@ const FilledButton: React.FC<ButtonProps> = ({
         {
           backgroundColor: ButtonColors[type].backgroundColor,
           opacity: disabled ? 0.4 : 1,
+
+          ...style
         },
-        style,
       ]}
-      activeOpacity={activeOpacity}
       onPress={onPress}
       disabled={disabled}>
-      {icon && icon}
-      <Text style={[styles.label, {color: ButtonColors[type].textColor}]}>
+      {icon}
+      <Text style={[styles.label, { color: ButtonColors[type].textColor }]}>
+
         {label}
       </Text>
     </TouchableOpacity>
@@ -76,11 +81,12 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    width: '100%',
-    marginVertical: 6,
+
+    display: "flex",
+
+
+    gap: 4
+
   },
   label: {
     fontSize: 16,

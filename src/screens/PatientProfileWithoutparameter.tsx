@@ -22,7 +22,9 @@ import Card from '../components/cards/Card';
 import {DummyImage} from '../assets/dummy/images';
 import {measurements, userData} from '../test/Data';
 import Icons from '../assets/icon/Icon';
-import {IconName} from '../assets/icon/IconNames';
+
+import { IconName } from '../assets/icon/IconNames';
+
 
 let data1 = [
   {
@@ -53,7 +55,9 @@ let data2 = [
 export default function PatientProfileWithoutparameter({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
+
       <Header title="Monitored patient" />
+
 
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
         <Card>
@@ -93,7 +97,9 @@ export default function PatientProfileWithoutparameter({navigation}) {
         </Card>
 
         <Card
+
           title="LAST MEASUREMENTS"
+
           cardFooter={
             <View
               style={{
@@ -163,8 +169,10 @@ export default function PatientProfileWithoutparameter({navigation}) {
                   </Text>
                 </Text>
                 <Icons.AntDesign
+
                   name={item.state ? IconName.CheckCircle : 'checkcircleo'}
                   color={item.state ? Colors.Green : Colors.Grey}
+
                   size={22}
                 />
               </View>
@@ -189,10 +197,12 @@ export default function PatientProfileWithoutparameter({navigation}) {
               icon="file-medical"
               iconsname="FontAwesome5"
               color="#76BC21"
+
             />
             <PatientElements
               name="Health thresholds"
               icon="data-thresholding"
+
               iconsname="MaterialIcons"
               color="#76BC21"
             />
@@ -222,6 +232,7 @@ export default function PatientProfileWithoutparameter({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
   },
   body: {
     flex: 1,
