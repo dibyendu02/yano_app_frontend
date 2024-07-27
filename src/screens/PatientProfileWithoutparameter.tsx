@@ -11,10 +11,13 @@ import {
   ScrollView,
 } from 'react-native';
 import React from 'react';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import PatientDetails from '../components/PatientDetails';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import PatientElements from '../components/PatientElements';
 import Header from '../components/header/Header';
 import {Colors} from '../constants/Colors';
@@ -22,9 +25,7 @@ import Card from '../components/cards/Card';
 import {DummyImage} from '../assets/dummy/images';
 import {measurements, userData} from '../test/Data';
 import Icons from '../assets/icon/Icon';
-
-import { IconName } from '../assets/icon/IconNames';
-
+import {IconName} from '../assets/icon/IconNames';
 
 let data1 = [
   {
@@ -55,9 +56,7 @@ let data2 = [
 export default function PatientProfileWithoutparameter({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
-
-      <Header title="Monitored patient" />
-
+      <Header />
 
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
         <Card>
@@ -97,9 +96,7 @@ export default function PatientProfileWithoutparameter({navigation}) {
         </Card>
 
         <Card
-
-          title="LAST MEASUREMENTS"
-
+          title="last measurements"
           cardFooter={
             <View
               style={{
@@ -169,10 +166,8 @@ export default function PatientProfileWithoutparameter({navigation}) {
                   </Text>
                 </Text>
                 <Icons.AntDesign
-
-                  name={item.state ? IconName.CheckCircle : 'checkcircleo'}
-                  color={item.state ? Colors.Green : Colors.Grey}
-
+                  name={IconName.CheckCircle}
+                  color={Colors.Green}
                   size={22}
                 />
               </View>
@@ -197,12 +192,11 @@ export default function PatientProfileWithoutparameter({navigation}) {
               icon="file-medical"
               iconsname="FontAwesome5"
               color="#76BC21"
-
+              onPress={() => navigation.navigate('MedicalHistory')}
             />
             <PatientElements
               name="Health thresholds"
-              icon="data-thresholding"
-
+              icon="history-edu"
               iconsname="MaterialIcons"
               color="#76BC21"
             />
@@ -218,7 +212,7 @@ export default function PatientProfileWithoutparameter({navigation}) {
       <View>
         <View style={styles.basicDetails}>
           <View style={styles.stopMonitoringButton}>
-            <Icons.MaterialIcons name="exit-to-app" size={20} color={'red'} />
+            <Ionicons name="exit-outline" size={20} color={'red'} />
             <TouchableOpacity>
               <Text style={styles.monintoring}>stop Monitoring</Text>
             </TouchableOpacity>
@@ -232,7 +226,7 @@ export default function PatientProfileWithoutparameter({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    backgroundColor: Colors.White,
   },
   body: {
     flex: 1,
