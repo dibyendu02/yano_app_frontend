@@ -6,9 +6,12 @@ import Icons from '../assets/icon/Icon';
 
 type PatientElementsProps = {
   name: string;
-  icon: string;
-  iconsname: keyof typeof Icons;
+  icon?: string;
+  iconsname?: keyof typeof Icons;
   color: string;
+  element?: React.ReactNode;
+  customStyle?: object;
+  onPress?: () => void;
 };
 
 const PatientElements: React.FC<PatientElementsProps> = ({
@@ -16,16 +19,20 @@ const PatientElements: React.FC<PatientElementsProps> = ({
   icon,
   iconsname,
   color,
+  element,
+  customStyle,
+  onPress,
 }) => {
   const navigation = useNavigation();
 
   // Get the appropriate icon component
-  const IconComponent = Icons[iconsname];
+  const IconComponent = Icons[iconsname || 'MaterialIcons'];
 
   return (
-    <TouchableOpacity>
-      <View style={styles.container}>
-        {IconComponent && <IconComponent name={icon} size={25} color={color} />}
+    <TouchableOpacity onPress={onPress}>
+      <View style={[styles.container, {...customStyle}]}>
+        {IconComponent && <IconComponent name={icon!} size={25} color={color} />}
+        {element}
         <Text style={styles.name}>{name}</Text>
         <MaterialIcons name="navigate-next" size={25} color={'black'} />
       </View>
