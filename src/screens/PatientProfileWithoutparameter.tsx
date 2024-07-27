@@ -1,9 +1,14 @@
+/* eslint-disable react/no-unstable-nested-components */
+/* eslint-disable react-native/no-inline-styles */
 import {
   StyleSheet,
   Text,
   View,
   TouchableOpacity,
   SafeAreaView,
+  Image,
+  FlatList,
+  ScrollView,
 } from 'react-native';
 import React from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -14,76 +19,197 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PatientDetails from '../components/PatientDetails';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PatientElements from '../components/PatientElements';
+import Header from '../components/header/Header';
+import {Colors} from '../constants/Colors';
+import Card from '../components/cards/Card';
+import {DummyImage} from '../assets/dummy/images';
+import {measurements, userData} from '../test/Data';
+import Icons from '../assets/icon/Icon';
+import { IconName } from '../assets/icon/IconNames';
+
+let data1 = [
+  {
+    label: userData.gender,
+    icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
+  },
+  {
+    label: userData.age,
+    icon: <Fontisto name="date" size={20} color={'#76BC21'} />,
+  },
+  {
+    label: userData.blood,
+    icon: <MaterialIcons name="bloodtype" size={20} color={'#76BC21'} />,
+  },
+];
+
+let data2 = [
+  {
+    label: userData.height,
+    icon: <MaterialIcons name="height" size={20} color={'#76BC21'} />,
+  },
+  {
+    label: userData.weight,
+    icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
+  },
+];
 
 export default function PatientProfileWithoutparameter({navigation}) {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.navbar}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <AntDesign name="arrowleft" size={28} color={'black'} />
-        </TouchableOpacity>
+      <Header />
 
-        <Text style={styles.navbarTitle}>Monitored Patient</Text>
-      </View>
-
-      <View style={styles.secondContainer}>
-        <View style={styles.patientProfileDetails}>
-          <FontAwesome5 name="user-circle" size={80} color={'black'} />
+      <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
+        <Card>
+          <Image
+            source={DummyImage.user}
+            style={{
+              height: 80,
+              width: 80,
+              borderRadius: 40,
+            }}
+          />
           <Text style={styles.patientName}>María Clemente</Text>
           <View style={styles.detailRow}>
-            <View style={styles.detailItem}>
-              <Foundation name="female-symbol" size={20} color={'#76BC21'} />
-              <Text style={styles.detailText}>Female</Text>
-            </View>
-            <View style={styles.detailItem}>
-              <Fontisto name="date" size={20} color={'#76BC21'} />
-              <Text style={styles.detailText}>67 Years</Text>
-            </View>
-            <View style={styles.detailItem}>
-              <MaterialIcons name="bloodtype" size={20} color={'#76BC21'} />
-              <Text style={styles.detailText}>O+</Text>
-            </View>
+            {data1.map((e, i, a) => (
+              <View style={styles.detailItem} key={e.label}>
+                {e.icon}
+                <Text style={styles.detailText}>{e.label}</Text>
+                {i < a.length - 1 && <View style={styles.separator} />}
+              </View>
+            ))}
           </View>
+
           <View style={styles.detailRow}>
-            <View style={styles.detailItem}>
-              <MaterialIcons name="height" size={20} color={'#76BC21'} />
-              <Text style={styles.detailText}>168 cm</Text>
-            </View>
-            <View style={styles.detailItem}>
-              <Foundation name="female-symbol" size={20} color={'#76BC21'} />
-              <Text style={styles.detailText}>64 kg</Text>
-            </View>
+            {data2.map((e, i, a) => (
+              <View style={styles.detailItem} key={e.label}>
+                {e.icon}
+                <Text style={styles.detailText}>{e.label}</Text>
+                {i < a.length - 1 && <View style={styles.separator} />}
+              </View>
+            ))}
           </View>
+
           <TouchableOpacity style={styles.addButton}>
             <FontAwesome5 name="file-medical-alt" size={15} color="white" />
             <Text style={styles.addButtonText}>Measure vital signs</Text>
           </TouchableOpacity>
-        </View>
+        </Card>
 
-        <View style={styles.measurmentDetails}>
-          {/* Add measurement details here */}
-          <PatientElements
-            name="Medical history"
-            icon="file-medical"
-            iconsname="FontAwesome5"
-            color="#76BC21"
+        <Card
+          title="last measurements"
+          cardFooter={
+            <View
+              style={{
+                borderTopWidth: 1,
+                borderTopColor: Colors.LightGray,
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingVertical: 16,
+              }}>
+              <Text
+                style={{
+                  fontSize: 15,
+                  fontWeight: 'bold',
+                  fontFamily: 'Roboto',
+                  color: Colors.SteelBlue,
+                }}>
+                View More
+              </Text>
+            </View>
+          }>
+          <FlatList
+            data={
+              measurements.length >= 2
+                ? measurements.filter((e, i) => i < 2)
+                : []
+            }
+            scrollEnabled={false}
+            style={{width: '100%'}}
+            renderItem={({item, index: _index}) => (
+              <View
+                style={{
+                  width: '100%',
+                  paddingVertical: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <View style={{width: '50%'}}>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      fontFamily: 'Roboto',
+                      marginBottom: 4,
+                    }}>
+                    {item.mType}
+                  </Text>
+                  <Text style={{fontSize: 13, fontFamily: 'Roboto'}}>
+                    {item.dt}
+                  </Text>
+                </View>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontFamily: 'Roboto',
+                    marginBottom: 4,
+                    fontWeight: '500',
+                  }}>
+                  {item.amt}{' '}
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontFamily: 'Roboto',
+                      fontWeight: 'light',
+                    }}>
+                    mmol/L
+                  </Text>
+                </Text>
+                <Icons.AntDesign
+                  name={IconName.CheckCircle}
+                  color={Colors.Green}
+                  size={22}
+                />
+              </View>
+            )}
+            ItemSeparatorComponent={() => (
+              <View
+                style={{
+                  height: 1,
+                  width: '100%',
+                  backgroundColor: Colors.LightGray,
+                  alignSelf: 'center',
+                }}
+              />
+            )}
           />
-          <PatientElements
-            name="Health thresholds"
-            icon="history-edu"
-            iconsname="MaterialIcons"
-            color="#76BC21"
-          />
-          <PatientElements
-            name="Reminders"
-            icon="bell-plus"
-            iconsname="MaterialCommunityIcons"
-            color="#76BC21"
-          />
-        </View>
+        </Card>
 
+        <Card>
+          <View style={{width: '100%'}}>
+            <PatientElements
+              name="Medical history"
+              icon="file-medical"
+              iconsname="FontAwesome5"
+              color="#76BC21"
+            />
+            <PatientElements
+              name="Health thresholds"
+              icon="history-edu"
+              iconsname="MaterialIcons"
+              color="#76BC21"
+            />
+            <PatientElements
+              name="Reminders"
+              icon="bell-plus"
+              iconsname="MaterialCommunityIcons"
+              color="#76BC21"
+            />
+          </View>
+        </Card>
+      </ScrollView>
+      <View>
         <View style={styles.basicDetails}>
-          {/* Add basic details here */}
           <View style={styles.stopMonitoringButton}>
             <Ionicons name="exit-outline" size={20} color={'red'} />
             <TouchableOpacity>
@@ -99,25 +225,22 @@ export default function PatientProfileWithoutparameter({navigation}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: Colors.White,
   },
-  navbar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: 20,
-    paddingHorizontal: 10,
+  body: {
+    flex: 1,
+    backgroundColor: Colors.GhostWhite,
   },
-  navbarTitle: {
-    color: 'black',
-    fontSize: 20,
-    fontWeight: 'bold',
-    fontFamily: 'Roboto',
-    paddingLeft: 15,
+
+  separator: {
+    width: 1,
+    height: 20,
+    backgroundColor: Colors.Black,
+    marginHorizontal: 8,
   },
   secondContainer: {
     flex: 1,
     backgroundColor: '#f5f5f5',
-    // backgroundColor: 'red',
     justifyContent: 'space-between',
     padding: 20,
   },
@@ -128,15 +251,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: 'white',
     width: '100%',
-    // margin: ,
   },
   patientName: {
     color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
-    marginTop: 10,
-    marginBottom: 20,
+    marginVertical: 6,
   },
   detailRow: {
     flexDirection: 'row',
@@ -145,15 +266,11 @@ const styles = StyleSheet.create({
   detailItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderRightWidth: 0.5,
-    borderRightColor: 'gray',
-    marginRight: 10,
-    padding: 3,
   },
   detailText: {
-    marginLeft: 5,
     color: 'black',
     fontSize: 16,
+    marginHorizontal: 6,
   },
   addButton: {
     flexDirection: 'row',
@@ -178,6 +295,8 @@ const styles = StyleSheet.create({
   basicDetails: {
     alignItems: 'center',
     marginTop: 20,
+    width: '90%',
+    alignSelf: 'center',
   },
   stopMonitoringButton: {
     flexDirection: 'row',

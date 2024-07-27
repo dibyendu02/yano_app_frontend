@@ -1,14 +1,14 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import MonitoringPatientHold from '../screens/MonitoringPatientHold';
-import PatientProfileWithoutparameter from '../screens/PatientProfileWithoutparameter';
-import MonitoringFilled from '../screens/MonitoringFilled';
+import MonitoringPatientHold from '../../screens/MonitoringPatientHold';
+import PatientProfileWithoutparameter from '../../screens/PatientProfileWithoutparameter';
+import MonitoringFilled from '../../screens/MonitoringFilled';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import MyProfile from '../screens/MyProfile';
-import AddPatients from '../screens/AddPatients';
-import Icons from '../assets/icon/Icon';
-import EmailNotFoundPatient from '../screens/EmailNotFoundPatient';
+import MyProfile from '../../screens/MyProfile';
+import AddPatients from '../../screens/AddPatients';
+import Icons from '../../assets/icon/Icon';
+import EmailNotFoundPatient from '../../screens/EmailNotFoundPatient';
 
 const Tab = createBottomTabNavigator();
 
