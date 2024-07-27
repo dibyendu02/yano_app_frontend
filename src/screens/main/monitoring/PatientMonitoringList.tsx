@@ -6,6 +6,9 @@ import {Colors} from '../../../constants/Colors';
 import {patientList} from '../../../test/Data';
 import PatientListItem from './components/PatientListItem';
 import Card from '../../../components/cards/Card';
+import FilledButton from '../../../components/buttons/FilledButton';
+import Icons from '../../../assets/icon/Icon';
+import {navigate} from '../../../navigation/RootNavigation';
 
 const PatientMonitoringList = () => {
   return (
@@ -22,6 +25,16 @@ const PatientMonitoringList = () => {
             ItemSeparatorComponent={() => <View style={styles.separator} />}
           />
         </Card>
+        <FilledButton
+          type="blue"
+          label="Add patient"
+          activeOpacity={1}
+          onPress={() => navigate('AddPatients')}
+          icon={
+            <Icons.MaterialIcons name="add" color={Colors.White} size={25} />
+          }
+          style={styles.floatingBtn}
+        />
       </View>
     </SafeAreaView>
   );
@@ -37,10 +50,17 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.GhostWhite,
     width: '100%',
+    position: 'relative',
   },
   separator: {
     backgroundColor: Colors.LightGray,
     height: 1,
     width: '100%',
+  },
+  floatingBtn: {
+    position: 'absolute',
+    bottom: '4%',
+    right: '4%',
+    width: '40%',
   },
 });

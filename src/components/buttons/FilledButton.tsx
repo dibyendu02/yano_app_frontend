@@ -1,9 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
   GestureResponderEvent,
+  StyleProp,
   StyleSheet,
   Text,
   TouchableOpacity,
+  ViewStyle,
 } from 'react-native';
 import React from 'react';
 import {Colors} from '../../constants/Colors';
@@ -31,15 +33,21 @@ const ButtonColors = {
 interface ButtonProps {
   type: 'blue' | 'red' | 'white';
   label: string;
-  onPress: (event: GestureResponderEvent) => void;
+  icon?: React.ReactNode;
+  onPress?: (event: GestureResponderEvent) => void;
   disabled?: boolean;
+  style?: StyleProp<ViewStyle>;
+  activeOpacity?: number;
 }
 
 const FilledButton: React.FC<ButtonProps> = ({
   type = ButtonType.Blue,
   label,
+  icon,
   onPress,
   disabled = false,
+  activeOpacity = 0.5,
+  style,
 }) => {
   return (
     <TouchableOpacity
@@ -49,9 +57,12 @@ const FilledButton: React.FC<ButtonProps> = ({
           backgroundColor: ButtonColors[type].backgroundColor,
           opacity: disabled ? 0.4 : 1,
         },
+        style,
       ]}
+      activeOpacity={activeOpacity}
       onPress={onPress}
       disabled={disabled}>
+      {icon && icon}
       <Text style={[styles.label, {color: ButtonColors[type].textColor}]}>
         {label}
       </Text>
