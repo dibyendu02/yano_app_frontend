@@ -2,6 +2,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import picture1 from '../assets/image/singup.png';
 import logo from '../assets/image/logo.png';
+import PrimaryButton from '../components/buttons/PrimaryButton';
 export default function Start({navigation}) {
   return (
     <View style={styles.Container}>
@@ -26,12 +27,10 @@ export default function Start({navigation}) {
               onPress={() => navigation.navigate('Usertype')}>
               <Text style={styles.buttonText}>Sign Up</Text>
             </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.LoginButton}
-              onPress={() => navigation.navigate('Login')}>
-              <Text style={styles.buttonText2}>Log in</Text>
-            </TouchableOpacity>
+            <PrimaryButton
+              label="Log in"
+              onPress={() => navigation.navigate('Login')}
+            />
           </View>
         </View>
       </View>
@@ -82,23 +81,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#00263E',
-    fontSize: 16,
-    fontFamily: 'Roboto',
-    fontWeight: 'bold',
-  },
-  LoginButton: {
-    backgroundColor: '#00263E',
-    padding: 15,
-    borderRadius: 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    marginRight: 10,
-    width: '100%',
-    marginBottom: 10,
-  },
-  buttonText2: {
-    color: 'white',
     fontSize: 16,
     fontFamily: 'Roboto',
     fontWeight: 'bold',
