@@ -1,20 +1,28 @@
-import {StyleSheet, Text, View} from 'react-native';
+
+import {StyleProp, Text, View, ViewStyle} from 'react-native';
 import React, {ReactNode} from 'react';
-import {Colors} from '../../constants/Colors';
+import {CardStyles as styles} from './CardStyle';
+
 
 interface CardProps {
   title?: string;
   children?: ReactNode;
   cardFooter?: ReactNode | null;
+
+  contentContainerStyle?: StyleProp<ViewStyle>;
+
 }
 
 const Card: React.FC<CardProps> = ({
   title = '',
   children,
   cardFooter = null,
+
+  contentContainerStyle,
 }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, contentContainerStyle]}>
+
       <View style={styles.content}>
         {title && <Text style={styles.title}>{title}</Text>}
         {children}
@@ -25,6 +33,7 @@ const Card: React.FC<CardProps> = ({
 };
 
 export default Card;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -48,3 +57,4 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
 });
+

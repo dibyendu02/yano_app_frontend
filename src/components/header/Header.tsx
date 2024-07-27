@@ -1,3 +1,4 @@
+
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { FC } from 'react';
 import Icons from '../../assets/icon/Icon';
@@ -24,6 +25,7 @@ const Header: FC<props> = ({ title, leftIcon, rightComp1, rightComp2 }) => {
       <View style={{ flexDirection: "row", gap: 20 }}>
         {rightComp1}
         {rightComp2}
+
       </View>
     </View>
   );
@@ -33,17 +35,20 @@ export default Header;
 
 const styles = StyleSheet.create({
   navbar: {
+
     alignItems: 'center',
     paddingVertical: 20,
     paddingHorizontal: 10,
     paddingEnd: 20,
     backgroundColor: Colors.White,
+
   },
   navbarTitle: {
     color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
+
     paddingLeft: 15,
   },
   boxStyle: {
@@ -68,4 +73,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   }
+
 });

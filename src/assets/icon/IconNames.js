@@ -1,3 +1,4 @@
+
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import Icons from "./Icon";
 
@@ -39,3 +40,4 @@ export const DateIcon = () => {
     <Icons.FontAwesome5 name={'calendar-alt'} color={Colors.Blue} size={18} />
   )
 }
+

@@ -1,3 +1,25 @@
+
+export const patientList = [
+  {name: 'María Clemente'},
+  {name: 'Juan Torres'},
+  {name: 'Jorge Pardo'},
+  {name: 'Ana López'},
+  {name: 'Carlos Sánchez'},
+  {name: 'Lucía Martínez'},
+  {name: 'Miguel Fernández'},
+  {name: 'Laura García'},
+  {name: 'Daniel Rodríguez'},
+  {name: 'Sofía Pérez'},
+  {name: 'Alejandro Gómez'},
+  {name: 'Isabel Morales'},
+  {name: 'Fernando Ortiz'},
+  {name: 'Cristina Ruiz'},
+  {name: 'Roberto Torres'},
+  {name: 'Marta Flores'},
+  {name: 'Alberto Ramírez'},
+];
+
+
 export const measurements = [
   {
     mType: 'Glucose Level',
