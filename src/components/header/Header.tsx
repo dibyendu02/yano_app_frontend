@@ -7,18 +7,29 @@ import {Colors} from '../../constants/Colors';
 interface HeaderProps {
   title?: string;
   showBackIcon?: boolean;
+  headerRightComponent?: React.ReactNode;
 }
 
-const Header: React.FC<HeaderProps> = ({title, showBackIcon = true}) => {
+const Header: React.FC<HeaderProps> = ({
+  title,
+  showBackIcon = true,
+  headerRightComponent,
+}) => {
   const navigation = useNavigation();
   return (
     <View style={styles.navbar}>
-      {showBackIcon && (
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icons.AntDesign name="arrowleft" size={28} color={'black'} />
-        </TouchableOpacity>
-      )}
-      <Text style={styles.navbarTitle}>{title}</Text>
+      <View style={styles.navBarLeftContainer}>
+        {showBackIcon && (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Icons.AntDesign name="arrowleft" size={28} color={'black'} />
+          </TouchableOpacity>
+        )}
+        <Text style={styles.navbarTitle}>{title}</Text>
+      </View>
+
+      <View style={{width: '20%'}}>
+        {headerRightComponent && headerRightComponent}
+      </View>
     </View>
   );
 };
@@ -32,12 +43,18 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 10,
     backgroundColor: Colors.White,
+    justifyContent: 'space-between',
   },
   navbarTitle: {
     color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
-    paddingLeft: 15,
+    marginLeft: 8,
+  },
+  navBarLeftContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '75%',
   },
 });

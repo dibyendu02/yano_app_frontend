@@ -7,10 +7,10 @@ import MonitoringFilled from '../../screens/MonitoringFilled';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MyProfile from '../../screens/MyProfile';
-import AddPatients from '../../screens/AddPatients';
 import Icons from '../../assets/icon/Icon';
 import EmailNotFoundPatient from '../../screens/EmailNotFoundPatient';
 import PatientMonitoringList from '../../screens/main/monitoring/PatientMonitoringList';
+import AddPatient from '../../screens/main/AddPatient/AddPatient';
 
 const Tab = createBottomTabNavigator();
 
@@ -61,8 +61,8 @@ const MainStack = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="AddPatients"
-        component={AddPatients}
+        name="AddPatient"
+        component={AddPatient}
         options={{headerShown: false}}
       />
       <Stack.Screen

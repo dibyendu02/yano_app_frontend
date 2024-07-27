@@ -29,7 +29,7 @@ const PatientMonitoringList = () => {
           type="blue"
           label="Add patient"
           activeOpacity={1}
-          onPress={() => navigate('AddPatients')}
+          onPress={() => navigate('AddPatient')}
           icon={
             <Icons.MaterialIcons name="add" color={Colors.White} size={25} />
           }
