@@ -14,6 +14,7 @@ import MedicalHistory from '../../screens/healthCondition/MedicalHistory';
 import PatientMonitoringList from '../../screens/main/monitoring/PatientMonitoringList';
 import AddPatient from '../../screens/main/add-patient/AddPatient';
 import PatientMonitoringProfile from '../../screens/main/monitoring/PatientMonitoringProfile';
+import HealthStatsList from '../../screens/main/health-stats/HealthStatsList';
 
 const Tab = createBottomTabNavigator();
 
@@ -81,6 +82,11 @@ const MainStack = () => {
       <Stack.Screen
         name="MonitoringPatient"
         component={MonitoringPatientHold}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="HealthStatsList"
+        component={HealthStatsList}
         options={{headerShown: false}}
       />
       <Stack.Screen

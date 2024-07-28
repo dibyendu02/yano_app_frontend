@@ -96,7 +96,7 @@ export default function PatientMonitoringProfile({}) {
         <Card
           title="last measurements"
           cardFooter={
-            <View
+            <TouchableOpacity
               style={{
                 borderTopWidth: 1,
                 borderTopColor: Colors.LightGray,
@@ -104,7 +104,8 @@ export default function PatientMonitoringProfile({}) {
                 justifyContent: 'center',
                 alignItems: 'center',
                 paddingVertical: 16,
-              }}>
+              }}
+              onPress={() => navigate('HealthStatsList')}>
               <Text
                 style={{
                   fontSize: 15,
@@ -114,7 +115,7 @@ export default function PatientMonitoringProfile({}) {
                 }}>
                 View More
               </Text>
-            </View>
+            </TouchableOpacity>
           }>
           <FlatList
             data={
