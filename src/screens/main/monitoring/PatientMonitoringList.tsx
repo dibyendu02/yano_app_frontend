@@ -17,12 +17,14 @@ const PatientMonitoringList = () => {
         title="Monitoring"
         showBackIcon={false}
         headerRightComponent={
-          <Icons.Ionicons
-            name="notifications"
-            size={25}
-            color={Colors.Blue}
-            style={{width: 40}}
-          />
+          <View style={{width: 40}}>
+            <Icons.Ionicons
+              name="notifications"
+              size={25}
+              color={Colors.Blue}
+              style={{backgroundColor: Colors.Red}}
+            />
+          </View>
         }
       />
       <View style={styles.contentContainer}>
