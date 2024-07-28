@@ -13,7 +13,18 @@ import {navigate} from '../../../navigation/RootNavigation';
 const PatientMonitoringList = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Monitoring" showBackIcon={false} />
+      <Header
+        title="Monitoring"
+        showBackIcon={false}
+        headerRightComponent={
+          <Icons.Ionicons
+            name="notifications"
+            size={25}
+            color={Colors.Blue}
+            style={{width: 40}}
+          />
+        }
+      />
       <View style={styles.contentContainer}>
         <Card>
           <FlatList
