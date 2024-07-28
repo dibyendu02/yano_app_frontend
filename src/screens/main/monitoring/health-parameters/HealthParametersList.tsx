@@ -6,18 +6,20 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React from 'react';
-import Header from '../../../components/header/Header';
-import {HSDG} from '../../../test/HealthStatsData';
-import Card from '../../../components/cards/Card';
-import {IconName} from '../../../assets/icon/IconNames';
-import {Colors} from '../../../constants/Colors';
-import Icons from '../../../assets/icon/Icon';
+import Header from '../../../../components/header/Header';
+import {HSDG} from '../../../../test/HealthStatsData';
+import Card from '../../../../components/cards/Card';
+import {IconName} from '../../../../assets/icon/IconNames';
+import {Colors} from '../../../../constants/Colors';
+import Icons from '../../../../assets/icon/Icon';
 import moment from 'moment';
+import {navigate} from '../../../../navigation/RootNavigation';
 
-const HealthStatsList = () => {
+const HealthParametersList = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header
@@ -41,7 +43,8 @@ const HealthStatsList = () => {
                 scrollEnabled={false}
                 data={item.data}
                 renderItem={({item: e, index: _i}) => (
-                  <View
+                  <TouchableOpacity
+                    activeOpacity={0.5}
                     style={{
                       width: '100%',
                       paddingVertical: 10,
@@ -49,6 +52,7 @@ const HealthStatsList = () => {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                     }}
+                    onPress={() => navigate('HealthParameterDetail')}
                     key={e.field}>
                     <View style={{width: '50%'}}>
                       <Text
@@ -102,7 +106,7 @@ const HealthStatsList = () => {
                         size={22}
                       />
                     )}
-                  </View>
+                  </TouchableOpacity>
                 )}
                 ItemSeparatorComponent={() => (
                   <View
@@ -123,7 +127,7 @@ const HealthStatsList = () => {
   );
 };
 
-export default HealthStatsList;
+export default HealthParametersList;
 
 const styles = StyleSheet.create({
   container: {

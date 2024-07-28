@@ -77,6 +77,19 @@ export const healthStatsData = [
   },
 ];
 
+export const GlucoseDetail = [
+  {
+    label: 'Glucose Level',
+    value: '5.6',
+    unit: 'mmol/L',
+  },
+  {
+    label: 'Measurement Time',
+    value: 'After Lunch',
+    unit: '',
+  },
+];
+
 export const HSDG = [
   {
     month: 'July',
@@ -583,4 +596,3 @@ export const HSDG = [
     ],
   },
 ];
-

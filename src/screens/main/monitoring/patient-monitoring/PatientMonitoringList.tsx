@@ -1,14 +1,14 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
 import React from 'react';
-import Header from '../../../components/header/Header';
-import {Colors} from '../../../constants/Colors';
-import {patientList} from '../../../test/Data';
-import PatientListItem from './components/PatientListItem';
-import Card from '../../../components/cards/Card';
-import FilledButton from '../../../components/buttons/FilledButton';
-import Icons from '../../../assets/icon/Icon';
-import {navigate} from '../../../navigation/RootNavigation';
+import Header from '../../../../components/header/Header';
+import {Colors} from '../../../../constants/Colors';
+import {patientList} from '../../../../test/Data';
+import PatientListItem from '../components/PatientListItem';
+import Card from '../../../../components/cards/Card';
+import FilledButton from '../../../../components/buttons/FilledButton';
+import Icons from '../../../../assets/icon/Icon';
+import {navigate} from '../../../../navigation/RootNavigation';
 
 const PatientMonitoringList = () => {
   return (

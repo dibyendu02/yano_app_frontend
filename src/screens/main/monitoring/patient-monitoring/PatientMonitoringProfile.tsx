@@ -15,15 +15,15 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import PatientElements from '../../../components/PatientElements';
-import Header from '../../../components/header/Header';
-import {Colors} from '../../../constants/Colors';
-import Card from '../../../components/cards/Card';
-import {DummyImage} from '../../../assets/dummy/images';
-import {measurements, userData} from '../../../test/Data';
-import Icons from '../../../assets/icon/Icon';
-import {IconName} from '../../../assets/icon/IconNames';
-import {navigate} from '../../../navigation/RootNavigation';
+import PatientElements from '../../../../components/PatientElements';
+import Header from '../../../../components/header/Header';
+import {Colors} from '../../../../constants/Colors';
+import Card from '../../../../components/cards/Card';
+import {DummyImage} from '../../../../assets/dummy/images';
+import {measurements, userData} from '../../../../test/Data';
+import Icons from '../../../../assets/icon/Icon';
+import {IconName} from '../../../../assets/icon/IconNames';
+import {navigate} from '../../../../navigation/RootNavigation';
 
 let data1 = [
   {
@@ -105,7 +105,7 @@ export default function PatientMonitoringProfile({}) {
                 alignItems: 'center',
                 paddingVertical: 16,
               }}
-              onPress={() => navigate('HealthStatsList')}>
+              onPress={() => navigate('HealthParametersList')}>
               <Text
                 style={{
                   fontSize: 15,
