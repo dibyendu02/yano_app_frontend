@@ -2,8 +2,6 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import MonitoringPatientHold from '../../screens/MonitoringPatientHold';
-import PatientProfileWithoutparameter from '../../screens/PatientProfileWithoutparameter';
-import MonitoringFilled from '../../screens/MonitoringFilled';
 
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MyProfile from '../../screens/MyProfile';
@@ -14,7 +12,8 @@ import HealthConditionDetails from '../../screens/healthCondition/HealthConditio
 import AddHealthRecord from '../../screens/healthCondition/AddHealthRecord';
 import MedicalHistory from '../../screens/healthCondition/MedicalHistory';
 import PatientMonitoringList from '../../screens/main/monitoring/PatientMonitoringList';
-import AddPatients from '../../screens/AddPatients';
+import AddPatient from '../../screens/main/add-patient/AddPatient';
+import PatientMonitoringProfile from '../../screens/main/monitoring/PatientMonitoringProfile';
 
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +28,7 @@ const Tabs = () => {
       }}>
       <Tab.Screen
         name="Monitor"
-        component={MonitoringFilled}
+        component={PatientMonitoringList}
         options={{
           headerShown: false,
           tabBarIcon: ({color, size}) => (
@@ -59,16 +58,14 @@ const Tabs = () => {
 const MainStack = () => {
   return (
     <Stack.Navigator>
-      {/* Tabs */}
       <Stack.Screen
         name="tabs"
         component={Tabs}
         options={{headerShown: false}}
       />
-      {/* AddPatients */}
       <Stack.Screen
-        name="AddPatients"
-        component={AddPatients}
+        name="AddPatient"
+        component={AddPatient}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -76,16 +73,9 @@ const MainStack = () => {
         component={EmailNotFoundPatient}
         options={{headerShown: false}}
       />
-      {/* MonitoringFilled */}
-      {/* <Stack.Screen
-        name="MonitoringFilled"
-        component={MonitoringFilled}
-        options={{headerShown: false}}
-      /> */}
-      {/* PatientProfileWithoutparameter */}
       <Stack.Screen
-        name="PatientProfile"
-        component={PatientProfileWithoutparameter}
+        name="PatientMonitoringProfile"
+        component={PatientMonitoringProfile}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -93,7 +83,6 @@ const MainStack = () => {
         component={MonitoringPatientHold}
         options={{headerShown: false}}
       />
-      {/* Health Condition screen Navigation start */}
       <Stack.Screen
         name="MedicalHistory"
         component={MedicalHistory}
@@ -114,7 +103,6 @@ const MainStack = () => {
         component={AddHealthRecord}
         options={{headerShown: false}}
       />
-      {/* Health Condition screen Navigation end */}
     </Stack.Navigator>
   );
 };

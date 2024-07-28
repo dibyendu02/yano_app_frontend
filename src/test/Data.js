@@ -1,4 +1,3 @@
-
 export const patientList = [
   {name: 'María Clemente'},
   {name: 'Juan Torres'},
@@ -18,7 +17,6 @@ export const patientList = [
   {name: 'Marta Flores'},
   {name: 'Alberto Ramírez'},
 ];
-
 
 export const measurements = [
   {
