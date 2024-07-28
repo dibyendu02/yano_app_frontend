@@ -27,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({
         <Text style={styles.navbarTitle}>{title}</Text>
       </View>
 
-      <View>{headerRightComponent}</View>
+      <View style={{alignItems: 'flex-end'}}>{headerRightComponent}</View>
     </View>
   );
 };
