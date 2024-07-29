@@ -1,18 +1,17 @@
-import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { Colors } from '../../constants/Colors'
-import Header from '../../components/header/Header'
-import { DeleteIcon, EditIcon } from '../../assets/icon/IconNames'
-import DetailItems from './components/DetailItems'
+import { Colors } from '../../../constants/Colors';
+import Header from '../../../components/header/Header';
+import { DeleteIcon, EditIcon } from '../../../assets/icon/IconNames';
+import DetailItems from '../components/DetailItems';
 
-const HealthConditionDetails = ({ navigation, route }: any) => {
+const AllergyDetails = ({ navigation, route }: any) => {
     if (!route || !route.params) {
         Alert.alert('Error', 'Data not passed or invalid data passed');
         return navigation.goBack();
     }
     const data = route.params.data;
-    const { name, date, status, treatedBy, medicine, additionalNotes } = data;
+    const { name, date, details, moreDetails, treatedBy, medicine, additionalNotes } = data;
     return (
         <SafeAreaView
             style={{
@@ -24,7 +23,7 @@ const HealthConditionDetails = ({ navigation, route }: any) => {
                 title={name}
                 rightComp1={
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('AddHealthCondition', { data })}
+                        onPress={() => navigation.navigate('AddAndEditAllergies', { data })}
                     >
                         <EditIcon />
                     </TouchableOpacity>
@@ -39,9 +38,10 @@ const HealthConditionDetails = ({ navigation, route }: any) => {
                 <View style={{ padding: 20 }}>
                     <View style={styles.boxStyle}>
                         <DetailItems name='Name of the health condition' value={name} />
-                        <DetailItems name='Date of diagnosis' value={date} /> 
-                        <DetailItems name='Status' value={status} /> 
+                        <DetailItems name='Details of allergy' value={details} />
+                        <DetailItems name='More details' value={moreDetails} />
                         <DetailItems name='Treated by' value={treatedBy} />
+                        <DetailItems name='Date of diagnosis' value={date} />
                         <DetailItems name='Medicine' value={medicine} />
                         <DetailItems name='Additional notes' value={additionalNotes} />
                     </View>
@@ -51,7 +51,7 @@ const HealthConditionDetails = ({ navigation, route }: any) => {
     )
 }
 
-export default HealthConditionDetails
+export default AllergyDetails
 
 const styles = StyleSheet.create({
     boxStyle: {

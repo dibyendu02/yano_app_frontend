@@ -1,18 +1,26 @@
-import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { Colors } from '../../constants/Colors'
-import Header from '../../components/header/Header'
-import { DeleteIcon, EditIcon } from '../../assets/icon/IconNames'
-import DetailItems from './components/DetailItems'
+import { Colors } from '../../../constants/Colors'; 
+import { DeleteIcon, EditIcon } from '../../../assets/icon/IconNames';
+import DetailItems from '../components/DetailItems';
+import CommonHeader from '../components/CommonHeader';
 
-const HealthConditionDetails = ({ navigation, route }: any) => {
+
+const VaccineDetails = ({ navigation, route }: any) => {
     if (!route || !route.params) {
         Alert.alert('Error', 'Data not passed or invalid data passed');
         return navigation.goBack();
     }
     const data = route.params.data;
-    const { name, date, status, treatedBy, medicine, additionalNotes } = data;
+    const {
+        name,
+        field1,
+        field2,
+        field3,
+        field4,
+        field5,
+    } = data;
+
     return (
         <SafeAreaView
             style={{
@@ -20,11 +28,11 @@ const HealthConditionDetails = ({ navigation, route }: any) => {
                 backgroundColor: Colors.LightGray,
                 position: 'relative',
             }}>
-            <Header
+            <CommonHeader
                 title={name}
                 rightComp1={
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('AddHealthCondition', { data })}
+                        onPress={() => navigation.navigate('AddAndEditVaccine', { data })}
                     >
                         <EditIcon />
                     </TouchableOpacity>
@@ -38,12 +46,12 @@ const HealthConditionDetails = ({ navigation, route }: any) => {
             <ScrollView>
                 <View style={{ padding: 20 }}>
                     <View style={styles.boxStyle}>
-                        <DetailItems name='Name of the health condition' value={name} />
-                        <DetailItems name='Date of diagnosis' value={date} /> 
-                        <DetailItems name='Status' value={status} /> 
-                        <DetailItems name='Treated by' value={treatedBy} />
-                        <DetailItems name='Medicine' value={medicine} />
-                        <DetailItems name='Additional notes' value={additionalNotes} />
+                        <DetailItems name='Name of the Vaccine' value={name} />
+                        <DetailItems name='Fecha de la toma' value={new Date(field1).toDateString()} />
+                        <DetailItems name='Nombre de la vacuna' value={field2} />
+                        <DetailItems name='Detalles de la vacuna' value={field3} />
+                        <DetailItems name='Número del lote' value={field4} />
+                        <DetailItems name='Additional notes' value={field5} />
                     </View>
                 </View>
             </ScrollView>
@@ -51,7 +59,7 @@ const HealthConditionDetails = ({ navigation, route }: any) => {
     )
 }
 
-export default HealthConditionDetails
+export default VaccineDetails
 
 const styles = StyleSheet.create({
     boxStyle: {

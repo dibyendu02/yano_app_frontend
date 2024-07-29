@@ -1,17 +1,14 @@
-import {SafeAreaView, StyleSheet} from 'react-native';
-import React from 'react';
-import {Colors} from '../../constants/Colors';
-import Header from '../../components/header/Header';
-import FilledButton from '../../components/buttons/FilledButton';
-import HealthConditionItems from './components/HealthConditionItems';
-import {PlusIcon} from '../../assets/icon/IconNames';
-import EmptyHealthCondition from './components/EmptyHealthCondition';
 
-const HealthConditionHomeScreen = ({navigation}: any) => {
+import React from 'react';
+import CommonHomeScreen from './components/CommonHomeScreen';
+
+const HealthConditionHomeScreen = ({ navigation }: any) => {
+  
+  // make sure that data has mandatory filed name is present
   const data = [
     {
       id: 1,
-      title: 'Hypertension',
+      name: 'Hypertension',
       date: '12/12/2021',
       status: 'Active',
       treatedBy: 'Dr. John Doe',
@@ -19,33 +16,18 @@ const HealthConditionHomeScreen = ({navigation}: any) => {
       additionalNotes: 'Additional Notes',
     },
   ];
+  
   return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        backgroundColor: Colors.LightGray,
-        position: 'relative',
-      }}>
-      <Header title="Health Condition" />
-      <HealthConditionItems data={data} navigation={navigation} />
-      {/* <EmptyHealthCondition/> */}
-      <FilledButton
-        label="Add"
-        icon={<PlusIcon />}
-        onPress={() => navigation.navigate('AddHealthCondition')}
-        style={styles.addBtn}
-      />
-    </SafeAreaView>
+    <CommonHomeScreen
+      navigation={navigation}
+      data={data}
+      heading="Health Conditions"
+      addItem_path="AddHealthCondition"
+      viewItem_path="HealthConditionDetails"
+      emptyHomeTitle="No health condition added yet"
+      emptyHomeMessage="Add your health conditions to keep track of them."
+    />
   );
 };
 
-export default HealthConditionHomeScreen;
-
-const styles = StyleSheet.create({
-  addBtn: {
-    width: 100,
-    position: 'absolute',
-    bottom: 40,
-    right: 20,
-  },
-});
+export default HealthConditionHomeScreen; 

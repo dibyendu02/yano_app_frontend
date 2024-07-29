@@ -1,4 +1,5 @@
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+
+import { Colors } from '../../constants/Colors';
 import Icons from './Icon';
 
 export const IconName = {
@@ -38,3 +39,23 @@ export const DateIcon = () => {
     <Icons.FontAwesome5 name={'calendar-alt'} color={Colors.Blue} size={18} />
   );
 };
+
+export const Checkbox = () => {
+  return (
+    <Icons.MaterialCommunityIcons
+      name={'checkbox-marked'}
+      color={Colors.Green}
+      size={30}
+    />
+  );
+};
+
+export const CheckboxOutline = () => {
+  return (
+    <Icons.MaterialCommunityIcons
+      name={'checkbox-blank-outline'}
+      color={Colors.Grey}
+      size={30}
+    />
+  );
+}
