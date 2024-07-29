@@ -1,3 +1,4 @@
+
 import { Colors } from '../../constants/Colors';
 import Icons from './Icon';
 
@@ -28,7 +29,7 @@ export const PlusIcon = () => {
       name={'plus'}
       color={'#fff'}
       size={16}
-      style={{ marginEnd: 6 }}
+      style={{marginEnd: 6}}
     />
   );
 };

@@ -10,7 +10,7 @@ interface PatientListItem {
 }
 const PatientListItem: React.FC<PatientListItem> = props => {
   return (
-    <TouchableOpacity onPress={() => navigate('PatientProfile')}>
+    <TouchableOpacity onPress={() => navigate('PatientMonitoringProfile')}>
       <View style={styles.container}>
         <Image source={DummyImage.user} style={styles.avatar} />
         <Text style={styles.name}>{props.name}</Text>

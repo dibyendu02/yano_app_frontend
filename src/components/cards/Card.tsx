@@ -14,7 +14,6 @@ const Card: React.FC<CardProps> = ({
   title = '',
   children,
   cardFooter = null,
-
   contentContainerStyle,
 }) => {
   return (

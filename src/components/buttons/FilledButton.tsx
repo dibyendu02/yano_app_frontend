@@ -1,9 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import {
   GestureResponderEvent,
+  StyleProp,
   StyleSheet,
   Text,
   TouchableOpacity,
+  ViewStyle,
 } from 'react-native';
 import React from 'react';
 import {Colors} from '../../constants/Colors';
@@ -29,20 +31,22 @@ const ButtonColors = {
   },
 };
 interface ButtonProps {
-  type?: 'blue' | 'red' | 'white';
+  type: 'blue' | 'red' | 'white';
   label: string;
-  onPress: (event: GestureResponderEvent) => void;
-  disabled?: boolean;
   icon?: React.ReactNode;
-  style?: any;
+  onPress?: (event: GestureResponderEvent) => void;
+  disabled?: boolean;
+  style?: StyleProp<ViewStyle>;
+  activeOpacity?: number;
 }
 
 const FilledButton: React.FC<ButtonProps> = ({
   type = ButtonType.Blue,
   label,
+  icon,
   onPress,
   disabled = false,
-  icon,
+  activeOpacity = 0.5,
   style,
 }) => {
   return (
@@ -52,12 +56,13 @@ const FilledButton: React.FC<ButtonProps> = ({
         {
           backgroundColor: ButtonColors[type].backgroundColor,
           opacity: disabled ? 0.4 : 1,
-          ...style,
         },
+        style,
       ]}
+      activeOpacity={activeOpacity}
       onPress={onPress}
       disabled={disabled}>
-      {icon}
+      {icon && icon}
       <Text style={[styles.label, {color: ButtonColors[type].textColor}]}>
         {label}
       </Text>
@@ -71,13 +76,11 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     borderRadius: 5,
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
     width: '100%',
     marginVertical: 6,
-    gap: 4,
   },
   label: {
     fontSize: 16,

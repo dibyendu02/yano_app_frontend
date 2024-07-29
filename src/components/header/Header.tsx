@@ -1,8 +1,9 @@
+
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import Icons from '../../assets/icon/Icon';
-import { useNavigation } from '@react-navigation/native';
-import { Colors } from '../../constants/Colors';
+import {useNavigation} from '@react-navigation/native';
+import {Colors} from '../../constants/Colors';
 
 interface HeaderProps {
   title?: string;

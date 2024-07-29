@@ -58,6 +58,7 @@ const AddPatient = () => {
           <FilledButton
             label="Find"
             type="blue"
+            style={styles.findButton}
             onPress={() => navigate('EmailNotFoundPatient')}
           />
         }
@@ -152,5 +153,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     width: '94%',
     alignSelf: 'center',
+  },
+  findButton: {
+    width: '50%',
   },
 });
