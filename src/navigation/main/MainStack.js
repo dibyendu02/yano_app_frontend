@@ -11,9 +11,11 @@ import HealthConditionHomeScreen from '../../screens/healthCondition/HealthCondi
 import HealthConditionDetails from '../../screens/healthCondition/HealthConditionDetails';
 import AddHealthRecord from '../../screens/healthCondition/AddHealthRecord';
 import MedicalHistory from '../../screens/healthCondition/MedicalHistory';
-import PatientMonitoringList from '../../screens/main/monitoring/PatientMonitoringList';
+import PatientMonitoringList from '../../screens/main/monitoring/patient-monitoring/PatientMonitoringList';
 import AddPatient from '../../screens/main/add-patient/AddPatient';
-import PatientMonitoringProfile from '../../screens/main/monitoring/PatientMonitoringProfile';
+import PatientMonitoringProfile from '../../screens/main/monitoring/patient-monitoring/PatientMonitoringProfile';
+import HealthParametersList from '../../screens/main/monitoring/health-parameters/HealthParametersList';
+import HealthParameterDetail from '../../screens/main/monitoring/health-parameters/HealthParameterDetail';
 
 const Tab = createBottomTabNavigator();
 
@@ -81,6 +83,17 @@ const MainStack = () => {
       <Stack.Screen
         name="MonitoringPatient"
         component={MonitoringPatientHold}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="HealthParametersList"
+        component={HealthParametersList}
+        options={{headerShown: false}}
+      />
+      {/* HealthParameterDetail */}
+      <Stack.Screen
+        name="HealthParameterDetail"
+        component={HealthParameterDetail}
         options={{headerShown: false}}
       />
       <Stack.Screen
