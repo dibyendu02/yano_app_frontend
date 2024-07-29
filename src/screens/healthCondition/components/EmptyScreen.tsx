@@ -1,9 +1,14 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
+import React, { FC } from 'react'
 import { Colors } from '../../../constants/Colors'
 import { DummyImage } from '../../../assets/dummy/images'
 
-const EmptyHealthCondition = () => {
+type EmptyScreenProps = {
+    title: string;
+    message: string;
+}
+
+const EmptyScreen:FC<EmptyScreenProps> = ({title, message}) => {
     return (
         <>
             <View style={styles.ImageContainer}>
@@ -19,14 +24,14 @@ const EmptyHealthCondition = () => {
                         fontWeight: '600',
                         marginVertical: 10
                     }}>
-                        No health condition added yet
+                        {title}
                     </Text>
                     <Text style={{
-                        color: Colors.lightBlue,
+                        color: Colors.SteelBlue,
                         fontSize: 15,
                         textAlign: 'center'
                     }}>
-                        Las condiciones de salud aparecerán aquí. Agrega una para empezar.
+                        {message}
                     </Text>
                 </View>
             </View>
@@ -34,7 +39,7 @@ const EmptyHealthCondition = () => {
     )
 }
 
-export default EmptyHealthCondition
+export default EmptyScreen
 
 const styles = StyleSheet.create({
     ImageContainer: {

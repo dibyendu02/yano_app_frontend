@@ -1,32 +1,33 @@
-
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { FC } from 'react';
+import React from 'react';
 import Icons from '../../assets/icon/Icon';
 import { useNavigation } from '@react-navigation/native';
 import { Colors } from '../../constants/Colors';
 
-type props = {
-  title?: string,
-  leftIcon?: React.ReactNode
-  rightComp1?: React.ReactNode
-  rightComp2?: React.ReactNode
+interface HeaderProps {
+  title?: string;
+  showBackIcon?: boolean;
+  headerRightComponent?: React.ReactNode;
 }
 
-const Header: FC<props> = ({ title, leftIcon, rightComp1, rightComp2 }) => {
+const Header: React.FC<HeaderProps> = ({
+  title,
+  showBackIcon = true,
+  headerRightComponent,
+}) => {
   const navigation = useNavigation();
   return (
-    <View style={[styles.navbar, styles.flexBox]}>
-      <View style={[styles.flexBox, { justifyContent: "center" }]}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          {leftIcon ? leftIcon : <Icons.AntDesign name="arrowleft" size={28} color={'black'} />}
-        </TouchableOpacity>
-        <Text style={styles.navbarTitle}>{title ? title : "Monitored Patient"}</Text>
+    <View style={styles.navbar}>
+      <View style={styles.navBarLeftContainer}>
+        {showBackIcon && (
+          <TouchableOpacity onPress={() => navigation.goBack()}>
+            <Icons.AntDesign name="arrowleft" size={28} color={'black'} />
+          </TouchableOpacity>
+        )}
+        <Text style={styles.navbarTitle}>{title}</Text>
       </View>
-      <View style={{ flexDirection: "row", gap: 20 }}>
-        {rightComp1}
-        {rightComp2}
 
-      </View>
+      <View style={{ alignItems: 'flex-end' }}>{headerRightComponent}</View>
     </View>
   );
 };
@@ -35,43 +36,21 @@ export default Header;
 
 const styles = StyleSheet.create({
   navbar: {
-
+    flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-    paddingEnd: 20,
+    padding: 20,
     backgroundColor: Colors.White,
-
+    justifyContent: 'space-between',
   },
   navbarTitle: {
     color: 'black',
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
-
-    paddingLeft: 15,
+    marginLeft: 8,
   },
-  boxStyle: {
-    width: "100%",
-    backgroundColor: Colors.White,
-    borderRadius: 15,
-    padding: 10,
+  navBarLeftContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "600",
-    color: Colors.Blue
-  },
-  para: {
-    fontSize: 14,
-    color: Colors.lightBlue,
-    marginBottom: 4
-  },
-  flexBox: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-  }
-
 });
