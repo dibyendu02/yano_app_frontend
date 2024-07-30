@@ -16,6 +16,7 @@
     "@react-navigation/native-stack": "^6.11.0",
     "moment": "^2.30.1",
     "react": "18.2.0",
+    "react-hook-form": "^7.52.1",
     "react-native": "0.74.3",
     "react-native-country-codes-picker": "^2.3.5",
     "react-native-date-picker": "^5.0.4",

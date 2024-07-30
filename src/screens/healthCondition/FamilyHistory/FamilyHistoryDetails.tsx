@@ -1,18 +1,23 @@
-import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
+import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { Colors } from '../../constants/Colors'
-import Header from '../../components/header/Header'
-import { DeleteIcon, EditIcon } from '../../assets/icon/IconNames'
-import DetailItems from './components/DetailItems'
+import { Colors } from '../../../constants/Colors';
+import Header from '../../../components/header/Header';
+import { DeleteIcon, EditIcon } from '../../../assets/icon/IconNames';
+import DetailItems from '../components/DetailItems';
+import CommonHeader from '../components/CommonHeader';
 
-const HealthConditionDetails = ({ navigation, route }: any) => {
+
+const FamilyHistoryDetails = ({ navigation, route }: any) => {
     if (!route || !route.params) {
         Alert.alert('Error', 'Data not passed or invalid data passed');
         return navigation.goBack();
     }
     const data = route.params.data;
-    const { name, date, status, treatedBy, medicine, additionalNotes } = data;
+    const {
+        name,
+        disease, 
+    } = data;
+
     return (
         <SafeAreaView
             style={{
@@ -20,11 +25,11 @@ const HealthConditionDetails = ({ navigation, route }: any) => {
                 backgroundColor: Colors.LightGray,
                 position: 'relative',
             }}>
-            <Header
+            <CommonHeader
                 title={name}
                 rightComp1={
                     <TouchableOpacity
-                        onPress={() => navigation.navigate('AddHealthCondition', { data })}
+                        onPress={() => navigation.navigate('AddAndEditFamilyHistory', { data })}
                     >
                         <EditIcon />
                     </TouchableOpacity>
@@ -38,12 +43,8 @@ const HealthConditionDetails = ({ navigation, route }: any) => {
             <ScrollView>
                 <View style={{ padding: 20 }}>
                     <View style={styles.boxStyle}>
-                        <DetailItems name='Name of the health condition' value={name} />
-                        <DetailItems name='Date of diagnosis' value={date} /> 
-                        <DetailItems name='Status' value={status} /> 
-                        <DetailItems name='Treated by' value={treatedBy} />
-                        <DetailItems name='Medicine' value={medicine} />
-                        <DetailItems name='Additional notes' value={additionalNotes} />
+                        <DetailItems name='Relationship to family member' value={name} />
+                        <DetailItems name="Family member' s health condition" value={disease} /> 
                     </View>
                 </View>
             </ScrollView>
@@ -51,7 +52,7 @@ const HealthConditionDetails = ({ navigation, route }: any) => {
     )
 }
 
-export default HealthConditionDetails
+export default FamilyHistoryDetails
 
 const styles = StyleSheet.create({
     boxStyle: {

@@ -114,20 +114,5 @@ const styles = StyleSheet.create({
   formContainer: {},
   inputBox: {
     marginBottom: 20,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Colors.Blue,
-  },
-  input: {
-    backgroundColor: Colors.White,
-    borderRadius: 8,
-    marginTop: 5,
-    borderWidth: 1,
-    borderColor: Colors.LightGray,
-    height: 56,
-    paddingHorizontal: 15,
-    fontSize: 16,
-  },
+  }, 
 });
