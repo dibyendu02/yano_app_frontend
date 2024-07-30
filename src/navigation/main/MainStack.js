@@ -45,6 +45,7 @@ import SettingHomeScreen from '../../screens/main/my-profile/settings/SettingHom
 import SupportHomeScreen from '../../screens/main/my-profile/support/SupportHomeScreen';
 import HealthParametersList from '../../screens/main/monitoring/health-parameters/HealthParametersList';
 import HealthParameterDetail from '../../screens/main/monitoring/health-parameters/HealthParameterDetail';
+import AddPatient from '../../screens/main/add-patient/AddPatient';
 
 const Tab = createBottomTabNavigator();
 
@@ -94,11 +95,11 @@ const MainStack = () => {
         component={Tabs}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name="AddPatients"
-        component={AddPatients}
-        options={{ headerShown: false }}
-      /> */}
+      <Stack.Screen
+        name="AddPatient"
+        component={AddPatient}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="EmailNotFoundPatient"
         component={EmailNotFoundPatient}
