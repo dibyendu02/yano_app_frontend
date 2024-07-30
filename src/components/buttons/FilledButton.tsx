@@ -14,6 +14,7 @@ export enum ButtonType {
   Blue = 'blue',
   Red = 'red',
   White = 'white',
+  LightGrey = 'lightGrey',
 }
 
 const ButtonColors = {
@@ -29,10 +30,14 @@ const ButtonColors = {
     backgroundColor: Colors.White,
     textColor: Colors.Blue,
   },
+  [ButtonType.LightGrey]: {
+    backgroundColor: Colors.LightGray,
+    textColor: Colors.Blue,
+  },
 };
 interface ButtonProps {
-  type: 'blue' | 'red' | 'white';
-  label: string;
+  type: 'blue' | 'red' | 'white' | 'lightGrey';
+  label?: string;
   icon?: React.ReactNode;
   onPress?: (event: GestureResponderEvent) => void;
   disabled?: boolean;
