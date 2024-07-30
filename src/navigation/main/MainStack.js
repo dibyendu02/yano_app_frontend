@@ -11,8 +11,6 @@ import HealthConditionHomeScreen from '../../screens/healthCondition/HealthCondi
 import HealthConditionDetails from '../../screens/healthCondition/HealthConditionDetails';
 import AddHealthRecord from '../../screens/healthCondition/AddHealthRecord';
 import MedicalHistory from '../../screens/healthCondition/MedicalHistory';
-import PatientMonitoringList from '../../screens/main/monitoring/PatientMonitoringList';
-import AddPatients from '../../screens/AddPatients';
 import AllergiesHomeScreen from '../../screens/healthCondition/allergies/AllergiesHomeScreen';
 import AddAndEditAllergy from '../../screens/healthCondition/allergies/AddAllergy';
 import AllergyDetails from '../../screens/healthCondition/allergies/AllergyDetails';
@@ -35,6 +33,16 @@ import HospitalizationDetails from '../../screens/healthCondition/hospitalizatio
 import AddAndEditHospitalization from '../../screens/healthCondition/hospitalization/AdddAndEditHospitalization';
 import SocialHistoryHomeScreen from '../../screens/healthCondition/socailHistory/SocialHistoryHomeScreen';
 import AddAndEditSocialHistory from '../../screens/healthCondition/socailHistory/AddAndEditSocailHistory';
+import { Screen } from 'react-native-screens';
+import ConsultancyNotes from '../../screens/healthCondition/consultancyNotes/ConsultancyNotes';
+import ConsultancyNotesDetails from '../../screens/healthCondition/consultancyNotes/ConsultancyNoteDetails';
+import PatientMonitoringList from '../../screens/main/monitoring/patient-monitoring/PatientMonitoringList';
+import PatientMonitoringProfile from '../../screens/main/monitoring/patient-monitoring/PatientMonitoringProfile';
+import MyProfile from '../../screens/main/my-profile/MyProfile';
+import MeasurementToolsHomeScreen from '../../screens/main/my-profile/measurement-tools/MeasurementToolsHomeScreen';
+import ChooseDevice from '../../screens/main/my-profile/measurement-tools/ChooseDevice';
+import SettingHomeScreen from '../../screens/main/my-profile/settings/SettingHomeScreen';
+import SupportHomeScreen from '../../screens/main/my-profile/support/SupportHomeScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -84,19 +92,19 @@ const MainStack = () => {
         component={Tabs}
         options={{ headerShown: false }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="AddPatients"
         component={AddPatients}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name="EmailNotFoundPatient"
         component={EmailNotFoundPatient}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="PatientProfile"
-        component={PatientProfileWithoutparameter}
+        name="PatientMonitoringProfile"
+        component={PatientMonitoringProfile}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -284,6 +292,60 @@ const MainStack = () => {
         }}
       />
       {/* Social History screen Navigation end */}
+      {/* Consultation Notes screen Navigation start */}
+      <Stack.Screen
+        name="ConsultationNotes"
+        component={ConsultancyNotes}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name="ConsultationNotesDetails"
+        component={ConsultancyNotesDetails}
+        options={{
+          headerShown: false
+        }}
+      />
+      {/* Consultation Notes screen Navigation end */}
+
+      {/* User profile section start */}
+      <Stack.Screen
+        name='MeasurementTools'
+        component={MeasurementToolsHomeScreen}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='ChooseDevice'
+        component={ChooseDevice}
+        options={{
+          headerShown: false
+        }}
+      />
+
+      {/* User profile section end */}
+
+      {/* Settings section end */}
+      <Stack.Screen
+        name='Settings'
+        component={SettingHomeScreen}
+        options={{
+          headerShown: false
+        }}
+      />
+      {/* Settings section end */}
+
+      {/* Support  section start */}
+      <Stack.Screen
+        name='YanoSupport'
+        component={SupportHomeScreen}
+        options={{
+          headerShown: false
+        }}
+      />
+      {/* Support section end */}
 
 
       {/* Medical History screen Navigation end */}

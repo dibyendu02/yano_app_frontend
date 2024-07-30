@@ -25,7 +25,7 @@ const SurgeriesDetails = ({ navigation, route }: any) => {
         <SafeAreaView
             style={{
                 flex: 1,
-                backgroundColor: Colors.LightGray,
+                backgroundColor: Colors.GhostWhite,
                 position: 'relative',
             }}>
             <CommonHeader

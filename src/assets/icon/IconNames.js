@@ -15,7 +15,7 @@ export const DeleteIcon = () => {
     />
   );
 };
-export const EditIcon = ({size = 18}) => {
+export const EditIcon = ({ size = 18 }) => {
   return <Icons.Feather name={'edit-2'} color={Colors.Blue} size={size} />;
 };
 
@@ -29,7 +29,7 @@ export const PlusIcon = () => {
       name={'plus'}
       color={'#fff'}
       size={16}
-      style={{marginEnd: 6}}
+      style={{ marginEnd: 6 }}
     />
   );
 };
@@ -58,4 +58,79 @@ export const CheckboxOutline = () => {
       size={30}
     />
   );
+}
+
+export const CheckCircleIcon = () => {
+  return (
+    <Icons.MaterialIcons
+      name={'radio-button-on'}
+      color={Colors.Green}
+      size={20}
+    />
+  );
+}
+export const CheckIcon = () => {
+  return (
+    <Icons.MaterialIcons
+      name={'radio-button-off'}
+      color={Colors.SteelBlue}
+      size={20}
+    />
+  );
+}
+
+export const DownloadIcon = () => {
+  return (
+    <Icons.Feather
+      name={'download'}
+      color={Colors.Blue}
+      size={20}
+    />
+  );
+}
+
+export const NextIcon = () => {
+  return (
+    <Icons.MaterialIcons
+      name="navigate-next"
+      size={25}
+      color={'black'} />
+  )
+}
+
+export const BluetoothConnected = () => {
+  return (
+    <Icons.MaterialCommunityIcons
+      name='bluetooth-connect'
+      size={20}
+      color={'#2F80ED'}
+    />
+  )
+}
+export const BluetoothDisconnected = () => {
+  return (
+    <Icons.MaterialCommunityIcons
+      name='bluetooth-off'
+      size={20}
+      color={Colors.SteelBlue}
+    />
+  )
+}
+export const BatteryCharge = () => {
+  return (
+    <Icons.MaterialCommunityIcons
+      name='battery-70'
+      size={20}
+      color={'#0DAB76'}
+    />
+  )
+}
+export const LogoutIcon = () => {
+  return (
+    <Icons.MaterialIcons
+      name='logout'
+      size={25}
+      color={Colors.Red}
+    />
+  )
 }

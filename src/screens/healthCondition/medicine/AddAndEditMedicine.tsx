@@ -10,6 +10,7 @@ import CustomSelect from '../../../components/formComp/SelectFiled';
 import CustomTextarea from '../../../components/formComp/TextAreaField';
 import CustomDatePicker from '../../../components/formComp/CustomDatePicker';
 import CustomCheckbox from '../../../components/formComp/CustomCheckbox';
+import CommonHeader from '../components/CommonHeader';
 
 
 interface FormValues {
@@ -65,13 +66,14 @@ const AddAndEditMedicine = ({ navigation, route }: any) => {
         <SafeAreaView
             style={{
                 flex: 1,
-                backgroundColor: Colors.LightGray,
+                backgroundColor: Colors.GhostWhite,
                 position: 'relative',
             }}>
-            <Header
+            <CommonHeader
                 title={data ? 'Edit' : 'Add'}
                 rightComp1={
                     <FilledButton
+                        type='blue'
                         label="Save"
                         onPress={handleSubmit(onSubmit)}
                         disabled={!disabled}

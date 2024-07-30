@@ -6,4 +6,5 @@ export const DummyImage = {
   DoctorImg: require('./doctor.png'),
   QR: require('./QR.png'),
   ECG: require('./ECG.png'),
+  device: require('./device.png')
 };
