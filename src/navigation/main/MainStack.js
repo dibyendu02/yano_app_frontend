@@ -3,8 +3,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import MonitoringPatientHold from '../../screens/MonitoringPatientHold';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import MyProfile from '../../screens/main/profile/MyProfile';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'; 
 import Icons from '../../assets/icon/Icon';
 import EmailNotFoundPatient from '../../screens/EmailNotFoundPatient';
 import HealthConditionHomeScreen from '../../screens/healthCondition/HealthConditionHomeScreen';
