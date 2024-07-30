@@ -1,146 +1,309 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {
+  FlatList,
+  Image,
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, {useState} from 'react';
 import Header from '../../../../components/header/Header';
 import Icons from '../../../../assets/icon/Icon';
 import {Colors} from '../../../../constants/Colors';
-import Card from '../../../../components/cards/Card';
 import {CardStyles} from '../../../../components/cards/CardStyle';
-import {GlucoseDetail} from '../../../../test/HealthStatsData';
+import FilledButton from '../../../../components/buttons/FilledButton';
+import {DummyImage} from '../../../../assets/dummy/images';
+import Card from '../../../../components/cards/Card';
 
-const HealthParameterDetail = () => {
+//@ts-ignore
+const HealthParameterDetail = ({route}) => {
+  const [isReviewed, setIsReviewed] = useState(false);
+
+  let healthParameterDetail = route?.params?.healthParameterDetail;
+
   return (
     <SafeAreaView style={{flex: 1}}>
       <Header
-        title="Glucose Level"
+        title={healthParameterDetail?.field_full}
         headerRightComponent={
           <Icons.Feather name="share-2" color={Colors.Blue} size={25} />
         }
       />
       <View style={{flex: 1, backgroundColor: Colors.GhostWhite}}>
-        <View style={[CardStyles.container]}>
-          <View style={{width: '100%', padding: 20}}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <View
-                style={{
-                  height: 10,
-                  width: 10,
-                  borderRadius: 5,
-                  backgroundColor: Colors.Green,
-                  marginRight: 4,
-                }}
-              />
-              <Text style={{fontSize: 18, fontWeight: 'bold'}}>Normal</Text>
+        {healthParameterDetail?.field !== 'ECG' ? (
+          <View style={[CardStyles.container]}>
+            <View style={{width: '100%', padding: 20}}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View
+                  style={{
+                    height: 10,
+                    width: 10,
+                    borderRadius: 5,
+                    backgroundColor: Colors.Green,
+                    marginRight: 4,
+                  }}
+                />
+                <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                  {'Normal' + ' ' + healthParameterDetail?.field_full}
+                </Text>
+              </View>
+              <Text style={{fontSize: 12, color: Colors.SteelBlue}}>
+                October 7, 2022 - 5:13 PM
+              </Text>
             </View>
-            <Text style={{fontSize: 12, color: Colors.SteelBlue}}>
-              October 7, 2022 - 5:13 PM
-            </Text>
+            <View
+              style={{
+                width: '100%',
+                height: 1,
+                backgroundColor: Colors.LightGray,
+              }}
+            />
+            <FlatList
+              data={healthParameterDetail?.data || []}
+              scrollEnabled={false}
+              style={{width: '100%', paddingHorizontal: 20}}
+              renderItem={({item, index: _index}) => (
+                <View
+                  style={{
+                    width: '100%',
+                    paddingVertical: 20,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}>
+                  <View style={{width: '50%'}}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontFamily: 'Roboto',
+                        marginBottom: 4,
+                        color: Colors.SteelBlue,
+                        fontWeight: '500',
+                      }}>
+                      {item.label}
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      fontFamily: 'Roboto',
+                      marginBottom: 4,
+                      fontWeight: '500',
+                    }}>
+                    {item.value}{' '}
+                    {item.unit && (
+                      <Text
+                        style={{
+                          fontSize: 15,
+                          fontFamily: 'Roboto',
+                          fontWeight: 'light',
+                          color: Colors.SteelBlue,
+                        }}>
+                        {item.unit}
+                      </Text>
+                    )}
+                  </Text>
+                </View>
+              )}
+              ItemSeparatorComponent={() => (
+                <View
+                  style={{
+                    height: 1,
+                    width: '100%',
+                    backgroundColor: Colors.LightGray,
+                    alignSelf: 'center',
+                  }}
+                />
+              )}
+            />
+            <View
+              style={{
+                width: '100%',
+                height: 1,
+                backgroundColor: Colors.LightGray,
+              }}
+            />
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                paddingHorizontal: 20,
+                paddingVertical: 14,
+                width: '100%',
+              }}>
+              <View style={{flexDirection: 'row'}}>
+                <Icons.MaterialIcons
+                  name="query-stats"
+                  color={Colors.CeruleanBlue}
+                  size={20}
+                />
+                <Text style={{color: Colors.CeruleanBlue, marginLeft: 6}}>
+                  See stats
+                </Text>
+              </View>
+              <Icons.MaterialIcons
+                name="navigate-next"
+                size={30}
+                color={Colors.Blue}
+              />
+            </View>
           </View>
-          <View
-            style={{
-              width: '100%',
-              height: 1,
-              backgroundColor: Colors.LightGray,
-            }}
-          />
-          <FlatList
-            data={GlucoseDetail}
-            scrollEnabled={false}
-            style={{width: '100%', paddingHorizontal: 20}}
-            renderItem={({item, index: _index}) => (
-              <View
+        ) : (
+          <View>
+            <View
+              style={{
+                backgroundColor: Colors.White,
+                width: '100%',
+                padding: 10,
+                alignItems: 'center',
+                marginBottom: 10,
+              }}>
+              <ImageBackground
+                source={DummyImage.ECG}
                 style={{
                   width: '100%',
-                  paddingVertical: 20,
+                  height: 200,
+                }}
+                resizeMode="contain">
+                <Icons.Ionicons
+                  name="resize"
+                  size={30}
+                  color={Colors.Black}
+                  style={{position: 'absolute', right: '5%', top: '5%'}}
+                />
+              </ImageBackground>
+
+              <View
+                style={{
                   flexDirection: 'row',
+                  marginTop: 20,
+                  width: '90%',
+                  justifyContent: 'center',
                   alignItems: 'center',
-                  justifyContent: 'space-between',
                 }}>
-                <View style={{width: '50%'}}>
+                <Text style={styles.dataLabel}>Gain: 10mm/mv</Text>
+                <Text style={styles.dataLabel}>Paper speed: 10mm/mv</Text>
+              </View>
+            </View>
+
+            <Card>
+              <FlatList
+                data={healthParameterDetail?.data || []}
+                scrollEnabled={false}
+                style={{width: '100%', paddingHorizontal: 20}}
+                ListHeaderComponent={
                   <Text
                     style={{
                       fontSize: 16,
-                      fontFamily: 'Roboto',
-                      marginBottom: 4,
-                      color: Colors.SteelBlue,
-                      fontWeight: '500',
+                      color: Colors.Blue,
+                      fontWeight: '600',
                     }}>
-                    {item.label}
+                    Sample Details
                   </Text>
-                </View>
-                <Text
-                  style={{
-                    fontSize: 17,
-                    fontFamily: 'Roboto',
-                    marginBottom: 4,
-                    fontWeight: '500',
-                  }}>
-                  {item.value}{' '}
-                  {item.unit && (
-                    <Text
+                }
+                renderItem={({item, index: _index}) => (
+                  <View
+                    style={{
+                      width: '100%',
+                      paddingVertical: 20,
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}>
+                    <View
                       style={{
-                        fontSize: 15,
-                        fontFamily: 'Roboto',
-                        fontWeight: 'light',
-                        color: Colors.SteelBlue,
+                        width: '100%',
+                        justifyContent: 'space-between',
+                        flexDirection: !Array.isArray(item) ? 'column' : 'row',
                       }}>
-                      {item.unit}
-                    </Text>
-                  )}
-                </Text>
-              </View>
-            )}
-            ItemSeparatorComponent={() => (
-              <View
-                style={{
-                  height: 1,
-                  width: '100%',
-                  backgroundColor: Colors.LightGray,
-                  alignSelf: 'center',
-                }}
+                      {!Array.isArray(item) ? (
+                        <Text
+                          style={{
+                            fontFamily: 'Roboto',
+                            color: Colors.SteelBlue,
+                            fontWeight: '500',
+                          }}>
+                          {item.label + ': '}
+                          <Text
+                            style={{
+                              fontFamily: 'Roboto',
+                              fontWeight: 'bold',
+                            }}>
+                            {item.value}
+                            {' ' + item.unit}
+                          </Text>
+                        </Text>
+                      ) : (
+                        item.map(e => (
+                          <Text
+                            style={{
+                              flexShrink: 12,
+                              fontFamily: 'Roboto',
+                              color: Colors.SteelBlue,
+                              fontWeight: '500',
+                            }}
+                            key={e.label}>
+                            {e.label + ': '}
+                            <Text
+                              style={{
+                                fontFamily: 'Roboto',
+                                fontWeight: 'bold',
+                              }}>
+                              {e.value}
+                              {' ' + e.unit}
+                            </Text>
+                          </Text>
+                        ))
+                      )}
+                    </View>
+                  </View>
+                )}
+                ItemSeparatorComponent={() => (
+                  <View
+                    style={{
+                      height: 1,
+                      width: '100%',
+                      backgroundColor: Colors.LightGray,
+                      alignSelf: 'center',
+                    }}
+                  />
+                )}
               />
-            )}
-          />
-          <View
-            style={{
-              width: '100%',
-              height: 1,
-              backgroundColor: Colors.LightGray,
-            }}
-          />
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingHorizontal: 20,
-              paddingVertical: 14,
-              width: '100%',
-            }}>
-            <View style={{flexDirection: 'row'}}>
-              <Icons.MaterialIcons
-                name="query-stats"
-                color={Colors.CeruleanBlue}
-                size={20}
-              />
-              <Text style={{color: Colors.CeruleanBlue, marginLeft: 6}}>
-                See stats
-              </Text>
-            </View>
-            <Icons.MaterialIcons
-              name="navigate-next"
-              size={30}
-              color={Colors.Blue}
-            />
+            </Card>
           </View>
-        </View>
+        )}
       </View>
+      <FilledButton
+        label={isReviewed ? 'Revised measurement' : 'Mark as reviewed'}
+        icon={
+          isReviewed && (
+            <Icons.AntDesign
+              name="checkcircle"
+              size={20}
+              color={Colors.White}
+            />
+          )
+        }
+        type={isReviewed ? 'green' : 'blue'}
+        style={{width: '92%', alignSelf: 'center', marginVertical: 14}}
+        onPress={() => setIsReviewed(!isReviewed)}
+        activeOpacity={0.8}
+      />
     </SafeAreaView>
   );
 };
 
 export default HealthParameterDetail;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  dataLabel: {
+    color: Colors.Blue,
+    fontSize: 12,
+    marginHorizontal: 4,
+  },
+});
