@@ -3,4 +3,7 @@ export const DummyImage = {
   emptyHealthCondition: require('./emptyHealthCondition.png'),
   docBag: require('./docbag.png'),
   Electrocardiogram: require('./Electrocardiogram.png'),
+  DoctorImg: require('./doctor.png'),
+  QR: require('./QR.png'),
+  ECG: require('./ECG.png'),
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
 import {
@@ -11,7 +12,11 @@ import {
 } from 'react-native';
 import React from 'react';
 import Header from '../../../../components/header/Header';
-import {HSDG} from '../../../../test/HealthStatsData';
+import {
+  healthParameterDetailsN,
+  HSDG,
+  HSDGN,
+} from '../../../../test/HealthStatsData';
 import Card from '../../../../components/cards/Card';
 import {IconName} from '../../../../assets/icon/IconNames';
 import {Colors} from '../../../../constants/Colors';
@@ -35,7 +40,7 @@ const HealthParametersList = () => {
       <View style={{backgroundColor: Colors.GhostWhite, flex: 1}}>
         <FlatList
           showsVerticalScrollIndicator={false}
-          data={HSDG}
+          data={HSDGN}
           style={{marginVertical: 6}}
           renderItem={({item, index: _index}) => (
             <Card key={item.month} title={item.month}>
@@ -52,7 +57,12 @@ const HealthParametersList = () => {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                     }}
-                    onPress={() => navigate('HealthParameterDetail')}
+                    onPress={() =>
+                      navigate('HealthParameterDetail', {
+                        //@ts-ignore
+                        healthParameterDetail: healthParameterDetailsN[e.field],
+                      })
+                    }
                     key={e.field}>
                     <View style={{width: '50%'}}>
                       <Text
@@ -61,7 +71,7 @@ const HealthParametersList = () => {
                           fontFamily: 'Roboto',
                           marginBottom: 4,
                         }}>
-                        {e.field}
+                        {e.field_full}
                       </Text>
                       <Text style={{fontSize: 13, fontFamily: 'Roboto'}}>
                         {moment(e.timestamp).format('M/D/YYYY - h:mm A')}

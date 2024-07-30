@@ -14,6 +14,8 @@ export enum ButtonType {
   Blue = 'blue',
   Red = 'red',
   White = 'white',
+  LightGrey = 'lightGrey',
+  Green = 'green',
 }
 
 const ButtonColors = {
@@ -29,10 +31,18 @@ const ButtonColors = {
     backgroundColor: Colors.White,
     textColor: Colors.Blue,
   },
+  [ButtonType.LightGrey]: {
+    backgroundColor: Colors.LightGray,
+    textColor: Colors.Blue,
+  },
+  [ButtonType.Green]: {
+    backgroundColor: Colors.Green,
+    textColor: Colors.White,
+  },
 };
 interface ButtonProps {
-  type: 'blue' | 'red' | 'white';
-  label: string;
+  type: 'blue' | 'red' | 'white' | 'lightGrey' | 'green';
+  label?: string;
   icon?: React.ReactNode;
   onPress?: (event: GestureResponderEvent) => void;
   disabled?: boolean;
@@ -63,7 +73,11 @@ const FilledButton: React.FC<ButtonProps> = ({
       onPress={onPress}
       disabled={disabled}>
       {icon && icon}
-      <Text style={[styles.label, {color: ButtonColors[type].textColor}]}>
+      <Text
+        style={[
+          styles.label,
+          {color: ButtonColors[type].textColor, marginLeft: icon ? 4 : 0},
+        ]}>
         {label}
       </Text>
     </TouchableOpacity>

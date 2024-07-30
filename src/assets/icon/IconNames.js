@@ -15,8 +15,8 @@ export const DeleteIcon = () => {
     />
   );
 };
-export const EditIcon = () => {
-  return <Icons.Feather name={'edit-2'} color={Colors.Blue} size={18} />;
+export const EditIcon = ({size = 18}) => {
+  return <Icons.Feather name={'edit-2'} color={Colors.Blue} size={size} />;
 };
 
 export const RightIcon = () => {

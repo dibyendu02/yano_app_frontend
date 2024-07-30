@@ -10,4 +10,5 @@ export const Colors = {
   LightGray: '#E9E9E9',
   Black: '#000',
   CeruleanBlue: '#1565C0',
+  Transparent: 'transparent',
 };
