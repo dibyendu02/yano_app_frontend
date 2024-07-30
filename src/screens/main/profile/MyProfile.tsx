@@ -53,14 +53,18 @@ const MyProfile = () => {
   let [showQR, setShowQR] = useState(false);
   return (
     <SafeAreaView style={{flex: 1}}>
-      <BottomSheet isVisible={showQR}>
-        <View style={{padding: 20, alignItems:'center'}}>
+      <BottomSheet isVisible={showQR} onBackdropPress={() => setShowQR(false)}>
+        <View style={{padding: 20, alignItems: 'center'}}>
           <Image source={DummyImage.QR} height={150} width={150} />
           <Text style={{marginVertical: 20}}>
             Scan this QR code with your patient's cell phone to access their
             measurements and health history.
           </Text>
-          <FilledButton type="blue" label="Done" />
+          <FilledButton
+            type="blue"
+            label="Done"
+            onPress={() => setShowQR(false)}
+          />
         </View>
       </BottomSheet>
       <Header
@@ -116,6 +120,7 @@ const MyProfile = () => {
               icon={
                 <Icons.AntDesign name="qrcode" color={Colors.Blue} size={25} />
               }
+              onPress={() => setShowQR(true)}
             />
           </View>
         </View>

@@ -5,7 +5,7 @@ import React from 'react';
 import Modal from 'react-native-modal';
 import {Colors} from '../../constants/Colors';
 
-const BottomSheet = ({isVisible, children}) => {
+const BottomSheet = ({isVisible, children, onBackdropPress}) => {
   return (
     <Modal
       isVisible={isVisible}
@@ -17,6 +17,8 @@ const BottomSheet = ({isVisible, children}) => {
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
       }}
+      onBackdropPress={onBackdropPress}
+      onBackButtonPress={onBackdropPress}
       backdropColor={'rgba(0,0,0,0.4)'}>
       <View
         style={{
