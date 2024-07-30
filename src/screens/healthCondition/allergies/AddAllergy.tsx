@@ -7,6 +7,7 @@ import { ScrollView } from 'react-native'
 import { InputField } from '../../../components/form/InputField'
 import { DatePickerField } from '../../../components/form/DatePicker' 
 import { TextArea } from '../../../components/form/TextAreaField'
+import CommonHeader from '../components/CommonHeader'
 
 const AddAndEditAllergy = ({ navigation, route }: any) => {
     let data = null;
@@ -42,10 +43,11 @@ const AddAndEditAllergy = ({ navigation, route }: any) => {
                 backgroundColor: Colors.LightGray,
                 position: 'relative',
             }}>
-            <Header
+            <CommonHeader
                 title={data ? 'Edit' : 'Add'}
                 rightComp1={
                     <FilledButton
+                        type='blue'
                         label="Save"
                         onPress={handelSubmit}
                         disabled={disabled}

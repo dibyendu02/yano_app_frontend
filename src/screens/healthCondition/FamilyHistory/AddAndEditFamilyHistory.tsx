@@ -45,13 +45,14 @@ const AddAndEditFamilyHistory = ({ navigation, route }: any) => {
         <SafeAreaView
             style={{
                 flex: 1,
-                backgroundColor: Colors.LightGray,
+                backgroundColor: Colors.GhostWhite,
                 position: 'relative',
             }}>
             <CommonHeader
                 title={data ? 'Edit' : 'Add'}
                 rightComp1={
                     <FilledButton
+                        type='blue'
                         label="Save"
                         onPress={handleSubmit(onSubmit)}
                         disabled={!disabled}

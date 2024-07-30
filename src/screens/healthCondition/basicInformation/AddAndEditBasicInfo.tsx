@@ -55,6 +55,7 @@ const AddAndEditBasicInfo = ({ navigation, route }: any) => {
                 title={data ? 'Edit' : 'Add'}
                 rightComp1={
                     <FilledButton
+                        type='blue'
                         label="Save"
                         onPress={handleSubmit(onSubmit)}
                         disabled={!disabled}

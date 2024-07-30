@@ -6,11 +6,10 @@ import {
     SafeAreaView,
     ScrollView,
 } from 'react-native';
-import { Colors } from '../../../constants/Colors';
-import Header from '../../../components/header/Header';
+import { Colors } from '../../../constants/Colors'; 
 import FilledButton from '../../../components/buttons/FilledButton';
 import CustomInputField from '../../../components/formComp/CustomInputField';
-import { useForm, Control, FieldValues } from 'react-hook-form'; 
+import { useForm, Control, FieldValues } from 'react-hook-form';
 import CustomDatePicker from '../../../components/formComp/CustomDatePicker';
 import CommonHeader from '../components/CommonHeader';
 
@@ -52,13 +51,14 @@ const AddAndEditHospitalization = ({ navigation, route }: any) => {
         <SafeAreaView
             style={{
                 flex: 1,
-                backgroundColor: Colors.LightGray,
+                backgroundColor: Colors.GhostWhite,
                 position: 'relative',
             }}>
             <CommonHeader
                 title={data ? 'Edit' : 'Add'}
                 rightComp1={
                     <FilledButton
+                        type='blue'
                         label="Save"
                         onPress={handleSubmit(onSubmit)}
                         disabled={!disabled}
@@ -101,7 +101,7 @@ const AddAndEditHospitalization = ({ navigation, route }: any) => {
                             name="doctorName"
                             control={control as unknown as Control<FieldValues, object>}
                             placeholder="Doctor's name"
-                        /> 
+                        />
                     </View>
                 </View>
             </ScrollView>

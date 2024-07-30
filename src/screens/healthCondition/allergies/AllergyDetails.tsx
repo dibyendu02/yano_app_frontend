@@ -4,6 +4,7 @@ import { Colors } from '../../../constants/Colors';
 import Header from '../../../components/header/Header';
 import { DeleteIcon, EditIcon } from '../../../assets/icon/IconNames';
 import DetailItems from '../components/DetailItems';
+import CommonHeader from '../components/CommonHeader';
 
 const AllergyDetails = ({ navigation, route }: any) => {
     if (!route || !route.params) {
@@ -19,7 +20,7 @@ const AllergyDetails = ({ navigation, route }: any) => {
                 backgroundColor: Colors.LightGray,
                 position: 'relative',
             }}>
-            <Header
+            <CommonHeader
                 title={name}
                 rightComp1={
                     <TouchableOpacity

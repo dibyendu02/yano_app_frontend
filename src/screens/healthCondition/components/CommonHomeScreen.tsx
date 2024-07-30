@@ -30,7 +30,7 @@ const CommonHomeScreen: FC<CommonHomeScreenProps> = ({
         <SafeAreaView
             style={{
                 flex: 1,
-                backgroundColor: Colors.LightGray,
+                backgroundColor: Colors.GhostWhite,
                 position: 'relative',
             }}>
             <CommonHeader title={heading} />
@@ -47,6 +47,7 @@ const CommonHomeScreen: FC<CommonHomeScreenProps> = ({
                     />
             }
             <FilledButton
+                type='blue'
                 label="Add"
                 icon={<PlusIcon />}
                 onPress={() => navigation.navigate(addItem_path)}

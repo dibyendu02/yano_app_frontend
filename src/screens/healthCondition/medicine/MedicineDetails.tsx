@@ -4,6 +4,7 @@ import { Colors } from '../../../constants/Colors';
 import Header from '../../../components/header/Header';
 import { DeleteIcon, EditIcon } from '../../../assets/icon/IconNames';
 import DetailItems from '../components/DetailItems';
+import CommonHeader from '../components/CommonHeader';
 
 
 const MedicineDetails = ({ navigation, route }: any) => {
@@ -34,10 +35,10 @@ const MedicineDetails = ({ navigation, route }: any) => {
         <SafeAreaView
             style={{
                 flex: 1,
-                backgroundColor: Colors.LightGray,
+                backgroundColor: Colors.GhostWhite,
                 position: 'relative',
             }}>
-            <Header
+            <CommonHeader
                 title={name}
                 rightComp1={
                     <TouchableOpacity
