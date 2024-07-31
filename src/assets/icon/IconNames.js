@@ -79,12 +79,12 @@ export const CheckIcon = () => {
   );
 }
 
-export const DownloadIcon = () => {
+export const DownloadIcon = ({ size = 20, color = Colors.Blue }) => {
   return (
     <Icons.Feather
       name={'download'}
-      color={Colors.Blue}
-      size={20}
+      color={color}
+      size={size}
     />
   );
 }
@@ -98,11 +98,11 @@ export const NextIcon = () => {
   )
 }
 
-export const BluetoothConnected = () => {
+export const BluetoothConnected = ({ size = 20 }) => {
   return (
     <Icons.MaterialCommunityIcons
       name='bluetooth-connect'
-      size={20}
+      size={size}
       color={'#2F80ED'}
     />
   )
@@ -116,11 +116,11 @@ export const BluetoothDisconnected = () => {
     />
   )
 }
-export const BatteryCharge = () => {
+export const BatteryCharge = ({ size = 20 }) => {
   return (
     <Icons.MaterialCommunityIcons
       name='battery-70'
-      size={20}
+      size={size}
       color={'#0DAB76'}
     />
   )
@@ -131,6 +131,80 @@ export const LogoutIcon = () => {
       name='logout'
       size={25}
       color={Colors.Red}
+    />
+  )
+}
+
+export const OkIcon = ({ size = 20, color = Colors.Green }) => {
+  return (
+    <Icons.MaterialCommunityIcons
+      name='checkbox-marked-circle'
+      size={size}
+      color={color}
+    />
+  )
+}
+
+export const ViewPassIcon = ({ size = 20, color = Colors.lightBlack }) => {
+  return (
+    <Icons.Ionicons
+      name='eye'
+      size={size}
+      color={color}
+    />
+  )
+}
+export const NotViewPassIcon = ({ size = 20, color = Colors.lightBlack }) => {
+  return (
+    <Icons.Ionicons
+      name='eye-off'
+      size={size}
+      color={color}
+    />
+  )
+}
+export const SettingsIcon = ({ size = 20, color = Colors.Blue }) => {
+  return (
+    <Icons.Ionicons
+      name='settings'
+      size={size}
+      color={color}
+    />
+  )
+}
+export const NotificationIcon = ({ size = 20, color = Colors.LightGreen }) => {
+  return (
+    <Icons.Ionicons
+      name='notifications'
+      size={size}
+      color={color}
+    />
+  )
+}
+export const ErrorIcon = ({ size = 20, color = Colors.Red }) => {
+  return (
+    <Icons.MaterialIcons
+      name='error'
+      size={size}
+      color={color}
+    />
+  )
+}
+export const CloseIcon = ({ size = 20, color = Colors.Blue }) => {
+  return (
+    <Icons.Ionicons
+      name='close'
+      size={size}
+      color={color}
+    />
+  )
+}
+export const CheckListIcon = ({ size = 20, color = Colors.Blue }) => {
+  return (
+    <Icons.MaterialIcons
+      name='checklist-rtl'
+      size={size}
+      color={color}
     />
   )
 }

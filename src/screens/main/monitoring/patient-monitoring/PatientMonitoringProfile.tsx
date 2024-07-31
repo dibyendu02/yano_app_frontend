@@ -198,6 +198,7 @@ export default function PatientMonitoringProfile({}) {
               icon="history-edu"
               iconsname="MaterialIcons"
               color="#76BC21"
+              onPress={() => navigate('HealthThresholdHomeScreen')}
             />
             <PatientElements
               name="Reminders"
