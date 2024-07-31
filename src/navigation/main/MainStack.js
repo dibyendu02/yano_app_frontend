@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unstable-nested-components */
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import MonitoringPatientHold from '../../screens/MonitoringPatientHold';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'; 
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+// import MyProfile from '../../screens/main/profile/MyProfile';
 import Icons from '../../assets/icon/Icon';
 import EmailNotFoundPatient from '../../screens/EmailNotFoundPatient';
 import HealthConditionHomeScreen from '../../screens/healthCondition/HealthConditionHomeScreen';
@@ -32,7 +33,7 @@ import HospitalizationDetails from '../../screens/healthCondition/hospitalizatio
 import AddAndEditHospitalization from '../../screens/healthCondition/hospitalization/AdddAndEditHospitalization';
 import SocialHistoryHomeScreen from '../../screens/healthCondition/socailHistory/SocialHistoryHomeScreen';
 import AddAndEditSocialHistory from '../../screens/healthCondition/socailHistory/AddAndEditSocailHistory';
-import { Screen } from 'react-native-screens';
+import {Screen} from 'react-native-screens';
 import ConsultancyNotes from '../../screens/healthCondition/consultancyNotes/ConsultancyNotes';
 import ConsultancyNotesDetails from '../../screens/healthCondition/consultancyNotes/ConsultancyNoteDetails';
 import PatientMonitoringList from '../../screens/main/monitoring/patient-monitoring/PatientMonitoringList';
@@ -42,6 +43,10 @@ import MeasurementToolsHomeScreen from '../../screens/main/my-profile/measuremen
 import ChooseDevice from '../../screens/main/my-profile/measurement-tools/ChooseDevice';
 import SettingHomeScreen from '../../screens/main/my-profile/settings/SettingHomeScreen';
 import SupportHomeScreen from '../../screens/main/my-profile/support/SupportHomeScreen';
+import HealthParametersList from '../../screens/main/monitoring/health-parameters/HealthParametersList';
+import HealthParameterDetail from '../../screens/main/monitoring/health-parameters/HealthParameterDetail';
+import AddPatient from '../../screens/main/add-patient/AddPatient';
+import HealthStats from '../../screens/main/monitoring/health-stats/HealthStats';
 
 const Tab = createBottomTabNavigator();
 
@@ -59,7 +64,7 @@ const Tabs = () => {
         component={PatientMonitoringList}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <Icons.MaterialIcons
               name="health-and-safety"
               size={size}
@@ -74,7 +79,7 @@ const Tabs = () => {
         options={{
           headerShown: false,
 
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <Icons.FontAwesome5 name="user-circle" size={size} color={color} />
           ),
         }}
@@ -89,64 +94,64 @@ const MainStack = () => {
       <Stack.Screen
         name="tabs"
         component={Tabs}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
-      {/* <Stack.Screen
-        name="AddPatients"
-        component={AddPatients}
-        options={{ headerShown: false }}
-      /> */}
+      <Stack.Screen
+        name="AddPatient"
+        component={AddPatient}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="EmailNotFoundPatient"
         component={EmailNotFoundPatient}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="PatientMonitoringProfile"
         component={PatientMonitoringProfile}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="MonitoringPatient"
         component={MonitoringPatientHold}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* Medical History screen Navigation start */}
       <Stack.Screen
         name="MedicalHistory"
         component={MedicalHistory}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="HealthCondition"
         component={HealthConditionHomeScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="HealthConditionDetails"
         component={HealthConditionDetails}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AddHealthCondition"
         component={AddHealthRecord}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* allergies screen start */}
       <Stack.Screen
         name="Allergies"
         component={AllergiesHomeScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AddAndEditAllergies"
         component={AddAndEditAllergy}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AllergyDetails"
         component={AllergyDetails}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* allergies screen end */}
 
@@ -155,18 +160,18 @@ const MainStack = () => {
         name="Medicine"
         component={MedicineHomeScreen}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='MedicineDetails'
+        name="MedicineDetails"
         component={MedicineDetails}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AddAndEditMedicine"
         component={AddAndEditMedicine}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* Medical History screen Navigation end */}
 
@@ -175,18 +180,18 @@ const MainStack = () => {
         name="Vaccines"
         component={VaccinesHomeScreen}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='VaccineDetails'
+        name="VaccineDetails"
         component={VaccineDetails}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AddAndEditVaccine"
         component={AddAndEditVaccine}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* Vaccines screen Navigation end */}
 
@@ -195,21 +200,21 @@ const MainStack = () => {
         name="Surgeries"
         component={SurgeriesHomeScreen}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="SurgeriesDetails"
         component={SurgeriesDetails}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="AddAndEditSurgeries"
         component={AddAndEditSurgeries}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       {/* Surgeries screen Navigation end */}
@@ -218,76 +223,76 @@ const MainStack = () => {
         name="FamilyHistory"
         component={FamilyHistoryHomeScreen}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="FamilyHistoryDetails"
         component={FamilyHistoryDetails}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="AddAndEditFamilyHistory"
         component={AddAndEditFamilyHistory}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       {/* Family History screen Navigation end */}
       {/* Basic Info screen Navigation start */}
       <Stack.Screen
-        name={"BasicInformation"}
+        name={'BasicInformation'}
         component={BasicInfo}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name={"AddAndEditBasicInfo"}
+        name={'AddAndEditBasicInfo'}
         component={AddAndEditBasicInfo}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       {/* Basic Info screen Navigation end */}
       {/* Hospitalization screen Navigation end */}
       <Stack.Screen
-        name={"Hospitalization"}
+        name={'Hospitalization'}
         component={HospitalizationHomeScreen}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name={"HospitalizationDetails"}
+        name={'HospitalizationDetails'}
         component={HospitalizationDetails}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name={"AddAndEditHospitalization"}
+        name={'AddAndEditHospitalization'}
         component={AddAndEditHospitalization}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       {/* Hospitalization screen Navigation end */}
       {/* Social History screen Navigation start */}
       <Stack.Screen
-        name={"SocialHistory"}
+        name={'SocialHistory'}
         component={SocialHistoryHomeScreen}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name={"AddAndEditSocialHistory"}
+        name={'AddAndEditSocialHistory'}
         component={AddAndEditSocialHistory}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       {/* Social History screen Navigation end */}
@@ -296,31 +301,31 @@ const MainStack = () => {
         name="ConsultationNotes"
         component={ConsultancyNotes}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="ConsultationNotesDetails"
         component={ConsultancyNotesDetails}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       {/* Consultation Notes screen Navigation end */}
 
       {/* User profile section start */}
       <Stack.Screen
-        name='MeasurementTools'
+        name="MeasurementTools"
         component={MeasurementToolsHomeScreen}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='ChooseDevice'
+        name="ChooseDevice"
         component={ChooseDevice}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
 
@@ -328,26 +333,41 @@ const MainStack = () => {
 
       {/* Settings section end */}
       <Stack.Screen
-        name='Settings'
+        name="Settings"
         component={SettingHomeScreen}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       {/* Settings section end */}
 
       {/* Support  section start */}
       <Stack.Screen
-        name='YanoSupport'
+        name="YanoSupport"
         component={SupportHomeScreen}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       {/* Support section end */}
 
-
       {/* Medical History screen Navigation end */}
+      <Stack.Screen
+        name="HealthParametersList"
+        component={HealthParametersList}
+        options={{headerShown: false}}
+      />
+      {/* HealthParameterDetail */}
+      <Stack.Screen
+        name="HealthParameterDetail"
+        component={HealthParameterDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="HealthStats"
+        component={HealthStats}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
