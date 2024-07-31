@@ -60,6 +60,13 @@ import DownloadData from '../../screens/main/my-profile/settings/DownloadData';
 import DeleteAccount from '../../screens/main/my-profile/settings/DeleteAccount';
 import Notification from '../../screens/main/my-profile/settings/Notification';
 import MeasurementUnitSettings from '../../screens/main/my-profile/settings/MeasurementUnitSettings';
+import HealthThresholdHomeScreen from '../../screens/main/monitoring/thresholds/HealthThresholdHomeScreen';
+import EditHeartRate from '../../screens/main/monitoring/thresholds/EditHeartRate';
+import BloodOxygen from '../../screens/main/monitoring/thresholds/BloodOxygen';
+import BloodPressure from '../../screens/main/monitoring/thresholds/BloodPressure';
+import BodyTemperature from '../../screens/main/monitoring/thresholds/BodyTemparature';
+import GlucoseLevel from '../../screens/main/monitoring/thresholds/GlucoseLevel';
+import NotificationAlerts from '../../screens/main/monitoring/notification/NotificationAlerts';
 
 const Tab = createBottomTabNavigator();
 
@@ -103,7 +110,7 @@ const Tabs = () => {
 
 const MainStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator >
       <Stack.Screen
         name="tabs"
         component={Tabs}
@@ -480,6 +487,43 @@ const MainStack = () => {
         component={HealthStats}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="HealthThresholdHomeScreen"
+        component={HealthThresholdHomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="HeartRate"
+        component={EditHeartRate}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BloodOxygen"
+        component={BloodOxygen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BloodPressure"
+        component={BloodPressure}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="BodyTemperature"
+        component={BodyTemperature}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="GlucoseLevel"
+        component={GlucoseLevel}
+        options={{ headerShown: false }}
+      />
+
+      <Stack.Screen
+        name="NotificationAlerts"
+        component={NotificationAlerts}
+        options={{ headerShown: false }}
+      />
+
     </Stack.Navigator>
   );
 };

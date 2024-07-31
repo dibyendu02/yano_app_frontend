@@ -11,4 +11,5 @@ export const DummyImage = {
   shop1: require('./shop-1.png'),
   shop2: require('./shop-2.png'),
   shop3: require('./shop-3.png'),
+  notification: require('./notifications.png'),
 };

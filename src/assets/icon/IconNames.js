@@ -172,3 +172,39 @@ export const SettingsIcon = ({ size = 20, color = Colors.Blue }) => {
     />
   )
 }
+export const NotificationIcon = ({ size = 20, color = Colors.LightGreen }) => {
+  return (
+    <Icons.Ionicons
+      name='notifications'
+      size={size}
+      color={color}
+    />
+  )
+}
+export const ErrorIcon = ({ size = 20, color = Colors.Red }) => {
+  return (
+    <Icons.MaterialIcons
+      name='error'
+      size={size}
+      color={color}
+    />
+  )
+}
+export const CloseIcon = ({ size = 20, color = Colors.Blue }) => {
+  return (
+    <Icons.Ionicons
+      name='close'
+      size={size}
+      color={color}
+    />
+  )
+}
+export const CheckListIcon = ({ size = 20, color = Colors.Blue }) => {
+  return (
+    <Icons.MaterialIcons
+      name='checklist-rtl'
+      size={size}
+      color={color}
+    />
+  )
+}
