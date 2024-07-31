@@ -8,6 +8,7 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
@@ -18,6 +19,7 @@ import {CardStyles} from '../../../../components/cards/CardStyle';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import {DummyImage} from '../../../../assets/dummy/images';
 import Card from '../../../../components/cards/Card';
+import {navigate} from '../../../../navigation/RootNavigation';
 
 //@ts-ignore
 const HealthParameterDetail = ({route}) => {
@@ -127,7 +129,7 @@ const HealthParameterDetail = ({route}) => {
                 backgroundColor: Colors.LightGray,
               }}
             />
-            <View
+            <TouchableOpacity
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -135,7 +137,8 @@ const HealthParameterDetail = ({route}) => {
                 paddingHorizontal: 20,
                 paddingVertical: 14,
                 width: '100%',
-              }}>
+              }}
+              onPress={() => navigate('HealthStats')}>
               <View style={{flexDirection: 'row'}}>
                 <Icons.MaterialIcons
                   name="query-stats"
@@ -151,7 +154,7 @@ const HealthParameterDetail = ({route}) => {
                 size={30}
                 color={Colors.Blue}
               />
-            </View>
+            </TouchableOpacity>
           </View>
         ) : (
           <View>

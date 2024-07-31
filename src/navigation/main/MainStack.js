@@ -46,6 +46,7 @@ import SupportHomeScreen from '../../screens/main/my-profile/support/SupportHome
 import HealthParametersList from '../../screens/main/monitoring/health-parameters/HealthParametersList';
 import HealthParameterDetail from '../../screens/main/monitoring/health-parameters/HealthParameterDetail';
 import AddPatient from '../../screens/main/add-patient/AddPatient';
+import HealthStats from '../../screens/main/monitoring/health-stats/HealthStats';
 
 const Tab = createBottomTabNavigator();
 
@@ -360,6 +361,11 @@ const MainStack = () => {
       <Stack.Screen
         name="HealthParameterDetail"
         component={HealthParameterDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="HealthStats"
+        component={HealthStats}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
