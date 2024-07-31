@@ -1,10 +1,8 @@
-/* eslint-disable react/no-unstable-nested-components */
+
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import MonitoringPatientHold from '../../screens/MonitoringPatientHold';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import MyProfile from '../../screens/main/profile/MyProfile';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icons from '../../assets/icon/Icon';
 import EmailNotFoundPatient from '../../screens/EmailNotFoundPatient';
 import HealthConditionHomeScreen from '../../screens/healthCondition/HealthConditionHomeScreen';
@@ -32,8 +30,7 @@ import HospitalizationHomeScreen from '../../screens/healthCondition/hospitaliza
 import HospitalizationDetails from '../../screens/healthCondition/hospitalization/HospitalizationDetails';
 import AddAndEditHospitalization from '../../screens/healthCondition/hospitalization/AdddAndEditHospitalization';
 import SocialHistoryHomeScreen from '../../screens/healthCondition/socailHistory/SocialHistoryHomeScreen';
-import AddAndEditSocialHistory from '../../screens/healthCondition/socailHistory/AddAndEditSocailHistory';
-import { Screen } from 'react-native-screens';
+import AddAndEditSocialHistory from '../../screens/healthCondition/socailHistory/AddAndEditSocailHistory'; 
 import ConsultancyNotes from '../../screens/healthCondition/consultancyNotes/ConsultancyNotes';
 import ConsultancyNotesDetails from '../../screens/healthCondition/consultancyNotes/ConsultancyNoteDetails';
 import PatientMonitoringList from '../../screens/main/monitoring/patient-monitoring/PatientMonitoringList';
@@ -43,6 +40,20 @@ import MeasurementToolsHomeScreen from '../../screens/main/my-profile/measuremen
 import ChooseDevice from '../../screens/main/my-profile/measurement-tools/ChooseDevice';
 import SettingHomeScreen from '../../screens/main/my-profile/settings/SettingHomeScreen';
 import SupportHomeScreen from '../../screens/main/my-profile/support/SupportHomeScreen';
+import DeviceInfo from '../../screens/main/my-profile/measurement-tools/DeviceInfo';
+import WhatToMeasure from '../../screens/main/my-profile/measurement-tools/WhatToMeasure'; 
+import TurnOnDevice from '../../screens/main/my-profile/measurement-tools/TurnOnDevice';
+import DeviceConnected from '../../screens/main/my-profile/measurement-tools/DeviceConnected';
+import MeasurementMonitoring from '../../screens/main/my-profile/measurement-tools/MeasurementMonitoring';
+import DeviceSettingsScreen from '../../screens/main/my-profile/measurement-tools/DeviceSettings';
+import DeviceInnerSettings from '../../screens/main/my-profile/measurement-tools/DeviceInnerSettings';
+import DeviceAndAccessories from '../../screens/main/my-profile/measurement-tools/DeviceAndAcceories';
+import ChangePassword from '../../screens/main/my-profile/settings/ChangePassword';
+import ManageYourData from '../../screens/main/my-profile/settings/ManageYourData';
+import DownloadData from '../../screens/main/my-profile/settings/DownloadData';
+import DeleteAccount from '../../screens/main/my-profile/settings/DeleteAccount';
+import Notification from '../../screens/main/my-profile/settings/Notification';
+import MeasurementUnitSettings from '../../screens/main/my-profile/settings/MeasurementUnitSettings';
 
 const Tab = createBottomTabNavigator();
 
@@ -324,6 +335,62 @@ const MainStack = () => {
           headerShown: false
         }}
       />
+      <Stack.Screen
+        name='DeviceInfo'
+        component={DeviceInfo}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='WhatToMeasure'
+        component={WhatToMeasure}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='DeviceConnected'
+        component={DeviceConnected}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='TurnOnDevice'
+        component={TurnOnDevice}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='MeasurementMonitoring'
+        component={MeasurementMonitoring}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='DeviceSettings'
+        component={DeviceSettingsScreen}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='DeviceInnerSettings'
+        component={DeviceInnerSettings}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='DeviceAndAccessories'
+        component={DeviceAndAccessories}
+        options={{
+          headerShown: false
+        }}
+      />
 
       {/* User profile section end */}
 
@@ -335,6 +402,49 @@ const MainStack = () => {
           headerShown: false
         }}
       />
+      <Stack.Screen
+        name='ManageYourData'
+        component={ManageYourData}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='DownloadData'
+        component={DownloadData}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='DeleteAccount'
+        component={DeleteAccount}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='ChangePassword'
+        component={ChangePassword}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='Notifications'
+        component={Notification}
+        options={{
+          headerShown: false
+        }}
+      />
+      <Stack.Screen
+        name='MeasurementUnitSettings'
+        component={MeasurementUnitSettings}
+        options={{
+          headerShown: false
+        }}
+      />
+      
       {/* Settings section end */}
 
       {/* Support  section start */}

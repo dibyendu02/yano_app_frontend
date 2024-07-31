@@ -1,12 +1,15 @@
 import { Image, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../../../../components/header/Header'
 import { DummyImage } from '../../../../assets/dummy/images'
 import { Colors } from '../../../../constants/Colors'
 import CommonItem from '../components/CommonItem'
 import FilledButton from '../../../../components/buttons/FilledButton'
+import EmptyScreen from '../../../../components/EmptyScreen'
+import { navigate } from '../../../../navigation/RootNavigation'
 
-const MeasurementToolsHomeScreen = ({ navigation }: any) => {
+const MeasurementToolsHomeScreen = () => {
+    const [visible, isVisible] = useState(true);
     return (
         <SafeAreaView
             style={{
@@ -16,38 +19,45 @@ const MeasurementToolsHomeScreen = ({ navigation }: any) => {
             }}
         >
             <Header title='Measurement Tools' />
-            <ScrollView>
-                <View style={{ padding: 20 }}>
-                    <CommonItem
-                        name='Monitor Multiparámetros Yano'
-                        onPress={() => navigation.navigate('')}
-                        leftIcon={
-                            <Image
-                                source={DummyImage.device}
-                                width={30}
-                                height={30}
+            {
+                visible ?
+                    <ScrollView>
+                        <View style={{ padding: 20 }}>
+                            <CommonItem
+                                name='Monitor Multiparámetros Yano'
+                                onPress={() => navigate('MeasurementMonitoring')}
+                                leftIcon={
+                                    <Image
+                                        source={DummyImage.device}
+                                        width={30}
+                                        height={30}
+                                    />
+                                }
                             />
-                        }
-                    />
-                    <CommonItem
-                        name='Monitor Multiparámetros Yano'
-                        onPress={() => navigation.navigate('')}
-                        leftIcon={
-                            <Image
-                                source={DummyImage.device}
-                                width={30}
-                                height={30}
+                            <CommonItem
+                                name='Monitor Multiparámetros Yano'
+                                onPress={() => navigate('DeviceInfo')}
+                                leftIcon={
+                                    <Image
+                                        source={DummyImage.device}
+                                        width={30}
+                                        height={30}
+                                    />
+                                }
+                                isConnected={true}
                             />
-                        }
-                        isConnected={true}
+                        </View>
+                    </ScrollView>
+                    : <EmptyScreen
+                        title='No measurement tools'
+                        message='Add a device to start measuring your patient’s health.'
                     />
-                </View>
-            </ScrollView>
+            }
             <View style={styles.addBtn}>
                 <FilledButton
                     label='Add a device'
                     type='blue'
-                    onPress={() => navigation.navigate('ChooseDevice')}
+                    onPress={() => navigate('ChooseDevice')}
                 />
             </View>
         </SafeAreaView>
