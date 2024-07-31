@@ -13,4 +13,5 @@ export const Colors = {
   CeruleanBlue: '#1565C0',
   Transparent: 'transparent',
   Orange: '#FFA726',
+  lightBlack:"##617987"
 };
