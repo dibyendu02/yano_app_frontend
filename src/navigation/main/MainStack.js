@@ -67,6 +67,9 @@ import BloodPressure from '../../screens/main/monitoring/thresholds/BloodPressur
 import BodyTemperature from '../../screens/main/monitoring/thresholds/BodyTemparature';
 import GlucoseLevel from '../../screens/main/monitoring/thresholds/GlucoseLevel';
 import NotificationAlerts from '../../screens/main/monitoring/notification/NotificationAlerts';
+import RemainderScreen from '../../screens/main/monitoring/remainder/RemainderScreen';
+import AddRemainder from '../../screens/main/monitoring/remainder/AddRemainder';
+import SetRepetition from '../../screens/main/monitoring/remainder/SetRepetition';
 
 const Tab = createBottomTabNavigator();
 
@@ -523,7 +526,23 @@ const MainStack = () => {
         component={NotificationAlerts}
         options={{ headerShown: false }}
       />
-
+      {/* Remainders screen start*/}
+      <Stack.Screen
+        name="RemainderScreen"
+        component={RemainderScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddRemainder"
+        component={AddRemainder}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="SetRepetition"
+        component={SetRepetition}
+        options={{ headerShown: false }}
+      />
+      {/* Remainders screen end*/}
     </Stack.Navigator>
   );
 };

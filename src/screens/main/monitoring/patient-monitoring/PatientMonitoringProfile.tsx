@@ -205,6 +205,7 @@ export default function PatientMonitoringProfile({}) {
               icon="bell-plus"
               iconsname="MaterialCommunityIcons"
               color="#76BC21"
+              onPress={() => navigate('RemainderScreen')}
             />
           </View>
         </Card>

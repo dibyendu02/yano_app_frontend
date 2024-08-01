@@ -208,3 +208,30 @@ export const CheckListIcon = ({ size = 20, color = Colors.Blue }) => {
     />
   )
 }
+export const ReminderIcon = ({ size = 20, color = Colors.Green }) => {
+  return (
+    <Icons.Ionicons
+      name='alarm-sharp'
+      size={size}
+      color={color}
+    />
+  )
+}
+export const RepeatIcon = ({ size = 20, color = Colors.Blue }) => {
+  return (
+    <Icons.FontAwesome
+      name='repeat'
+      size={size}
+      color={color}
+    />
+  )
+}
+export const TimeIcon = ({ size = 20, color = Colors.Blue }) => {
+  return (
+    <Icons.MaterialIcons
+      name='access-time'
+      size={size}
+      color={color}
+    />
+  )
+}
