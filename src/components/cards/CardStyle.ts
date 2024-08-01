@@ -17,10 +17,11 @@ export const CardStyles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
     fontWeight: '600',
     fontSize: 12,
     color: Colors.SteelBlue,
     alignSelf: 'flex-start',
+    textTransform: 'uppercase',
   },
 });

@@ -62,6 +62,7 @@ const OutlineButton: React.FC<ButtonProps> = ({
                     borderWidth: 1,
                     borderColor: ButtonColors[type].backgroundColor,
                     opacity: disabled ? 0.4 : 1,
+                    gap: 6,
                 },
                 style,
             ]}
