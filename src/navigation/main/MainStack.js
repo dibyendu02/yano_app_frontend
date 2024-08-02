@@ -1,9 +1,8 @@
-
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import MonitoringPatientHold from '../../screens/MonitoringPatientHold';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 // import MyProfile from '../../screens/main/profile/MyProfile';
 import Icons from '../../assets/icon/Icon';
 import EmailNotFoundPatient from '../../screens/EmailNotFoundPatient';
@@ -70,6 +69,14 @@ import NotificationAlerts from '../../screens/main/monitoring/notification/Notif
 import RemainderScreen from '../../screens/main/monitoring/remainder/RemainderScreen';
 import AddRemainder from '../../screens/main/monitoring/remainder/AddRemainder';
 import SetRepetition from '../../screens/main/monitoring/remainder/SetRepetition';
+import BloodGlucoseTest from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseTest';
+import BloodGlucoseTestTime from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseTestTime';
+import BloodGlucoseSelectStrip from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseSelectStrip';
+import BloodGlucoseReading from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseReading';
+import BloodGlucoseStep3 from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseStep3';
+import BloodGlucoseStep2 from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseStep2';
+import BloodGlucoseStep1 from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseStep1';
+import BloodGlucoseResult from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseResult';
 
 const Tab = createBottomTabNavigator();
 
@@ -87,7 +94,7 @@ const Tabs = () => {
         component={PatientMonitoringList}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <Icons.MaterialIcons
               name="health-and-safety"
               size={size}
@@ -102,7 +109,7 @@ const Tabs = () => {
         options={{
           headerShown: false,
 
-          tabBarIcon: ({ color, size }) => (
+          tabBarIcon: ({color, size}) => (
             <Icons.FontAwesome5 name="user-circle" size={size} color={color} />
           ),
         }}
@@ -113,68 +120,68 @@ const Tabs = () => {
 
 const MainStack = () => {
   return (
-    <Stack.Navigator >
+    <Stack.Navigator>
       <Stack.Screen
         name="tabs"
         component={Tabs}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AddPatient"
         component={AddPatient}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="EmailNotFoundPatient"
         component={EmailNotFoundPatient}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="PatientMonitoringProfile"
         component={PatientMonitoringProfile}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="MonitoringPatient"
         component={MonitoringPatientHold}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* Medical History screen Navigation start */}
       <Stack.Screen
         name="MedicalHistory"
         component={MedicalHistory}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="HealthCondition"
         component={HealthConditionHomeScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="HealthConditionDetails"
         component={HealthConditionDetails}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AddHealthCondition"
         component={AddHealthRecord}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* allergies screen start */}
       <Stack.Screen
         name="Allergies"
         component={AllergiesHomeScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AddAndEditAllergies"
         component={AddAndEditAllergy}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AllergyDetails"
         component={AllergyDetails}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* allergies screen end */}
 
@@ -189,12 +196,12 @@ const MainStack = () => {
       <Stack.Screen
         name="MedicineDetails"
         component={MedicineDetails}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AddAndEditMedicine"
         component={AddAndEditMedicine}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* Medical History screen Navigation end */}
 
@@ -209,12 +216,12 @@ const MainStack = () => {
       <Stack.Screen
         name="VaccineDetails"
         component={VaccineDetails}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AddAndEditVaccine"
         component={AddAndEditVaccine}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* Vaccines screen Navigation end */}
 
@@ -352,59 +359,59 @@ const MainStack = () => {
         }}
       />
       <Stack.Screen
-        name='DeviceInfo'
+        name="DeviceInfo"
         component={DeviceInfo}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='WhatToMeasure'
+        name="WhatToMeasure"
         component={WhatToMeasure}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='DeviceConnected'
+        name="DeviceConnected"
         component={DeviceConnected}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='TurnOnDevice'
+        name="TurnOnDevice"
         component={TurnOnDevice}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='MeasurementMonitoring'
+        name="MeasurementMonitoring"
         component={MeasurementMonitoring}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='DeviceSettings'
+        name="DeviceSettings"
         component={DeviceSettingsScreen}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='DeviceInnerSettings'
+        name="DeviceInnerSettings"
         component={DeviceInnerSettings}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='DeviceAndAccessories'
+        name="DeviceAndAccessories"
         component={DeviceAndAccessories}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
 
@@ -419,45 +426,45 @@ const MainStack = () => {
         }}
       />
       <Stack.Screen
-        name='ManageYourData'
+        name="ManageYourData"
         component={ManageYourData}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='DownloadData'
+        name="DownloadData"
         component={DownloadData}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='DeleteAccount'
+        name="DeleteAccount"
         component={DeleteAccount}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='ChangePassword'
+        name="ChangePassword"
         component={ChangePassword}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='Notifications'
+        name="Notifications"
         component={Notification}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
-        name='MeasurementUnitSettings'
+        name="MeasurementUnitSettings"
         component={MeasurementUnitSettings}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
 
@@ -477,72 +484,114 @@ const MainStack = () => {
       <Stack.Screen
         name="HealthParametersList"
         component={HealthParametersList}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* HealthParameterDetail */}
       <Stack.Screen
         name="HealthParameterDetail"
         component={HealthParameterDetail}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="HealthStats"
         component={HealthStats}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="HealthThresholdHomeScreen"
         component={HealthThresholdHomeScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="HeartRate"
         component={EditHeartRate}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="BloodOxygen"
         component={BloodOxygen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="BloodPressure"
         component={BloodPressure}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="BodyTemperature"
         component={BodyTemperature}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="GlucoseLevel"
         component={GlucoseLevel}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
 
       <Stack.Screen
         name="NotificationAlerts"
         component={NotificationAlerts}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* Remainders screen start*/}
       <Stack.Screen
         name="RemainderScreen"
         component={RemainderScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AddRemainder"
         component={AddRemainder}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="SetRepetition"
         component={SetRepetition}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* Remainders screen end*/}
+
+      {/* measurement screens  */}
+      <Stack.Screen
+        name="BloodGlucoseTest"
+        component={BloodGlucoseTest}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseTestTime"
+        component={BloodGlucoseTestTime}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseSelectStrip"
+        component={BloodGlucoseSelectStrip}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseStep1"
+        component={BloodGlucoseStep1}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseStep2"
+        component={BloodGlucoseStep2}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseStep3"
+        component={BloodGlucoseStep3}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseReading"
+        component={BloodGlucoseReading}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseResult"
+        component={BloodGlucoseResult}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
