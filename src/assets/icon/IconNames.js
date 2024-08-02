@@ -22,13 +22,15 @@ export const RightIcon = () => {
   return <Icons.Entypo name={'chevron-right'} color={Colors.Blue} size={20} />;
 };
 
-export const PlusIcon = () => {
+export const PlusIcon = ({ size = 16, color = Colors.White }) => {
   return (
     <Icons.FontAwesome5
       name={'plus'}
-      color={'#fff'}
-      size={16}
-      style={{marginEnd: 6}}
+
+      color={color}
+      size={size}
+      style={{ marginEnd: 6 }}
+
     />
   );
 };
@@ -59,21 +61,23 @@ export const CheckboxOutline = () => {
   );
 };
 
-export const CheckCircleIcon = () => {
+export const CheckCircleIcon = ({ size = 20, color = Colors.Green }) => {
   return (
     <Icons.MaterialIcons
       name={'radio-button-on'}
-      color={Colors.Green}
-      size={20}
+      color={color}
+      size={size}
     />
   );
-};
-export const CheckIcon = () => {
+
+}
+export const CheckIcon = ({ size = 20, color = Colors.Blue }) => {
+
   return (
     <Icons.MaterialIcons
       name={'radio-button-off'}
-      color={Colors.SteelBlue}
-      size={20}
+      color={color}
+      size={size}
     />
   );
 };

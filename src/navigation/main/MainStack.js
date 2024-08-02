@@ -69,6 +69,11 @@ import NotificationAlerts from '../../screens/main/monitoring/notification/Notif
 import RemainderScreen from '../../screens/main/monitoring/remainder/RemainderScreen';
 import AddRemainder from '../../screens/main/monitoring/remainder/AddRemainder';
 import SetRepetition from '../../screens/main/monitoring/remainder/SetRepetition';
+
+import UserProfile from '../../screens/main/user-screen/user-profile/UserProfile';
+import MyHealthHomeScreen from '../../screens/main/user-screen/user-health/MyHealthHomeScreen';
+import Subscription from '../../screens/main/user-screen/user-health/Subscription';
+
 import BloodPressureScreen from '../../screens/main/my-profile/measurement-tools/BloodPressureScreen';
 import BloodOxygenScreen from '../../screens/main/my-profile/measurement-tools/BloodOxygen';
 import BloodGlucoseTest from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseTest';
@@ -82,6 +87,7 @@ import BloodGlucoseResult from '../../screens/main/monitoring/measurements/Blood
 import HeartRateMeasurement from '../../screens/main/my-profile/measurement-tools/HearRateMeasurement';
 import BodyTemperatureMeasurement from '../../screens/main/my-profile/measurement-tools/BodyTemperatureMeasurement';
 import EcgMeasurement from '../../screens/main/my-profile/measurement-tools/EcgMeasurement';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -114,9 +120,32 @@ const Tabs = () => {
         options={{
           headerShown: false,
 
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
+
             <Icons.FontAwesome5 name="user-circle" size={size} color={color} />
           ),
+        }}
+      />
+      <Tab.Screen
+        name="UserProfile"
+        component={UserProfile}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Icons.FontAwesome5 name="user-circle" size={size} color={color} />
+          ),
+          tabBarLabel: 'My Profile'
+        }}
+      />
+      <Tab.Screen
+        name="MyHealth"
+        component={MyHealthHomeScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <Icons.MaterialIcons name="monitor-heart" size={size} color={color} />
+          ),
+          tabBarLabel: 'My Health'
         }}
       />
     </Tab.Navigator>
@@ -125,7 +154,9 @@ const Tabs = () => {
 
 const MainStack = () => {
   return (
-    <Stack.Navigator>
+
+    <Stack.Navigator initialRouteName='userProfile' >
+
       <Stack.Screen
         name="tabs"
         component={Tabs}
@@ -591,6 +622,18 @@ const MainStack = () => {
       />
       {/* Remainders screen end*/}
 
+
+
+      {/* user section start */}
+      {/* user Profile start */}
+      <Stack.Screen
+        name="Subscription"
+        component={Subscription}
+        options={{ headerShown: false }}
+      />
+      {/* user Profile end */}
+      {/* user section end */}
+
       {/* measurement screens  */}
       <Stack.Screen
         name="BloodGlucoseTest"
@@ -632,6 +675,7 @@ const MainStack = () => {
         component={BloodGlucoseResult}
         options={{headerShown: false}}
       />
+
     </Stack.Navigator>
   );
 };
