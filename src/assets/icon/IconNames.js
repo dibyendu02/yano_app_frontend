@@ -1,5 +1,4 @@
-
-import { Colors } from '../../constants/Colors';
+import {Colors} from '../../constants/Colors';
 import Icons from './Icon';
 
 export const IconName = {
@@ -15,7 +14,7 @@ export const DeleteIcon = () => {
     />
   );
 };
-export const EditIcon = ({ size = 18 }) => {
+export const EditIcon = ({size = 18}) => {
   return <Icons.Feather name={'edit-2'} color={Colors.Blue} size={size} />;
 };
 
@@ -29,7 +28,7 @@ export const PlusIcon = () => {
       name={'plus'}
       color={'#fff'}
       size={16}
-      style={{ marginEnd: 6 }}
+      style={{marginEnd: 6}}
     />
   );
 };
@@ -58,7 +57,7 @@ export const CheckboxOutline = () => {
       size={30}
     />
   );
-}
+};
 
 export const CheckCircleIcon = () => {
   return (
@@ -68,7 +67,7 @@ export const CheckCircleIcon = () => {
       size={20}
     />
   );
-}
+};
 export const CheckIcon = () => {
   return (
     <Icons.MaterialIcons
@@ -77,169 +76,109 @@ export const CheckIcon = () => {
       size={20}
     />
   );
-}
+};
 
-export const DownloadIcon = ({ size = 20, color = Colors.Blue }) => {
-  return (
-    <Icons.Feather
-      name={'download'}
-      color={color}
-      size={size}
-    />
-  );
-}
+export const DownloadIcon = ({size = 20, color = Colors.Blue}) => {
+  return <Icons.Feather name={'download'} color={color} size={size} />;
+};
 
 export const NextIcon = () => {
-  return (
-    <Icons.MaterialIcons
-      name="navigate-next"
-      size={25}
-      color={'black'} />
-  )
-}
+  return <Icons.MaterialIcons name="navigate-next" size={25} color={'black'} />;
+};
 
-export const BluetoothConnected = ({ size = 20 }) => {
+export const BluetoothConnected = ({size = 20}) => {
   return (
     <Icons.MaterialCommunityIcons
-      name='bluetooth-connect'
+      name="bluetooth-connect"
       size={size}
       color={'#2F80ED'}
     />
-  )
-}
+  );
+};
 export const BluetoothDisconnected = () => {
   return (
     <Icons.MaterialCommunityIcons
-      name='bluetooth-off'
+      name="bluetooth-off"
       size={20}
       color={Colors.SteelBlue}
     />
-  )
-}
-export const BatteryCharge = ({ size = 20 }) => {
+  );
+};
+export const BatteryCharge = ({size = 20}) => {
   return (
     <Icons.MaterialCommunityIcons
-      name='battery-70'
+      name="battery-70"
       size={size}
       color={'#0DAB76'}
     />
-  )
-}
+  );
+};
 export const LogoutIcon = () => {
-  return (
-    <Icons.MaterialIcons
-      name='logout'
-      size={25}
-      color={Colors.Red}
-    />
-  )
-}
+  return <Icons.MaterialIcons name="logout" size={25} color={Colors.Red} />;
+};
 
-export const OkIcon = ({ size = 20, color = Colors.Green }) => {
+export const OkIcon = ({size = 20, color = Colors.Green}) => {
   return (
     <Icons.MaterialCommunityIcons
-      name='checkbox-marked-circle'
+      name="checkbox-marked-circle"
       size={size}
       color={color}
     />
-  )
-}
+  );
+};
 
-export const ViewPassIcon = ({ size = 20, color = Colors.lightBlack }) => {
+export const ViewPassIcon = ({size = 20, color = Colors.lightBlack}) => {
+  return <Icons.Ionicons name="eye" size={size} color={color} />;
+};
+export const NotViewPassIcon = ({size = 20, color = Colors.lightBlack}) => {
+  return <Icons.Ionicons name="eye-off" size={size} color={color} />;
+};
+export const SettingsIcon = ({size = 20, color = Colors.Blue}) => {
+  return <Icons.Ionicons name="settings" size={size} color={color} />;
+};
+export const NotificationIcon = ({size = 20, color = Colors.LightGreen}) => {
+  return <Icons.Ionicons name="notifications" size={size} color={color} />;
+};
+export const ErrorIcon = ({size = 20, color = Colors.Red}) => {
+  return <Icons.MaterialIcons name="error" size={size} color={color} />;
+};
+export const CloseIcon = ({size = 20, color = Colors.Blue}) => {
+  return <Icons.Ionicons name="close" size={size} color={color} />;
+};
+export const CheckListIcon = ({size = 20, color = Colors.Blue}) => {
+  return <Icons.MaterialIcons name="checklist-rtl" size={size} color={color} />;
+};
+export const ReminderIcon = ({size = 20, color = Colors.Green}) => {
+  return <Icons.Ionicons name="alarm-sharp" size={size} color={color} />;
+};
+export const RepeatIcon = ({size = 20, color = Colors.Blue}) => {
+  return <Icons.FontAwesome name="repeat" size={size} color={color} />;
+};
+export const TimeIcon = ({size = 20, color = Colors.Blue}) => {
+  return <Icons.MaterialIcons name="access-time" size={size} color={color} />;
+};
+export const UTurnIcon = ({size = 20, color = Colors.Blue}) => {
   return (
-    <Icons.Ionicons
-      name='eye'
+    <Icons.MaterialCommunityIcons
+      name="undo-variant"
       size={size}
       color={color}
     />
-  )
-}
-export const NotViewPassIcon = ({ size = 20, color = Colors.lightBlack }) => {
-  return (
-    <Icons.Ionicons
-      name='eye-off'
-      size={size}
-      color={color}
-    />
-  )
-}
-export const SettingsIcon = ({ size = 20, color = Colors.Blue }) => {
-  return (
-    <Icons.Ionicons
-      name='settings'
-      size={size}
-      color={color}
-    />
-  )
-}
-export const NotificationIcon = ({ size = 20, color = Colors.LightGreen }) => {
-  return (
-    <Icons.Ionicons
-      name='notifications'
-      size={size}
-      color={color}
-    />
-  )
-}
-export const ErrorIcon = ({ size = 20, color = Colors.Red }) => {
-  return (
-    <Icons.MaterialIcons
-      name='error'
-      size={size}
-      color={color}
-    />
-  )
-}
-export const CloseIcon = ({ size = 20, color = Colors.Blue }) => {
-  return (
-    <Icons.Ionicons
-      name='close'
-      size={size}
-      color={color}
-    />
-  )
-}
-export const CheckListIcon = ({ size = 20, color = Colors.Blue }) => {
-  return (
-    <Icons.MaterialIcons
-      name='checklist-rtl'
-      size={size}
-      color={color}
-    />
-  )
-}
-export const ReminderIcon = ({ size = 20, color = Colors.Green }) => {
-  return (
-    <Icons.Ionicons
-      name='alarm-sharp'
-      size={size}
-      color={color}
-    />
-  )
-}
-export const RepeatIcon = ({ size = 20, color = Colors.Blue }) => {
-  return (
-    <Icons.FontAwesome
-      name='repeat'
-      size={size}
-      color={color}
-    />
-  )
-}
-export const TimeIcon = ({ size = 20, color = Colors.Blue }) => {
-  return (
-    <Icons.MaterialIcons
-      name='access-time'
-      size={size}
-      color={color}
-    />
-  )
-}
-
+  );
+};
 export const HelpIcon = ({ size = 20, color = '#FFAC07' }) => {
   return (
     <Icons.MaterialIcons
       name='help'
+      size={size}
+      color={color}
+    />
+  )
+}
+export const ShareIcon = ({ size = 20, color = Colors.Blue }) => {
+  return (
+    <Icons.MaterialIcons
+      name='share'
       size={size}
       color={color}
     />

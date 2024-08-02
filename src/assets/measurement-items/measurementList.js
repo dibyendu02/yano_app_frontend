@@ -1,9 +1,8 @@
-
 export const measurementList = [
     {
         title: 'Heart rate',
         img: require('./images/heart_rate.png'),
-        path: ''
+        path: 'HeartRateMeasurement'
     },
     {
         title: "Blood pressure",
@@ -18,34 +17,34 @@ export const measurementList = [
     {
         title: "Body temperature",
         img: require('./images/temparature.png'),
-        path: ''
+        path: 'BodyTemperatureMeasurement'
     },
     {
         title: "ECG",
         img: require('./images/ecg.png'),
-        path: ''
+        path: 'EcgMeasurement'
     },
     {
         title: "Glucose level",
         img: require('./images/glucose.png'),
-        path: ''
+        path: 'BloodGlucoseTest'
     },
 ]
 
 export const DeviceSettings = [
-    {
-        title: "ECG Settings",
-        img: require('./images/monitor_heart.png'),
-        path: 'DeviceInnerSettings'
-    },
-    {
-        title: "Warranty",
-        img: require('./images/verified.png'),
-        path: ''
-    },
-    {
-        title: "Yano's support",
-        img: require('./images/live_help.png'),
-        path: ''
-    },
-]
+  {
+    title: 'ECG Settings',
+    img: require('./images/monitor_heart.png'),
+    path: 'DeviceInnerSettings',
+  },
+  {
+    title: 'Warranty',
+    img: require('./images/verified.png'),
+    path: '',
+  },
+  {
+    title: "Yano's support",
+    img: require('./images/live_help.png'),
+    path: '',
+  },
+];

@@ -5,9 +5,11 @@ import { Colors } from '../../../../constants/Colors'
 import CommonMeasurementScreen from '../components/CommonMeasurementScreen'
 import MeasurementBox from '../components/MeasurementBox'
 import { DummyImage } from '../../../../assets/dummy/images'
+import { ShareIcon } from '../../../../assets/icon/IconNames'
 
 const BloodPressureScreen = () => {
     const [loading, setLoading] = useState(false)
+    const [count, setCount] = useState(0)
     const [values, setValues] = useState({
         systolic: 0,
         diastolic: 0,
@@ -18,10 +20,11 @@ const BloodPressureScreen = () => {
         const interval = setInterval(() => {
             setLoading(false);
             setValues({
-                systolic: Math.floor(Math.random() * 200),
-                diastolic: Math.floor(Math.random() * 200),
-                heartRate: Math.floor(Math.random() * 200)
+                systolic: 119,
+                diastolic: 78,
+                heartRate: 73
             })
+            setCount(count + 1)
         }, 3000);
         return () => clearInterval(interval);
     }
@@ -32,7 +35,10 @@ const BloodPressureScreen = () => {
             onPress={handleStartMeasurements}
             element={
                 <>
-                    <Header title='Blood Pressure' />
+                    <Header
+                        title='Blood Pressure'
+                        headerRightComponent={<ShareIcon />}
+                    />
                     <ScrollView>
                         <View style={{ padding: 20 }}>
                             <View style={{
@@ -66,7 +72,7 @@ const BloodPressureScreen = () => {
                                 />
                             </View>
 
-                            <View style={{
+                            {count !== 0 && <View style={{
                                 padding: 20,
                                 backgroundColor: Colors.White,
                                 borderRadius: 10,
@@ -101,6 +107,7 @@ const BloodPressureScreen = () => {
                                     />
                                 </View>
                             </View>
+                            }
                         </View>
                     </ScrollView>
                 </>

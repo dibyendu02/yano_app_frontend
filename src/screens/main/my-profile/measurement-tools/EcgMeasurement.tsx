@@ -7,7 +7,7 @@ import { Colors } from '../../../../constants/Colors'
 import { DummyImage } from '../../../../assets/dummy/images'
 import { ShareIcon } from '../../../../assets/icon/IconNames'
 
-const BloodOxygenScreen = () => {
+const EcgMeasurement = () => {
     const [loading, setLoading] = useState(false)
     const [count, setCount] = useState(0)
 
@@ -35,11 +35,47 @@ const BloodOxygenScreen = () => {
                 element={
                     <>
                         <Header
-                            title='Blood Oxygen'
+                            title='ECG'
                             headerRightComponent={<ShareIcon />}
                         />
                         <ScrollView>
                             <View style={{ padding: 15 }}>
+                                <View
+                                    style={{
+                                        backgroundColor: Colors.White,
+                                        width: '100%', 
+                                        borderRadius: 10,
+                                        padding: 20
+                                    }}
+                                >
+                                    <Image
+                                        source={DummyImage.graph}
+                                        style={{
+                                            width: '100%',
+                                            objectFit: 'cover',
+                                        }}
+                                    />
+                                    <View style={{
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-around',
+                                        marginTop: 20
+                                    }}>
+                                        <Text style={{
+                                            fontSize: 14,
+                                            fontWeight: '500',
+                                            color: Colors.SteelBlue
+                                        }} >
+                                            Gain: 10mm/mv 
+                                        </Text>
+                                        <Text style={{
+                                            fontSize: 14,
+                                            fontWeight: '500',
+                                            color: Colors.SteelBlue
+                                        }} >
+                                            Paper speed: 10mm/mv
+                                        </Text>
+                                    </View>
+                                </View>
                                 <View style={{ padding: 20 }}>
                                     <View style={{
                                         flexDirection: 'row',
@@ -49,9 +85,9 @@ const BloodOxygenScreen = () => {
                                         <MeasurementBox
                                             loading={loading}
                                             fields={{
-                                                name: 'SpO2H',
-                                                value: values.spo2,
-                                                unit: '%'
+                                                name: 'Heart Rate',
+                                                value: values.heartRate,
+                                                unit: 'Beats/min'
                                             }}
                                             customStyles={{
                                                 width: '70%',
@@ -60,9 +96,9 @@ const BloodOxygenScreen = () => {
                                         <MeasurementBox
                                             loading={false}
                                             fields={{
-                                                name: 'Heart Rate',
-                                                value: values.heartRate,
-                                                unit: 'Beats/min'
+                                                name: 'Time Left',
+                                                value: values.spo2,
+                                                unit: 'Seconds'
                                             }}
                                         />
                                     </View>
@@ -112,6 +148,6 @@ const BloodOxygenScreen = () => {
     )
 }
 
-export default BloodOxygenScreen
+export default EcgMeasurement
 
 const styles = StyleSheet.create({})

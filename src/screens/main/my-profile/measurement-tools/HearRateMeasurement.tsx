@@ -7,7 +7,7 @@ import { Colors } from '../../../../constants/Colors'
 import { DummyImage } from '../../../../assets/dummy/images'
 import { ShareIcon } from '../../../../assets/icon/IconNames'
 
-const BloodOxygenScreen = () => {
+const HeartRateMeasurement = () => {
     const [loading, setLoading] = useState(false)
     const [count, setCount] = useState(0)
 
@@ -35,7 +35,7 @@ const BloodOxygenScreen = () => {
                 element={
                     <>
                         <Header
-                            title='Blood Oxygen'
+                            title='Heart Rate'
                             headerRightComponent={<ShareIcon />}
                         />
                         <ScrollView>
@@ -49,20 +49,23 @@ const BloodOxygenScreen = () => {
                                         <MeasurementBox
                                             loading={loading}
                                             fields={{
-                                                name: 'SpO2H',
-                                                value: values.spo2,
-                                                unit: '%'
+                                                name: 'Heart Rate',
+                                                value: values.heartRate,
+                                                unit: 'Beats/min'
                                             }}
                                             customStyles={{
-                                                width: '70%',
+                                                width: '60%',
                                             }}
                                         />
                                         <MeasurementBox
                                             loading={false}
                                             fields={{
-                                                name: 'Heart Rate',
-                                                value: values.heartRate,
-                                                unit: 'Beats/min'
+                                                name: 'Blood Oxygen',
+                                                value: values.spo2,
+                                                unit: 'SpO2H'
+                                            }}
+                                            customStyles={{
+                                                width: '40%',
                                             }}
                                         />
                                     </View>
@@ -112,6 +115,6 @@ const BloodOxygenScreen = () => {
     )
 }
 
-export default BloodOxygenScreen
+export default HeartRateMeasurement
 
 const styles = StyleSheet.create({})

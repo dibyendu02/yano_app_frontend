@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React, { FC } from 'react'
 import CommonLayout from '../../../../components/CommonLayout'
-import { navigate } from '../../../../navigation/RootNavigation'
 import { Colors } from '../../../../constants/Colors'
 import FilledButton from '../../../../components/buttons/FilledButton'
 import { HelpIcon } from '../../../../assets/icon/IconNames'
@@ -12,7 +11,7 @@ type props = {
     onPress?: () => void
 }
 
-const CommonMeasurementScreen: FC<props> = ({ element,loading, onPress }) => {
+const CommonMeasurementScreen: FC<props> = ({ element, loading, onPress }) => {
     return (
         <CommonLayout>
             {element}
@@ -21,7 +20,7 @@ const CommonMeasurementScreen: FC<props> = ({ element,loading, onPress }) => {
                     loading ?
                         <FilledButton
                             label='Stop measuring'
-                            type='red' 
+                            type='red'
                         />
                         : (
                             <>

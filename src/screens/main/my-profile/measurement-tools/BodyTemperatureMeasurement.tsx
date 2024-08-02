@@ -7,22 +7,16 @@ import { Colors } from '../../../../constants/Colors'
 import { DummyImage } from '../../../../assets/dummy/images'
 import { ShareIcon } from '../../../../assets/icon/IconNames'
 
-const BloodOxygenScreen = () => {
+const BodyTemperatureMeasurement = () => {
     const [loading, setLoading] = useState(false)
     const [count, setCount] = useState(0)
 
-    const [values, setValues] = useState({
-        spo2: 0,
-        heartRate: 0
-    })
+    const [values, setValues] = useState(0)
     const handleStartMeasurements = () => {
         setLoading(true);
         const interval = setInterval(() => {
             setLoading(false);
-            setValues({
-                spo2: 100,
-                heartRate: 74
-            })
+            setValues(37)
             setCount(count + 1)
         }, 3000);
         return () => clearInterval(interval);
@@ -35,7 +29,7 @@ const BloodOxygenScreen = () => {
                 element={
                     <>
                         <Header
-                            title='Blood Oxygen'
+                            title='Body Temperature'
                             headerRightComponent={<ShareIcon />}
                         />
                         <ScrollView>
@@ -49,22 +43,14 @@ const BloodOxygenScreen = () => {
                                         <MeasurementBox
                                             loading={loading}
                                             fields={{
-                                                name: 'SpO2H',
-                                                value: values.spo2,
-                                                unit: '%'
+                                                name: 'Body Temperature',
+                                                value: values,
+                                                unit: '°C'
                                             }}
                                             customStyles={{
-                                                width: '70%',
+                                                width: '100%',
                                             }}
-                                        />
-                                        <MeasurementBox
-                                            loading={false}
-                                            fields={{
-                                                name: 'Heart Rate',
-                                                value: values.heartRate,
-                                                unit: 'Beats/min'
-                                            }}
-                                        />
+                                        /> 
                                     </View>
                                     {count !== 0 &&
                                         <View style={{
@@ -88,7 +74,7 @@ const BloodOxygenScreen = () => {
                                                     fontSize: 20,
                                                     fontWeight: '600',
                                                     color: Colors.Blue
-                                                }} >Normal blood pressure</Text>
+                                                }} >Normal Body Temperature</Text>
                                             </View>
                                             <View>
                                                 <Image
@@ -112,6 +98,6 @@ const BloodOxygenScreen = () => {
     )
 }
 
-export default BloodOxygenScreen
+export default BodyTemperatureMeasurement
 
 const styles = StyleSheet.create({})

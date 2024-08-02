@@ -14,4 +14,5 @@ export const DummyImage = {
   notification: require('./notifications.png'),
   bp: require('./BloodPressure.png'),
   bloodOxygen: require('./bloodOxygen.png'),
+  graph: require('./graph.png'),
 };
