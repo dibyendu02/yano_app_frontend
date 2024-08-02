@@ -12,4 +12,7 @@ export const DummyImage = {
   shop2: require('./shop-2.png'),
   shop3: require('./shop-3.png'),
   notification: require('./notifications.png'),
+  bp: require('./BloodPressure.png'),
+  bloodOxygen: require('./bloodOxygen.png'),
+  graph: require('./graph.png'),
 };

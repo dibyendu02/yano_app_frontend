@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import arrow from '../assets/image/arrow_back.png';
+import {Colors} from '../constants/Colors';
 
 export default function CodeVerification({navigation}) {
   const onChangeText = (e: string) => {
@@ -98,6 +99,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginTop: 5,
     backgroundColor: 'white',
+    color: Colors.Blue,
   },
   bottomView: {
     backgroundColor: 'white',

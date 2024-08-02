@@ -18,7 +18,7 @@ const Landing: React.FC<LandingScreenProps> = ({navigation}) => {
   return (
     <ImageBackground source={StaticImage.Landing} style={styles.container}>
       <SafeAreaView style={styles.contentContainer}>
-        <Image source={StaticImage.Logo} />
+        <Image source={StaticImage.Logo} style={{marginTop: 30}} />
         <View style={{width: '90%', paddingVertical: 20}}>
           <View style={{alignItems: 'center', marginBottom: 50}}>
             <Text style={styles.welcomeText}>Welcome</Text>

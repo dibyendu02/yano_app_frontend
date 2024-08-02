@@ -70,10 +70,17 @@ const HealthParametersList = () => {
                           fontSize: 18,
                           fontFamily: 'Roboto',
                           marginBottom: 4,
+                          color: Colors.Blue,
+                          fontWeight: '800',
                         }}>
                         {e.field_full}
                       </Text>
-                      <Text style={{fontSize: 13, fontFamily: 'Roboto'}}>
+                      <Text
+                        style={{
+                          fontSize: 13,
+                          fontFamily: 'Roboto',
+                          color: Colors.Blue,
+                        }}>
                         {moment(e.timestamp).format('M/D/YYYY - h:mm A')}
                       </Text>
                     </View>

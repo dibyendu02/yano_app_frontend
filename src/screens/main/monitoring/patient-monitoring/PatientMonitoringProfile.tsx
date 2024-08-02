@@ -140,10 +140,16 @@ export default function PatientMonitoringProfile({}) {
                       fontSize: 18,
                       fontFamily: 'Roboto',
                       marginBottom: 4,
+                      color: Colors.Blue,
                     }}>
                     {item.mType}
                   </Text>
-                  <Text style={{fontSize: 13, fontFamily: 'Roboto'}}>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontFamily: 'Roboto',
+                      color: Colors.Blue,
+                    }}>
                     {item.dt}
                   </Text>
                 </View>
@@ -210,7 +216,7 @@ export default function PatientMonitoringProfile({}) {
           </View>
         </Card>
       </ScrollView>
-      <View>
+      <View style={{paddingBottom: 10}}>
         <View style={styles.basicDetails}>
           <View style={styles.stopMonitoringButton}>
             <Icons.Ionicons name="exit-outline" size={20} color={'red'} />

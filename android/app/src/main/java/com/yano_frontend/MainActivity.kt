@@ -1,4 +1,4 @@
-package com.yano_frontend
+package com.YANO
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
