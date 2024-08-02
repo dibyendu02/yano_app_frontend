@@ -12,6 +12,7 @@ import googleIcon from '../assets/image/googleicon.png';
 import facebookIcon from '../assets/image/fbIcon.png';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import arrow from '../assets/image/arrow_back.png';
+import {Colors} from '../constants/Colors';
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
@@ -152,6 +153,7 @@ const styles = StyleSheet.create({
     borderColor: '#E9E9E9',
     borderWidth: 1,
     width: '100%',
+    color: Colors.Blue,
   },
   passwordContainer: {
     flexDirection: 'row',

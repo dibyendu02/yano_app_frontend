@@ -49,7 +49,12 @@ const HealthParameterDetail = ({route}) => {
                     marginRight: 4,
                   }}
                 />
-                <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    color: Colors.Blue,
+                  }}>
                   {'Normal' + ' ' + healthParameterDetail?.field_full}
                 </Text>
               </View>

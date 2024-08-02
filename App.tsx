@@ -29,7 +29,7 @@ export default function App() {
   return (
     <NavigationContainer ref={navigationRef} theme={theme}>
       <UserContext.Provider value={{login, logout}}>
-        {!isLoggedIn ? <MainStack /> : <AuthStack />}
+        {isLoggedIn ? <MainStack /> : <AuthStack />}
       </UserContext.Provider>
     </NavigationContainer>
   );

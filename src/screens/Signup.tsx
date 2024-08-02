@@ -14,6 +14,7 @@ import userpic from '../assets/image/User.png';
 import {Dropdown} from 'react-native-element-dropdown';
 import Icons from '../assets/icon/Icon';
 import arrow from '../assets/image/arrow_back.png';
+import {Colors} from '../constants/Colors';
 
 export default function Signup({navigation}) {
   const [name, setName] = useState('');
@@ -53,6 +54,13 @@ export default function Signup({navigation}) {
       Alert.alert('Success', 'Form submitted');
       navigation.navigate('Verification');
     }
+  };
+  const renderDropdownItem = item => {
+    return (
+      <View style={styles.dropdownItem}>
+        <Text style={styles.dropdownItemText}>{item.label}</Text>
+      </View>
+    );
   };
 
   return (
@@ -123,7 +131,10 @@ export default function Signup({navigation}) {
             valueField="value"
             placeholder="Select Your Gender"
             value={gender}
+            placeholderStyle={{color: '#00263E'}}
+            selectedTextStyle={{color: '#00263E'}}
             onChange={item => setGender(item.value)}
+            renderItem={renderDropdownItem}
           />
         </View>
         <View style={styles.inputField}>
@@ -257,6 +268,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginTop: 5,
+    color: Colors.Blue,
   },
   dropdown: {
     height: 50,
@@ -266,6 +278,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginTop: 5,
     color: '#00263E',
+  },
+  dropdownItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+  },
+  dropdownItemText: {
+    color: '#00263E', // Set the color of the dropdown options here
   },
   continueButton: {
     marginTop: 20,
