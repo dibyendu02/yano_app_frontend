@@ -8,12 +8,12 @@ export const measurementList = [
     {
         title: "Blood pressure",
         img: require('./images/pressure.png'),
-        path: ''
+        path: 'BloodPressureScreen'
     },
     {
         title: "Blood oxygen",
         img: require('./images/bloodOxygen.png'),
-        path: ''
+        path: 'BloodOxygenMeasurement'
     },
     {
         title: "Body temperature",

@@ -70,6 +70,8 @@ import NotificationAlerts from '../../screens/main/monitoring/notification/Notif
 import RemainderScreen from '../../screens/main/monitoring/remainder/RemainderScreen';
 import AddRemainder from '../../screens/main/monitoring/remainder/AddRemainder';
 import SetRepetition from '../../screens/main/monitoring/remainder/SetRepetition';
+import BloodPressureScreen from '../../screens/main/my-profile/measurement-tools/BloodPressureScreen';
+import BloodOxygenScreen from '../../screens/main/my-profile/measurement-tools/BloodOxygen';
 
 const Tab = createBottomTabNavigator();
 
@@ -340,6 +342,20 @@ const MainStack = () => {
       <Stack.Screen
         name="MeasurementTools"
         component={MeasurementToolsHomeScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="BloodPressureScreen"
+        component={BloodPressureScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="BloodOxygenMeasurement"
+        component={BloodOxygenScreen}
         options={{
           headerShown: false,
         }}

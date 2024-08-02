@@ -235,3 +235,13 @@ export const TimeIcon = ({ size = 20, color = Colors.Blue }) => {
     />
   )
 }
+
+export const HelpIcon = ({ size = 20, color = '#FFAC07' }) => {
+  return (
+    <Icons.MaterialIcons
+      name='help'
+      size={size}
+      color={color}
+    />
+  )
+}
