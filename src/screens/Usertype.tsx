@@ -6,14 +6,16 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import arrow from '../assets/image/arrow_back.png';
 import patientLogo from '../assets/image/healthLogo.png';
 import healthcare from '../assets/image/providerLogo.png';
 import Icons from '../assets/icon/Icon';
+import UserContext from '../contexts/UserContext';
 
 export default function Usertype({navigation}) {
   const [selectedUser, setSelectedUser] = useState(null);
+  const {ProviderLogin, PatientLogin} = useContext(UserContext);
 
   const handleSelection = userType => {
     setSelectedUser(userType);
@@ -41,7 +43,11 @@ export default function Usertype({navigation}) {
         <Text style={styles.headerText}>What type of user are you?</Text>
 
         <View style={styles.subContainer}>
-          <TouchableOpacity onPress={() => handleSelection('patient')}>
+          <TouchableOpacity
+            onPress={() => {
+              PatientLogin();
+              handleSelection('patient');
+            }}>
             <View
               style={[
                 styles.PatientDiv,
@@ -54,7 +60,11 @@ export default function Usertype({navigation}) {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => handleSelection('healthcare')}>
+          <TouchableOpacity
+            onPress={() => {
+              ProviderLogin();
+              handleSelection('healthcare');
+            }}>
             <View
               style={[
                 styles.healthCare,

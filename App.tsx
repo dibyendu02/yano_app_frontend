@@ -10,12 +10,25 @@ import {Colors} from './src/constants/Colors';
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  //patient view
+
+  const [isPatient, setIsPatient] = useState(false);
+
+  const PatientLogin = () => {
+    setIsPatient(true);
+  };
+
+  const ProviderLogin = () => {
+    setIsPatient(false);
+  };
+
   const login = () => {
     setIsLoggedIn(true);
   };
 
   const logout = () => {
     setIsLoggedIn(false);
+    setIsPatient(false);
   };
 
   const theme = {
@@ -28,7 +41,8 @@ export default function App() {
 
   return (
     <NavigationContainer ref={navigationRef} theme={theme}>
-      <UserContext.Provider value={{login, logout}}>
+      <UserContext.Provider
+        value={{login, logout, ProviderLogin, PatientLogin, isPatient}}>
         {isLoggedIn ? <MainStack /> : <AuthStack />}
       </UserContext.Provider>
     </NavigationContainer>

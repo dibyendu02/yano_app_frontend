@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import MonitoringPatientHold from '../../screens/MonitoringPatientHold';
@@ -87,13 +87,51 @@ import BloodGlucoseResult from '../../screens/main/monitoring/measurements/Blood
 import HeartRateMeasurement from '../../screens/main/my-profile/measurement-tools/HearRateMeasurement';
 import BodyTemperatureMeasurement from '../../screens/main/my-profile/measurement-tools/BodyTemperatureMeasurement';
 import EcgMeasurement from '../../screens/main/my-profile/measurement-tools/EcgMeasurement';
-
+import PatientVideoCall from '../../screens/main/video-call/PatientVideoCall';
+import UserContext from '../../contexts/UserContext';
 
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
-const Tabs = () => {
+const PatientTabs = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: '#76bc21',
+        tabBarInactiveTintColor: 'black',
+      }}>
+      <Tab.Screen
+        name="MyHealth"
+        component={MyHealthHomeScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Icons.MaterialIcons
+              name="monitor-heart"
+              size={size}
+              color={color}
+            />
+          ),
+          tabBarLabel: 'My Health',
+        }}
+      />
+      <Tab.Screen
+        name="UserProfile"
+        component={UserProfile}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Icons.FontAwesome5 name="user-circle" size={size} color={color} />
+          ),
+          tabBarLabel: 'My Profile',
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
+const ProviderTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -114,38 +152,16 @@ const Tabs = () => {
           ),
         }}
       />
+
       <Tab.Screen
         name="Profile"
         component={MyProfile}
         options={{
           headerShown: false,
 
-          tabBarIcon: ({ color, size }) => (
-
+          tabBarIcon: ({color, size}) => (
             <Icons.FontAwesome5 name="user-circle" size={size} color={color} />
           ),
-        }}
-      />
-      <Tab.Screen
-        name="UserProfile"
-        component={UserProfile}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <Icons.FontAwesome5 name="user-circle" size={size} color={color} />
-          ),
-          tabBarLabel: 'My Profile'
-        }}
-      />
-      <Tab.Screen
-        name="MyHealth"
-        component={MyHealthHomeScreen}
-        options={{
-          headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <Icons.MaterialIcons name="monitor-heart" size={size} color={color} />
-          ),
-          tabBarLabel: 'My Health'
         }}
       />
     </Tab.Navigator>
@@ -153,13 +169,18 @@ const Tabs = () => {
 };
 
 const MainStack = () => {
+  const {isPatient} = useContext(UserContext);
   return (
-
-    <Stack.Navigator initialRouteName='userProfile' >
-
+    <Stack.Navigator initialRouteName="userProfile">
       <Stack.Screen
         name="tabs"
-        component={Tabs}
+        // component={ProviderTabs}
+        component={isPatient ? PatientTabs : ProviderTabs}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PatientVideoCall"
+        component={PatientVideoCall}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -622,14 +643,12 @@ const MainStack = () => {
       />
       {/* Remainders screen end*/}
 
-
-
       {/* user section start */}
       {/* user Profile start */}
       <Stack.Screen
         name="Subscription"
         component={Subscription}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       {/* user Profile end */}
       {/* user section end */}
@@ -675,7 +694,6 @@ const MainStack = () => {
         component={BloodGlucoseResult}
         options={{headerShown: false}}
       />
-
     </Stack.Navigator>
   );
 };
