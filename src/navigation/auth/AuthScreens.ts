@@ -1,6 +1,6 @@
 export const AuthScreen = {
   Landing: 'Landing',
-  Usertype: 'Usertype',
+  SelectUserType: 'SelectUserType',
   Login: 'Login',
   Signup: 'Signup',
   Verification: 'Verification',

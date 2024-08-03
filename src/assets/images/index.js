@@ -4,4 +4,6 @@ export const StaticImage = {
   ListEmpty: require('./list-empty.png'),
   CallIcon: require('./call.png'),
   VideoCallIcon: require('./videocam.png'),
+  PatientLogo: require('./patientLogo.png'),
+  ProviderLogo: require('./providerLogo.png'),
 };
