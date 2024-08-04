@@ -20,6 +20,7 @@ import {FormInputType} from '../../components/hook-form/types';
 import FormDateInput from '../../components/hook-form/FormDateInput';
 import FormSelectionInput from '../../components/hook-form/FormSelectionInput';
 import FilledButton from '../../components/buttons/FilledButton';
+import FormPhoneNumberInput from '../../components/hook-form/FormPhoneNumberInput';
 
 const Gender = [
   {
@@ -126,6 +127,7 @@ const Registration = () => {
                 type={FormInputType.Email}
                 autoCapitalize="none"
               />
+              <FormPhoneNumberInput name="phone" />
               <FormSelectionInput
                 name="gender"
                 placeholder="Select your gender"
