@@ -3,70 +3,64 @@ import {View, Text, StyleSheet} from 'react-native';
 import {Controller, FieldError, useFormContext} from 'react-hook-form';
 import {Colors} from '../../constants/Colors';
 import {TextInput, TextInputProps} from 'react-native-paper';
-import {FormInputType} from './types';
-interface FormInputProps extends TextInputProps {
+import DatePicker from 'react-native-date-picker';
+import moment from 'moment';
+interface FormDateInputProps extends TextInputProps {
   name: string;
   rules?: object;
   label?: string;
-  type?: FormInputType;
 }
 
-const FormInput: FC<FormInputProps> = ({
+const FormDateInput: FC<FormDateInputProps> = ({
   name,
   label,
   rules = {},
-  type = FormInputType.Default,
   ...inputProps
 }) => {
   const {control} = useFormContext();
-  const [showSecureValue, setShowSecureValue] = useState(
-    type === FormInputType.Password,
-  );
-  const defaultRules = {
-    [FormInputType.Default]: {},
-    [FormInputType.Email]: {
-      pattern: {
-        value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
-        message: 'Invalid email address',
-      },
-    },
-    [FormInputType.Password]: {},
-  };
+  const [showDatePicker, setShowDatePicker] = useState(false);
   return (
     <View style={styles.inputBox}>
+      {label && <Text style={styles.label}>{label}</Text>}
       <Controller
         control={control}
-        rules={{...rules, ...defaultRules[type]}}
+        rules={{...rules}}
         render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
           <View>
-            {label && (
-              <Text style={[styles.label, error && {color: Colors.Red}]}>
-                {label}
-              </Text>
-            )}
             <TextInput
               style={[styles.input, error && styles.errorInput]}
               mode="outlined"
               outlineColor="transparent"
               activeOutlineColor="transparent"
               onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              secureTextEntry={showSecureValue}
+              value={moment(value).format('DD/MM/YYYY')}
               outlineStyle={styles.outline}
               cursorColor={Colors.Black}
               selectionColor={Colors.Black}
+              editable={false}
               right={
-                type === FormInputType.Password ? (
-                  <TextInput.Icon
-                    icon={!showSecureValue ? 'eye-off' : 'eye'}
-                    onPress={() => setShowSecureValue(!showSecureValue)}
-                    size={25}
-                    color={Colors.Grey}
-                  />
-                ) : null
+                <TextInput.Icon
+                  icon="calendar-range"
+                  onPress={() => setShowDatePicker(true)}
+                  size={25}
+                  color={Colors.Grey}
+                  forceTextInputFocus={false}
+                />
               }
               {...inputProps}
+            />
+            <DatePicker
+              mode="date"
+              modal
+              open={showDatePicker}
+              date={value ? new Date(value) : new Date()}
+              onConfirm={date => {
+                onChange(date);
+                setShowDatePicker(false);
+              }}
+              onCancel={() => {
+                setShowDatePicker(false);
+              }}
             />
             {error && (
               <Text style={styles.errorText}>
@@ -112,4 +106,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FormInput;
+export default FormDateInput;

@@ -24,8 +24,8 @@ const SwitchButton: FC<SwitchButtonProps> = ({ label, getValue, element }) => {
                 </View>
                 <Switch
                     trackColor={{ false: Colors.LightGray, true: Colors.LighterGreen }}
-                    thumbColor={isEnabled ? Colors.LightGreen : Colors.lightBlack}
-                    ios_backgroundColor={Colors.lightBlack}
+                    thumbColor={isEnabled ? Colors.LightGreen : Colors.LightBlack}
+                    ios_backgroundColor={Colors.LightBlack}
                     onValueChange={toggleSwitch}
                     value={isEnabled}
                 />

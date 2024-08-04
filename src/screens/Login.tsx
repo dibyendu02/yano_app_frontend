@@ -11,8 +11,9 @@ import React, {useState} from 'react';
 import googleIcon from '../assets/image/googleicon.png';
 import facebookIcon from '../assets/image/fbIcon.png';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import arrow from '../assets/image/arrow_back.png';
 import {Colors} from '../constants/Colors';
+import {navigate} from '../navigation/RootNavigation';
+import {AuthScreen} from '../navigation/auth/AuthScreens';
 
 export default function Login({navigation}) {
   const [email, setEmail] = useState('');
@@ -27,7 +28,7 @@ export default function Login({navigation}) {
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
           <Text style={styles.text}>Not Registered?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
+          <TouchableOpacity onPress={() => navigate(AuthScreen.Registration)}>
             <Text style={styles.loginButton}>Sign Up</Text>
           </TouchableOpacity>
         </View>

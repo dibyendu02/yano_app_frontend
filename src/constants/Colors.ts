@@ -13,7 +13,7 @@ export const Colors = {
   CeruleanBlue: '#1565C0',
   Transparent: 'transparent',
   Orange: '#FFA726',
-  lightBlack: '#617987',
+  LightBlack: '#617987',
   LighterGreen: '#76BC2161',
   lightBlue: '#ECF9FD',
 };

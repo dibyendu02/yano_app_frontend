@@ -131,10 +131,10 @@ export const OkIcon = ({size = 20, color = Colors.Green}) => {
   );
 };
 
-export const ViewPassIcon = ({size = 20, color = Colors.lightBlack}) => {
+export const ViewPassIcon = ({size = 20, color = Colors.LightBlack}) => {
   return <Icons.Ionicons name="eye" size={size} color={color} />;
 };
-export const NotViewPassIcon = ({size = 20, color = Colors.lightBlack}) => {
+export const NotViewPassIcon = ({size = 20, color = Colors.LightBlack}) => {
   return <Icons.Ionicons name="eye-off" size={size} color={color} />;
 };
 export const SettingsIcon = ({size = 20, color = Colors.Blue}) => {
