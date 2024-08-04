@@ -80,7 +80,7 @@ const SelectUserType = () => {
         label="Continue"
         disabled={!selectedRole}
         style={{width: '90%', marginVertical: 10, alignSelf: 'center'}}
-        onPress={() => navigate(AuthScreen.Signup)}
+        onPress={() => navigate(AuthScreen.Registration)}
       />
     </SafeAreaView>
   );

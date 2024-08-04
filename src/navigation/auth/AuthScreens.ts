@@ -1,8 +1,8 @@
 export const AuthScreen = {
   Landing: 'Landing',
+  Registration: 'Registration',
   SelectUserType: 'SelectUserType',
   Login: 'Login',
-  Signup: 'Signup',
   Verification: 'Verification',
   CodeVerification: 'CodeVerification',
   LoadingScreen: 'LoadingScreen',
