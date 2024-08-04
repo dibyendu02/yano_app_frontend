@@ -89,6 +89,11 @@ import BodyTemperatureMeasurement from '../../screens/main/my-profile/measuremen
 import EcgMeasurement from '../../screens/main/my-profile/measurement-tools/EcgMeasurement';
 import PatientVideoCall from '../../screens/main/video-call/PatientVideoCall';
 import UserContext from '../../contexts/UserContext';
+import UserFamilyMembers from '../../screens/main/user-screen/user-family/UserFamilyMembers';
+import ViewFamilyMemberDetails from '../../screens/main/user-screen/user-family/ViewFamilyMemberDetails';
+import AddUserFamilyMember from '../../screens/main/user-screen/user-family/AddUserFamilyMember';
+import EditUserFamilyMember from '../../screens/main/user-screen/user-family/EditUserFamilyMember';
+import LoadingAfterSave from '../../screens/main/user-screen/user-family/LoadingAfterSave';
 
 const Tab = createBottomTabNavigator();
 
@@ -171,7 +176,7 @@ const ProviderTabs = () => {
 const MainStack = () => {
   const {isPatient} = useContext(UserContext);
   return (
-    <Stack.Navigator initialRouteName="userProfile">
+    <Stack.Navigator initialRouteName="UserFamilyMembers">
       <Stack.Screen
         name="tabs"
         // component={ProviderTabs}
@@ -693,6 +698,32 @@ const MainStack = () => {
         name="BloodGlucoseResult"
         component={BloodGlucoseResult}
         options={{headerShown: false}}
+      />
+      {/* user family */}
+      <Stack.Screen
+        name="UserFamilyMembers"
+        component={UserFamilyMembers}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="UserFamilyMemberDetails"
+        component={ViewFamilyMemberDetails}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddUserFamilyMember"
+        component={AddUserFamilyMember}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditFamilyMembers"
+        component={EditUserFamilyMember}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FamilyMemberSaved"
+        component={LoadingAfterSave}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
