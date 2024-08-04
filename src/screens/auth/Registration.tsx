@@ -101,6 +101,9 @@ const DoctorSpecialties = [
 
 const Registration = () => {
   const {...methods} = useForm({mode: 'onBlur'});
+  const onSubmit = (data: any) => {
+    console.log(data);
+  };
   return (
     <SafeAreaView style={{flex: 1}}>
       <KeyboardAvoidingView
@@ -199,7 +202,7 @@ const Registration = () => {
         type="blue"
         style={{width: '90%', alignSelf: 'center', marginVertical: 10}}
         disabled={!methods.formState.isValid}
-        onPress={methods.handleSubmit(data => console.log(data))}
+        onPress={methods.handleSubmit(onSubmit)}
       />
     </SafeAreaView>
   );
