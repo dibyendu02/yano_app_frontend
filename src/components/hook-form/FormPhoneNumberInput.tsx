@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
 import React, {FC, useState} from 'react';
 import {
@@ -58,9 +59,23 @@ const FormPhoneNumberInput: FC<FormPhoneNumberInputProps> = ({
               outlineStyle={styles.outline}
               cursorColor={Colors.Black}
               selectionColor={Colors.Black}
-              editable={false}
               placeholder={placeholder}
               placeholderTextColor={Colors.LightBlack}
+              inputMode="numeric"
+              left={
+                <TextInput.Icon
+                  icon={() => (
+                    <Image
+                      source={CountryFlags['IN']}
+                      style={{
+                        height: 30,
+                        width: 30,
+                        resizeMode: 'contain',
+                      }}
+                    />
+                  )}
+                />
+              }
               right={
                 <TextInput.Icon
                   icon="chevron-down"
@@ -112,8 +127,9 @@ const FormPhoneNumberInput: FC<FormPhoneNumberInputProps> = ({
                           <Image
                             source={CountryFlags[item.code]}
                             style={{
-                              height: 20,
-                              width: 20,
+                              height: 30,
+                              width: 30,
+                              aspectRatio: '16/9',
                               marginHorizontal: 10,
                             }}
                           />
