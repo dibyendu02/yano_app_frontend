@@ -5,7 +5,7 @@ import {Controller, FieldError, useFormContext} from 'react-hook-form';
 import {Colors} from '../../constants/Colors';
 import {RadioButton, TextInput} from 'react-native-paper';
 import BottomSheet from '../bottom-sheet/BottomSheet';
-import FilledButton from '../buttons/FilledButton';
+// import FilledButton from '../buttons/FilledButton';
 
 interface FormSelectionOption {
   id: string;
@@ -36,6 +36,7 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
   const [showOptionsModal, setShowOptionsModal] = useState(false);
   const handleOptionValueSelection = (value: string) => {
     setValue(name, value);
+    setShowOptionsModal(false);
   };
   return (
     <View style={styles.inputBox}>
@@ -135,7 +136,7 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
                       />
                     </RadioButton.Group>
                   </View>
-                  <View
+                  {/* <View
                     style={{
                       flexDirection: 'row',
                       justifyContent: 'space-around',
@@ -154,7 +155,7 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
                       style={styles.bottomSheetBtn}
                       disabled={!value}
                     />
-                  </View>
+                  </View> */}
                 </View>
               </BottomSheet>
             )}

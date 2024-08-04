@@ -102,83 +102,106 @@ const DoctorSpecialties = [
 const Registration = () => {
   const {...methods} = useForm({mode: 'onBlur'});
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={{flex: 1}}>
-      <SafeAreaView style={{flex: 1}}>
-        <Header
-          title=""
-          headerRightComponent={
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Text style={styles.text}>Already Registered?</Text>
-              <TouchableOpacity onPress={() => navigate(AuthScreen.Login)}>
-                <Text style={styles.loginButton}>Log in</Text>
-              </TouchableOpacity>
-            </View>
-          }
-        />
-        <View style={styles.body}>
-          <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
-            <FormProvider {...methods}>
-              <FormImageInput name="profileImage" />
-              <FormInput
-                name="firstName"
-                label="First Name"
-                placeholder="Enter your first name"
-              />
-              <FormInput
-                name="lastName"
-                label="Last Name"
-                placeholder="Enter your last name"
-              />
-              <FormInput
-                name="email"
-                label="Email"
-                type={FormInputType.Email}
-                placeholder="Enter your email"
-                autoCapitalize="none"
-                keyboardType="email-address"
-              />
-              <FormPhoneNumberInput name="phone" label="Phone number" />
-              <FormSelectionInput
-                name="gender"
-                placeholder="Select your gender"
-                options={Gender}
-                label="Gender"
-                optionsListLabel="Select your gender"
-                optionsListHeight={400}
-              />
-              <FormDateInput name="dob" label="Date of birth" />
-              <FormSelectionInput
-                name="specialty"
-                placeholder="Select your specialty"
-                label="Specialty"
-                options={DoctorSpecialties}
-                optionsListLabel="Select your specialty"
-                optionsListHeight={400}
-              />
-              <FormInput
-                name="password"
-                label="Password"
-                type={FormInputType.Password}
-                placeholder="Enter your password"
-              />
-              <FormInput
-                name="repeatPassword"
-                label="Repeat Password"
-                type={FormInputType.Password}
-                placeholder="Confirm password"
-              />
-            </FormProvider>
-          </ScrollView>
+    <SafeAreaView style={{flex: 1}}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{flex: 1}}>
+        <View style={{flex: 1}}>
+          <Header
+            title=""
+            headerRightComponent={
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Text style={styles.text}>Already Registered?</Text>
+                <TouchableOpacity onPress={() => navigate(AuthScreen.Login)}>
+                  <Text style={styles.loginButton}>Log in</Text>
+                </TouchableOpacity>
+              </View>
+            }
+          />
+          <View style={styles.body}>
+            <Text
+              style={{
+                color: Colors.Blue,
+                fontWeight: 'bold',
+                fontSize: 24,
+                marginTop: 10,
+              }}>
+              Sign up
+            </Text>
+            <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+              <FormProvider {...methods}>
+                <FormImageInput name="profileImage" />
+                <FormInput
+                  name="firstName"
+                  label="First Name"
+                  placeholder="Enter your first name"
+                />
+                <FormInput
+                  name="lastName"
+                  label="Last Name"
+                  placeholder="Enter your last name"
+                />
+                <FormInput
+                  name="email"
+                  label="Email"
+                  type={FormInputType.Email}
+                  placeholder="Enter your email"
+                  autoCapitalize="none"
+                  keyboardType="email-address"
+                />
+                <FormPhoneNumberInput name="phone" label="Phone number" />
+                <FormSelectionInput
+                  name="gender"
+                  placeholder="Select your gender"
+                  options={Gender}
+                  label="Gender"
+                  optionsListLabel="Select your gender"
+                  optionsListHeight={200}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: 'Please select your gender',
+                    },
+                  }}
+                />
+                <FormDateInput
+                  name="dob"
+                  label="Date of birth"
+                  placeholder="Select your DOB"
+                />
+                <FormSelectionInput
+                  name="specialty"
+                  placeholder="Select your specialty"
+                  label="Specialty"
+                  options={DoctorSpecialties}
+                  optionsListLabel="Select your specialty"
+                  optionsListHeight={400}
+                />
+                <FormInput
+                  name="password"
+                  label="Password"
+                  type={FormInputType.Password}
+                  placeholder="Enter your password"
+                />
+                <FormInput
+                  name="repeatPassword"
+                  label="Repeat Password"
+                  type={FormInputType.Password}
+                  placeholder="Confirm password"
+                />
+              </FormProvider>
+            </ScrollView>
+          </View>
         </View>
-        <FilledButton
-          label="Continue"
-          type="blue"
-          style={{width: '90%', alignSelf: 'center'}}
-        />
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+      <FilledButton
+        label="Continue"
+        type="blue"
+        style={{width: '90%', alignSelf: 'center', marginVertical: 10}}
+        disabled={!methods.formState.isValid}
+        onPress={methods.handleSubmit(data => console.log(data))}
+      />
+    </SafeAreaView>
   );
 };
 

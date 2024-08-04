@@ -9,12 +9,14 @@ interface FormDateInputProps extends TextInputProps {
   name: string;
   rules?: object;
   label?: string;
+  placeholder?: string;
 }
 
 const FormDateInput: FC<FormDateInputProps> = ({
   name,
   label,
   rules = {},
+  placeholder,
   ...inputProps
 }) => {
   const {control} = useFormContext();
@@ -33,11 +35,12 @@ const FormDateInput: FC<FormDateInputProps> = ({
               outlineColor="transparent"
               activeOutlineColor="transparent"
               onBlur={onBlur}
-              value={moment(value).format('DD/MM/YYYY')}
+              value={value ? moment(value).format('DD/MM/YYYY') : ''}
               outlineStyle={styles.outline}
               cursorColor={Colors.Black}
               selectionColor={Colors.Black}
               editable={false}
+              placeholder={placeholder}
               right={
                 <TextInput.Icon
                   icon="calendar-range"
@@ -70,6 +73,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
           </View>
         )}
         name={name}
+        defaultValue={undefined}
       />
     </View>
   );
