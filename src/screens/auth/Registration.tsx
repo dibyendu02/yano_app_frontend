@@ -21,6 +21,7 @@ import FormDateInput from '../../components/hook-form/FormDateInput';
 import FormSelectionInput from '../../components/hook-form/FormSelectionInput';
 import FilledButton from '../../components/buttons/FilledButton';
 import FormPhoneNumberInput from '../../components/hook-form/FormPhoneNumberInput';
+import FormImageInput from '../../components/hook-form/FormImageInput';
 
 const Gender = [
   {
@@ -119,15 +120,26 @@ const Registration = () => {
         <View style={styles.body}>
           <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
             <FormProvider {...methods}>
-              <FormInput name="Name" label="Name" />
-              <FormInput name="lastName" label="Last Name" />
+              <FormImageInput name="profileImage" />
+              <FormInput
+                name="firstName"
+                label="First Name"
+                placeholder="Enter your first name"
+              />
+              <FormInput
+                name="lastName"
+                label="Last Name"
+                placeholder="Enter your last name"
+              />
               <FormInput
                 name="email"
                 label="Email"
                 type={FormInputType.Email}
+                placeholder="Enter your email"
                 autoCapitalize="none"
+                keyboardType="email-address"
               />
-              <FormPhoneNumberInput name="phone" />
+              <FormPhoneNumberInput name="phone" label="Phone number" />
               <FormSelectionInput
                 name="gender"
                 placeholder="Select your gender"
@@ -149,11 +161,13 @@ const Registration = () => {
                 name="password"
                 label="Password"
                 type={FormInputType.Password}
+                placeholder="Enter your password"
               />
               <FormInput
                 name="repeatPassword"
                 label="Repeat Password"
                 type={FormInputType.Password}
+                placeholder="Confirm password"
               />
             </FormProvider>
           </ScrollView>

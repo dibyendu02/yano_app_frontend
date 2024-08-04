@@ -28,6 +28,7 @@
     "react-native-encrypted-storage": "^4.0.3",
     "react-native-fs": "^2.20.0",
     "react-native-gifted-charts": "^1.4.22",
+    "react-native-image-crop-picker": "^0.31.0",
     "react-native-linear-gradient": "^2.8.3",
     "react-native-modal": "^13.0.1",
     "react-native-paper": "^5.12.5",

@@ -6,4 +6,5 @@ export const StaticImage = {
   VideoCallIcon: require('./videocam.png'),
   PatientLogo: require('./patientLogo.png'),
   ProviderLogo: require('./providerLogo.png'),
+  PersonPlaceholder: require('./person-placeholder.png'),
 };

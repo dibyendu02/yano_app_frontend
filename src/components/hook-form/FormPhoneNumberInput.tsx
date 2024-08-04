@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react-native/no-inline-styles */
-import React, {FC, useState} from 'react';
+import React, {FC, useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,6 @@ import {Controller, FieldError, useFormContext} from 'react-hook-form';
 import {Colors} from '../../constants/Colors';
 import {TextInput} from 'react-native-paper';
 import BottomSheet from '../bottom-sheet/BottomSheet';
-import FilledButton from '../buttons/FilledButton';
 import {getCountryCodeWithFlagAndName} from '../../utils/CountryCodeUtils';
 import {CountryFlags} from '../../assets/country-flags';
 
@@ -33,14 +32,28 @@ const FormPhoneNumberInput: FC<FormPhoneNumberInputProps> = ({
   const countryList = getCountryCodeWithFlagAndName();
   const {control, setValue} = useFormContext();
   const [showOptionsModal, setShowOptionsModal] = useState(false);
-  const handleOptionValueSelection = (value: string) => {
-    setValue(name, value);
+  const [selectedCountry, setSelectedCountry] = useState(countryList[0]);
+
+  useEffect(() => {
+    setValue(name, `${selectedCountry.phoneCode}`);
+  }, [selectedCountry, setValue, name]);
+
+  const handleOptionValueSelection = (country: any) => {
+    setSelectedCountry(country);
+    setShowOptionsModal(false);
   };
+
   return (
     <View style={styles.inputBox}>
       <Controller
         control={control}
-        rules={{...rules}}
+        rules={{
+          ...rules,
+          pattern: {
+            value: new RegExp(selectedCountry.regex),
+            message: 'Enter valid mobile number!',
+          },
+        }}
         render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
           <View>
             {label && (
@@ -66,7 +79,7 @@ const FormPhoneNumberInput: FC<FormPhoneNumberInputProps> = ({
                 <TextInput.Icon
                   icon={() => (
                     <Image
-                      source={CountryFlags['IN']}
+                      source={CountryFlags[selectedCountry.code]}
                       style={{
                         height: 30,
                         width: 30,
@@ -119,11 +132,11 @@ const FormPhoneNumberInput: FC<FormPhoneNumberInputProps> = ({
                     <FlatList
                       data={countryList}
                       showsVerticalScrollIndicator={false}
-                      renderItem={({item, index: _i}) => (
+                      renderItem={({item}) => (
                         <TouchableOpacity
                           key={item.code}
                           style={styles.optionItemContainer}
-                          onPress={() => handleOptionValueSelection(item.code)}>
+                          onPress={() => handleOptionValueSelection(item)}>
                           <Image
                             source={CountryFlags[item.code]}
                             style={{
@@ -136,30 +149,10 @@ const FormPhoneNumberInput: FC<FormPhoneNumberInputProps> = ({
                           <Text
                             style={styles.optionItemLabel}
                             numberOfLines={2}>
-                            {`${item.name}(${item.phoneCode})`}
+                            {`${item.name} (${item.phoneCode})`}
                           </Text>
                         </TouchableOpacity>
                       )}
-                    />
-                  </View>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-around',
-                      alignItems: 'center',
-                      width: '90%',
-                      paddingVertical: 10,
-                    }}>
-                    <FilledButton
-                      label="Cancel"
-                      type="lightGrey"
-                      style={styles.bottomSheetBtn}
-                    />
-                    <FilledButton
-                      label="Accept"
-                      type="blue"
-                      style={styles.bottomSheetBtn}
-                      disabled={!value}
                     />
                   </View>
                 </View>
@@ -168,6 +161,7 @@ const FormPhoneNumberInput: FC<FormPhoneNumberInputProps> = ({
           </View>
         )}
         name={name}
+        defaultValue={`${countryList[0].phoneCode}`}
       />
     </View>
   );
