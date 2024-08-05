@@ -2,11 +2,12 @@ import { Image, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-n
 import React from 'react'
 import Header from '../../../../components/header/Header'
 import { DummyImage } from '../../../../assets/dummy/images'
-import { Colors } from '../../../../constants/Colors' 
+import { Colors } from '../../../../constants/Colors'
 import PatientElements from '../../../../components/PatientElements'
 import OutlineButton from '../../../../components/buttons/OutlineButton'
+import { navigate } from '../../../../navigation/RootNavigation'
 
-const ChooseDevice = ({ navigation }: any) => {
+const ChooseDevice = () => {
     return (
         <SafeAreaView
             style={{
@@ -20,7 +21,7 @@ const ChooseDevice = ({ navigation }: any) => {
                 <View style={{ padding: 20 }}>
                     <PatientElements
                         name='Monitor Multiparámetros Yano'
-                        onPress={navigation.navigate('')}
+                        onPress={() => navigate('DeviceInfo')}
                         element={
                             <Image
                                 source={DummyImage.device}
@@ -41,6 +42,7 @@ const ChooseDevice = ({ navigation }: any) => {
                 <OutlineButton
                     label='Click here to buy'
                     type='blue'
+                    onPress={() => navigate('DeviceAndAccessories')}
                 />
             </View>
         </SafeAreaView>

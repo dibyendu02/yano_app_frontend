@@ -13,12 +13,13 @@ import {LandingScreenProps} from '../../navigation/auth/types';
 import {Colors} from '../../constants/Colors';
 import {StaticImage} from '../../assets/images';
 import {AuthScreen} from '../../navigation/auth/AuthScreens';
+import {navigate} from '../../navigation/RootNavigation';
 
-const Landing: React.FC<LandingScreenProps> = ({navigation}) => {
+const Landing: React.FC<LandingScreenProps> = () => {
   return (
     <ImageBackground source={StaticImage.Landing} style={styles.container}>
       <SafeAreaView style={styles.contentContainer}>
-        <Image source={StaticImage.Logo} />
+        <Image source={StaticImage.Logo} style={{marginTop: 30}} />
         <View style={{width: '90%', paddingVertical: 20}}>
           <View style={{alignItems: 'center', marginBottom: 50}}>
             <Text style={styles.welcomeText}>Welcome</Text>
@@ -28,12 +29,12 @@ const Landing: React.FC<LandingScreenProps> = ({navigation}) => {
           <FilledButton
             type="white"
             label="Sign Up"
-            onPress={() => navigation.navigate('Usertype')}
+            onPress={() => navigate(AuthScreen.SelectUserType)}
           />
           <FilledButton
             type="blue"
             label="Log in"
-            onPress={() => navigation.navigate(AuthScreen.Login)}
+            onPress={() => navigate(AuthScreen.Login)}
           />
         </View>
       </SafeAreaView>

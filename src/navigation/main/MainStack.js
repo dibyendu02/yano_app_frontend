@@ -1,5 +1,4 @@
-/* eslint-disable react/no-unstable-nested-components */
-import React from 'react';
+import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import MonitoringPatientHold from '../../screens/MonitoringPatientHold';
@@ -33,7 +32,6 @@ import HospitalizationDetails from '../../screens/healthCondition/hospitalizatio
 import AddAndEditHospitalization from '../../screens/healthCondition/hospitalization/AdddAndEditHospitalization';
 import SocialHistoryHomeScreen from '../../screens/healthCondition/socailHistory/SocialHistoryHomeScreen';
 import AddAndEditSocialHistory from '../../screens/healthCondition/socailHistory/AddAndEditSocailHistory';
-import {Screen} from 'react-native-screens';
 import ConsultancyNotes from '../../screens/healthCondition/consultancyNotes/ConsultancyNotes';
 import ConsultancyNotesDetails from '../../screens/healthCondition/consultancyNotes/ConsultancyNoteDetails';
 import PatientMonitoringList from '../../screens/main/monitoring/patient-monitoring/PatientMonitoringList';
@@ -46,12 +44,94 @@ import SupportHomeScreen from '../../screens/main/my-profile/support/SupportHome
 import HealthParametersList from '../../screens/main/monitoring/health-parameters/HealthParametersList';
 import HealthParameterDetail from '../../screens/main/monitoring/health-parameters/HealthParameterDetail';
 import AddPatient from '../../screens/main/add-patient/AddPatient';
+import HealthStats from '../../screens/main/monitoring/health-stats/HealthStats';
+import DeviceInfo from '../../screens/main/my-profile/measurement-tools/DeviceInfo';
+import WhatToMeasure from '../../screens/main/my-profile/measurement-tools/WhatToMeasure';
+import TurnOnDevice from '../../screens/main/my-profile/measurement-tools/TurnOnDevice';
+import DeviceConnected from '../../screens/main/my-profile/measurement-tools/DeviceConnected';
+import MeasurementMonitoring from '../../screens/main/my-profile/measurement-tools/MeasurementMonitoring';
+import DeviceSettingsScreen from '../../screens/main/my-profile/measurement-tools/DeviceSettings';
+import DeviceInnerSettings from '../../screens/main/my-profile/measurement-tools/DeviceInnerSettings';
+import DeviceAndAccessories from '../../screens/main/my-profile/measurement-tools/DeviceAndAcceories';
+import ChangePassword from '../../screens/main/my-profile/settings/ChangePassword';
+import ManageYourData from '../../screens/main/my-profile/settings/ManageYourData';
+import DownloadData from '../../screens/main/my-profile/settings/DownloadData';
+import DeleteAccount from '../../screens/main/my-profile/settings/DeleteAccount';
+import Notification from '../../screens/main/my-profile/settings/Notification';
+import MeasurementUnitSettings from '../../screens/main/my-profile/settings/MeasurementUnitSettings';
+import HealthThresholdHomeScreen from '../../screens/main/monitoring/thresholds/HealthThresholdHomeScreen';
+import EditHeartRate from '../../screens/main/monitoring/thresholds/EditHeartRate';
+import BloodOxygen from '../../screens/main/monitoring/thresholds/BloodOxygen';
+import BloodPressure from '../../screens/main/monitoring/thresholds/BloodPressure';
+import BodyTemperature from '../../screens/main/monitoring/thresholds/BodyTemparature';
+import GlucoseLevel from '../../screens/main/monitoring/thresholds/GlucoseLevel';
+import NotificationAlerts from '../../screens/main/monitoring/notification/NotificationAlerts';
+import RemainderScreen from '../../screens/main/monitoring/remainder/RemainderScreen';
+import AddRemainder from '../../screens/main/monitoring/remainder/AddRemainder';
+import SetRepetition from '../../screens/main/monitoring/remainder/SetRepetition';
+
+import UserProfile from '../../screens/main/user-screen/user-profile/UserProfile';
+import MyHealthHomeScreen from '../../screens/main/user-screen/user-health/MyHealthHomeScreen';
+import Subscription from '../../screens/main/user-screen/user-health/Subscription';
+
+import BloodPressureScreen from '../../screens/main/my-profile/measurement-tools/BloodPressureScreen';
+import BloodOxygenScreen from '../../screens/main/my-profile/measurement-tools/BloodOxygen';
+import BloodGlucoseTest from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseTest';
+import BloodGlucoseTestTime from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseTestTime';
+import BloodGlucoseSelectStrip from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseSelectStrip';
+import BloodGlucoseReading from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseReading';
+import BloodGlucoseStep3 from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseStep3';
+import BloodGlucoseStep2 from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseStep2';
+import BloodGlucoseStep1 from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseStep1';
+import BloodGlucoseResult from '../../screens/main/monitoring/measurements/BloodGlucose/BloodGlucoseResult';
+import HeartRateMeasurement from '../../screens/main/my-profile/measurement-tools/HearRateMeasurement';
+import BodyTemperatureMeasurement from '../../screens/main/my-profile/measurement-tools/BodyTemperatureMeasurement';
+import EcgMeasurement from '../../screens/main/my-profile/measurement-tools/EcgMeasurement';
+import PatientVideoCall from '../../screens/main/video-call/PatientVideoCall';
+import UserContext from '../../contexts/UserContext';
 
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
-const Tabs = () => {
+const PatientTabs = () => {
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: '#76bc21',
+        tabBarInactiveTintColor: 'black',
+      }}>
+      <Tab.Screen
+        name="MyHealth"
+        component={MyHealthHomeScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Icons.MaterialIcons
+              name="monitor-heart"
+              size={size}
+              color={color}
+            />
+          ),
+          tabBarLabel: 'My Health',
+        }}
+      />
+      <Tab.Screen
+        name="UserProfile"
+        component={UserProfile}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({color, size}) => (
+            <Icons.FontAwesome5 name="user-circle" size={size} color={color} />
+          ),
+          tabBarLabel: 'My Profile',
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+
+const ProviderTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -72,6 +152,7 @@ const Tabs = () => {
           ),
         }}
       />
+
       <Tab.Screen
         name="Profile"
         component={MyProfile}
@@ -88,11 +169,18 @@ const Tabs = () => {
 };
 
 const MainStack = () => {
+  const {isPatient} = useContext(UserContext);
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName="userProfile">
       <Stack.Screen
         name="tabs"
-        component={Tabs}
+        // component={ProviderTabs}
+        component={isPatient ? PatientTabs : ProviderTabs}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PatientVideoCall"
+        component={PatientVideoCall}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -321,8 +409,99 @@ const MainStack = () => {
         }}
       />
       <Stack.Screen
+        name="BloodPressureScreen"
+        component={BloodPressureScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="BloodOxygenMeasurement"
+        component={BloodOxygenScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="HeartRateMeasurement"
+        component={HeartRateMeasurement}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="BodyTemperatureMeasurement"
+        component={BodyTemperatureMeasurement}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="EcgMeasurement"
+        component={EcgMeasurement}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="ChooseDevice"
         component={ChooseDevice}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="DeviceInfo"
+        component={DeviceInfo}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="WhatToMeasure"
+        component={WhatToMeasure}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="DeviceConnected"
+        component={DeviceConnected}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="TurnOnDevice"
+        component={TurnOnDevice}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="MeasurementMonitoring"
+        component={MeasurementMonitoring}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="DeviceSettings"
+        component={DeviceSettingsScreen}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="DeviceInnerSettings"
+        component={DeviceInnerSettings}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="DeviceAndAccessories"
+        component={DeviceAndAccessories}
         options={{
           headerShown: false,
         }}
@@ -338,6 +517,49 @@ const MainStack = () => {
           headerShown: false,
         }}
       />
+      <Stack.Screen
+        name="ManageYourData"
+        component={ManageYourData}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="DownloadData"
+        component={DownloadData}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="DeleteAccount"
+        component={DeleteAccount}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Notifications"
+        component={Notification}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="MeasurementUnitSettings"
+        component={MeasurementUnitSettings}
+        options={{
+          headerShown: false,
+        }}
+      />
+
       {/* Settings section end */}
 
       {/* Support  section start */}
@@ -360,6 +582,116 @@ const MainStack = () => {
       <Stack.Screen
         name="HealthParameterDetail"
         component={HealthParameterDetail}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="HealthStats"
+        component={HealthStats}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="HealthThresholdHomeScreen"
+        component={HealthThresholdHomeScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="HeartRate"
+        component={EditHeartRate}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodOxygen"
+        component={BloodOxygen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodPressure"
+        component={BloodPressure}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BodyTemperature"
+        component={BodyTemperature}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="GlucoseLevel"
+        component={GlucoseLevel}
+        options={{headerShown: false}}
+      />
+
+      <Stack.Screen
+        name="NotificationAlerts"
+        component={NotificationAlerts}
+        options={{headerShown: false}}
+      />
+      {/* Remainders screen start*/}
+      <Stack.Screen
+        name="RemainderScreen"
+        component={RemainderScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="AddRemainder"
+        component={AddRemainder}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SetRepetition"
+        component={SetRepetition}
+        options={{headerShown: false}}
+      />
+      {/* Remainders screen end*/}
+
+      {/* user section start */}
+      {/* user Profile start */}
+      <Stack.Screen
+        name="Subscription"
+        component={Subscription}
+        options={{headerShown: false}}
+      />
+      {/* user Profile end */}
+      {/* user section end */}
+
+      {/* measurement screens  */}
+      <Stack.Screen
+        name="BloodGlucoseTest"
+        component={BloodGlucoseTest}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseTestTime"
+        component={BloodGlucoseTestTime}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseSelectStrip"
+        component={BloodGlucoseSelectStrip}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseStep1"
+        component={BloodGlucoseStep1}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseStep2"
+        component={BloodGlucoseStep2}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseStep3"
+        component={BloodGlucoseStep3}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseReading"
+        component={BloodGlucoseReading}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodGlucoseResult"
+        component={BloodGlucoseResult}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

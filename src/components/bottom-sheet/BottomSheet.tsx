@@ -5,7 +5,17 @@ import React from 'react';
 import Modal from 'react-native-modal';
 import {Colors} from '../../constants/Colors';
 
-const BottomSheet = ({isVisible, children, onBackdropPress}) => {
+interface BottomSheetProps {
+  isVisible: boolean;
+  children: React.ReactNode;
+  onBackdropPress: () => void;
+}
+
+const BottomSheet: React.FC<BottomSheetProps> = ({
+  isVisible,
+  children,
+  onBackdropPress,
+}) => {
   return (
     <Modal
       isVisible={isVisible}
@@ -22,6 +32,7 @@ const BottomSheet = ({isVisible, children, onBackdropPress}) => {
       backdropColor={'rgba(0,0,0,0.4)'}>
       <View
         style={{
+          height: 'auto',
           minHeight: 300,
           width: '100%',
           backgroundColor: Colors.White,
@@ -32,7 +43,7 @@ const BottomSheet = ({isVisible, children, onBackdropPress}) => {
         }}>
         <View
           style={{
-            width: 80,
+            width: 72,
             height: 8,
             backgroundColor: Colors.LightGray,
             marginVertical: 8,
