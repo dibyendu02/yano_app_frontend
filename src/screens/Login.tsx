@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   StyleSheet,
   Text,
@@ -8,31 +9,30 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React, {useState} from 'react';
-import googleIcon from '../assets/image/googleicon.png';
-import facebookIcon from '../assets/image/fbIcon.png';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import {Colors} from '../constants/Colors';
 import {navigate} from '../navigation/RootNavigation';
 import {AuthScreen} from '../navigation/auth/AuthScreens';
+import {StaticImage} from '../assets/images';
+import Header from '../components/header/Header';
 
-export default function Login({navigation}) {
+export default function Login({}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [hidePassword, setHidePassword] = useState(true);
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.navbar}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <AntDesign name="arrowleft" size={30} color={'#00263E'} />
-        </TouchableOpacity>
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.text}>Not Registered?</Text>
-          <TouchableOpacity onPress={() => navigate(AuthScreen.Registration)}>
-            <Text style={styles.loginButton}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <Header
+        title=""
+        headerRightComponent={
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text style={styles.text}>Not Registered?</Text>
+            <TouchableOpacity onPress={() => navigate(AuthScreen.Registration)}>
+              <Text style={styles.loginButton}>Sign Up</Text>
+            </TouchableOpacity>
+          </View>
+        }
+      />
 
       <View style={styles.secondContainer}>
         <Text style={styles.headerText}>Log in</Text>
@@ -56,7 +56,7 @@ export default function Login({navigation}) {
           </View>
           <TouchableOpacity
             style={styles.forgotPassword}
-            onPress={() => navigation.navigate('ForgotPass')}>
+            onPress={() => navigate('ForgotPass')}>
             <Text style={{color: '#00263E'}}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
@@ -65,7 +65,7 @@ export default function Login({navigation}) {
             styles.loginBtn,
             {backgroundColor: email && password ? '#00263E' : 'gray'},
           ]}
-          onPress={() => navigation.navigate('LoadingScreen')}
+          onPress={() => navigate('LoadingScreen')}
           // disabled={!email || !password}
         >
           <Text style={styles.loginBtnText}>Log in</Text>
@@ -83,11 +83,11 @@ export default function Login({navigation}) {
           <View style={{width: '45%', height: 2, backgroundColor: '#E9E9E9'}} />
         </View>
         <TouchableOpacity style={styles.socialBtn}>
-          <Image source={googleIcon} style={styles.socialIcon} />
+          <Image source={StaticImage.GoogleLogo} style={styles.socialIcon} />
           <Text style={styles.socialBtnText}>Log in with Google</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.socialBtn}>
-          <Image source={facebookIcon} style={styles.socialIcon} />
+          <Image source={StaticImage.FacebookLogo} style={styles.socialIcon} />
           <Text style={styles.socialBtnText}>Log in with Facebook</Text>
         </TouchableOpacity>
       </View>
@@ -110,10 +110,8 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#00263E',
-    paddingTop: 10,
-    paddingRight: 15,
+    color: Colors.Blue,
+    marginRight: 8,
   },
   loginButton: {
     borderWidth: 1,
