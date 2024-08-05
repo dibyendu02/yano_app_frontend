@@ -28,7 +28,8 @@ const Login = () => {
         headerRightComponent={
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={styles.text}>Not Registered?</Text>
-            <TouchableOpacity onPress={() => navigate(AuthScreen.Registration)}>
+            <TouchableOpacity
+              onPress={() => navigate(AuthScreen.SelectUserType)}>
               <Text style={styles.loginButton}>Sign Up</Text>
             </TouchableOpacity>
           </View>

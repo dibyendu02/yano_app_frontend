@@ -4,7 +4,8 @@ import {Constants} from '../constants/Constants';
 const axiosInstance = axios.create({
   baseURL: Constants.BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    Accept: 'multipart/form-data',
+    'Content-Type': 'multipart/form-data',
   },
   timeout: 10000,
 });
