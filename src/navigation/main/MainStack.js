@@ -94,6 +94,12 @@ import ViewFamilyMemberDetails from '../../screens/main/user-screen/user-family/
 import AddUserFamilyMember from '../../screens/main/user-screen/user-family/AddUserFamilyMember';
 import EditUserFamilyMember from '../../screens/main/user-screen/user-family/EditUserFamilyMember';
 import LoadingAfterSave from '../../screens/main/user-screen/user-family/LoadingAfterSave';
+import HeartRateModal from '../../screens/main/video-call/HeartRateModal';
+import BloodPressureModal from '../../screens/main/video-call/BloodPressureModal';
+import BloodOxygenModal from '../../screens/main/video-call/BloodOxygen';
+import BodyTemperatureModal from '../../screens/main/video-call/BodyTemperature';
+import ECGModal from '../../screens/main/video-call/ECGModal';
+import GlucoseLevelModal from '../../screens/main/video-call/GlucoseLevelModal';
 
 const Tab = createBottomTabNavigator();
 
@@ -176,7 +182,7 @@ const ProviderTabs = () => {
 const MainStack = () => {
   const {isPatient} = useContext(UserContext);
   return (
-    <Stack.Navigator initialRouteName="UserFamilyMembers">
+    <Stack.Navigator initialRouteName="PatientVideoCall">
       <Stack.Screen
         name="tabs"
         // component={ProviderTabs}
@@ -186,6 +192,36 @@ const MainStack = () => {
       <Stack.Screen
         name="PatientVideoCall"
         component={PatientVideoCall}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="HeartRateModal"
+        component={HeartRateModal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodPressureModal"
+        component={BloodPressureModal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodOxygenModal"
+        component={BloodOxygenModal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BodyTemperatureModal"
+        component={BodyTemperatureModal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="GlucoseLevelModal"
+        component={GlucoseLevelModal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ECGModal"
+        component={ECGModal}
         options={{headerShown: false}}
       />
       <Stack.Screen
