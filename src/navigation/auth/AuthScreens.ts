@@ -4,7 +4,6 @@ export const AuthScreen = {
   SelectUserType: 'SelectUserType',
   Login: 'Login',
   AccountVerification: 'AccountVerification',
-  CodeVerification: 'CodeVerification',
   LoadingScreen: 'LoadingScreen',
   ForgotPass: 'ForgotPass',
   SecondForgotPassword: 'SecondForgotPassword',

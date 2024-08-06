@@ -1,6 +1,5 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import CodeVerification from '../../screens/CodeVerification';
 import LoadingScreen from '../../screens/LoadingScreen';
 import ForgotPass from '../../screens/ForgotPass';
 import SecondForgotPassword from '../../screens/SecondForgotPassword';
@@ -30,11 +29,6 @@ const authStackConfig: AuthStackConfig[] = [
   {
     name: AuthScreen.AccountVerification,
     component: AccountVerification,
-    options: {headerShown: false},
-  },
-  {
-    name: 'CodeVerification',
-    component: CodeVerification,
     options: {headerShown: false},
   },
   {
