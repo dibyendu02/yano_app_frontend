@@ -30,6 +30,38 @@ export const measurementList = [
         path: 'BloodGlucoseTest'
     },
 ]
+export const measurementList2 = [
+    {
+        title: 'Heart rate',
+        img: require('./images/heart_rate.png'),
+        path: 'HeartRateModal'
+    },
+    {
+        title: "Blood pressure",
+        img: require('./images/pressure.png'),
+        path: 'BloodPressureModal'
+    },
+    {
+        title: "Blood oxygen",
+        img: require('./images/bloodOxygen.png'),
+        path: 'BloodOxygenModal'
+    },
+    {
+        title: "Body temperature",
+        img: require('./images/temparature.png'),
+        path: 'BodyTemperatureModal'
+    },
+    {
+        title: "ECG",
+        img: require('./images/ecg.png'),
+        path: 'ECGModal'
+    },
+    {
+        title: "Glucose level",
+        img: require('./images/glucose.png'),
+        path: 'GlucoseLevelModal'
+    },
+]
 
 export const DeviceSettings = [
   {
