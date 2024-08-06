@@ -3,7 +3,7 @@ export const AuthScreen = {
   Registration: 'Registration',
   SelectUserType: 'SelectUserType',
   Login: 'Login',
-  Verification: 'Verification',
+  AccountVerification: 'AccountVerification',
   CodeVerification: 'CodeVerification',
   LoadingScreen: 'LoadingScreen',
   ForgotPass: 'ForgotPass',

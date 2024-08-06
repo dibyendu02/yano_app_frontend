@@ -7,3 +7,7 @@ export const loginUser = (data: {email: string; password: string}) => {
 export const registerDoctor = (data: any) => {
   return axios.post('api/userdoctor/signup', data);
 };
+
+export const registerPatient = (data: any) => {
+  return axios.post('api/userpatient/signup', data);
+};

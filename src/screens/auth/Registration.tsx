@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-native/no-inline-styles */
 import {
   View,
@@ -25,7 +26,7 @@ import FormImageInput from '../../components/hook-form/FormImageInput';
 import {AuthScreensProps} from '../../navigation/auth/types';
 import {UserType} from '../../constants/enums';
 import moment from 'moment';
-import {registerDoctor} from '../../services/Endpoints';
+import {registerDoctor, registerPatient} from '../../services/Endpoints';
 
 const Gender = [
   {
@@ -136,11 +137,20 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
     for (let key in payload) {
       requestData.append(key, data[key]);
     }
-    registerDoctor(requestData)
-      .then(res => {
-        console.log(res, '<--------->');
-      })
-      .catch(e => console.log(e?.response?.data?.message));
+    if (userType === UserType.Patient) {
+      registerPatient(requestData)
+        .then(res => {
+          console.log(res, '<--------->');
+        })
+        .catch(e => console.log('Error!', e?.response?.data?.message));
+    } else {
+      registerDoctor(requestData)
+        .then(res => {
+          console.log(res, '<--------->');
+        })
+        .catch(e => console.log('Error!', e?.response?.data?.message));
+    }
+    navigate(AuthScreen.AccountVerification);
   };
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -294,8 +304,9 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
         label="Continue"
         type="blue"
         style={{width: '90%', alignSelf: 'center', marginVertical: 10}}
-        disabled={!methods.formState.isDirty}
-        onPress={methods.handleSubmit(onSubmit)}
+        // disabled={!methods.formState.isDirty}
+        // onPress={methods.handleSubmit(onSubmit)}
+        onPress={() => navigate(AuthScreen.AccountVerification)}
       />
     </SafeAreaView>
   );
