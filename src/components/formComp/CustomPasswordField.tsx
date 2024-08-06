@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, { FC, useState } from 'react';
 import {
   View,
   Text,
@@ -7,9 +7,9 @@ import {
   TextInputProps,
   TouchableOpacity,
 } from 'react-native';
-import {Controller, Control, FieldValues, FieldError} from 'react-hook-form';
-import {Colors} from '../../constants/Colors';
-import {NotViewPassIcon, ViewPassIcon} from '../../assets/icon/IconNames';
+import { Controller, Control, FieldValues, FieldError } from 'react-hook-form';
+import { Colors } from '../../constants/Colors';
+import { NotViewPassIcon, ViewPassIcon } from '../../assets/icon/IconNames';
 
 interface CustomInputProps extends TextInputProps {
   name: string;
@@ -37,8 +37,8 @@ const CustomPasswordField: FC<CustomInputProps> = ({
       <Controller
         control={control}
         rules={rules}
-        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
-          <View style={{position: 'relative'}}>
+        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+          <View style={{ position: 'relative' }}>
             <TextInput
               style={[styles.input, error && styles.errorInput]}
               onBlur={onBlur}
@@ -56,10 +56,14 @@ const CustomPasswordField: FC<CustomInputProps> = ({
                 backgroundColor: Colors.White,
               }}
               onPress={() => setVisiblePass(!visiblePass)}>
-              <>{visiblePass ? <ViewPassIcon /> : <NotViewPassIcon />}</>
+              <>{visiblePass ? <ViewPassIcon
+                color={Colors.SteelBlue}
+              /> : <NotViewPassIcon
+                color={Colors.SteelBlue}
+              />}</>
             </TouchableOpacity>
             {condition && !error && (
-              <Text style={{marginTop: 3}}>{condition}</Text>
+              <Text style={{ marginTop: 3, color: Colors.SteelBlue }}>{condition}</Text>
             )}
             {error && (
               <Text style={styles.errorText}>

@@ -1,9 +1,15 @@
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import Header from '../../../../components/header/Header' 
+import React, { useState } from 'react'
+import Header from '../../../../components/header/Header'
 import { Colors } from '../../../../constants/Colors'
+import { Switch } from 'react-native-paper'
 
 const Notification = () => {
+    const [notificationEnabled, setNotificationEnabled] = useState(false);
+    const toggleNotification = () => setNotificationEnabled(previousState => !previousState);
+
+    const [messageEnabled, setMessageEnabled] = useState(false);
+    const toggleMessage = () => setMessageEnabled(previousState => !previousState);
     return (
         <SafeAreaView
             style={{
@@ -32,23 +38,35 @@ const Notification = () => {
                         }}>
                             <Text style={{
                                 fontSize: 18,
-                                fontWeight: "500",
+                                fontWeight: "600",
                                 color: Colors.Blue
                             }}>Push notifications</Text>
-                            <Text>Icon</Text>
+                            <Switch
+                                trackColor={{ false: Colors.LightGray, true: Colors.LighterGreen }}
+                                thumbColor={notificationEnabled ? Colors.LightGreen : Colors.White}
+                                ios_backgroundColor={Colors.LightBlack}
+                                onValueChange={toggleNotification}
+                                value={notificationEnabled}
+                            />
                         </View>
                         <View style={{
                             flexDirection: "row",
                             justifyContent: "space-between",
                             alignItems: "center",
-                            paddingTop:20
+                            paddingTop: 20
                         }}>
                             <Text style={{
                                 fontSize: 18,
-                                fontWeight: "500",
+                                fontWeight: "600",
                                 color: Colors.Blue
                             }}>Email notifications</Text>
-                            <Text>Icon</Text>
+                            <Switch
+                                trackColor={{ false: Colors.LightGray, true: Colors.LighterGreen }}
+                                thumbColor={messageEnabled ? Colors.LightGreen : Colors.White}
+                                ios_backgroundColor={Colors.LightBlack}
+                                onValueChange={toggleMessage}
+                                value={messageEnabled}
+                            />
                         </View>
                     </View>
                 </View>

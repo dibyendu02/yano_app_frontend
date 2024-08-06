@@ -3,7 +3,7 @@ import React from 'react'
 import { SafeAreaView } from 'react-native'
 import { Colors } from '../../../../constants/Colors'
 import Header from '../../../../components/header/Header'
-import { ScrollView } from 'react-native' 
+import { ScrollView } from 'react-native'
 import { Control, FieldValues, useForm } from 'react-hook-form'
 import FilledButton from '../../../../components/buttons/FilledButton'
 import CustomPasswordField from '../../../../components/formComp/CustomPasswordField'
@@ -34,15 +34,15 @@ const DeleteAccount = () => {
                             paddingBottom: 20,
                             marginBottom: 20
                         }}>
-                            <Text style={styles.list}>The account will be deleted from Yano and all your devices.</Text>
-                            <Text style={styles.list}>Your health history will be erased.</Text>
-                            <Text style={styles.list}>Your measurements will be erased.</Text>
+                            <Text style={styles.list}>• The account will be deleted from Yano and all your devices.</Text>
+                            <Text style={styles.list}>• Your health history will be erased.</Text>
+                            <Text style={styles.list}>• Your measurements will be erased.</Text>
                         </View>
                         <View>
                             <Text style={{
-                                fontSize: 18, 
+                                fontSize: 18,
                                 color: Colors.SteelBlue,
-                                marginBottom:10,
+                                marginBottom: 10,
                             }} >To delete your account please enter your password.</Text>
                             <CustomPasswordField
                                 name='password'
