@@ -1,4 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
+import React, {useContext, useState} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -7,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
 import Header from '../../components/header/Header';
 import {navigate} from '../../navigation/RootNavigation';
 import {AuthScreen} from '../../navigation/auth/AuthScreens';
@@ -16,6 +16,7 @@ import {CardStyles} from '../../components/cards/CardStyle';
 import {StaticImage} from '../../assets/images';
 import FilledButton from '../../components/buttons/FilledButton';
 import {UserType} from '../../constants/enums';
+import UserContext from '../../contexts/UserContext'; // Adjust the path accordingly
 
 const Config = [
   {
@@ -31,7 +32,17 @@ const Config = [
 ];
 
 const SelectUserType = () => {
+  const {PatientLogin, ProviderLogin} = useContext(UserContext);
   const [selectedRole, setSelectedRole] = useState<string | null>(null);
+
+  const handleContinue = () => {
+    if (selectedRole === UserType.Patient) {
+      PatientLogin();
+    } else if (selectedRole === UserType.Doctor) {
+      ProviderLogin();
+    }
+    navigate(AuthScreen.Registration);
+  };
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -80,13 +91,14 @@ const SelectUserType = () => {
         label="Continue"
         disabled={!selectedRole}
         style={{width: '90%', marginVertical: 10, alignSelf: 'center'}}
-        onPress={() => navigate(AuthScreen.Registration)}
+        onPress={handleContinue}
       />
     </SafeAreaView>
   );
 };
 
 export default SelectUserType;
+
 const styles = StyleSheet.create({
   text: {
     fontSize: 16,
