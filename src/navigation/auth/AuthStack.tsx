@@ -1,7 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import CodeVerification from '../../screens/CodeVerification';
-import Verification from '../../screens/Verification';
 import LoadingScreen from '../../screens/LoadingScreen';
 import ForgotPass from '../../screens/ForgotPass';
 import SecondForgotPassword from '../../screens/SecondForgotPassword';
@@ -11,6 +10,7 @@ import {AuthScreen} from './AuthScreens';
 import SelectUserType from '../../screens/auth/SelectUserType';
 import Registration from '../../screens/auth/Registration';
 import Login from '../../screens/auth/Login';
+import AccountVerification from '../../screens/auth/AccountVerification';
 
 const Stack = createNativeStackNavigator<AuthStackParams>();
 
@@ -28,8 +28,8 @@ const authStackConfig: AuthStackConfig[] = [
     options: {headerShown: false},
   },
   {
-    name: 'Verification',
-    component: Verification,
+    name: AuthScreen.AccountVerification,
+    component: AccountVerification,
     options: {headerShown: false},
   },
   {
