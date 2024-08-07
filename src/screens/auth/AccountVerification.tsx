@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   sendButton: {
-    width: '90%',
+    width: '92%',
     alignSelf: 'center',
     marginTop: 20,
   },

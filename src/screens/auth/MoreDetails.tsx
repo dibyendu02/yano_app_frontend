@@ -123,7 +123,7 @@ const MoreDetails = () => {
                   placeholder="Select your blood type"
                   options={BloodTypes}
                   label="Blood Type"
-                  optionsListLabel="Select your blood type"
+                  optionsListLabel="Choose your blood type"
                   optionsListHeight={500}
                   rules={{
                     required: {

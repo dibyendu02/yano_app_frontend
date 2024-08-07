@@ -164,7 +164,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
             title=""
             headerRightComponent={
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={styles.text}>Already Registered?</Text>
+                <Text style={styles.text}>Already registered?</Text>
                 <TouchableOpacity onPress={() => navigate(AuthScreen.Login)}>
                   <Text style={styles.loginButton}>Log in</Text>
                 </TouchableOpacity>
@@ -186,7 +186,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
                 <FormImageInput name="file" />
                 <FormInput
                   name="firstName"
-                  label="First Name"
+                  label="Name"
                   placeholder="Enter your first name"
                   rules={{
                     required: {
