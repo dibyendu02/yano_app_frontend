@@ -13,11 +13,21 @@ import { MeasurementSettingItems } from '../../../../assets/settings/SettingItem
 import DeviceItems from '../components/DeviceItems';
 import MeasurementChangeCard from '../UiUpdateComponents/MeasurementChangeCard';
 
+
+type MeasurementItem = {
+  img: any; // Replace with the specific type if available
+  path: string;
+  subtitle: string;
+  title: string;
+  unit1: string;
+  unit2: string;
+};
+
 const MeasurementUnitSettings = () => {
   const [isClicked, setIsClicked] = useState(true);
-  const [items, setItems] = useState()
+  const [items, setItems] = useState<MeasurementItem | undefined>(undefined);
 
-  const handlePress = (item: any) => {
+  const handlePress = (item: MeasurementItem) => {
     setItems(item);
     setIsClicked(true);
   };
@@ -54,10 +64,10 @@ const MeasurementUnitSettings = () => {
           ))}
         </View>
       </ScrollView>
-      {isClicked && (
+      {isClicked && items && (
         <View style={styles.afterClick}>
           <MeasurementChangeCard
-            title={`${items?.title} unit`}
+            title={`${items.title} unit`}
             active={setIsClicked}
             items={items}
           />

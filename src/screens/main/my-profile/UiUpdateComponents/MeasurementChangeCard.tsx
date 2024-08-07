@@ -1,5 +1,5 @@
 import { StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { Colors } from '../../../../constants/Colors';
 import { RadioButton } from 'react-native-paper';
 
@@ -9,7 +9,7 @@ interface MeasurementChangeCardProps {
     cardFooter?: ReactNode | null;
     contentContainerStyle?: StyleProp<ViewStyle>;
     active: (value: boolean) => void;
-    items?: { unit1: { label: string; value: string }, unit2: { label: string; value: string } };
+    items?: { unit1: string, unit2: string };
 }
 
 const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
@@ -18,7 +18,13 @@ const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
     active,
     items
 }) => {
-    const [selectedValue, setSelectedValue] = React.useState('');
+    const [selectedValue, setSelectedValue] = React.useState<string>('');
+
+    useEffect(() => {
+        if (items) {
+            setSelectedValue(items.unit1); // Default to unit1, or you could add logic to check for previously selected unit
+        }
+    }, [items]);
 
     return (
         <View style={[styles.container, contentContainerStyle]}>
@@ -29,25 +35,25 @@ const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
             <View>
                 <RadioButton.Group
                     onValueChange={value => setSelectedValue(value)}
-                    value={selectedValue}
+                    value={selectedValue || ''}
                 >
                     <View style={styles.radioItem}>
                         <RadioButton
-                            value={items?.unit1}
+                            value={items?.unit1 || ''}
                             mode="android"
                             color={Colors.LightGreen}
                             uncheckedColor={Colors.Grey}
                         />
-                        <Text style={styles.radioText}>{items?.unit1}</Text>
+                        <Text style={styles.radioText}>{items?.unit1 || ''}</Text>
                     </View>
                     <View style={styles.radioItem}>
                         <RadioButton
-                            value={items?.unit2}
+                            value={items?.unit2 || ''}
                             mode="android"
                             color={Colors.LightGreen}
                             uncheckedColor={Colors.Grey}
                         />
-                        <Text style={styles.radioText}>{items?.unit2}</Text>
+                        <Text style={styles.radioText}>{items?.unit2 || ''}</Text>
                     </View>
                 </RadioButton.Group>
             </View>

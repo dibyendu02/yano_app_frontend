@@ -4,15 +4,23 @@ import PatientElements from '../../../../components/PatientElements'
 import { Colors } from '../../../../constants/Colors'
 import { navigate } from '../../../../navigation/RootNavigation'
 
-type props = { 
+type Props = {
     data: {
         title: string,
         img: any,
         path: string
-    }[]
+    }[],
+    active: (value: boolean) => void
 }
 
-const MeasurementItems: FC<props> = ({ data }) => { 
+const MeasurementItems: FC<Props> = ({ data, active }) => {
+    const handleOnPress = (path: string) => {
+        if (path !== 'DeleteAllData') {
+            navigate(path)
+        } else {
+            active(true)
+        }
+    }
     return (
         <>
             {
@@ -25,7 +33,7 @@ const MeasurementItems: FC<props> = ({ data }) => {
                                 source={item.img}
                                 style={{
                                     width: 30,
-                                    objectFit: 'contain'
+                                    resizeMode: 'contain'
                                 }}
                             />
                         }
@@ -36,7 +44,7 @@ const MeasurementItems: FC<props> = ({ data }) => {
                             borderBottomWidth: 1,
                             borderBottomColor: Colors.LightGray,
                         }}
-                        onPress={() => navigate(item.path)}
+                        onPress={() => handleOnPress(item.path)}
                     />
                 ))
             }
