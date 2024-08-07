@@ -99,9 +99,10 @@ import BloodOxygenModal from '../../screens/main/video-call/BloodOxygen';
 import BodyTemperatureModal from '../../screens/main/video-call/BodyTemperature';
 import ECGModal from '../../screens/main/video-call/ECGModal';
 import GlucoseLevelModal from '../../screens/main/video-call/GlucoseLevelModal';
-
 import DeleteAllData from '../../screens/main/my-profile/settings/DeleteAllData';
+import { Colors } from '../../constants/Colors';
 import NoDataScreen from '../../screens/main/my-profile/settings/NoDataScreen';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -112,7 +113,7 @@ const PatientTabs = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarActiveTintColor: '#76bc21',
-        tabBarInactiveTintColor: 'black',
+        tabBarInactiveTintColor: Colors.Grey,
       }}>
       <Tab.Screen
         name="MyHealth"

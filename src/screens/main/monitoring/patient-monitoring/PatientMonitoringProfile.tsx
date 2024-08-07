@@ -17,13 +17,13 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PatientElements from '../../../../components/PatientElements';
 import Header from '../../../../components/header/Header';
-import {Colors} from '../../../../constants/Colors';
+import { Colors } from '../../../../constants/Colors';
 import Card from '../../../../components/cards/Card';
-import {DummyImage} from '../../../../assets/dummy/images';
-import {measurements, userData} from '../../../../test/Data';
+import { DummyImage } from '../../../../assets/dummy/images';
+import { measurements, userData } from '../../../../test/Data';
 import Icons from '../../../../assets/icon/Icon';
-import {IconName} from '../../../../assets/icon/IconNames';
-import {navigate} from '../../../../navigation/RootNavigation';
+import { IconName } from '../../../../assets/icon/IconNames';
+import { navigate } from '../../../../navigation/RootNavigation';
 
 let data1 = [
   {
@@ -51,10 +51,10 @@ let data2 = [
   },
 ];
 
-export default function PatientMonitoringProfile({}) {
+export default function PatientMonitoringProfile({ }) {
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Monitored patient" />
+      <Header title="My profile" />
 
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
         <Card>
@@ -124,8 +124,8 @@ export default function PatientMonitoringProfile({}) {
                 : []
             }
             scrollEnabled={false}
-            style={{width: '100%'}}
-            renderItem={({item, index: _index}) => (
+            style={{ width: '100%' }}
+            renderItem={({ item, index: _index }) => (
               <View
                 style={{
                   width: '100%',
@@ -134,7 +134,7 @@ export default function PatientMonitoringProfile({}) {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                 }}>
-                <View style={{width: '50%'}}>
+                <View style={{ width: '50%' }}>
                   <Text
                     style={{
                       fontSize: 18,
@@ -191,7 +191,7 @@ export default function PatientMonitoringProfile({}) {
         </Card>
 
         <Card>
-          <View style={{width: '100%'}}>
+          <View style={{ width: '100%' }}>
             <PatientElements
               name="Medical history"
               icon="file-medical"
@@ -216,7 +216,7 @@ export default function PatientMonitoringProfile({}) {
           </View>
         </Card>
       </ScrollView>
-      <View style={{paddingBottom: 10}}>
+      <View style={{ paddingBottom: 10 }}>
         <View style={styles.basicDetails}>
           <View style={styles.stopMonitoringButton}>
             <Icons.Ionicons name="exit-outline" size={20} color={'red'} />

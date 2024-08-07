@@ -9,12 +9,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Header from '../../../components/header/Header';
-import {EditIcon} from '../../../assets/icon/IconNames';
-import {Colors} from '../../../constants/Colors';
-import {CardStyles} from '../../../components/cards/CardStyle';
-import {DummyImage} from '../../../assets/dummy/images';
+import { EditIcon } from '../../../assets/icon/IconNames';
+import { Colors } from '../../../constants/Colors';
+import { CardStyles } from '../../../components/cards/CardStyle';
+import { DummyImage } from '../../../assets/dummy/images';
 import FilledButton from '../../../components/buttons/FilledButton';
 import Icons from '../../../assets/icon/Icon';
 import BottomSheet from '../../../components/bottom-sheet/BottomSheet';
@@ -52,11 +52,11 @@ const menuData = [
 const MyProfile = () => {
   let [showQR, setShowQR] = useState(false);
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <BottomSheet isVisible={showQR} onBackdropPress={() => setShowQR(false)}>
-        <View style={{padding: 20, alignItems: 'center'}}>
+        <View style={{ padding: 20, alignItems: 'center' }}>
           <Image source={DummyImage.QR} height={150} width={150} />
-          <Text style={{marginVertical: 20}}>
+          <Text style={{ marginVertical: 20 }}>
             Scan this QR code with your patient's cell phone to access their
             measurements and health history.
           </Text>
@@ -72,20 +72,20 @@ const MyProfile = () => {
         showBackIcon={false}
         headerRightComponent={<EditIcon size={20} />}
       />
-      <View style={{flex: 1, backgroundColor: Colors.GhostWhite}}>
-        <View style={[CardStyles.container, {marginTop: 10}]}>
+      <View style={{ flex: 1, backgroundColor: Colors.GhostWhite }}>
+        <View style={[CardStyles.container, { marginTop: 10 }]}>
           <View
-            style={{paddingVertical: 24, width: '100%', alignItems: 'center'}}>
+            style={{ paddingVertical: 24, width: '100%', alignItems: 'center' }}>
             <Image
               source={DummyImage.DoctorImg}
               height={80}
               width={80}
-              style={{borderRadius: 40}}
+              style={{ borderRadius: 40 }}
             />
-            <Text style={{color: Colors.Blue, fontSize: 18, fontWeight: '600'}}>
+            <Text style={{ color: Colors.Blue, fontSize: 18, fontWeight: '600' }}>
               Dr. Eduardo Escobar
             </Text>
-            <Text style={{color: Colors.SteelBlue}}>General medicine</Text>
+            <Text style={{ color: Colors.SteelBlue }}>General medicine</Text>
           </View>
 
           <View
@@ -105,7 +105,7 @@ const MyProfile = () => {
             <FilledButton
               label="Share Profile"
               type="blue"
-              style={{width: '75%'}}
+              style={{ width: '75%' }}
               icon={
                 <Icons.EvilIcons
                   name="share-google"
@@ -116,7 +116,7 @@ const MyProfile = () => {
             />
             <FilledButton
               type="lightGrey"
-              style={{width: '18%', marginLeft: 8}}
+              style={{ width: '18%', marginLeft: 8 }}
               icon={
                 <Icons.AntDesign name="qrcode" color={Colors.Blue} size={25} />
               }
@@ -128,8 +128,8 @@ const MyProfile = () => {
         <View style={CardStyles.container}>
           <FlatList
             data={menuData}
-            style={{paddingHorizontal: 20, paddingVertical: 10}}
-            renderItem={({item, index: _i}) => (
+            style={{ paddingHorizontal: 20, paddingVertical: 10 }}
+            renderItem={({ item, index: _i }) => (
               <TouchableOpacity
                 style={{
                   width: '100%',
@@ -138,7 +138,7 @@ const MyProfile = () => {
                   paddingVertical: 14,
                   alignItems: 'center',
                 }}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                   {item.icon}
                   <Text
                     style={{
@@ -146,6 +146,7 @@ const MyProfile = () => {
                       fontSize: 16,
                       fontWeight: '600',
                       marginLeft: 6,
+                      fontFamily: 'Roboto',
                     }}>
                     {item.text}
                   </Text>

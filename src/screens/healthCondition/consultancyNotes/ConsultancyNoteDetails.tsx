@@ -46,7 +46,7 @@ const ConsultancyNotesDetails = ({ navigation, route }: any) => {
                                 marginBottom: 15,
                                 color: Colors.Blue,
                             }}
-                        >Consultation note</Text>
+                        >Consultation notes</Text>
                         <DetailItems name='Consultation date' value={date} />
                         <DetailItems name='Consultation time' value={time} />
                         <DetailItems name='Note' value={note} />
