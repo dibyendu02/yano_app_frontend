@@ -100,6 +100,8 @@ import BodyTemperatureModal from '../../screens/main/video-call/BodyTemperature'
 import ECGModal from '../../screens/main/video-call/ECGModal';
 import GlucoseLevelModal from '../../screens/main/video-call/GlucoseLevelModal';
 
+import DeleteAllData from '../../screens/main/my-profile/settings/DeleteAllData';
+
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
@@ -562,6 +564,14 @@ const MainStack = () => {
       <Stack.Screen
         name="DownloadData"
         component={DownloadData}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="DeleteAllData"
+        component={DeleteAllData}
         options={{
           headerShown: false,
         }}

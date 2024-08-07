@@ -27,7 +27,7 @@ const ChangePassword = () => {
             }}
         >
             <Header
-                title={'Settings'}
+                title={'Change password'}
                 headerRightComponent={
                     <FilledButton
                         type='blue'
@@ -48,20 +48,21 @@ const ChangePassword = () => {
                         <CustomPasswordField
                             name='oldPassword'
                             control={control as unknown as Control<FieldValues, object>}
-                            label='Old Password'
+                            label='Old password'
                             rules={{ required: "Old password is required" }}
                         />
                         <CustomPasswordField
                             name='newPassword'
                             control={control as unknown as Control<FieldValues, object>}
-                            label='New Password'
+                            label='New password'
                             condition='At least 8 characters'
                             rules={{ required: "New password is required" }}
                         />
                         <CustomPasswordField
                             name='repeatPassword'
                             control={control as unknown as Control<FieldValues, object>}
-                            label='Repeat Password'
+                            label='Repeat new password'
+                            condition='Must be the same as the new password'
                             rules={{ required: "Repeat password is required" }}
                         />
                     </View>

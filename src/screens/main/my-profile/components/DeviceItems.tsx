@@ -1,6 +1,7 @@
-import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Card from '../UiUpdateComponents/Card';
 
 type DeviceItemsProps = {
   name: string;
@@ -19,24 +20,24 @@ const DeviceItems: React.FC<DeviceItemsProps> = ({
   isVisibleIcon = true,
   onPress,
 }) => {
+
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={[styles.container, {...customStyle}]}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          {element}
-          <View
-            style={{
-              marginStart: 15,
-            }}>
-            <Text style={styles.name}>{name}</Text>
-            <Text style={{marginTop: 4}}>{subtitle}</Text>
+    <>
+      <TouchableOpacity onPress={onPress}>
+        <View style={[styles.container, customStyle]}>
+          <View style={styles.content}>
+            {element}
+            <View style={styles.textContainer}>
+              <Text style={styles.name}>{name}</Text>
+              {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
+            </View>
           </View>
+          {isVisibleIcon && (
+            <MaterialIcons name="navigate-next" size={25} color={'black'} />
+          )}
         </View>
-        {isVisibleIcon && (
-          <MaterialIcons name="navigate-next" size={25} color={'black'} />
-        )}
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </>
   );
 };
 
@@ -49,16 +50,25 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     paddingHorizontal: 20,
-    // paddingBottom: 10,
+    paddingVertical: 20,
     borderRadius: 8,
+  },
+  content: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textContainer: {
+    marginStart: 15,
+    justifyContent: 'center',
   },
   name: {
     color: '#00263E',
     fontSize: 18,
     fontWeight: '600',
-    // fontFamily: 'Roboto',
-    // flex: 1,
-    // backgroundColor: 'red',
-    marginTop: 20,
+  },
+  subtitle: {
+    color: '#00263E',
+    fontSize: 14,
+    fontWeight: '400',
   },
 });

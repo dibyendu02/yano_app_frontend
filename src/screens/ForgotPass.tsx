@@ -7,10 +7,10 @@ import {
   TextInput,
   SafeAreaView,
 } from 'react-native';
-import React, {useState} from 'react';
-import arrow from '../assets/image/arrow_back.png';
+import React, { useState } from 'react';
+import arrow from '../assets/image/arrow_back.png'
 
-export default function ForgotPass({navigation}) {
+export default function ForgotPass({ navigation }) {
   const [email, setEmail] = useState('');
 
   return (
@@ -19,7 +19,7 @@ export default function ForgotPass({navigation}) {
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
             source={arrow}
-            style={{height: 30, width: 30, paddingTop: 2}}
+            style={{ height: 30, width: 30, paddingTop: 2 }}
           />
         </TouchableOpacity>
         <Text style={styles.navbarText}>Forgot Your Password?</Text>
@@ -30,7 +30,7 @@ export default function ForgotPass({navigation}) {
           {`Enter your email and we will send an email\nwith the instructions to reestablish your password.`}
         </Text>
         <View style={styles.inputField}>
-          <Text style={{color: '#00263E', fontWeight: 'bold'}}>Email</Text>
+          <Text style={{ color: '#00263E', fontWeight: 'bold' }}>Email</Text>
           <TextInput
             style={styles.inputBox}
             value={email}
@@ -42,7 +42,7 @@ export default function ForgotPass({navigation}) {
           onPress={() => navigation.navigate('SecondForgotPassword')}
           style={[
             styles.submitButton,
-            {backgroundColor: email ? '#00263E' : '#93a2ac'},
+            { backgroundColor: email ? '#00263E' : '#93a2ac' },
           ]}
           disabled={!email}>
           <Text style={styles.submitButtonText}>Send Instruction</Text>

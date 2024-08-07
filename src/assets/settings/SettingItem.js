@@ -45,24 +45,32 @@ export const MeasurementSettingItems = [
         title: "Temperature",
         subtitle: "Celsius",
         img: require('./images/temperature.png'),
-        path: ''
+        path: '',
+        unit1: 'Celsius',
+        unit2: 'Fahrenheit',
     },
     {
         title: "Weight",
         subtitle: "Kilograms",
         img: require('./images/weight.png'),
-        path: ''
+        path: '',
+        unit1: 'Kilograms',
+        unit2: 'Pounds',
     },
     {
         title: "Height",
         subtitle: "Centimeters",
         img: require('./images/height.png'),
-        path: ''
+        path: '',
+        unit1: 'Centimeters',
+        unit2: 'Feets, inches',
     },
     {
         title: "Glucose level",
         subtitle: "mmol/L",
         img: require('./images/glucoseLavel.png'),
-        path: ''
+        path: '',
+        unit1: 'mmol/L',
+        unit2: 'mg/dL',
     },
 ]

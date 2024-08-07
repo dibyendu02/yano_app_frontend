@@ -3,18 +3,35 @@ import {
   SafeAreaView,
   ScrollView,
   StyleSheet,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
-import {Colors} from '../../../../constants/Colors';
+import React, { useState } from 'react';
+import { Colors } from '../../../../constants/Colors';
 import Header from '../../../../components/header/Header';
-import MeasurementItems from '../components/MeasurementItems';
-import {MeasurementSettingItems} from '../../../../assets/settings/SettingItem';
+import { MeasurementSettingItems } from '../../../../assets/settings/SettingItem';
 import DeviceItems from '../components/DeviceItems';
+import MeasurementChangeCard from '../UiUpdateComponents/MeasurementChangeCard';
+
+
+type MeasurementItem = {
+  img: any; // Replace with the specific type if available
+  path: string;
+  subtitle: string;
+  title: string;
+  unit1: string;
+  unit2: string;
+};
 
 const MeasurementUnitSettings = () => {
+  const [isClicked, setIsClicked] = useState(true);
+  const [items, setItems] = useState<MeasurementItem | undefined>(undefined);
+
+  const handlePress = (item: MeasurementItem) => {
+    setItems(item);
+    setIsClicked(true);
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -24,7 +41,7 @@ const MeasurementUnitSettings = () => {
       }}>
       <Header title={'Measurement units'} />
       <ScrollView>
-        <View style={{padding: 20}}>
+        <View style={{ padding: 20 }}>
           {MeasurementSettingItems.map(item => (
             <DeviceItems
               key={item.title}
@@ -33,7 +50,7 @@ const MeasurementUnitSettings = () => {
                   source={item.img}
                   height={40}
                   width={40}
-                  style={{objectFit: 'contain'}}
+                  style={{ objectFit: 'contain' }}
                 />
               }
               name={item.title}
@@ -42,14 +59,35 @@ const MeasurementUnitSettings = () => {
                 borderBottomWidth: 1,
                 borderBottomColor: Colors.LightGray,
               }}
+              onPress={() => handlePress(item)}
             />
           ))}
         </View>
       </ScrollView>
+      {isClicked && items && (
+        <View style={styles.afterClick}>
+          <MeasurementChangeCard
+            title={`${items.title} unit`}
+            active={setIsClicked}
+            items={items}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
 
 export default MeasurementUnitSettings;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  afterClick: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    zIndex: 1,
+    flex: 1,
+    alignItems: 'center',
+    padding: 20,
+  },
+});
