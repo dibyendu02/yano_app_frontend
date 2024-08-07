@@ -3,11 +3,12 @@ export const AuthScreen = {
   Registration: 'Registration',
   SelectUserType: 'SelectUserType',
   Login: 'Login',
-  Verification: 'Verification',
-  CodeVerification: 'CodeVerification',
+  AccountVerification: 'AccountVerification',
   LoadingScreen: 'LoadingScreen',
   ForgotPass: 'ForgotPass',
   SecondForgotPassword: 'SecondForgotPassword',
+  Welcome: 'WelcomeScreen',
+  MoreDetails: 'MoreDetails',
 };
 
 export type AuthScreenType = (typeof AuthScreen)[keyof typeof AuthScreen];

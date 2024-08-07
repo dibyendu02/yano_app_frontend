@@ -1,10 +1,9 @@
 import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
-import MonitoringPatientHold from '../../screens/MonitoringPatientHold';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-// import MyProfile from '../../screens/main/profile/MyProfile';
+
 import Icons from '../../assets/icon/Icon';
+
 import EmailNotFoundPatient from '../../screens/EmailNotFoundPatient';
 import HealthConditionHomeScreen from '../../screens/healthCondition/HealthConditionHomeScreen';
 import HealthConditionDetails from '../../screens/healthCondition/HealthConditionDetails';
@@ -239,11 +238,6 @@ const MainStack = () => {
       <Stack.Screen
         name="PatientMonitoringProfile"
         component={PatientMonitoringProfile}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="MonitoringPatient"
-        component={MonitoringPatientHold}
         options={{headerShown: false}}
       />
       {/* Medical History screen Navigation start */}

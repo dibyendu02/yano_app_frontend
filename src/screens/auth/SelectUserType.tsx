@@ -57,7 +57,14 @@ const SelectUserType = () => {
           </View>
         }
       />
-      <View style={{flex: 1, backgroundColor: Colors.GhostWhite, padding: 14}}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: Colors.GhostWhite,
+          // backgroundColor: 'red',
+          paddingHorizontal: '5%',
+          paddingVertical: 10,
+        }}>
         <Text style={styles.headerText}>What type of user are you?</Text>
         <View
           style={{
@@ -90,8 +97,10 @@ const SelectUserType = () => {
         type="blue"
         label="Continue"
         disabled={!selectedRole}
-        style={{width: '90%', marginVertical: 10, alignSelf: 'center'}}
-        onPress={handleContinue}
+        style={{width: '92%', marginVertical: 10, alignSelf: 'center'}}
+        onPress={() =>
+          navigate(AuthScreen.Registration, {userType: selectedRole})
+        }
       />
     </SafeAreaView>
   );
@@ -101,9 +110,9 @@ export default SelectUserType;
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 16,
+    fontSize: 18,
     color: Colors.Blue,
-    marginRight: 8,
+    marginRight: 15,
   },
   loginButton: {
     borderWidth: 1,
@@ -112,10 +121,11 @@ const styles = StyleSheet.create({
     color: Colors.Blue,
     fontWeight: 'bold',
     padding: 10,
+    paddingHorizontal: 15,
   },
   selectionCardContainer: {
     width: '48%',
-    height: 200,
+    height: 180,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -123,6 +133,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     marginTop: 10,
+    color: Colors.Blue,
+    fontSize: 16,
   },
   headerText: {
     color: Colors.Blue,
