@@ -10,10 +10,13 @@ import CustomPasswordField from '../../../../components/formComp/CustomPasswordF
 import emergencyHome from '../../../../assets/image/emergencyHome.png'
 
 const DeleteAccount = () => {
-    const { control, handleSubmit, reset, formState: { errors, isValid } } = useForm();
+    const { control, handleSubmit, reset, formState: { errors, isValid }, watch } = useForm();
+    const password = watch('password', '');
+
     const onSubmit = (value: string) => {
         console.log(value)
     }
+
     return (
         <SafeAreaView
             style={{
@@ -60,7 +63,7 @@ const DeleteAccount = () => {
                             />
                             <FilledButton
                                 label='Delete account'
-                                disabled
+                                disabled={password.length < 6}
                                 type='red'
                             />
                         </View>
