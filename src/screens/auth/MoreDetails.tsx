@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import {
   View,
   Text,
@@ -8,7 +9,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../../components/header/Header';
 import {navigate} from '../../navigation/RootNavigation';
 import {Colors} from '../../constants/Colors';
@@ -29,18 +30,26 @@ const WeightOptions = Array.from({length: 150}, (_, i) => ({
 }));
 
 const BloodTypes = [
-  {id: 'A+', label: 'A+', enabled: true},
-  {id: 'A-', label: 'A-', enabled: true},
-  {id: 'B+', label: 'B+', enabled: true},
-  {id: 'B-', label: 'B-', enabled: true},
-  {id: 'AB+', label: 'AB+', enabled: true},
-  {id: 'AB-', label: 'AB-', enabled: true},
-  {id: 'O+', label: 'O+', enabled: true},
-  {id: 'O-', label: 'O-', enabled: true},
+  {id: 'A+', label: 'A Positive (A+)', enabled: true},
+  {id: 'A-', label: 'A Negative (A-)', enabled: true},
+  {id: 'B+', label: 'B Positive (B+)', enabled: true},
+  {id: 'B-', label: 'B Negative (B-)', enabled: true},
+  {id: 'AB+', label: 'AB Positive (AB+)', enabled: true},
+  {id: 'AB-', label: 'AB Negative (AB-)', enabled: true},
+  {id: 'O+', label: 'O Positive (O+)', enabled: true},
+  {id: 'O-', label: 'O Negative (O-)', enabled: true},
 ];
 
 const MoreDetails = () => {
   const {...methods} = useForm({mode: 'onBlur'});
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    const subscription = methods.watch((values, {name, type}) => {
+      setIsFormValid(methods.formState.isValid);
+    });
+    return () => subscription.unsubscribe();
+  }, [methods]);
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -56,7 +65,7 @@ const MoreDetails = () => {
             title=""
             headerRightComponent={
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <TouchableOpacity onPress={() => navigate(AuthScreen.Login)}>
+                <TouchableOpacity onPress={() => navigate()}>
                   <Text style={styles.skipButton}>Skip</Text>
                 </TouchableOpacity>
               </View>
@@ -69,6 +78,7 @@ const MoreDetails = () => {
                 fontWeight: 'bold',
                 fontSize: 24,
                 marginTop: 10,
+                marginBottom: 20,
               }}>
               Tell us a bit about yourself
             </Text>
@@ -108,7 +118,7 @@ const MoreDetails = () => {
                   options={BloodTypes}
                   label="Blood Type"
                   optionsListLabel="Select your blood type"
-                  optionsListHeight={200}
+                  optionsListHeight={500}
                   rules={{
                     required: {
                       value: true,
@@ -122,10 +132,10 @@ const MoreDetails = () => {
         </View>
       </KeyboardAvoidingView>
       <FilledButton
-        label="Continue"
+        label="Next"
         type="blue"
-        style={{width: '90%', alignSelf: 'center', marginVertical: 10}}
-        disabled={!methods.formState.isValid}
+        style={{width: '92%', alignSelf: 'center', marginVertical: 10}}
+        // disabled={!isFormValid}
         onPress={methods.handleSubmit(onSubmit)}
       />
     </SafeAreaView>

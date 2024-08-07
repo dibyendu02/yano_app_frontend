@@ -108,6 +108,8 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
   //@ts-ignore
   const userType = route?.params?.userType;
 
+  console.log(userType);
+
   const {...methods} = useForm({
     mode: 'onChange',
   });
@@ -300,13 +302,33 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
           </View>
         </View>
       </KeyboardAvoidingView>
+      <Text
+        style={{
+          width: '92%',
+          marginHorizontal: 'auto',
+          textAlign: 'center',
+          paddingTop: 10,
+          color: '3D5A6C',
+        }}>
+        When registering you are accepting our{' '}
+        <Text style={{color: Colors.Blue, textDecorationLine: 'underline'}}>
+          Terms and conditions
+        </Text>{' '}
+        and
+        <Text style={{color: Colors.Blue, textDecorationLine: 'underline'}}>
+          {' '}
+          Privacy policies
+        </Text>
+      </Text>
       <FilledButton
         label="Continue"
         type="blue"
-        style={{width: '90%', alignSelf: 'center', marginVertical: 10}}
+        style={{width: '92%', alignSelf: 'center', marginVertical: 10}}
         // disabled={!methods.formState.isDirty}
         // onPress={methods.handleSubmit(onSubmit)}
-        onPress={() => navigate(AuthScreen.AccountVerification)}
+        onPress={() =>
+          navigate(AuthScreen.AccountVerification, {userType: userType})
+        }
       />
     </SafeAreaView>
   );
@@ -316,7 +338,7 @@ export default Registration;
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 16,
+    fontSize: 18,
     color: Colors.Blue,
     marginRight: 8,
   },
@@ -327,6 +349,7 @@ const styles = StyleSheet.create({
     color: Colors.Blue,
     fontWeight: 'bold',
     padding: 10,
+    paddingHorizontal: 15,
   },
   body: {
     flex: 1,

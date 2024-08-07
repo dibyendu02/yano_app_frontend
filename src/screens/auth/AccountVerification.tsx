@@ -21,6 +21,7 @@ import FormInput from '../../components/hook-form/FormInput';
 const AccountVerification = () => {
   const route = useRoute();
   //@ts-ignore
+  const userType = route?.params?.userType;
   const mode = route.params?.mode;
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const {control, ...methods} = useForm();
@@ -29,14 +30,16 @@ const AccountVerification = () => {
     {
       key: 'Email',
       label: 'Email verification',
-      description:
-        'We will send you a 6-digit verification code to pedro.anzola@gmail.com',
+      description: `We will send you a 6-digit verification code to ${
+        userType === 'Patient'
+          ? 'patient.email@example.com'
+          : 'provider.email@example.com'
+      }`,
     },
     {
       key: 'Mobile',
-      label: 'Mobile verification',
-      description:
-        'We will send you a 6-digit verification code to \n+58 4126798909',
+      label: 'SMS verification',
+      description: `We will send you a 6-digit verification code to \n+1234567890`,
     },
   ];
 
@@ -50,6 +53,9 @@ const AccountVerification = () => {
   const verifyCode = async (_code: string) => {
     if (code === '123456') {
       methods.clearErrors('code');
+      if (userType == 'Patient') {
+        navigate(AuthScreen.Welcome);
+      } else navigate(AuthScreen.Dashboard);
     } else {
       methods.setError('code', {
         type: 'manual',
@@ -68,9 +74,16 @@ const AccountVerification = () => {
       <Header title="Account Verification" />
       <View style={styles.body}>
         <Text style={styles.instructionText}>
-          {mode === 'Verification'
-            ? 'Please enter the 6-digit verification code that was sent to 0412-6808909'
-            : "For your safety, we want to make sure it's \nreally you. Select a method to verify your \naccount."}
+          {mode === 'Verification' ? (
+            <>
+              Please enter the 6-digit verification code that was sent to{' '}
+              <Text style={styles.boldText}>
+                {userType === 'Patient' ? '0412-6808909' : '+1234567890'}
+              </Text>
+            </>
+          ) : (
+            "For your safety, we want to make sure it's \nreally you. Select a method to verify your \naccount."
+          )}
         </Text>
         {mode === 'Verification' ? (
           <View style={{marginTop: 24}}>
@@ -130,7 +143,10 @@ const AccountVerification = () => {
           type="blue"
           style={styles.sendButton}
           onPress={() =>
-            navigate(AuthScreen.AccountVerification, {mode: 'Verification'})
+            navigate(AuthScreen.AccountVerification, {
+              mode: 'Verification',
+              userType,
+            })
           }
         />
       )}
@@ -152,9 +168,13 @@ const styles = StyleSheet.create({
   },
   instructionText: {
     color: Colors.Blue,
-    fontSize: 16,
+    fontSize: 18,
     lineHeight: 21,
-    width: '95%',
+    width: '100%',
+    marginBottom: 10,
+  },
+  boldText: {
+    fontWeight: 'bold',
   },
   optionContainer: {
     width: '100%',
@@ -169,13 +189,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   optionLabel: {
-    fontSize: 16,
+    fontSize: 18,
     color: Colors.Blue,
   },
   optionDescription: {
     color: Colors.SteelBlue,
     fontWeight: '400',
     marginLeft: 35,
+    fontSize: 14,
   },
   resendContainer: {
     width: '100%',

@@ -7,6 +7,8 @@ export const AuthScreen = {
   LoadingScreen: 'LoadingScreen',
   ForgotPass: 'ForgotPass',
   SecondForgotPassword: 'SecondForgotPassword',
+  Welcome: 'WelcomeScreen',
+  MoreDetails: 'MoreDetails',
 };
 
 export type AuthScreenType = (typeof AuthScreen)[keyof typeof AuthScreen];

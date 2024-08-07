@@ -97,8 +97,7 @@ const SelectUserType = () => {
         type="blue"
         label="Continue"
         disabled={!selectedRole}
-        style={{width: '90%', marginVertical: 10, alignSelf: 'center'}}
-
+        style={{width: '92%', marginVertical: 10, alignSelf: 'center'}}
         onPress={() =>
           navigate(AuthScreen.Registration, {userType: selectedRole})
         }

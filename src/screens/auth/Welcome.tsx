@@ -3,6 +3,8 @@ import React, {useState} from 'react';
 import {StaticImage} from '../../assets/images';
 import {Colors} from '../../constants/Colors';
 import FilledButton from '../../components/buttons/FilledButton';
+import {navigate} from '../../navigation/RootNavigation';
+import {AuthScreen} from '../../navigation/auth/AuthScreens';
 
 const Welcome = () => {
   const [name, setName] = useState('Pedro');
@@ -17,7 +19,11 @@ const Welcome = () => {
           To make sure your experience with Yano is the best it can be, we need
           to get to know you a little better.
         </Text>
-        <FilledButton type="blue" label="Continue" />
+        <FilledButton
+          type="blue"
+          label="Continue"
+          onPress={() => navigate(AuthScreen.MoreDetails)}
+        />
       </View>
     </ImageBackground>
   );

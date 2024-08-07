@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import Header from '../../components/header/Header';
 import {navigate} from '../../navigation/RootNavigation';
 import {Colors} from '../../constants/Colors';
@@ -17,10 +17,15 @@ import {FormInputType} from '../../components/hook-form/types';
 import {FormProvider, useForm} from 'react-hook-form';
 import FilledButton from '../../components/buttons/FilledButton';
 import {StaticImage} from '../../assets/images';
+import UserContext from '../../contexts/UserContext';
 
 const Login = () => {
+  const {login} = useContext(UserContext);
   const {...methods} = useForm({mode: 'onBlur'});
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    login();
+    navigate('tabs');
+  };
   return (
     <SafeAreaView style={styles.container}>
       <Header
@@ -74,8 +79,18 @@ const Login = () => {
             }}
           />
         </FormProvider>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            marginBottom: 20,
+          }}>
+          <TouchableOpacity>
+            <Text style={{color: Colors.Blue}}>Forgot your password?</Text>
+          </TouchableOpacity>
+        </View>
         <FilledButton
-          label="Login"
+          label="Log in"
           type="blue"
           disabled={!methods.formState.isValid}
           onPress={methods.handleSubmit(onSubmit)}
@@ -90,7 +105,7 @@ const Login = () => {
           <View
             style={{width: '45%', height: 2, backgroundColor: Colors.LightGray}}
           />
-          <Text>or</Text>
+          <Text style={{fontSize: 18, color: Colors.Blue}}>o</Text>
           <View
             style={{width: '45%', height: 2, backgroundColor: Colors.LightGray}}
           />
@@ -137,7 +152,7 @@ const styles = StyleSheet.create({
     color: '#00263E',
     fontWeight: 'bold',
     padding: 10,
-    marginRight: 15,
+    paddingHorizontal: 15,
   },
   loginBtnText: {
     color: 'white',
@@ -145,7 +160,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   text: {
-    fontSize: 16,
+    fontSize: 18,
     color: Colors.Blue,
     marginRight: 8,
   },

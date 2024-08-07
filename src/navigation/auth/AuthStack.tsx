@@ -10,6 +10,8 @@ import SelectUserType from '../../screens/auth/SelectUserType';
 import Registration from '../../screens/auth/Registration';
 import Login from '../../screens/auth/Login';
 import AccountVerification from '../../screens/auth/AccountVerification';
+import Welcome from '../../screens/auth/Welcome';
+import MoreDetails from '../../screens/auth/MoreDetails';
 
 const Stack = createNativeStackNavigator<AuthStackParams>();
 
@@ -29,6 +31,16 @@ const authStackConfig: AuthStackConfig[] = [
   {
     name: AuthScreen.AccountVerification,
     component: AccountVerification,
+    options: {headerShown: false},
+  },
+  {
+    name: AuthScreen.Welcome,
+    component: Welcome,
+    options: {headerShown: false},
+  },
+  {
+    name: AuthScreen.MoreDetails,
+    component: MoreDetails,
     options: {headerShown: false},
   },
   {
