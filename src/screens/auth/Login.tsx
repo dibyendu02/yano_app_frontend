@@ -29,7 +29,7 @@ const Login = () => {
     // navigate('tabs');
   };
   useEffect(() => {
-    console.log(isPatient);
+    console.log();
   }, []);
   return (
     <SafeAreaView style={styles.container}>
