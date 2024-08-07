@@ -9,4 +9,6 @@ export const StaticImage = {
   PatientLogo: require('./patientLogo.png'),
   ProviderLogo: require('./providerLogo.png'),
   PersonPlaceholder: require('./person-placeholder.png'),
+  Welcome: require('./welcome.png'),
+  WaveIcon: require('./wave.png'),
 };
