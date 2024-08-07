@@ -9,13 +9,15 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+
 import Header from '../../components/header/Header';
 import { navigate } from '../../navigation/RootNavigation';
 import { Colors } from '../../constants/Colors';
 import { FormProvider, useForm } from 'react-hook-form';
 import FilledButton from '../../components/buttons/FilledButton';
 import FormSelectionInput from '../../components/hook-form/FormSelectionInput';
+import UserContext from '../../contexts/UserContext';
 
 const HeightOptions = Array.from({ length: 100 }, (_, i) => ({
   id: (i + 100).toString(),
@@ -43,6 +45,7 @@ const BloodTypes = [
 const MoreDetails = () => {
   const { ...methods } = useForm({ mode: 'onBlur' });
   const [isFormValid, setIsFormValid] = useState(false);
+  const { login, isPatient } = useContext(UserContext);
 
   useEffect(() => {
     const subscription = methods.watch((values, { name, type }) => {
@@ -65,8 +68,14 @@ const MoreDetails = () => {
           <Header
             title=""
             headerRightComponent={
+
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity onPress={() => navigate("MyHealth")}>
+                <TouchableOpacity
+                  onPress={() => {
+                    login();
+                    navigate('tabs');
+                  }}>
+
                   <Text style={styles.skipButton}>Skip</Text>
                 </TouchableOpacity>
               </View>

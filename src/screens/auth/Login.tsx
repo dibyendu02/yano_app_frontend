@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+
 import Header from '../../components/header/Header';
 import { navigate } from '../../navigation/RootNavigation';
 import { Colors } from '../../constants/Colors';
@@ -22,10 +23,14 @@ import UserContext from '../../contexts/UserContext';
 const Login = () => {
   const { login } = useContext(UserContext);
   const { ...methods } = useForm({ mode: 'onBlur' });
+
   const onSubmit = () => {
     login();
-    navigate('tabs');
+    // navigate('tabs');
   };
+  useEffect(() => {
+    console.log(isPatient);
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <Header
