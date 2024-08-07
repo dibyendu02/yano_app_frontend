@@ -15,4 +15,7 @@ export const DummyImage = {
   bp: require('./BloodPressure.png'),
   bloodOxygen: require('./bloodOxygen.png'),
   graph: require('./graph.png'),
+  largeDevice: require('./large-device.png'),
+  glucometer: require('./glucometer.png'),
+  glucoround: require('./gluco-round.png'),
 };

@@ -164,7 +164,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
             title=""
             headerRightComponent={
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Text style={styles.text}>Already Registered?</Text>
+                <Text style={styles.text}>Already registered?</Text>
                 <TouchableOpacity onPress={() => navigate(AuthScreen.Login)}>
                   <Text style={styles.loginButton}>Log in</Text>
                 </TouchableOpacity>
@@ -186,8 +186,8 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
                 <FormImageInput name="file" />
                 <FormInput
                   name="firstName"
-                  label="First Name"
-                  placeholder="Enter your first name"
+                  label="Name"
+                  // placeholder="Enter your first name"
                   rules={{
                     required: {
                       value: true,
@@ -198,7 +198,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
                 <FormInput
                   name="lastName"
                   label="Last Name"
-                  placeholder="Enter your last name"
+                  // placeholder="Enter your last name"
                   rules={{
                     required: {
                       value: true,
@@ -210,7 +210,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
                   name="email"
                   label="Email"
                   type={FormInputType.Email}
-                  placeholder="Enter your email"
+                  // placeholder="Enter your email"
                   autoCapitalize="none"
                   keyboardType="email-address"
                   rules={{
@@ -247,7 +247,8 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
                 <FormDateInput
                   name="dateOfBirth"
                   label="Date of birth"
-                  placeholder="Select your DOB"
+                  placeholder="Select a date"
+                  placeholderTextColor={Colors.Grey}
                   rules={{
                     required: {
                       value: true,
@@ -275,7 +276,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
                   name="password"
                   label="Password"
                   type={FormInputType.Password}
-                  placeholder="Enter your password"
+                  // placeholder="Enter your password"
                   rules={{
                     required: {
                       value: true,
@@ -287,7 +288,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
                   name="repeatPassword"
                   label="Repeat Password"
                   type={FormInputType.Password}
-                  placeholder="Confirm password"
+                  // placeholder="Confirm password"
                   rules={{
                     validate: value => {
                       if (value !== methods.getValues('password')) {

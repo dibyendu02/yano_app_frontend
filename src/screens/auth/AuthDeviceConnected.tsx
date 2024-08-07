@@ -6,13 +6,16 @@ import {
   Text,
   View,
 } from 'react-native';
-import React from 'react';
-import {Colors} from '../../../../constants/Colors';
-import Header from '../../../../components/header/Header';
-import FilledButton from '../../../../components/buttons/FilledButton';
-import {OkIcon} from '../../../../assets/icon/IconNames';
+import React, {useContext} from 'react';
+import {Colors} from '../../constants/Colors';
+import Header from '../../components/header/Header';
+import FilledButton from '../../components/buttons/FilledButton';
+import {OkIcon} from '../../assets/icon/IconNames';
+import UserContext from '../../contexts/UserContext';
+import {AuthScreen} from '../../navigation/auth/AuthScreens';
 
-const DeviceConnected = ({navigation}: any) => {
+const AuthDeviceConnected = ({navigation}: any) => {
+  const {login} = useContext(UserContext);
   return (
     <SafeAreaView
       style={{
@@ -20,7 +23,25 @@ const DeviceConnected = ({navigation}: any) => {
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title="" />
+      {/* <Header title="" /> */}
+      <View
+        style={{
+          width: '100%',
+          height: 50,
+          backgroundColor: Colors.White,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: 'bold',
+            color: Colors.Blue,
+          }}>
+          ¡Felicidades!
+        </Text>
+      </View>
       <ScrollView>
         <View style={{padding: 20}}>
           <View
@@ -46,9 +67,9 @@ const DeviceConnected = ({navigation}: any) => {
                 fontWeight: 'bold',
                 color: Colors.Blue,
                 textAlign: 'center',
-                marginBottom: 10,
+                marginBottom: 5,
               }}>
-              Monitor Multiparámetros Yano has been added
+              Yano Multi-Parameter Monitor has been added
             </Text>
             <Text
               style={{
@@ -63,16 +84,19 @@ const DeviceConnected = ({navigation}: any) => {
       </ScrollView>
       <View style={styles.addBtn}>
         <FilledButton
-          label="Add a device"
+          label="Continue"
           type="blue"
-          onPress={() => navigation.navigate('MeasurementTools')}
+          onPress={() => {
+            // login();
+            navigation.navigate(AuthScreen.LoadingScreen);
+          }}
         />
       </View>
     </SafeAreaView>
   );
 };
 
-export default DeviceConnected;
+export default AuthDeviceConnected;
 
 const styles = StyleSheet.create({
   addBtn: {

@@ -117,20 +117,24 @@ const FormImageInput: React.FC<FormImageProps> = ({name}) => {
               <TouchableOpacity
                 style={styles.optionContainer}
                 onPress={() => handleImageCapture('Camera')}>
-                <Icons.MaterialCommunityIcons
-                  name="camera"
-                  size={30}
-                  color={Colors.Blue}
+                {/* <Icons.Entypo name="camera" size={30} color={Colors.Blue} /> */}
+                <Image
+                  source={StaticImage.CameraIcon}
+                  style={{width: 30, height: 30}}
                 />
                 <Text style={{color: Colors.Blue, fontSize: 16}}>Camera</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.optionContainer}
                 onPress={() => handleImageCapture('Gallery')}>
-                <Icons.MaterialCommunityIcons
+                {/* <Icons.MaterialCommunityIcons
                   name="image-outline"
                   size={30}
                   color={Colors.Blue}
+                /> */}
+                <Image
+                  source={StaticImage.GalleryIcon}
+                  style={{width: 30, height: 30}}
                 />
                 <Text style={{color: Colors.Blue, fontSize: 16}}>Gallery</Text>
               </TouchableOpacity>

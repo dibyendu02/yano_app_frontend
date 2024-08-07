@@ -1,10 +1,11 @@
 import React, {FC, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {Controller, FieldError, useFormContext} from 'react-hook-form';
 import {Colors} from '../../constants/Colors';
 import {TextInput, TextInputProps} from 'react-native-paper';
 import DatePicker from 'react-native-date-picker';
 import moment from 'moment';
+import {StaticImage} from '../../assets/images';
 interface FormDateInputProps extends TextInputProps {
   name: string;
   rules?: object;
@@ -43,7 +44,13 @@ const FormDateInput: FC<FormDateInputProps> = ({
               placeholder={placeholder}
               right={
                 <TextInput.Icon
-                  icon="calendar-range"
+                  // icon="calendar-range"
+                  icon={() => (
+                    <Image
+                      source={StaticImage.CalenderIcon}
+                      // style={{width: 40, height: 40}}
+                    />
+                  )}
                   onPress={() => setShowDatePicker(true)}
                   size={25}
                   color={Colors.Grey}

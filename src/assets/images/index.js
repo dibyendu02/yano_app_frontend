@@ -11,4 +11,8 @@ export const StaticImage = {
   PersonPlaceholder: require('./person-placeholder.png'),
   Welcome: require('./welcome.png'),
   WaveIcon: require('./wave.png'),
+  CameraIcon: require('./camera.png'),
+  CalenderIcon: require('./calender.png'),
+  GalleryIcon: require('./gallery.png'),
+  DeviceStart: require('./device-start.png'),
 };

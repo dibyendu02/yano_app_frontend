@@ -83,7 +83,8 @@ const FormPhoneNumberInput: FC<FormPhoneNumberInputProps> = ({
                       style={{
                         height: 30,
                         width: 30,
-                        resizeMode: 'contain',
+                        resizeMode: 'cover',
+                        borderRadius: 50,
                       }}
                     />
                   )}

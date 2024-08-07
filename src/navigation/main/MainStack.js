@@ -99,9 +99,10 @@ import BloodOxygenModal from '../../screens/main/video-call/BloodOxygen';
 import BodyTemperatureModal from '../../screens/main/video-call/BodyTemperature';
 import ECGModal from '../../screens/main/video-call/ECGModal';
 import GlucoseLevelModal from '../../screens/main/video-call/GlucoseLevelModal';
-
 import DeleteAllData from '../../screens/main/my-profile/settings/DeleteAllData';
 import { Colors } from '../../constants/Colors';
+import NoDataScreen from '../../screens/main/my-profile/settings/NoDataScreen';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -744,27 +745,32 @@ const MainStack = () => {
       <Stack.Screen
         name="UserFamilyMembers"
         component={UserFamilyMembers}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="UserFamilyMemberDetails"
         component={ViewFamilyMemberDetails}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="AddUserFamilyMember"
         component={AddUserFamilyMember}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="EditFamilyMembers"
         component={EditUserFamilyMember}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="FamilyMemberSaved"
         component={LoadingAfterSave}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="NoDataScreen"
+        component={NoDataScreen}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

@@ -4,15 +4,20 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
-import {Colors} from '../../../../constants/Colors';
-import Header from '../../../../components/header/Header';
-import {DummyImage} from '../../../../assets/dummy/images';
-import FilledButton from '../../../../components/buttons/FilledButton';
+import React, {useContext} from 'react';
+import {Colors} from '../../constants/Colors';
+import Header from '../../components/header/Header';
+import {DummyImage} from '../../assets/dummy/images';
+import FilledButton from '../../components/buttons/FilledButton';
+import {navigate} from '../../navigation/RootNavigation';
+import UserContext from '../../contexts/UserContext';
+import {AuthScreen} from '../../navigation/auth/AuthScreens';
 
-const DeviceInfo = ({navigation}: any) => {
+const AuthDeviceInfo = ({navigation}: any) => {
+  const {login, isPatient} = useContext(UserContext);
   return (
     <SafeAreaView
       style={{
@@ -20,7 +25,19 @@ const DeviceInfo = ({navigation}: any) => {
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title="" />
+      <Header
+        title=""
+        headerRightComponent={
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigate(AuthScreen.LoadingScreen);
+              }}>
+              <Text style={styles.skipButton}>Skip</Text>
+            </TouchableOpacity>
+          </View>
+        }
+      />
       <ScrollView>
         <View style={{padding: 20}}>
           <View
@@ -66,16 +83,16 @@ const DeviceInfo = ({navigation}: any) => {
       </ScrollView>
       <View style={styles.addBtn}>
         <FilledButton
-          label="Add a device"
+          label="Connect this device"
           type="blue"
-          onPress={() => navigation.navigate('DeviceConnected')}
+          onPress={() => navigation.navigate(AuthScreen.DeviceInstruction)}
         />
       </View>
     </SafeAreaView>
   );
 };
 
-export default DeviceInfo;
+export default AuthDeviceInfo;
 
 const styles = StyleSheet.create({
   addBtn: {
@@ -85,5 +102,16 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: Colors.White,
     padding: 10,
+  },
+  skipButton: {
+    borderWidth: 1,
+    borderColor: 'black',
+    borderRadius: 8,
+    fontSize: 14,
+    color: '#00263E',
+    fontWeight: 'bold',
+    padding: 10,
+    paddingHorizontal: 15,
+    marginRight: 15,
   },
 });
