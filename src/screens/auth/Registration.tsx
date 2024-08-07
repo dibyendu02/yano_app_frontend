@@ -284,6 +284,9 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
                     },
                   }}
                 />
+                <Text style={{color: Colors.Grey, marginBottom: 12}}>
+                  Must be at least 8 characters
+                </Text>
                 <FormInput
                   name="repeatPassword"
                   label="Repeat Password"
