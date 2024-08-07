@@ -41,7 +41,16 @@ const SelectUserType = () => {
     } else if (selectedRole === UserType.Doctor) {
       ProviderLogin();
     }
-    navigate(AuthScreen.Registration);
+    navigate(AuthScreen.Registration, {userType: selectedRole});
+  };
+
+  const handlePress = (role: string) => {
+    setSelectedRole(role);
+    if (role === UserType.Patient) {
+      PatientLogin();
+    } else if (role === UserType.Doctor) {
+      ProviderLogin();
+    }
   };
 
   return (
@@ -61,7 +70,6 @@ const SelectUserType = () => {
         style={{
           flex: 1,
           backgroundColor: Colors.GhostWhite,
-          // backgroundColor: 'red',
           paddingHorizontal: '5%',
           paddingVertical: 10,
         }}>
@@ -84,7 +92,7 @@ const SelectUserType = () => {
                   borderWidth: selectedRole && item.id === selectedRole ? 2 : 0,
                 },
               ]}
-              onPress={() => setSelectedRole(item.id)}>
+              onPress={() => handlePress(item.id)}>
               <Image source={item.img} />
               <Text style={styles.selectionCardContainerText}>
                 {item.label}
@@ -98,9 +106,7 @@ const SelectUserType = () => {
         label="Continue"
         disabled={!selectedRole}
         style={{width: '92%', marginVertical: 10, alignSelf: 'center'}}
-        onPress={() =>
-          navigate(AuthScreen.Registration, {userType: selectedRole})
-        }
+        onPress={handleContinue}
       />
     </SafeAreaView>
   );
