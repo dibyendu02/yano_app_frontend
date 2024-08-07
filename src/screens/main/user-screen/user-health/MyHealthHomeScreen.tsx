@@ -37,6 +37,7 @@ const MyHealthHomeScreen = ({navigation}) => {
   return (
     <CommonLayout>
       <Header
+        showBackIcon={false}
         title="Hi, Pedro"
         headerRightComponent={
           <TouchableOpacity style={{position: 'relative'}}>
