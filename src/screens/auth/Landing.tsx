@@ -3,6 +3,7 @@ import React, {useEffect} from 'react';
 import {
   Image,
   ImageBackground,
+  Platform,
   SafeAreaView,
   StatusBar,
   StyleSheet,
@@ -21,12 +22,14 @@ const Landing: React.FC<LandingScreenProps> = () => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    if (isFocused) {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor('#a4d6eb');
-    } else {
-      StatusBar.setBarStyle('dark-content');
-      StatusBar.setBackgroundColor(Colors.White);
+    if (Platform.OS === 'android') {
+      if (isFocused) {
+        StatusBar.setBarStyle('dark-content');
+        StatusBar.setBackgroundColor('#a4d6eb');
+      } else {
+        StatusBar.setBarStyle('dark-content');
+        StatusBar.setBackgroundColor(Colors.White);
+      }
     }
   }, [isFocused]);
 
