@@ -27,12 +27,17 @@ const Notifications = [
     },
 ]
 
-const NotificationAlerts = () => {
+const NotificationAlerts = ({ navigation }) => {
     return (
         <CommonLayout>
             <CommonHeader
                 leftIcon={
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => navigation.goBack()}
+                        style={{
+                            marginLeft: 10
+                        }}
+                    >
                         <CloseIcon size={30} />
                     </TouchableOpacity>
                 }

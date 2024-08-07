@@ -40,7 +40,9 @@ const MyHealthHomeScreen = ({ navigation }) => {
         showBackIcon={false}
         title="Hi, Pedro"
         headerRightComponent={
-          <TouchableOpacity style={{ position: 'relative' }}>
+          <TouchableOpacity
+            onPress={() => navigate('NotificationAlerts')}
+            style={{ position: 'relative' }}>
             <NotificationIcon size={24} color={Colors.Blue} />
             <View
               style={{
