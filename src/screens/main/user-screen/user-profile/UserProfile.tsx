@@ -10,24 +10,25 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {userData} from '../../../../test/Data';
+import { userData } from '../../../../test/Data';
 import Header from '../../../../components/header/Header';
-import {EditIcon} from '../../../../assets/icon/IconNames';
+import { EditIcon } from '../../../../assets/icon/IconNames';
 import Card from '../../../../components/cards/Card';
-import {DummyImage} from '../../../../assets/dummy/images';
-import {navigate} from '../../../../navigation/RootNavigation';
-import {Colors} from '../../../../constants/Colors';
+import { DummyImage } from '../../../../assets/dummy/images';
+import { navigate } from '../../../../navigation/RootNavigation';
+import { Colors } from '../../../../constants/Colors';
 import PatientElements from '../../../../components/PatientElements';
 import Icons from '../../../../assets/icon/Icon';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import BottomSheet from '../../../../components/bottom-sheet/BottomSheet';
-import {CardStyles} from '../../../../components/cards/CardStyle';
+import { CardStyles } from '../../../../components/cards/CardStyle';
 import Badge from '../../../../components/Badge';
+import ShareButton from './ShareButton';
 
 let data1 = [
   {
@@ -105,7 +106,7 @@ export default function () {
   return (
     <SafeAreaView style={styles.container}>
       <Header
-        title="Monitored patient"
+        title="My profile"
         headerRightComponent={
           <TouchableOpacity>
             <EditIcon />
@@ -172,10 +173,10 @@ export default function () {
               justifyContent: 'center',
               padding: 14,
             }}>
-            <FilledButton
+            <ShareButton
               label="Share Profile"
               type="blue"
-              style={{width: '75%'}}
+              style={{ width: '75%' }}
               icon={
                 <Icons.EvilIcons
                   name="share-google"
@@ -186,7 +187,7 @@ export default function () {
             />
             <FilledButton
               type="lightGrey"
-              style={{width: '18%', marginLeft: 8}}
+              style={{ width: '18%', marginLeft: 8 }}
               icon={
                 <Icons.AntDesign name="qrcode" color={Colors.Blue} size={25} />
               }
@@ -202,7 +203,7 @@ export default function () {
               paddingHorizontal: 20,
               paddingVertical: 10,
             }}
-            renderItem={({item, index: _i}) => (
+            renderItem={({ item, index: _i }) => (
               <TouchableOpacity
                 onPress={() => navigate(item.path)}
                 style={{
@@ -240,9 +241,9 @@ export default function () {
         </View>
       </ScrollView>
       <BottomSheet isVisible={showQR} onBackdropPress={() => setShowQR(false)}>
-        <View style={{padding: 20, alignItems: 'center'}}>
+        <View style={{ padding: 20, alignItems: 'center' }}>
           <Image source={DummyImage.QR} height={150} width={150} />
-          <Text style={{marginVertical: 20}}>
+          <Text style={{ marginVertical: 20 }}>
             Scan this QR code with your patient's cell phone to access their
             measurements and health history.
           </Text>

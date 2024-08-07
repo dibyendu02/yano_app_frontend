@@ -8,8 +8,8 @@ import CommonHeader from '../components/CommonHeader';
 
 const BasicInfo = ({ navigation }: any) => {
     const data = {
-        height: "164cm",
-        weight: "56kg",
+        height: "164 cm",
+        weight: "56 kg",
         bloodGroup: "O+"
     }
 
@@ -29,11 +29,11 @@ const BasicInfo = ({ navigation }: any) => {
                         <EditIcon />
                     </TouchableOpacity>
                 }
-                rightComp2={
-                    <TouchableOpacity>
-                        <DeleteIcon />
-                    </TouchableOpacity>
-                }
+            // rightComp2={
+            //     <TouchableOpacity>
+            //         <DeleteIcon />
+            //     </TouchableOpacity>
+            // }
             />
             <ScrollView>
                 <View style={{ padding: 20 }}>

@@ -1,11 +1,11 @@
 import {
     ScrollView,
-    StyleSheet, 
+    StyleSheet,
     View,
 } from 'react-native';
-import React, { FC } from 'react'; 
+import React, { FC } from 'react';
 import { Colors } from '../../../constants/Colors';
-import PatientElements from '../../../components/PatientElements'; 
+import PatientElementComp from './PatientElementComp';
 
 type props = {
     data: any[];
@@ -19,10 +19,11 @@ const HomeItems: FC<props> = ({ data, path, navigation }) => {
             <ScrollView>
                 <View style={{ padding: 20 }}>
                     {data.map((item, i) => (
-                        <PatientElements
+                        <PatientElementComp
                             key={i}
                             name={item.name}
                             element={<></>}
+                            details={item.note}
                             color="black"
                             customStyle={{
                                 paddingVertical: 20,
