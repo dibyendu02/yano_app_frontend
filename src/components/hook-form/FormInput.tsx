@@ -1,12 +1,23 @@
 import React, {FC, useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {Controller, FieldError, useFormContext} from 'react-hook-form';
+import {
+  Controller,
+  FieldError,
+  FieldValues,
+  RegisterOptions,
+  useFormContext,
+} from 'react-hook-form';
 import {Colors} from '../../constants/Colors';
 import {TextInput, TextInputProps} from 'react-native-paper';
 import {FormInputType} from './types';
 interface FormInputProps extends TextInputProps {
   name: string;
-  rules?: object;
+  rules?:
+    | Omit<
+        RegisterOptions<FieldValues, string>,
+        'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
+      >
+    | undefined;
   label?: string;
   type?: FormInputType;
 }

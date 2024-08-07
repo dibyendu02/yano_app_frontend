@@ -19,3 +19,4 @@ export type AuthStackConfig = {
 
 //Landing Screen
 export type LandingScreenProps = NativeStackScreenProps<AuthStackParams , AuthScreenType>;
+export type AuthScreensProps = NativeStackScreenProps<AuthStackParams, AuthScreenType>;

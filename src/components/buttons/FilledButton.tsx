@@ -22,22 +22,32 @@ const ButtonColors = {
   [ButtonType.Blue]: {
     backgroundColor: Colors.Blue,
     textColor: Colors.White,
+    borderColor: Colors.Transparent,
+    borderWidth: 0,
   },
   [ButtonType.Red]: {
     backgroundColor: Colors.Red,
     textColor: Colors.White,
+    borderColor: Colors.Transparent,
+    borderWidth: 0,
   },
   [ButtonType.White]: {
     backgroundColor: Colors.White,
     textColor: Colors.Blue,
+    borderColor: Colors.LightGray,
+    borderWidth: 1,
   },
   [ButtonType.LightGrey]: {
     backgroundColor: Colors.LightGray,
     textColor: Colors.Blue,
+    borderColor: Colors.Transparent,
+    borderWidth: 0,
   },
   [ButtonType.Green]: {
     backgroundColor: Colors.Green,
     textColor: Colors.White,
+    borderColor: Colors.Transparent,
+    borderWidth: 0,
   },
 };
 interface ButtonProps {
@@ -65,6 +75,8 @@ const FilledButton: React.FC<ButtonProps> = ({
         styles.container,
         {
           backgroundColor: ButtonColors[type].backgroundColor,
+          borderColor: ButtonColors[type].borderColor,
+          borderWidth: ButtonColors[type].borderWidth,
           opacity: disabled ? 0.4 : 1,
         },
         style,
