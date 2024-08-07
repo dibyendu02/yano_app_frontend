@@ -12,6 +12,11 @@ import Login from '../../screens/auth/Login';
 import AccountVerification from '../../screens/auth/AccountVerification';
 import Welcome from '../../screens/auth/Welcome';
 import MoreDetails from '../../screens/auth/MoreDetails';
+import AuthChooseDevice from '../../screens/auth/AuthChooseDevice';
+import AuthDeviceInfo from '../../screens/auth/AuthDeviceInfo';
+import AuthDeviceConnected from '../../screens/auth/AuthDeviceConnected';
+import AuthInstruction from '../../screens/auth/AuthInstruction';
+import AuthAskDevice from '../../screens/auth/AuthAskDevice';
 
 const Stack = createNativeStackNavigator<AuthStackParams>();
 
@@ -41,6 +46,32 @@ const authStackConfig: AuthStackConfig[] = [
   {
     name: AuthScreen.MoreDetails,
     component: MoreDetails,
+    options: {headerShown: false},
+  },
+  {
+    name: AuthScreen.ChooseDevice,
+    component: AuthChooseDevice,
+    options: {headerShown: false},
+  },
+
+  {
+    name: AuthScreen.AskDevice,
+    component: AuthAskDevice,
+    options: {headerShown: false},
+  },
+  {
+    name: AuthScreen.DeviceInfo,
+    component: AuthDeviceInfo,
+    options: {headerShown: false},
+  },
+  {
+    name: AuthScreen.DeviceInstruction,
+    component: AuthInstruction,
+    options: {headerShown: false},
+  },
+  {
+    name: AuthScreen.DeviceConnected,
+    component: AuthDeviceConnected,
     options: {headerShown: false},
   },
   {

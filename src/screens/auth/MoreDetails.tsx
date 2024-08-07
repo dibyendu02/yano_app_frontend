@@ -9,73 +9,72 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 
 import Header from '../../components/header/Header';
-import { navigate } from '../../navigation/RootNavigation';
-import { Colors } from '../../constants/Colors';
-import { FormProvider, useForm } from 'react-hook-form';
+import {navigate} from '../../navigation/RootNavigation';
+import {Colors} from '../../constants/Colors';
+import {FormProvider, useForm} from 'react-hook-form';
 import FilledButton from '../../components/buttons/FilledButton';
 import FormSelectionInput from '../../components/hook-form/FormSelectionInput';
 import UserContext from '../../contexts/UserContext';
+import {AuthScreen} from '../../navigation/auth/AuthScreens';
 
-const HeightOptions = Array.from({ length: 100 }, (_, i) => ({
+const HeightOptions = Array.from({length: 100}, (_, i) => ({
   id: (i + 100).toString(),
   label: `${i + 100} cm`,
   enabled: true,
 }));
 
-const WeightOptions = Array.from({ length: 150 }, (_, i) => ({
+const WeightOptions = Array.from({length: 150}, (_, i) => ({
   id: (i + 30).toString(),
   label: `${i + 30} kg`,
   enabled: true,
 }));
 
 const BloodTypes = [
-  { id: 'A+', label: 'A Positive (A+)', enabled: true },
-  { id: 'A-', label: 'A Negative (A-)', enabled: true },
-  { id: 'B+', label: 'B Positive (B+)', enabled: true },
-  { id: 'B-', label: 'B Negative (B-)', enabled: true },
-  { id: 'AB+', label: 'AB Positive (AB+)', enabled: true },
-  { id: 'AB-', label: 'AB Negative (AB-)', enabled: true },
-  { id: 'O+', label: 'O Positive (O+)', enabled: true },
-  { id: 'O-', label: 'O Negative (O-)', enabled: true },
+  {id: 'A+', label: 'A Positive (A+)', enabled: true},
+  {id: 'A-', label: 'A Negative (A-)', enabled: true},
+  {id: 'B+', label: 'B Positive (B+)', enabled: true},
+  {id: 'B-', label: 'B Negative (B-)', enabled: true},
+  {id: 'AB+', label: 'AB Positive (AB+)', enabled: true},
+  {id: 'AB-', label: 'AB Negative (AB-)', enabled: true},
+  {id: 'O+', label: 'O Positive (O+)', enabled: true},
+  {id: 'O-', label: 'O Negative (O-)', enabled: true},
 ];
 
 const MoreDetails = () => {
-  const { ...methods } = useForm({ mode: 'onBlur' });
+  const {...methods} = useForm({mode: 'onBlur'});
   const [isFormValid, setIsFormValid] = useState(false);
-  const { login, isPatient } = useContext(UserContext);
+  const {login, isPatient} = useContext(UserContext);
 
   useEffect(() => {
-    const subscription = methods.watch((values, { name, type }) => {
+    const subscription = methods.watch((values, {name, type}) => {
       setIsFormValid(methods.formState.isValid);
     });
     return () => subscription.unsubscribe();
   }, [methods]);
 
   const onSubmit = (data: any) => {
-    navigate("MyHealth")
+    // navigate("MyHealth")
+    navigate(AuthScreen.AskDevice);
     console.log(data);
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
+        style={{flex: 1}}>
+        <View style={{flex: 1}}>
           <Header
             title=""
             headerRightComponent={
-
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
                   onPress={() => {
-                    login();
-                    navigate('tabs');
+                    navigate(AuthScreen.LoadingScreen);
                   }}>
-
                   <Text style={styles.skipButton}>Skip</Text>
                 </TouchableOpacity>
               </View>
@@ -144,7 +143,7 @@ const MoreDetails = () => {
       <FilledButton
         label="Next"
         type="blue"
-        style={{ width: '92%', alignSelf: 'center', marginVertical: 10 }}
+        style={{width: '92%', alignSelf: 'center', marginVertical: 10}}
         // disabled={!isFormValid}
         onPress={methods.handleSubmit(onSubmit)}
       />

@@ -71,7 +71,7 @@ const SelectUserType = () => {
           flex: 1,
           backgroundColor: Colors.GhostWhite,
           paddingHorizontal: '5%',
-          paddingVertical: 10,
+          // paddingVertical: 10,
         }}>
         <Text style={styles.headerText}>What type of user are you?</Text>
         <View
@@ -147,6 +147,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 24,
     fontFamily: 'Roboto',
-    marginBottom: 30,
+    marginVertical: 25,
   },
 });

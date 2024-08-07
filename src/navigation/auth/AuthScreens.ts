@@ -9,6 +9,11 @@ export const AuthScreen = {
   SecondForgotPassword: 'SecondForgotPassword',
   Welcome: 'WelcomeScreen',
   MoreDetails: 'MoreDetails',
+  AskDevice: 'AskDevice',
+  ChooseDevice: 'ChooseDevice',
+  DeviceInfo: 'DeviceInfo',
+  DeviceInstruction: 'DeviceInstruction',
+  DeviceConnected: 'DeviceConnected',
 };
 
 export type AuthScreenType = (typeof AuthScreen)[keyof typeof AuthScreen];

@@ -3,6 +3,7 @@ import {
   Image,
   ImageBackground,
   SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -18,8 +19,24 @@ import {navigate} from '../../navigation/RootNavigation';
 const Landing: React.FC<LandingScreenProps> = () => {
   return (
     <ImageBackground source={StaticImage.Landing} style={styles.container}>
+      {/* <StatusBar
+        // barStyle="dark-content" // You can use "dark-content" if you prefer dark text
+        // backgroundColor="#a4d6eb" // Set the background color you want
+      /> */}
       <SafeAreaView style={styles.contentContainer}>
-        <Image source={StaticImage.Logo} style={{marginTop: 30}} />
+        <View
+          style={{
+            width: '100%',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            // backgroundColor: 'red',
+          }}>
+          <Image
+            source={StaticImage.Logo}
+            style={{marginTop: 50, width: '55%', height: 88}}
+          />
+        </View>
+
         <View style={{width: '90%', paddingVertical: 20}}>
           <View style={{alignItems: 'center', marginBottom: 50}}>
             <Text style={styles.welcomeText}>Welcome</Text>
@@ -56,7 +73,7 @@ const styles = StyleSheet.create({
   welcomeText: {
     color: Colors.White,
     fontSize: 40,
-    fontWeight: 'semibold',
+    fontWeight: 'bold',
   },
   messageText: {
     color: 'white',
