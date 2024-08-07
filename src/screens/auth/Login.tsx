@@ -7,34 +7,36 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useContext, useEffect} from 'react';
+import React, { useContext, useEffect } from 'react';
+
 import Header from '../../components/header/Header';
-import {navigate} from '../../navigation/RootNavigation';
-import {Colors} from '../../constants/Colors';
-import {AuthScreen} from '../../navigation/auth/AuthScreens';
+import { navigate } from '../../navigation/RootNavigation';
+import { Colors } from '../../constants/Colors';
+import { AuthScreen } from '../../navigation/auth/AuthScreens';
 import FormInput from '../../components/hook-form/FormInput';
-import {FormInputType} from '../../components/hook-form/types';
-import {FormProvider, useForm} from 'react-hook-form';
+import { FormInputType } from '../../components/hook-form/types';
+import { FormProvider, useForm } from 'react-hook-form';
 import FilledButton from '../../components/buttons/FilledButton';
-import {StaticImage} from '../../assets/images';
+import { StaticImage } from '../../assets/images';
 import UserContext from '../../contexts/UserContext';
 
 const Login = () => {
-  const {login, isPatient} = useContext(UserContext);
-  const {...methods} = useForm({mode: 'onBlur'});
+  const { login } = useContext(UserContext);
+  const { ...methods } = useForm({ mode: 'onBlur' });
+
   const onSubmit = () => {
     login();
     // navigate('tabs');
   };
   useEffect(() => {
-    console.log(isPatient);
+    console.log();
   }, []);
   return (
     <SafeAreaView style={styles.container}>
       <Header
         title=""
         headerRightComponent={
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Text style={styles.text}>Not Registered?</Text>
             <TouchableOpacity
               onPress={() => navigate(AuthScreen.SelectUserType)}>
@@ -89,7 +91,7 @@ const Login = () => {
             marginBottom: 20,
           }}>
           <TouchableOpacity>
-            <Text style={{color: Colors.Blue}}>Forgot your password?</Text>
+            <Text style={{ color: Colors.Blue }}>Forgot your password?</Text>
           </TouchableOpacity>
         </View>
         <FilledButton
@@ -106,11 +108,11 @@ const Login = () => {
             marginVertical: 40,
           }}>
           <View
-            style={{width: '45%', height: 2, backgroundColor: Colors.LightGray}}
+            style={{ width: '45%', height: 2, backgroundColor: Colors.LightGray }}
           />
-          <Text style={{fontSize: 18, color: Colors.Blue}}>o</Text>
+          <Text style={{ fontSize: 18, color: Colors.Blue }}>o</Text>
           <View
-            style={{width: '45%', height: 2, backgroundColor: Colors.LightGray}}
+            style={{ width: '45%', height: 2, backgroundColor: Colors.LightGray }}
           />
         </View>
         <FilledButton

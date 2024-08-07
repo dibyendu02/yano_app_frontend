@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   FlatList,
   Image,
@@ -15,18 +15,18 @@ import {
   NotificationIcon,
   PlusIcon,
 } from '../../../../assets/icon/IconNames';
-import {Colors} from '../../../../constants/Colors';
+import { Colors } from '../../../../constants/Colors';
 import ItemWithTileSubtile from '../../../../components/ItemWithTileSubtitle';
 import Icons from '../../../../assets/icon/Icon';
 import Card from '../../../../components/cards/Card';
-import {navigate} from '../../../../navigation/RootNavigation';
-import {measurements} from '../../../../test/Data';
+import { navigate } from '../../../../navigation/RootNavigation';
+import { measurements } from '../../../../test/Data';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import OutlineButton from '../../../../components/buttons/OutlineButton';
 import BottomSheet from '../../../../components/bottom-sheet/BottomSheet';
-import {StaticImage} from '../../../../assets/images';
+import { StaticImage } from '../../../../assets/images';
 
-const MyHealthHomeScreen = ({navigation}) => {
+const MyHealthHomeScreen = ({ navigation }) => {
   const [show, setShow] = useState(false);
   const [selectedDiv, setSelectedDiv] = useState(null);
 
@@ -40,7 +40,9 @@ const MyHealthHomeScreen = ({navigation}) => {
         showBackIcon={false}
         title="Hi, Pedro"
         headerRightComponent={
-          <TouchableOpacity style={{position: 'relative'}}>
+          <TouchableOpacity
+            onPress={() => navigate('NotificationAlerts')}
+            style={{ position: 'relative' }}>
             <NotificationIcon size={24} color={Colors.Blue} />
             <View
               style={{
@@ -56,7 +58,7 @@ const MyHealthHomeScreen = ({navigation}) => {
         }
       />
       <ScrollView>
-        <View style={{padding: 15}}>
+        <View style={{ padding: 15 }}>
           <View style={styles.container}>
             <Text style={styles.title}>Do you have one of our devices?</Text>
             <Text style={styles.para}>
@@ -67,7 +69,7 @@ const MyHealthHomeScreen = ({navigation}) => {
               icon={<PlusIcon size={16} color={Colors.Blue} />}
               label="Connect Device"
               onPress={() => navigate('Subscription')}
-              style={{marginTop: 10}}
+              style={{ marginTop: 10 }}
             />
           </View>
           <ItemWithTileSubtile
@@ -126,8 +128,8 @@ const MyHealthHomeScreen = ({navigation}) => {
                 : []
             }
             scrollEnabled={false}
-            style={{width: '100%'}}
-            renderItem={({item, index: _index}) => (
+            style={{ width: '100%' }}
+            renderItem={({ item, index: _index }) => (
               <View
                 style={{
                   width: '100%',
@@ -136,7 +138,7 @@ const MyHealthHomeScreen = ({navigation}) => {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                 }}>
-                <View style={{width: '50%'}}>
+                <View style={{ width: '50%' }}>
                   <Text
                     style={{
                       fontSize: 18,
@@ -146,7 +148,7 @@ const MyHealthHomeScreen = ({navigation}) => {
                     }}>
                     {item.mType}
                   </Text>
-                  <Text style={{fontSize: 13, fontFamily: 'Roboto'}}>
+                  <Text style={{ fontSize: 13, fontFamily: 'Roboto' }}>
                     {item.dt}
                   </Text>
                 </View>
@@ -201,7 +203,7 @@ const MyHealthHomeScreen = ({navigation}) => {
         style={styles.addBtn}
       />
       <BottomSheet isVisible={show} onBackdropPress={() => setShow(false)}>
-        <View style={{padding: 20}}>
+        <View style={{ padding: 20 }}>
           <Text
             style={{
               fontSize: 18,
@@ -218,10 +220,10 @@ const MyHealthHomeScreen = ({navigation}) => {
               paddingVertical: 10,
               borderRadius: 10,
             }}>
-            <Text style={{fontSize: 16, color: Colors.SteelBlue}}>
+            <Text style={{ fontSize: 16, color: Colors.SteelBlue }}>
               Este servicio no está hecho para emergencias. Sí cree que está
               teniendo una, por favor contacte a{' '}
-              <Text style={{color: Colors.Red, fontWeight: '600'}}>
+              <Text style={{ color: Colors.Red, fontWeight: '600' }}>
                 Emergencias
               </Text>
             </Text>
@@ -268,7 +270,7 @@ const MyHealthHomeScreen = ({navigation}) => {
             <FilledButton
               label={'Continue'}
               type={'blue'}
-              style={{width: '100%', alignSelf: 'center', marginVertical: 14}}
+              style={{ width: '100%', alignSelf: 'center', marginVertical: 14 }}
               onPress={() => {
                 setShow(false);
                 navigation.navigate('PatientVideoCall');
@@ -298,7 +300,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   title: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
     color: Colors.Blue,
     marginBottom: 6,
@@ -306,7 +308,7 @@ const styles = StyleSheet.create({
   },
   para: {
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: 16,
     color: Colors.SteelBlue,
     marginBottom: 10,
   },

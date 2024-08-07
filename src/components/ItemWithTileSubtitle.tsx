@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {Colors} from '../constants/Colors';
+import { Colors } from '../constants/Colors';
 
 type ItemWithTileSubtileProps = {
   title: string;
@@ -22,8 +22,8 @@ const ItemWithTileSubtile: React.FC<ItemWithTileSubtileProps> = ({
 }) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={[styles.container, {...customStyle}]}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={[styles.container, { ...customStyle }]}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {element}
           <View
             style={{
@@ -31,7 +31,7 @@ const ItemWithTileSubtile: React.FC<ItemWithTileSubtileProps> = ({
               width: '70%',
             }}>
             <Text style={styles.title}>{title}</Text>
-            <Text style={{marginTop: 4, color: Colors.SteelBlue}}>
+            <Text style={{ marginTop: 4, color: Colors.SteelBlue }}>
               {subtitle}
             </Text>
           </View>
