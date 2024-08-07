@@ -78,7 +78,7 @@ const menuData = [
       />
     ),
     text: 'Family link',
-    path: 'UserFamilyLink',
+    path: 'UserFamilyMembers',
   },
   {
     id: '4',

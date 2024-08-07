@@ -58,7 +58,7 @@ const BloodOxygenScreen = () => {
                                             }}
                                         />
                                         <MeasurementBox
-                                            loading={false}
+                                            loading={loading}
                                             fields={{
                                                 name: 'Heart Rate',
                                                 value: values.heartRate,
@@ -88,7 +88,7 @@ const BloodOxygenScreen = () => {
                                                     fontSize: 20,
                                                     fontWeight: '600',
                                                     color: Colors.Blue
-                                                }} >Normal blood pressure</Text>
+                                                }} >Normal blood Oxygen</Text>
                                             </View>
                                             <View>
                                                 <Image

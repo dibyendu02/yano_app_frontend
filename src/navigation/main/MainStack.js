@@ -88,6 +88,17 @@ import BodyTemperatureMeasurement from '../../screens/main/my-profile/measuremen
 import EcgMeasurement from '../../screens/main/my-profile/measurement-tools/EcgMeasurement';
 import PatientVideoCall from '../../screens/main/video-call/PatientVideoCall';
 import UserContext from '../../contexts/UserContext';
+import UserFamilyMembers from '../../screens/main/user-screen/user-family/UserFamilyMembers';
+import ViewFamilyMemberDetails from '../../screens/main/user-screen/user-family/ViewFamilyMemberDetails';
+import AddUserFamilyMember from '../../screens/main/user-screen/user-family/AddUserFamilyMember';
+import EditUserFamilyMember from '../../screens/main/user-screen/user-family/EditUserFamilyMember';
+import LoadingAfterSave from '../../screens/main/user-screen/user-family/LoadingAfterSave';
+import HeartRateModal from '../../screens/main/video-call/HeartRateModal';
+import BloodPressureModal from '../../screens/main/video-call/BloodPressureModal';
+import BloodOxygenModal from '../../screens/main/video-call/BloodOxygen';
+import BodyTemperatureModal from '../../screens/main/video-call/BodyTemperature';
+import ECGModal from '../../screens/main/video-call/ECGModal';
+import GlucoseLevelModal from '../../screens/main/video-call/GlucoseLevelModal';
 
 const Tab = createBottomTabNavigator();
 
@@ -170,7 +181,7 @@ const ProviderTabs = () => {
 const MainStack = () => {
   const {isPatient} = useContext(UserContext);
   return (
-    <Stack.Navigator initialRouteName="userProfile">
+    <Stack.Navigator>
       <Stack.Screen
         name="tabs"
         // component={ProviderTabs}
@@ -180,6 +191,36 @@ const MainStack = () => {
       <Stack.Screen
         name="PatientVideoCall"
         component={PatientVideoCall}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="HeartRateModal"
+        component={HeartRateModal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodPressureModal"
+        component={BloodPressureModal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BloodOxygenModal"
+        component={BloodOxygenModal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="BodyTemperatureModal"
+        component={BodyTemperatureModal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="GlucoseLevelModal"
+        component={GlucoseLevelModal}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="ECGModal"
+        component={ECGModal}
         options={{headerShown: false}}
       />
       <Stack.Screen
@@ -687,6 +728,32 @@ const MainStack = () => {
         name="BloodGlucoseResult"
         component={BloodGlucoseResult}
         options={{headerShown: false}}
+      />
+      {/* user family */}
+      <Stack.Screen
+        name="UserFamilyMembers"
+        component={UserFamilyMembers}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="UserFamilyMemberDetails"
+        component={ViewFamilyMemberDetails}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddUserFamilyMember"
+        component={AddUserFamilyMember}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="EditFamilyMembers"
+        component={EditUserFamilyMember}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="FamilyMemberSaved"
+        component={LoadingAfterSave}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );

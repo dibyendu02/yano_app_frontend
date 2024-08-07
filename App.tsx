@@ -6,6 +6,10 @@ import MainStack from './src/navigation/main/MainStack';
 import UserContext from './src/contexts/UserContext';
 import {navigationRef} from './src/navigation/RootNavigation';
 import {Colors} from './src/constants/Colors';
+import {StatusBar} from 'react-native';
+import Welcome from './src/screens/auth/Welcome';
+import MoreDetails from './src/screens/auth/MoreDetails';
+import Registration from './src/screens/auth/Registration';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -41,6 +45,10 @@ export default function App() {
 
   return (
     <NavigationContainer ref={navigationRef} theme={theme}>
+      <StatusBar
+        barStyle="dark-content" // You can use "dark-content" if you prefer dark text
+        backgroundColor="white" // Set the background color you want
+      />
       <UserContext.Provider
         value={{login, logout, ProviderLogin, PatientLogin, isPatient}}>
         {isLoggedIn ? <MainStack /> : <AuthStack />}
