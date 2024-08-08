@@ -91,7 +91,12 @@ const AddPatient = () => {
             renderItem={({ item, index: _index }) => (
               <TouchableOpacity
                 style={styles.optionItemContainer}
-                onPress={() => { }}>
+                onPress={() => {
+                  if (item.label === 'Create Patient Account') {
+                    // console.log('create patient account');
+                    navigate('CreatePatientAccount');
+                  }
+                }}>
                 <View style={styles.optionItemLeftContainer}>
                   {item?.icon && item.icon}
                   <Text style={styles.label}>{item.label}</Text>

@@ -106,6 +106,8 @@ import NoDataScreen from '../../screens/main/my-profile/settings/NoDataScreen';
 import MyDevices from '../../screens/main/my-profile/measurement-tools/MyDevices';
 import FaqScreen from '../../screens/main/my-profile/support/FaqScreen';
 import SupportChat from '../../screens/main/my-profile/support/SupportChat';
+import EditProfile from '../../screens/main/my-profile/components/EditProfile/EditProfile';
+import CreatePatientAccount from '../../screens/main/add-patient/CreatePatientAccount';
 
 const Tab = createBottomTabNavigator();
 
@@ -789,6 +791,16 @@ const MainStack = () => {
       <Stack.Screen
         name="SupportChat"
         component={SupportChat}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="CreatePatientAccount"
+        component={CreatePatientAccount}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
