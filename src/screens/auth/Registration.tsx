@@ -284,6 +284,9 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
                     },
                   }}
                 />
+                <Text style={{color: Colors.SteelBlue, marginBottom: 12}}>
+                  Must be at least 8 characters
+                </Text>
                 <FormInput
                   name="repeatPassword"
                   label="Repeat Password"
@@ -309,7 +312,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
           marginHorizontal: 'auto',
           textAlign: 'center',
           paddingTop: 10,
-          color: '3D5A6C',
+          color: '#3D5A6C',
         }}>
         When registering you are accepting our{' '}
         <Text style={{color: Colors.Blue, textDecorationLine: 'underline'}}>

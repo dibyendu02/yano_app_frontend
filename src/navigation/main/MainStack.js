@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -100,9 +101,8 @@ import BodyTemperatureModal from '../../screens/main/video-call/BodyTemperature'
 import ECGModal from '../../screens/main/video-call/ECGModal';
 import GlucoseLevelModal from '../../screens/main/video-call/GlucoseLevelModal';
 import DeleteAllData from '../../screens/main/my-profile/settings/DeleteAllData';
-import { Colors } from '../../constants/Colors';
+import {Colors} from '../../constants/Colors';
 import NoDataScreen from '../../screens/main/my-profile/settings/NoDataScreen';
-
 
 const Tab = createBottomTabNavigator();
 

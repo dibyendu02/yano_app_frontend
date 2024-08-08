@@ -1,3 +1,6 @@
+/* eslint-disable react/self-closing-comp */
+// FormSliderSelectionInput;
+
 /* eslint-disable react-native/no-inline-styles */
 import React, {FC, useState} from 'react';
 import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
@@ -8,43 +11,45 @@ import BottomSheet from '../bottom-sheet/BottomSheet';
 import FilledButton from '../buttons/FilledButton';
 // import FilledButton from '../buttons/FilledButton';
 
-interface FormSelectionOption {
-  id: string;
-  label: string;
-  enabled?: boolean;
-}
-
-interface FormSelectionInputProps {
+interface FormPickerInputInputProps {
   name: string;
   rules?: object;
   label?: string;
   optionsListLabel?: string;
   optionsListHeight?: number;
   placeholder?: string;
-  options: FormSelectionOption[];
   selectedId?: string;
   showActionButtons?: boolean;
 }
 
-const FormSelectionInput: FC<FormSelectionInputProps> = ({
+const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
   name,
   placeholder,
   label,
   rules = {},
   optionsListLabel,
   optionsListHeight = 300,
-  options = [],
-  selectedId,
-  showActionButtons,
 }) => {
   let lastValue: any;
-  const {control, setValue, getValues} = useFormContext();
+  const {control, setValue} = useFormContext();
   const [showOptionsModal, setShowOptionsModal] = useState(false);
   const handleOptionValueSelection = (value: string) => {
-    lastValue = getValues(name);
     setValue(name, value);
-    !showActionButtons && setShowOptionsModal(false);
   };
+
+  const [middleItem, setMiddleItem] = useState(0);
+
+  const handleViewableItemsChanged = ({viewableItems}) => {
+    if (viewableItems.length > 0) {
+      const middleIndex = Math.floor(viewableItems.length / 2);
+      setMiddleItem(viewableItems[middleIndex].item);
+    }
+  };
+
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 100, // Item is considered visible if it is 100% visible
+  };
+
   return (
     <View style={styles.inputBox}>
       <Controller
@@ -89,9 +94,6 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
               <BottomSheet
                 isVisible={showOptionsModal}
                 onBackdropPress={() => {
-                  if (showActionButtons) {
-                    setValue(name, lastValue);
-                  }
                   setShowOptionsModal(false);
                 }}>
                 <View style={{alignItems: 'center', width: '100%'}}>
@@ -115,75 +117,97 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
 
                   <View
                     style={{
-                      height: optionsListHeight,
+                      height: 380,
                       width: '100%',
                       paddingHorizontal: 20,
+                      justifyContent: 'center',
+                      alignItems: 'center',
                     }}>
-                    <RadioButton.Group
-                      onValueChange={sValue =>
-                        handleOptionValueSelection(sValue)
-                      }
-                      value={value}>
-                      <FlatList
-                        data={options}
-                        showsVerticalScrollIndicator={false}
-                        renderItem={({item, index: _i}) => (
-                          <TouchableOpacity
-                            key={item.id}
-                            style={styles.optionItemContainer}
-                            onPress={() => handleOptionValueSelection(item.id)}>
-                            <RadioButton.Item
-                              label={''}
-                              mode="android"
-                              value={item.id}
-                              rippleColor={Colors.Transparent}
-                              color={Colors.LightGreen}
-                              uncheckedColor={Colors.Grey}
-                            />
-                            <Text style={styles.optionItemLabel}>
-                              {item.label}
-                            </Text>
-                          </TouchableOpacity>
-                        )}
-                      />
-                    </RadioButton.Group>
-                  </View>
-                  {showActionButtons && (
                     <View
                       style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-around',
+                        width: '100%',
                         alignItems: 'center',
-                        width: '90%',
-                        paddingVertical: 10,
+                        justifyContent: 'center',
+                        height: 200,
                       }}>
-                      <FilledButton
-                        label="Cancel"
-                        type="lightGrey"
-                        style={styles.bottomSheetBtn}
-                        onPress={() => {
-                          setValue(name, lastValue);
-                          setShowOptionsModal(false);
-                        }}
-                      />
-                      <FilledButton
-                        label="Accept"
-                        type="blue"
-                        style={styles.bottomSheetBtn}
-                        disabled={!value}
-                        onPress={() => setShowOptionsModal(false)}
+                      <FlatList
+                        data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                        contentContainerStyle={{width: 70}}
+                        style={{backgroundColor: Colors.Grey, borderRadius: 8}}
+                        showsVerticalScrollIndicator={false}
+                        snapToInterval={40}
+                        decelerationRate="fast"
+                        bounces={false}
+                        onViewableItemsChanged={handleViewableItemsChanged}
+                        viewabilityConfig={viewabilityConfig}
+                        renderItem={({item, index: _i}) => (
+                          <View
+                            style={{
+                              height: 40,
+                              width: 70,
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              backgroundColor: Colors.LightGray,
+                              marginVertical: item - middleItem === 0 ? 1 : 0,
+                            }}
+                            key={item}>
+                            <Text
+                              style={{
+                                color: Colors.Blue,
+                                opacity:
+                                  item - middleItem === 0 ||
+                                  item - middleItem === 1 ||
+                                  item - middleItem === -1
+                                    ? 1
+                                    : 0.6,
+                                fontWeight: '600',
+                                fontFamily: 'Roboto',
+                                fontSize:
+                                  item === middleItem
+                                    ? 22
+                                    : item - middleItem === 1 ||
+                                      item - middleItem === -1
+                                    ? 16
+                                    : 12,
+                              }}>
+                              {item}
+                            </Text>
+                          </View>
+                        )}
                       />
                     </View>
-                  )}
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-around',
+                      alignItems: 'center',
+                      width: '90%',
+                      paddingVertical: 10,
+                    }}>
+                    <FilledButton
+                      label="Cancel"
+                      type="lightGrey"
+                      style={styles.bottomSheetBtn}
+                      onPress={() => {
+                        setValue(name, lastValue);
+                        setShowOptionsModal(false);
+                      }}
+                    />
+                    <FilledButton
+                      label="Accept"
+                      type="blue"
+                      style={styles.bottomSheetBtn}
+                      disabled={!value}
+                      onPress={() => setShowOptionsModal(false)}
+                    />
+                  </View>
                 </View>
               </BottomSheet>
             )}
           </View>
         )}
         name={name}
-        defaultValue={
-          selectedId ? options.find(e => e.id === selectedId)?.id : null
-        }
       />
     </View>
   );
@@ -236,4 +260,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FormSelectionInput;
+export default FormPickerInputInput;

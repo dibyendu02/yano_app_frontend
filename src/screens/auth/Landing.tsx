@@ -1,14 +1,16 @@
 /* eslint-disable react-native/no-inline-styles */
+import React, {useEffect} from 'react';
 import {
   Image,
   ImageBackground,
+  Platform,
   SafeAreaView,
   StatusBar,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
-import React from 'react';
+import {useIsFocused} from '@react-navigation/native';
 import FilledButton from '../../components/buttons/FilledButton';
 import {LandingScreenProps} from '../../navigation/auth/types';
 import {Colors} from '../../constants/Colors';
@@ -17,19 +19,28 @@ import {AuthScreen} from '../../navigation/auth/AuthScreens';
 import {navigate} from '../../navigation/RootNavigation';
 
 const Landing: React.FC<LandingScreenProps> = () => {
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      if (isFocused) {
+        StatusBar.setBarStyle('dark-content');
+        StatusBar.setBackgroundColor('#a4d6eb');
+      } else {
+        StatusBar.setBarStyle('dark-content');
+        StatusBar.setBackgroundColor(Colors.White);
+      }
+    }
+  }, [isFocused]);
+
   return (
     <ImageBackground source={StaticImage.Landing} style={styles.container}>
-      {/* <StatusBar
-        // barStyle="dark-content" // You can use "dark-content" if you prefer dark text
-        // backgroundColor="#a4d6eb" // Set the background color you want
-      /> */}
       <SafeAreaView style={styles.contentContainer}>
         <View
           style={{
             width: '100%',
             flexDirection: 'row',
             justifyContent: 'center',
-            // backgroundColor: 'red',
           }}>
           <Image
             source={StaticImage.Logo}
@@ -45,7 +56,7 @@ const Landing: React.FC<LandingScreenProps> = () => {
 
           <FilledButton
             type="white"
-            label="Sign Up"
+            label="Sign up"
             onPress={() => navigate(AuthScreen.SelectUserType)}
           />
           <FilledButton
