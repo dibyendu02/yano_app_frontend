@@ -153,7 +153,7 @@ const ProviderTabs = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarActiveTintColor: '#76bc21',
-        tabBarInactiveTintColor: 'black',
+        tabBarInactiveTintColor: Colors.Grey,
       }}>
       <Tab.Screen
         name="Monitor"

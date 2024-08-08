@@ -118,6 +118,7 @@ const CommonMeasurementScreen: FC<props> = ({ help, element, loading, onPress })
                                 paddingHorizontal: 15,
                                 gap: 10,
                                 alignSelf: 'flex-end',
+                                alignItems: 'center',
                                 height: '12%'
                             }}>
                                 <FilledButton
