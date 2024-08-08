@@ -1,5 +1,11 @@
 /* eslint-disable react/no-unstable-nested-components */
-import {FlatList, SafeAreaView, StyleSheet, View} from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import Header from '../../../../components/header/Header';
 import {Colors} from '../../../../constants/Colors';
@@ -17,12 +23,14 @@ const PatientMonitoringList = () => {
         title="Monitoring"
         showBackIcon={false}
         headerRightComponent={
-          <Icons.Ionicons
-            name="notifications"
-            size={25}
-            color={Colors.Blue}
-            style={{width: 40}}
-          />
+          <TouchableOpacity onPress={() => navigate('NotificationAlerts')}>
+            <Icons.Ionicons
+              name="notifications"
+              size={25}
+              color={Colors.Blue}
+              style={{width: 40}}
+            />
+          </TouchableOpacity>
         }
       />
       <View style={styles.contentContainer}>
