@@ -50,6 +50,18 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
     itemVisiblePercentThreshold: 100, // Item is considered visible if it is 100% visible
   };
 
+  const data = [];
+  if (name == 'weight') {
+    for (let i = 28; i <= 120; i++) {
+      data.push(i);
+    }
+  }
+  if (name == 'height') {
+    for (let i = 148; i <= 200; i++) {
+      data.push(i);
+    }
+  }
+
   return (
     <View style={styles.inputBox}>
       <Controller
@@ -101,12 +113,14 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                     <View
                       style={{
                         width: '100%',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
                         paddingHorizontal: 20,
                         marginVertical: 8,
                       }}>
                       <Text
                         style={{
-                          fontSize: 20,
+                          fontSize: 24,
                           fontWeight: 'bold',
                           color: Colors.Blue,
                         }}>
@@ -117,7 +131,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
 
                   <View
                     style={{
-                      height: 380,
+                      height: 250,
                       width: '100%',
                       paddingHorizontal: 20,
                       justifyContent: 'center',
@@ -125,13 +139,15 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                     }}>
                     <View
                       style={{
-                        width: '100%',
+                        // width: '100%',
                         alignItems: 'center',
                         justifyContent: 'center',
                         height: 200,
+                        borderRadius: 25,
+                        backgroundColor: 'red',
                       }}>
                       <FlatList
-                        data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+                        data={data}
                         contentContainerStyle={{width: 70}}
                         style={{backgroundColor: Colors.Grey, borderRadius: 8}}
                         showsVerticalScrollIndicator={false}
@@ -198,7 +214,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                       label="Accept"
                       type="blue"
                       style={styles.bottomSheetBtn}
-                      disabled={!value}
+                      // disabled={!value}
                       onPress={() => setShowOptionsModal(false)}
                     />
                   </View>

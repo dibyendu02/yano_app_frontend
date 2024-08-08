@@ -19,6 +19,7 @@ interface FormInputProps extends TextInputProps {
       >
     | undefined;
   label?: string;
+  instruction?: string;
   type?: FormInputType;
 }
 
@@ -26,6 +27,7 @@ const FormInput: FC<FormInputProps> = ({
   name,
   label,
   rules = {},
+  instruction,
   type = FormInputType.Default,
   ...inputProps
 }) => {
@@ -79,6 +81,9 @@ const FormInput: FC<FormInputProps> = ({
               }
               {...inputProps}
             />
+            {instruction && (
+              <Text style={{color: Colors.SteelBlue}}>{instruction}</Text>
+            )}
             {error && (
               <Text style={styles.errorText}>
                 {(error as FieldError).message}

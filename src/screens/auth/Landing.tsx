@@ -34,9 +34,9 @@ const Landing: React.FC<LandingScreenProps> = () => {
   }, [isFocused]);
 
   return (
-    <ImageBackground source={StaticImage.Landing} style={styles.container}>
+    <ImageBackground source={StaticImage.Start} style={styles.container}>
       <SafeAreaView style={styles.contentContainer}>
-        <View
+        {/* <View
           style={{
             width: '100%',
             flexDirection: 'row',
@@ -46,7 +46,7 @@ const Landing: React.FC<LandingScreenProps> = () => {
             source={StaticImage.Logo}
             style={{marginTop: 50, width: '55%', height: 88}}
           />
-        </View>
+        </View> */}
 
         <View style={{width: '90%', paddingVertical: 20}}>
           <View style={{alignItems: 'center', marginBottom: 50}}>
@@ -58,6 +58,7 @@ const Landing: React.FC<LandingScreenProps> = () => {
             type="white"
             label="Sign up"
             onPress={() => navigate(AuthScreen.SelectUserType)}
+            style={{marginBottom: 12}}
           />
           <FilledButton
             type="blue"
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   welcomeText: {

@@ -7,7 +7,7 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Colors} from '../../constants/Colors';
 import Header from '../../components/header/Header';
 import FilledButton from '../../components/buttons/FilledButton';
@@ -17,6 +17,7 @@ import {AuthScreen} from '../../navigation/auth/AuthScreens';
 import {useRoute} from '@react-navigation/native';
 import {FormProvider, useForm, useWatch} from 'react-hook-form';
 import FormInput from '../../components/hook-form/FormInput';
+import UserContext from '../../contexts/UserContext';
 
 const AccountVerification = () => {
   const route = useRoute();
@@ -25,6 +26,7 @@ const AccountVerification = () => {
   const mode = route.params?.mode;
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const {control, ...methods} = useForm();
+  const {login, isPatient} = useContext(UserContext);
 
   const Options = [
     {
@@ -55,7 +57,10 @@ const AccountVerification = () => {
       methods.clearErrors('code');
       if (userType == 'Patient') {
         navigate(AuthScreen.Welcome);
-      } else navigate(AuthScreen.Dashboard);
+      } else {
+        login();
+        navigate('tabs');
+      }
     } else {
       methods.setError('code', {
         type: 'manual',

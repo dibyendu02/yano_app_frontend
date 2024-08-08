@@ -14,6 +14,7 @@ import {Colors} from '../../constants/Colors';
 import Icons from '../../assets/icon/Icon';
 import ImagePicker from 'react-native-image-crop-picker';
 import BottomSheet from '../bottom-sheet/BottomSheet';
+import FilledButton from '../buttons/FilledButton';
 
 interface FormImageProps {
   name: string;
@@ -139,6 +140,19 @@ const FormImageInput: React.FC<FormImageProps> = ({name}) => {
                 <Text style={{color: Colors.Blue, fontSize: 16}}>Gallery</Text>
               </TouchableOpacity>
             </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: 30,
+              }}>
+              <FilledButton
+                type="lightGrey"
+                label="Cancel"
+                style={{width: '92%'}}
+                onPress={() => setShowOptionsModal(false)}
+              />
+            </View>
           </BottomSheet>
         </View>
       )}
@@ -159,9 +173,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
+    borderColor: Colors.LightGray,
+    borderWidth: 3,
   },
   optionContainer: {
-    height: 120,
+    height: 100,
     width: '45%',
     borderWidth: 1,
     borderColor: Colors.LightGray,
