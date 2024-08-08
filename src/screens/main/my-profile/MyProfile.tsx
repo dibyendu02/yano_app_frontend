@@ -18,6 +18,8 @@ import { DummyImage } from '../../../assets/dummy/images';
 import FilledButton from '../../../components/buttons/FilledButton';
 import Icons from '../../../assets/icon/Icon';
 import BottomSheet from '../../../components/bottom-sheet/BottomSheet';
+import ShareButton from '../profile/ShareProfileButton';
+import { StaticImage } from '../../../assets/images';
 
 const menuData = [
   {
@@ -73,7 +75,13 @@ const MyProfile = ({ navigation }: any) => {
       <Header
         title="My Profile"
         showBackIcon={false}
-        headerRightComponent={<EditIcon size={20} />}
+        headerRightComponent={
+          <TouchableOpacity
+            onPress={() => navigation.navigate('EditProfile')}
+          >
+            <EditIcon size={20} />
+          </TouchableOpacity>
+        }
       />
       <View style={{ flex: 1, backgroundColor: Colors.GhostWhite }}>
         <View style={[CardStyles.container, { marginTop: 10 }]}>
@@ -105,7 +113,7 @@ const MyProfile = ({ navigation }: any) => {
               justifyContent: 'center',
               padding: 14,
             }}>
-            <FilledButton
+            <ShareButton
               label="Share Profile"
               type="blue"
               style={{ width: '75%' }}
@@ -122,7 +130,10 @@ const MyProfile = ({ navigation }: any) => {
               label=""
               style={{ width: '18%', marginLeft: 8 }}
               icon={
-                <Icons.AntDesign name="qrcode" color={Colors.Blue} size={25} />
+                // <Icons.AntDesign name="qrcode" color={Colors.Blue} size={25} />
+                <Image source={StaticImage.QrCode} style={{
+                  width: 20, height: 20
+                }} />
               }
               onPress={() => setShowQR(true)}
             />
