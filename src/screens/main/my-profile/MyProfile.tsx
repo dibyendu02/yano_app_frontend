@@ -75,7 +75,13 @@ const MyProfile = ({ navigation }: any) => {
       <Header
         title="My Profile"
         showBackIcon={false}
-        headerRightComponent={<EditIcon size={20} />}
+        headerRightComponent={
+          <TouchableOpacity
+            onPress={() => navigation.navigate('EditProfile')}
+          >
+            <EditIcon size={20} />
+          </TouchableOpacity>
+        }
       />
       <View style={{ flex: 1, backgroundColor: Colors.GhostWhite }}>
         <View style={[CardStyles.container, { marginTop: 10 }]}>
