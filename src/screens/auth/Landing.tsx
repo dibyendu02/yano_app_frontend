@@ -53,7 +53,7 @@ const Landing: React.FC<LandingScreenProps> = () => {
 
           <FilledButton
             type="white"
-            label="Sign Up"
+            label="Sign up"
             onPress={() => navigate(AuthScreen.SelectUserType)}
           />
           <FilledButton

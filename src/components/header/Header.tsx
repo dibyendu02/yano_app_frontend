@@ -1,5 +1,4 @@
-
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import Icons from '../../assets/icon/Icon';
 import {useNavigation} from '@react-navigation/native';
@@ -28,7 +27,7 @@ const Header: React.FC<HeaderProps> = ({
         <Text style={styles.navbarTitle}>{title}</Text>
       </View>
 
-      <View style={{ alignItems: 'flex-end' }}>{headerRightComponent}</View>
+      <View style={{alignItems: 'flex-end'}}>{headerRightComponent}</View>
     </View>
   );
 };
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   navbarTitle: {
-    color: 'black',
+    color: Colors.Blue,
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
