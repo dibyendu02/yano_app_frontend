@@ -25,6 +25,7 @@ import FilledButton from '../../../../components/buttons/FilledButton';
 import OutlineButton from '../../../../components/buttons/OutlineButton';
 import BottomSheet from '../../../../components/bottom-sheet/BottomSheet';
 import { StaticImage } from '../../../../assets/images';
+import MeasuringYourVitalComp from './MeasuringYourVitalComp';
 
 const MyHealthHomeScreen = ({ navigation }) => {
   const [show, setShow] = useState(false);
@@ -68,11 +69,11 @@ const MyHealthHomeScreen = ({ navigation }) => {
               type="blue"
               icon={<PlusIcon size={16} color={Colors.Blue} />}
               label="Connect Device"
-              onPress={() => navigate('Subscription')}
+              onPress={() => navigate('ChooseDevice')}
               style={{ marginTop: 10 }}
             />
           </View>
-          <ItemWithTileSubtile
+          <MeasuringYourVitalComp
             element={
               <View
                 style={{
@@ -93,7 +94,7 @@ const MyHealthHomeScreen = ({ navigation }) => {
             title="Measure your vital signs"
             subtitle="Choose a device and start monitoring your health."
             onPress={() => {
-              navigation.navigate('WhatToMeasure');
+              navigation.navigate('MyDevices');
             }}
           />
         </View>

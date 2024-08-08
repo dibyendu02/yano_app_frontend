@@ -9,10 +9,10 @@ interface MeasurementChangeCardProps {
     cardFooter?: ReactNode | null;
     contentContainerStyle?: StyleProp<ViewStyle>;
     active: (value: boolean) => void;
-    items?: { unit1: string, unit2: string };
+    items?: { unit1: string, unit2: string, unit3: string };
 }
 
-const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
+const ECGSettingsGainCard: React.FC<MeasurementChangeCardProps> = ({
     title = '',
     contentContainerStyle,
     active,
@@ -35,7 +35,7 @@ const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
             <View>
                 <RadioButton.Group
                     onValueChange={value => setSelectedValue(value)}
-                    value={selectedValue || ''}
+                    value={selectedValue}
                 >
                     <View style={styles.radioItem}>
                         <RadioButton
@@ -55,6 +55,15 @@ const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
                         />
                         <Text style={styles.radioText}>{items?.unit2 || ''}</Text>
                     </View>
+                    {items?.unit3 && <View style={styles.radioItem}>
+                        <RadioButton
+                            value={items?.unit3 || ''}
+                            mode="android"
+                            color={Colors.LightGreen}
+                            uncheckedColor={Colors.Grey}
+                        />
+                        <Text style={styles.radioText}>{items?.unit3 || ''}</Text>
+                    </View>}
                 </RadioButton.Group>
             </View>
 
@@ -77,7 +86,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         padding: 15,
         position: 'relative',
-        top: '30%',
+        top: '34%',
         zIndex: 2
     },
     content: {
@@ -120,4 +129,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default MeasurementChangeCard;
+export default ECGSettingsGainCard;
