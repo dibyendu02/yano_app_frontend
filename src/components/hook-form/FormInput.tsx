@@ -72,7 +72,7 @@ const FormInput: FC<FormInputProps> = ({
               right={
                 type === FormInputType.Password ? (
                   <TextInput.Icon
-                    icon={!showSecureValue ? 'eye-off' : 'eye'}
+                    icon={!showSecureValue ? 'eye' : 'eye-off'}
                     onPress={() => setShowSecureValue(!showSecureValue)}
                     size={25}
                     color={Colors.Grey}

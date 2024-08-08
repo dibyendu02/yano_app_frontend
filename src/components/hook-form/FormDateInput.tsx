@@ -48,7 +48,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
                   icon={() => (
                     <Image
                       source={StaticImage.CalenderIcon}
-                      // style={{width: 40, height: 40}}
+                      style={{width: 30, height: 30}}
                     />
                   )}
                   onPress={() => setShowDatePicker(true)}

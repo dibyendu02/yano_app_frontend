@@ -48,8 +48,8 @@ const Landing: React.FC<LandingScreenProps> = () => {
           />
         </View> */}
 
-        <View style={{width: '90%', paddingVertical: 20}}>
-          <View style={{alignItems: 'center', marginBottom: 50}}>
+        <View style={{width: '90%', paddingVertical: 0}}>
+          <View style={{alignItems: 'center', marginBottom: 40}}>
             <Text style={styles.welcomeText}>Welcome</Text>
             <Text style={styles.messageText}>You are no longer alone.</Text>
           </View>

@@ -69,15 +69,30 @@ const FilledButton: React.FC<ButtonProps> = ({
   activeOpacity = 0.5,
   style,
 }) => {
+  const getBackgroundColorWithOpacity = (color: any, opacity: any) => {
+    if (!color.startsWith('#')) {
+      // Handle other color formats if necessary
+      return color;
+    }
+    const hex = color.replace('#', '');
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
+    return `rgba(${r},${g},${b},${opacity})`;
+  };
   return (
     <TouchableOpacity
       style={[
         styles.container,
         {
-          backgroundColor: ButtonColors[type].backgroundColor,
+          backgroundColor: disabled
+            ? getBackgroundColorWithOpacity(
+                ButtonColors[type].backgroundColor,
+                0.4,
+              )
+            : ButtonColors[type].backgroundColor,
           borderColor: ButtonColors[type].borderColor,
           borderWidth: ButtonColors[type].borderWidth,
-          opacity: disabled ? 0.4 : 1,
         },
         style,
       ]}

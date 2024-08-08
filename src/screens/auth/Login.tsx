@@ -61,7 +61,7 @@ const Login = () => {
             name="email"
             label="Email"
             type={FormInputType.Email}
-            placeholder="Enter your email"
+            // placeholder="Enter your email"
             autoCapitalize="none"
             keyboardType="email-address"
             rules={{
@@ -75,7 +75,7 @@ const Login = () => {
             name="password"
             label="Password"
             type={FormInputType.Password}
-            placeholder="Enter your password"
+            // placeholder="Enter your password"
             rules={{
               required: {
                 value: true,

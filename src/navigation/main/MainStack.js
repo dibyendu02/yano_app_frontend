@@ -104,6 +104,8 @@ import DeleteAllData from '../../screens/main/my-profile/settings/DeleteAllData'
 import {Colors} from '../../constants/Colors';
 import NoDataScreen from '../../screens/main/my-profile/settings/NoDataScreen';
 import MyDevices from '../../screens/main/my-profile/measurement-tools/MyDevices';
+import FaqScreen from '../../screens/main/my-profile/support/FaqScreen';
+import SupportChat from '../../screens/main/my-profile/support/SupportChat';
 
 const Tab = createBottomTabNavigator();
 
@@ -779,6 +781,16 @@ const MainStack = () => {
         options={{headerShown: false}}
       />
 
+      <Stack.Screen
+        name="FaqScreen"
+        component={FaqScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="SupportChat"
+        component={SupportChat}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 };
