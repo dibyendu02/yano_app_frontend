@@ -19,6 +19,7 @@ import FilledButton from '../../components/buttons/FilledButton';
 import FormSelectionInput from '../../components/hook-form/FormSelectionInput';
 import UserContext from '../../contexts/UserContext';
 import {AuthScreen} from '../../navigation/auth/AuthScreens';
+import FormPickerInputInput from '../../components/hook-form/FormPickerInput';
 
 const HeightOptions = Array.from({length: 100}, (_, i) => ({
   id: (i + 100).toString(),
@@ -93,7 +94,7 @@ const MoreDetails = () => {
             </Text>
             <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
               <FormProvider {...methods}>
-                <FormSelectionInput
+                {/* <FormSelectionInput
                   name="height"
                   placeholder="Select your height"
                   options={HeightOptions}
@@ -106,8 +107,8 @@ const MoreDetails = () => {
                       message: 'Please select your height',
                     },
                   }}
-                />
-                <FormSelectionInput
+                /> */}
+                {/* <FormSelectionInput
                   name="weight"
                   placeholder="Select your weight"
                   options={WeightOptions}
@@ -120,6 +121,20 @@ const MoreDetails = () => {
                       message: 'Please select your weight',
                     },
                   }}
+                /> */}
+                <FormPickerInputInput
+                  name="height"
+                  label="Height"
+                  placeholder="Select your height"
+                  optionsListLabel="Select your height"
+                  optionsListHeight={500}
+                />
+                <FormPickerInputInput
+                  name="weight"
+                  label="Weight"
+                  placeholder="Select your weight"
+                  optionsListLabel="Select your weight"
+                  optionsListHeight={500}
                 />
                 <FormSelectionInput
                   name="bloodType"
@@ -128,6 +143,7 @@ const MoreDetails = () => {
                   label="Blood Type"
                   optionsListLabel="Choose your blood type"
                   optionsListHeight={500}
+                  showActionButtons={true}
                   rules={{
                     required: {
                       value: true,

@@ -1,4 +1,4 @@
-package com.YANO
+package com.yano_frontend
 import com.oblador.vectoricons.VectorIconsPackage;
 import android.app.Application
 import com.facebook.react.PackageList

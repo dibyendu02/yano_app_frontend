@@ -78,26 +78,28 @@ const FormPhoneNumberInput: FC<FormPhoneNumberInputProps> = ({
               left={
                 <TextInput.Icon
                   icon={() => (
-                    <Image
-                      source={CountryFlags[selectedCountry.code]}
-                      style={{
-                        height: 30,
-                        width: 30,
-                        resizeMode: 'cover',
-                        borderRadius: 50,
-                      }}
-                    />
+                    <TouchableOpacity onPress={() => setShowOptionsModal(true)}>
+                      <Image
+                        source={CountryFlags[selectedCountry.code]}
+                        style={{
+                          height: 30,
+                          width: 30,
+                          resizeMode: 'cover',
+                          borderRadius: 50,
+                        }}
+                      />
+                    </TouchableOpacity>
                   )}
                 />
               }
-              right={
-                <TextInput.Icon
-                  icon="chevron-down"
-                  size={25}
-                  color={Colors.Grey}
-                  onPress={() => setShowOptionsModal(true)}
-                />
-              }
+              // right={
+              //   <TextInput.Icon
+              //     icon="chevron-down"
+              //     size={25}
+              //     color={Colors.Grey}
+              //     onPress={() => setShowOptionsModal(true)}
+              //   />
+              // }
             />
             {error && (
               <Text style={styles.errorText}>

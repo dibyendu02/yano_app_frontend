@@ -3,6 +3,7 @@ export const StaticImage = {
   GoogleLogo: require('./google.png'),
   FacebookLogo: require('./facebook.png'),
   Landing: require('./landing.png'),
+  Start: require('./start.png'),
   ListEmpty: require('./list-empty.png'),
   CallIcon: require('./call.png'),
   VideoCallIcon: require('./videocam.png'),
@@ -15,4 +16,8 @@ export const StaticImage = {
   CalenderIcon: require('./calender.png'),
   GalleryIcon: require('./gallery.png'),
   DeviceStart: require('./device-start.png'),
+  BloodIcon: require('./blood.png'),
+  FamilyIcon: require('./family.png'),
+  QuestionIcon: require('./question.png'),
+  QrCode: require('./qr.png'),
 };
