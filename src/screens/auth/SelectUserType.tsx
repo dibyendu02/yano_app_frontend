@@ -93,7 +93,7 @@ const SelectUserType = () => {
                 },
               ]}
               onPress={() => handlePress(item.id)}>
-              <Image source={item.img} />
+              <Image source={item.img} style={{width: 64, height: 64}} />
               <Text style={styles.selectionCardContainerText}>
                 {item.label}
               </Text>
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.Black,
     borderRadius: 8,
     color: Colors.Blue,
-    fontWeight: 'medium',
+    fontWeight: 'bold',
     padding: 10,
     paddingHorizontal: 15,
     fontSize: 15,

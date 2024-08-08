@@ -10,25 +10,26 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { userData } from '../../../../test/Data';
+import {userData} from '../../../../test/Data';
 import Header from '../../../../components/header/Header';
-import { EditIcon } from '../../../../assets/icon/IconNames';
+import {EditIcon} from '../../../../assets/icon/IconNames';
 import Card from '../../../../components/cards/Card';
-import { DummyImage } from '../../../../assets/dummy/images';
-import { navigate } from '../../../../navigation/RootNavigation';
-import { Colors } from '../../../../constants/Colors';
+import {DummyImage} from '../../../../assets/dummy/images';
+import {navigate} from '../../../../navigation/RootNavigation';
+import {Colors} from '../../../../constants/Colors';
 import PatientElements from '../../../../components/PatientElements';
 import Icons from '../../../../assets/icon/Icon';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import BottomSheet from '../../../../components/bottom-sheet/BottomSheet';
-import { CardStyles } from '../../../../components/cards/CardStyle';
+import {CardStyles} from '../../../../components/cards/CardStyle';
 import Badge from '../../../../components/Badge';
 import ShareButton from './ShareButton';
+import {StaticImage} from '../../../../assets/images';
 
 let data1 = [
   {
@@ -37,11 +38,18 @@ let data1 = [
   },
   {
     label: userData.age,
-    icon: <Fontisto name="date" size={20} color={'#76BC21'} />,
+    icon: (
+      <Image
+        source={StaticImage.CalenderIcon}
+        style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
+      />
+    ),
   },
   {
     label: userData.blood,
-    icon: <MaterialIcons name="bloodtype" size={20} color={'#76BC21'} />,
+    icon: (
+      <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
+    ),
   },
 ];
 
@@ -72,10 +80,14 @@ const menuData = [
   {
     id: '2',
     icon: (
-      <Icons.MaterialIcons
-        name="diversity-3"
-        size={25}
-        color={Colors.LightGreen}
+      // <Icons.MaterialIcons
+      //   name="diversity-3"
+      //   size={25}
+      //   color={Colors.LightGreen}
+      // />
+      <Image
+        source={StaticImage.FamilyIcon}
+        style={{height: 20, width: 20, marginRight: 3}}
       />
     ),
     text: 'Family link',
@@ -90,10 +102,9 @@ const menuData = [
   {
     id: '3',
     icon: (
-      <Icons.MaterialCommunityIcons
-        name="comment-question"
-        size={25}
-        color={Colors.LightGreen}
+      <Image
+        source={StaticImage.QuestionIcon}
+        style={{height: 20, width: 18, marginRight: 3}}
       />
     ),
     text: "Yano's support",
@@ -176,7 +187,7 @@ export default function () {
             <ShareButton
               label="Share Profile"
               type="blue"
-              style={{ width: '75%' }}
+              style={{width: '85%'}}
               icon={
                 <Icons.EvilIcons
                   name="share-google"
@@ -187,9 +198,13 @@ export default function () {
             />
             <FilledButton
               type="lightGrey"
-              style={{ width: '18%', marginLeft: 8 }}
+              style={{width: '18%', marginLeft: 8}}
               icon={
-                <Icons.AntDesign name="qrcode" color={Colors.Blue} size={25} />
+                // <Icons.AntDesign name="qrcode" color={Colors.Blue} size={25} />
+                <Image
+                  source={StaticImage.QrCode}
+                  style={{width: 20, height: 20}}
+                />
               }
               onPress={() => setShowQR(true)}
             />
@@ -203,7 +218,7 @@ export default function () {
               paddingHorizontal: 20,
               paddingVertical: 10,
             }}
-            renderItem={({ item, index: _i }) => (
+            renderItem={({item, index: _i}) => (
               <TouchableOpacity
                 onPress={() => navigate(item.path)}
                 style={{
@@ -222,9 +237,9 @@ export default function () {
                   <Text
                     style={{
                       color: Colors.Blue,
-                      fontSize: 16,
-                      fontWeight: '600',
-                      marginLeft: 6,
+                      fontSize: 18,
+                      fontWeight: '800',
+                      marginLeft: 14,
                     }}>
                     {item.text}
                   </Text>
@@ -241,11 +256,18 @@ export default function () {
         </View>
       </ScrollView>
       <BottomSheet isVisible={showQR} onBackdropPress={() => setShowQR(false)}>
-        <View style={{ padding: 20, alignItems: 'center' }}>
+        <View style={{padding: 20, alignItems: 'center'}}>
           <Image source={DummyImage.QR} height={150} width={150} />
-          <Text style={{ marginVertical: 20 }}>
-            Scan this QR code with your patient's cell phone to access their
-            measurements and health history.
+          <Text
+            style={{
+              marginVertical: 20,
+              color: Colors.Blue,
+              textAlign: 'center',
+              fontSize: 15,
+            }}>
+            Scan this QR code with your health provider's or family member's
+            cell phone so that they have access to your measurements and health
+            history.
           </Text>
           <FilledButton
             type="blue"

@@ -118,6 +118,7 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
                       height: optionsListHeight,
                       width: '100%',
                       paddingHorizontal: 20,
+                      marginBottom: 10,
                     }}>
                     <RadioButton.Group
                       onValueChange={sValue =>
@@ -170,7 +171,7 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
                         label="Accept"
                         type="blue"
                         style={styles.bottomSheetBtn}
-                        disabled={!value}
+                        // disabled={!value}
                         onPress={() => setShowOptionsModal(false)}
                       />
                     </View>
