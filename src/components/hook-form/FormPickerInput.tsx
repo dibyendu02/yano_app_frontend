@@ -1,15 +1,12 @@
 /* eslint-disable react/self-closing-comp */
-// FormSliderSelectionInput;
-
 /* eslint-disable react-native/no-inline-styles */
 import React, {FC, useState} from 'react';
-import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Controller, FieldError, useFormContext} from 'react-hook-form';
 import {Colors} from '../../constants/Colors';
-import {RadioButton, TextInput} from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
 import BottomSheet from '../bottom-sheet/BottomSheet';
 import FilledButton from '../buttons/FilledButton';
-// import FilledButton from '../buttons/FilledButton';
 
 interface FormPickerInputInputProps {
   name: string;
@@ -18,8 +15,6 @@ interface FormPickerInputInputProps {
   optionsListLabel?: string;
   optionsListHeight?: number;
   placeholder?: string;
-  selectedId?: string;
-  showActionButtons?: boolean;
 }
 
 const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
@@ -38,6 +33,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
   };
 
   const [middleItem, setMiddleItem] = useState(0);
+  const [middleDecimalItem, setMiddleDecimalItem] = useState(0);
 
   const handleViewableItemsChanged = ({viewableItems}) => {
     if (viewableItems.length > 0) {
@@ -46,19 +42,38 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
     }
   };
 
+  const handleDecimalViewableItemsChanged = ({viewableItems}) => {
+    if (viewableItems.length > 0) {
+      const middleIndex = Math.floor(viewableItems.length / 2);
+      setMiddleDecimalItem(viewableItems[middleIndex].item);
+    }
+  };
+
   const viewabilityConfig = {
     itemVisiblePercentThreshold: 100, // Item is considered visible if it is 100% visible
   };
 
   const data = [];
-  if (name == 'weight') {
-    for (let i = 28; i <= 120; i++) {
-      data.push(i);
+  const decimalData = [null, null];
+  if (name === 'weight') {
+    for (let i = 10; i <= 120; i++) {
+      data.push(`${i}`);
     }
-  }
-  if (name == 'height') {
-    for (let i = 148; i <= 200; i++) {
-      data.push(i);
+    for (let i = 0; i <= 9; i++) {
+      decimalData.push(`.${i}`);
+    }
+    for (let i = 10; i <= 11; i++) {
+      decimalData.push(null);
+    }
+  } else if (name === 'height') {
+    for (let i = 80; i <= 200; i++) {
+      data.push(`${i}`);
+    }
+    for (let i = 0; i <= 9; i++) {
+      decimalData.push(`.${i}`);
+    }
+    for (let i = 10; i <= 11; i++) {
+      decimalData.push(null);
     }
   }
 
@@ -132,24 +147,32 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                   <View
                     style={{
                       height: 250,
-                      width: '100%',
+                      width: '50%',
                       paddingHorizontal: 20,
                       justifyContent: 'center',
                       alignItems: 'center',
                     }}>
                     <View
                       style={{
-                        // width: '100%',
+                        flexDirection: 'row',
                         alignItems: 'center',
                         justifyContent: 'center',
                         height: 200,
-                        borderRadius: 25,
-                        backgroundColor: 'red',
+                        borderRadius: 10,
+                        backgroundColor: Colors.White,
+                        overflow: 'hidden',
                       }}>
                       <FlatList
                         data={data}
-                        contentContainerStyle={{width: 70}}
-                        style={{backgroundColor: Colors.Grey, borderRadius: 8}}
+                        contentContainerStyle={{width: '100%'}}
+                        style={{
+                          backgroundColor: Colors.Grey,
+                          borderRightWidth: 2,
+                          borderRightColor: '#D8D7D9',
+                          width: '50%',
+                          borderTopLeftRadius: 25,
+                          borderBottomLeftRadius: 25,
+                        }}
                         showsVerticalScrollIndicator={false}
                         snapToInterval={40}
                         decelerationRate="fast"
@@ -160,11 +183,14 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                           <View
                             style={{
                               height: 40,
-                              width: 70,
+                              width: '100%',
                               justifyContent: 'center',
                               alignItems: 'center',
                               backgroundColor: Colors.LightGray,
                               marginVertical: item - middleItem === 0 ? 1 : 0,
+                              borderTopWidth: item === middleItem ? 1 : 0,
+                              borderBottomWidth: item === middleItem ? 1 : 0,
+                              borderColor: '#D8D7D9',
                             }}
                             key={item}>
                             <Text
@@ -176,7 +202,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                                   item - middleItem === -1
                                     ? 1
                                     : 0.6,
-                                fontWeight: '600',
+                                fontWeight: 'bold',
                                 fontFamily: 'Roboto',
                                 fontSize:
                                   item === middleItem
@@ -191,6 +217,76 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                           </View>
                         )}
                       />
+                      <FlatList
+                        data={decimalData}
+                        contentContainerStyle={{width: '100%'}}
+                        style={{
+                          backgroundColor: Colors.Grey,
+                          width: '50%',
+                          borderTopRightRadius: 25,
+                          borderBottomRightRadius: 25,
+                        }}
+                        showsVerticalScrollIndicator={false}
+                        snapToInterval={40}
+                        decelerationRate="fast"
+                        bounces={false}
+                        onViewableItemsChanged={
+                          handleDecimalViewableItemsChanged
+                        }
+                        viewabilityConfig={viewabilityConfig}
+                        renderItem={({item, index: _i}) =>
+                          item !== null && (
+                            <View
+                              style={{
+                                height: 40,
+                                width: '100%',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                backgroundColor: Colors.LightGray,
+                                marginVertical:
+                                  item - middleDecimalItem === 0 ? 1 : 0,
+                                borderTopWidth:
+                                  item === middleDecimalItem ? 2 : 0,
+                                borderBottomWidth:
+                                  item === middleDecimalItem ? 2 : 0,
+                                borderColor: '#D8D7D9',
+                              }}
+                              key={item}>
+                              <Text
+                                style={{
+                                  color: Colors.Black,
+                                  opacity:
+                                    item - middleDecimalItem === 0 ||
+                                    item - middleDecimalItem === 0.1 ||
+                                    item - middleDecimalItem === -0.1
+                                      ? 1
+                                      : 0.6,
+                                  fontWeight: 'bold',
+                                  fontFamily: 'Roboto',
+                                  fontSize:
+                                    item === middleDecimalItem
+                                      ? 22
+                                      : item - middleDecimalItem === 1 ||
+                                        item - middleDecimalItem === -1
+                                      ? 16
+                                      : 12,
+                                }}>
+                                {item}
+                              </Text>
+                            </View>
+                          )
+                        }
+                      />
+                      {name === 'weight' && (
+                        <View style={styles.unitLabel}>
+                          <Text style={styles.unitText}>kg</Text>
+                        </View>
+                      )}
+                      {name === 'height' && (
+                        <View style={styles.unitLabel}>
+                          <Text style={styles.unitText}>cm</Text>
+                        </View>
+                      )}
                     </View>
                   </View>
                   <View
@@ -214,8 +310,11 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                       label="Accept"
                       type="blue"
                       style={styles.bottomSheetBtn}
-                      // disabled={!value}
-                      onPress={() => setShowOptionsModal(false)}
+                      onPress={() => {
+                        const selectedValue = `${middleItem}.${middleDecimalItem}`;
+                        setValue(name, selectedValue);
+                        setShowOptionsModal(false);
+                      }}
                     />
                   </View>
                 </View>
@@ -273,6 +372,16 @@ const styles = StyleSheet.create({
   },
   bottomSheetBtn: {
     width: '45%',
+  },
+  unitLabel: {
+    position: 'absolute',
+    top: '50%',
+    transform: [{translateY: -5}, {translateX: 65}],
+  },
+  unitText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: Colors.Blue,
   },
 });
 

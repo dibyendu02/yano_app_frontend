@@ -93,11 +93,11 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
               ]}
             /> */}
             <FormProvider {...methods}>
-              <FormPickerInputInput
+              {/* <FormPickerInputInput
                 name="weight"
                 label="Weight"
                 optionsListHeight={500}
-              />
+              /> */}
               <FormSelectionInput
                 name="bloodGroup"
                 label="Blood Group"

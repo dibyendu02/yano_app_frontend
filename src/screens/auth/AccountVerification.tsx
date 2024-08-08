@@ -56,7 +56,9 @@ const AccountVerification = () => {
     if (code === '123456') {
       methods.clearErrors('code');
       if (userType == 'Patient') {
-        navigate(AuthScreen.Welcome);
+        setTimeout(() => {
+          navigate(AuthScreen.Welcome);
+        }, 1000);
       } else {
         login();
         navigate('tabs');
