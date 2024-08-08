@@ -8,6 +8,7 @@ export const Colors = {
   LightBlue: '#03A9F4',
   GhostWhite: '#f5f5f5',
   Grey: '#888888',
+  GreyText: '#9C9EB7',
   LightGray: '#E9E9E9',
   Black: '#000',
   CeruleanBlue: '#1565C0',
