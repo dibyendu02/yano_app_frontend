@@ -74,7 +74,7 @@ const MoreDetails = () => {
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableOpacity
                   onPress={() => {
-                    navigate(AuthScreen.LoadingScreen);
+                    navigate(AuthScreen.AskDevice);
                   }}>
                   <Text style={styles.skipButton}>Skip</Text>
                 </TouchableOpacity>
