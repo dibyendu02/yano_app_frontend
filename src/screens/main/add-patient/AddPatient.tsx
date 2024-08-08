@@ -8,16 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../../components/header/Header';
-import {Colors} from '../../../constants/Colors';
-import {navigate} from '../../../navigation/RootNavigation';
+import { Colors } from '../../../constants/Colors';
+import { navigate } from '../../../navigation/RootNavigation';
 import FilledButton from '../../../components/buttons/FilledButton';
 import Card from '../../../components/cards/Card';
 import Icons from '../../../assets/icon/Icon';
 
 const AddPatient = () => {
   const [email, setEmail] = useState('');
+  const [disabled, setDisabled] = useState(false);
+
   const OPTIONS = [
     {
       label: 'Scan QR Code',
@@ -50,6 +52,15 @@ const AddPatient = () => {
       ),
     },
   ];
+
+  useEffect(() => {
+    if (email) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [email]);
+
   return (
     <SafeAreaView style={styles.container}>
       <Header
@@ -59,6 +70,7 @@ const AddPatient = () => {
             label="Find"
             type="blue"
             style={styles.findButton}
+            disabled={disabled}
             onPress={() => navigate('EmailNotFoundPatient')}
           />
         }
@@ -76,10 +88,10 @@ const AddPatient = () => {
         <Card title="OTHER OPTIONS">
           <FlatList
             data={OPTIONS}
-            renderItem={({item, index: _index}) => (
+            renderItem={({ item, index: _index }) => (
               <TouchableOpacity
                 style={styles.optionItemContainer}
-                onPress={() => {}}>
+                onPress={() => { }}>
                 <View style={styles.optionItemLeftContainer}>
                   {item?.icon && item.icon}
                   <Text style={styles.label}>{item.label}</Text>
@@ -155,6 +167,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   findButton: {
-    width: '50%',
+    width: '55%',
   },
 });
