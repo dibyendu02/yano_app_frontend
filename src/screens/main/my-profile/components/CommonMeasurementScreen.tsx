@@ -28,14 +28,21 @@ const CommonMeasurementScreen: FC<props> = ({ help, element, loading, onPress })
             setUnderStand(true)
         } else if (index == help.length - 1) {
             setOpen(false)
-            setUnderStand(false)
-            setIndex(0)
+            setTimeout(() => {
+                setUnderStand(false)
+                setIndex(0)
+            }, 1000)
         }
     }
 
     const decCnt = () => {
         if (index > 0) {
             setIndex(index - 1)
+            setUnderStand(false)
+        } else if (index == 0) {
+            setOpen(false)
+            setUnderStand(false)
+            setIndex(0)
         }
     }
 
@@ -88,16 +95,20 @@ const CommonMeasurementScreen: FC<props> = ({ help, element, loading, onPress })
                                     source={help[index].img}
                                 />
 
-                                <Text
-                                    style={{
-                                        fontSize: 27,
-                                        fontWeight: 'bold',
-                                        fontFamily: 'Roboto',
-                                        color: Colors.Blue,
-                                    }}
-                                >
-                                    {help[index].text}
-                                </Text>
+                                <View style={{
+                                    paddingHorizontal: 20
+                                }}>
+                                    <Text
+                                        style={{
+                                            fontSize: 22,
+                                            fontWeight: 'bold',
+                                            fontFamily: 'Roboto',
+                                            color: Colors.Blue,
+                                        }}
+                                    >
+                                        {help[index].text}
+                                    </Text>
+                                </View>
                             </View>
 
 

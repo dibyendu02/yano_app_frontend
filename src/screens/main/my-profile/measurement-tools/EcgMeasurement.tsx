@@ -6,6 +6,35 @@ import MeasurementBox from '../components/MeasurementBox'
 import { Colors } from '../../../../constants/Colors'
 import { DummyImage } from '../../../../assets/dummy/images'
 import { ShareIcon } from '../../../../assets/icon/IconNames'
+import { StaticImage } from '../../../../assets/images'
+
+const help = [
+    {
+        "page": "1",
+        "text": "Sit in a comfortable position with your back straight and your legs uncrossed.",
+        "img": StaticImage.SittingPosition
+    },
+    {
+        "page": "2",
+        "text": "Hold the device with your left hand and with your thumb touches the metal part at the top of the blood oxygen sensor.",
+        "img": StaticImage.ThumpTouchesTheMetalpart
+    },
+    {
+        "page": "3",
+        "text": "Your index and middle fingers should touch the metal on the back of the device.",
+        "img": StaticImage.MFingureTouchBackMetal
+    },
+    {
+        "page": "4",
+        "text": "With the index finger of the right hand, touch the body temperature sensor. The two hands should not touch.",
+        "img": StaticImage.TwoHandShouldNotTouch
+    },
+    {
+        "page": "5",
+        "text": "To start measuring press the \"Start measuring\" button.",
+        "img": StaticImage.StartMeasuring
+    }
+];
 
 const EcgMeasurement = () => {
     const [loading, setLoading] = useState(false)
@@ -43,7 +72,7 @@ const EcgMeasurement = () => {
                                 <View
                                     style={{
                                         backgroundColor: Colors.White,
-                                        width: '100%', 
+                                        width: '100%',
                                         borderRadius: 10,
                                         padding: 20
                                     }}
@@ -65,7 +94,7 @@ const EcgMeasurement = () => {
                                             fontWeight: '500',
                                             color: Colors.SteelBlue
                                         }} >
-                                            Gain: 10mm/mv 
+                                            Gain: 10mm/mv
                                         </Text>
                                         <Text style={{
                                             fontSize: 14,
@@ -143,6 +172,7 @@ const EcgMeasurement = () => {
                         </ScrollView>
                     </>
                 }
+                help={help}
             />
         </>
     )

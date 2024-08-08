@@ -11,35 +11,31 @@ import { StaticImage } from '../../../../assets/images'
 const help = [
     {
         "page": "1",
-        "text": "Sit in a comfortable position with your back straight and your legs uncrossed.",
-        "img": StaticImage.SittingPosition
+        "text": "For best results make sure you are in a place with low light.",
+        "img": StaticImage.stopFromSunLight
     },
     {
         "page": "2",
-        "text": "Remove clothing from the upper part of the elbow. The device must make direct contact with the skin.",
-        "img": StaticImage.RemovingElbowCloth
+        "text": "Adjust your position and keep still.",
+        "img": StaticImage.SittingPosition
     },
     {
         "page": "3",
-        "text": "Insert your left arm into the cuff, then wrap it around your arm.",
-        "img": StaticImage.WrapAroundSolder
+        "text": "Keep the monitor on a flat surface.",
+        "img": StaticImage.FlatSurface
     },
     {
         "page": "4",
-        "text": "The device should be placed against the inside of the arm.",
-        "img": StaticImage.AgainstInsideTheArm
+        "text": "Put the pad of your middle finger on the sensor at the top of the monitor.",
+        "img": StaticImage.TouchTheSensor
     },
     {
         "page": "5",
-        "text": "To take your blood pressure, place your arm on a table and hold it at the level of your heart.",
-        "img": StaticImage.PlaceTheArmOnTheTable
-    },
-    {
-        "page": "6",
         "text": "To start measuring press the \"Start measuring\" button.",
         "img": StaticImage.StartMeasuring
     }
 ];
+
 const BloodOxygenScreen = () => {
     const [loading, setLoading] = useState(false)
     const [count, setCount] = useState(0)

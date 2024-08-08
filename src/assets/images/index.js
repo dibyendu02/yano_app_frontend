@@ -29,4 +29,9 @@ export const StaticImage = {
   WrapAroundSolder: require('./WrapAroundSolders.png'),
   AgainstInsideTheArm: require('./AgainstInsideTheArm.png'),
   PlaceTheArmOnTheTable: require('./PlaceTheArmOnATable.png'),
+  CentreToForeHead: require('./CenterToforeHead.png'),
+  TwoCmFromForeHead: require('./twoCmFromForeHead.png'),
+  ThumpTouchesTheMetalpart: require('./ThumpTouchesTheMetalpart.png'),
+  MFingureTouchBackMetal: require('./MFingureTouchBackMetal.png'),
+  TwoHandShouldNotTouch: require('./TwoHandShouldNotTouch.png'),
 };
