@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { FC } from 'react';
 import CommonLayout from '../../../../components/CommonLayout';
 import { Colors } from '../../../../constants/Colors';
@@ -7,18 +7,32 @@ import { HelpIcon } from '../../../../assets/icon/IconNames';
 import BottomSheet from '../../../../components/bottom-sheet/BottomSheet';
 
 type props = {
+    help: object,
     element: React.ReactNode,
     loading: boolean,
     onPress?: () => void
 }
 
-const CommonMeasurementScreen: FC<props> = ({ element, loading, onPress }) => {
+
+const CommonMeasurementScreen: FC<props> = ({ help, element, loading, onPress }) => {
     const [open, setOpen] = React.useState(false);
+    const [index, setIndex] = React.useState(0)
+
+    const incCnt = () => {
+        if (index < help.length - 1) {
+            setIndex(index + 1)
+        }
+    }
+
+    const decCnt = () => {
+        if (index > 0) {
+            setIndex(index - 1)
+        }
+    }
 
     const handleOnPress = () => {
-        console.log('handleOnPress');
+        console.log(help[0])
         setOpen(!open);
-        console.log(open);
     }
 
     return (
@@ -57,10 +71,34 @@ const CommonMeasurementScreen: FC<props> = ({ element, loading, onPress }) => {
                     children={
                         <View style={styles.bottomSheetContent}>
                             <View style={{
+                                alignItems: 'center',
+                                paddingVertical: 20,
+                                paddingBottom: 40
+                            }}>
+                                <Image
+                                    style={{ width: 264, height: 368 }}
+                                    source={help[index].img}
+                                />
+
+                                <Text
+                                    style={{
+                                        fontSize: 27,
+                                        fontWeight: 'bold',
+                                        fontFamily: 'Roboto',
+                                        color: Colors.Blue,
+                                    }}
+                                >
+                                    {help[index].text}
+                                </Text>
+                            </View>
+
+
+                            <View style={{
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
                                 paddingHorizontal: 15,
-                                gap: 10
+                                gap: 10,
+                                alignSelf: 'flex-end'
                             }}>
                                 <FilledButton
                                     label='Back'
@@ -68,6 +106,7 @@ const CommonMeasurementScreen: FC<props> = ({ element, loading, onPress }) => {
                                     style={{
                                         width: '50%'
                                     }}
+                                    onPress={() => decCnt()}
                                 />
                                 <FilledButton
                                     label='Next'
@@ -75,6 +114,7 @@ const CommonMeasurementScreen: FC<props> = ({ element, loading, onPress }) => {
                                     style={{
                                         width: '50%'
                                     }}
+                                    onPress={() => incCnt()}
                                 />
                             </View>
                         </View>
@@ -113,10 +153,12 @@ const styles = StyleSheet.create({
         width: '80%',
     },
     bottomSheetContent: {
-        flexDirection: 'row',
+        height: '90%',
+        flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
-        padding: 20,
+        paddingHorizontal: 20,
+        // backgroundColor: Colors.Red
     }
 });

@@ -20,4 +20,9 @@ export const StaticImage = {
   FamilyIcon: require('./family.png'),
   QuestionIcon: require('./question.png'),
   QrCode: require('./qr.png'),
+  stopFromSunLight: require('./stopFromSunLight.png'),
+  SittingPosition: require('./SittingPosition.png'),
+  FlatSurface: require('./FlatSurface.png'),
+  TouchTheSensor: require('./TouchTheSensor.png'),
+  StartMeasuring: require('./startMesuring.png')
 };
