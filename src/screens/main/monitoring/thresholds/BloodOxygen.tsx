@@ -1,30 +1,51 @@
-
-import React from 'react'
-import CustomSelect from '../../../../components/formComp/SelectFiled'
-import { Control, FieldValues, useForm } from 'react-hook-form'
-import CommonThresholdLayout from '../components/CommonThresholdLayout'
-import { View } from 'react-native'
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import {FormProvider, useForm} from 'react-hook-form';
+import CommonThresholdLayout from '../components/CommonThresholdLayout';
+import ThresholdPickerInput from './components/ThresholdPickerInput';
 
 const BloodOxygen = () => {
-    const { control, handleSubmit, reset, formState: { errors } } = useForm();
+  const methods = useForm();
 
-    return (
-        <CommonThresholdLayout title='Blood Oxygen'>
-            <View style={{ marginBottom: 10 }}>
-                <CustomSelect
-                    name='minimum'
-                    label='Minimum'
-                    control={control as unknown as Control<FieldValues, object>}
-                    options={[
-                        { label: '92 SpO2H', value: '92 SpO2H' },
-                        { label: '93 SpO2H', value: '93 SpO2H' },
-                        { label: '94 SpO2H', value: '94 SpO2H' },
-                        { label: '95 SpO2H', value: '95 SpO2H' },
-                    ]}
-                />
-            </View>
-        </CommonThresholdLayout >
-    )
-}
+  return (
+    <FormProvider {...methods}>
+      <CommonThresholdLayout
+        title="Blood Oxygen"
+        onPress={methods.handleSubmit(data => {
+          console.log('Form Data:', data);
+          // Handle form submission here
+        })}>
+        <View style={styles.container}>
+          <View style={styles.inputWrapper}>
+            <ThresholdPickerInput
+              name="minimum"
+              unit="SpO2"
+              minValue={85}
+              maxValue={99}
+              label="Minimum"
+              placeholder="Select minimum value"
+              optionsListLabel="Select minimum value"
+              optionsListHeight={300}
+            />
+          </View>
+        </View>
+      </CommonThresholdLayout>
+    </FormProvider>
+  );
+};
 
-export default BloodOxygen 
+export default BloodOxygen;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  inputWrapper: {
+    width: '100%',
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+});
