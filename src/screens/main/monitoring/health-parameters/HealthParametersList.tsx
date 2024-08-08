@@ -29,13 +29,13 @@ const HealthParametersList = () => {
     <SafeAreaView style={styles.container}>
       <Header
         title="Your measurements"
-        headerRightComponent={
-          <Icons.MaterialIcons
-            name="checklist-rtl"
-            color={Colors.Blue}
-            size={25}
-          />
-        }
+      // headerRightComponent={
+      //   <Icons.MaterialIcons
+      //     name="checklist-rtl"
+      //     color={Colors.Blue}
+      //     size={25}
+      //   />
+      // }
       />
       <View style={{ backgroundColor: Colors.GhostWhite, flex: 1 }}>
         <FlatList

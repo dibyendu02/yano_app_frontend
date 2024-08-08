@@ -1,9 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { FC } from 'react'
-import CommonLayout from '../../../../components/CommonLayout'
-import { Colors } from '../../../../constants/Colors'
-import FilledButton from '../../../../components/buttons/FilledButton'
-import { HelpIcon } from '../../../../assets/icon/IconNames'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { FC } from 'react';
+import CommonLayout from '../../../../components/CommonLayout';
+import { Colors } from '../../../../constants/Colors';
+import FilledButton from '../../../../components/buttons/FilledButton';
+import { HelpIcon } from '../../../../assets/icon/IconNames';
+import BottomSheet from '../../../../components/bottom-sheet/BottomSheet';
 
 type props = {
     element: React.ReactNode,
@@ -12,6 +13,14 @@ type props = {
 }
 
 const CommonMeasurementScreen: FC<props> = ({ element, loading, onPress }) => {
+    const [open, setOpen] = React.useState(false);
+
+    const handleOnPress = () => {
+        console.log('handleOnPress');
+        setOpen(!open);
+        console.log(open);
+    }
+
     return (
         <CommonLayout>
             {element}
@@ -24,20 +33,15 @@ const CommonMeasurementScreen: FC<props> = ({ element, loading, onPress }) => {
                         />
                         : (
                             <>
-                                <View style={{
-                                    width: 55,
-                                    height: 55,
-                                    borderWidth: 1,
-                                    borderColor: Colors.LightGray,
-                                    borderRadius: 30,
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}>
+                                <TouchableOpacity
+                                    style={styles.helpButton}
+                                    onPress={() => {
+                                        handleOnPress();
+                                    }}
+                                >
                                     <HelpIcon size={32} />
-                                </View>
-                                <View style={{
-                                    width: '80%',
-                                }}>
+                                </TouchableOpacity>
+                                <View style={styles.startButtonContainer}>
                                     <FilledButton
                                         label='Start measuring'
                                         type='blue'
@@ -47,12 +51,42 @@ const CommonMeasurementScreen: FC<props> = ({ element, loading, onPress }) => {
                             </>
                         )
                 }
+
+                <BottomSheet
+                    isVisible={open}
+                    children={
+                        <View style={styles.bottomSheetContent}>
+                            <View style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                paddingHorizontal: 15,
+                                gap: 10
+                            }}>
+                                <FilledButton
+                                    label='Back'
+                                    type='lightGrey'
+                                    style={{
+                                        width: '50%'
+                                    }}
+                                />
+                                <FilledButton
+                                    label='Next'
+                                    type='blue'
+                                    style={{
+                                        width: '50%'
+                                    }}
+                                />
+                            </View>
+                        </View>
+                    }
+                    onBackdropPress={() => setOpen(false)}
+                />
             </View>
         </CommonLayout>
     )
 }
 
-export default CommonMeasurementScreen
+export default CommonMeasurementScreen;
 
 const styles = StyleSheet.create({
     addBtn: {
@@ -65,5 +99,24 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
+    },
+    helpButton: {
+        width: 55,
+        height: 55,
+        borderWidth: 1,
+        borderColor: Colors.LightGray,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    startButtonContainer: {
+        width: '80%',
+    },
+    bottomSheetContent: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        width: '100%',
+        padding: 20,
     }
-})
+});
