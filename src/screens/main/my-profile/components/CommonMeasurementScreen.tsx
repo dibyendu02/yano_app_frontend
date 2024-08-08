@@ -4,7 +4,7 @@ import CommonLayout from '../../../../components/CommonLayout';
 import { Colors } from '../../../../constants/Colors';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import { HelpIcon } from '../../../../assets/icon/IconNames';
-import BottomSheet from '../../../../components/bottom-sheet/BottomSheet';
+import BottomSheet from './BottomSheetLocal/BottomSheet';
 
 type props = {
     help: object,
@@ -117,7 +117,8 @@ const CommonMeasurementScreen: FC<props> = ({ help, element, loading, onPress })
                                 justifyContent: 'space-between',
                                 paddingHorizontal: 15,
                                 gap: 10,
-                                alignSelf: 'flex-end'
+                                alignSelf: 'flex-end',
+                                height: '12%'
                             }}>
                                 <FilledButton
                                     label='Back'
@@ -177,7 +178,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
-        paddingHorizontal: 20,
-        // backgroundColor: Colors.Red
+        paddingHorizontal: 10,
+        paddingVertical: 20
+
     }
 });
