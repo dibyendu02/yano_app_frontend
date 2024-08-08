@@ -6,6 +6,42 @@ import CommonMeasurementScreen from '../components/CommonMeasurementScreen'
 import MeasurementBox from '../components/MeasurementBox'
 import { DummyImage } from '../../../../assets/dummy/images'
 import { ShareIcon } from '../../../../assets/icon/IconNames'
+import { StaticImage } from '../../../../assets/images'
+
+
+const help = [
+    {
+        "page": "1",
+        "text": "Sit in a comfortable position with your back straight and your legs uncrossed.",
+        "img": StaticImage.SittingPosition
+    },
+    {
+        "page": "2",
+        "text": "Remove clothing from the upper part of the elbow. The device must make direct contact with the skin.",
+        "img": StaticImage.RemovingElbowCloth
+    },
+    {
+        "page": "3",
+        "text": "Insert your left arm into the cuff, then wrap it around your arm.",
+        "img": StaticImage.WrapAroundSolder
+    },
+    {
+        "page": "4",
+        "text": "The device should be placed against the inside of the arm.",
+        "img": StaticImage.AgainstInsideTheArm
+    },
+    {
+        "page": "5",
+        "text": "To take your blood pressure, place your arm on a table and hold it at the level of your heart.",
+        "img": StaticImage.PlaceTheArmOnTheTable
+    },
+    {
+        "page": "6",
+        "text": "To start measuring press the \"Start measuring\" button.",
+        "img": StaticImage.StartMeasuring
+    }
+];
+
 
 const BloodPressureScreen = () => {
     const [loading, setLoading] = useState(false)
@@ -112,6 +148,7 @@ const BloodPressureScreen = () => {
                     </ScrollView>
                 </>
             }
+            help={help}
         />
     )
 }

@@ -17,10 +17,19 @@ type props = {
 const CommonMeasurementScreen: FC<props> = ({ help, element, loading, onPress }) => {
     const [open, setOpen] = React.useState(false);
     const [index, setIndex] = React.useState(0)
+    const [underStand, setUnderStand] = React.useState(false)
 
     const incCnt = () => {
         if (index < help.length - 1) {
             setIndex(index + 1)
+        }
+
+        if (index == help.length - 2) {
+            setUnderStand(true)
+        } else if (index == help.length - 1) {
+            setOpen(false)
+            setUnderStand(false)
+            setIndex(0)
         }
     }
 
@@ -31,7 +40,6 @@ const CommonMeasurementScreen: FC<props> = ({ help, element, loading, onPress })
     }
 
     const handleOnPress = () => {
-        console.log(help[0])
         setOpen(!open);
     }
 
@@ -109,7 +117,7 @@ const CommonMeasurementScreen: FC<props> = ({ help, element, loading, onPress })
                                     onPress={() => decCnt()}
                                 />
                                 <FilledButton
-                                    label='Next'
+                                    label={underStand ? 'Understood' : 'Next'}
                                     type='blue'
                                     style={{
                                         width: '50%'

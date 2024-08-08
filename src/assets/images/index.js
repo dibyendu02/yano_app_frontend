@@ -24,5 +24,9 @@ export const StaticImage = {
   SittingPosition: require('./SittingPosition.png'),
   FlatSurface: require('./FlatSurface.png'),
   TouchTheSensor: require('./TouchTheSensor.png'),
-  StartMeasuring: require('./startMesuring.png')
+  StartMeasuring: require('./startMesuring.png'),
+  RemovingElbowCloth: require('./RemoveElobowCloth.png'),
+  WrapAroundSolder: require('./WrapAroundSolders.png'),
+  AgainstInsideTheArm: require('./AgainstInsideTheArm.png'),
+  PlaceTheArmOnTheTable: require('./PlaceTheArmOnATable.png'),
 };
