@@ -103,6 +103,7 @@ import GlucoseLevelModal from '../../screens/main/video-call/GlucoseLevelModal';
 import DeleteAllData from '../../screens/main/my-profile/settings/DeleteAllData';
 import {Colors} from '../../constants/Colors';
 import NoDataScreen from '../../screens/main/my-profile/settings/NoDataScreen';
+import MyDevices from '../../screens/main/my-profile/measurement-tools/MyDevices';
 
 const Tab = createBottomTabNavigator();
 
@@ -772,6 +773,12 @@ const MainStack = () => {
         component={NoDataScreen}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="MyDevices"
+        component={MyDevices}
+        options={{headerShown: false}}
+      />
+
     </Stack.Navigator>
   );
 };

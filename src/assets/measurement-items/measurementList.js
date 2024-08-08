@@ -77,6 +77,6 @@ export const DeviceSettings = [
   {
     title: "Yano's support",
     img: require('./images/live_help.png'),
-    path: '',
+    path: 'YanoSupport',
   },
 ];
