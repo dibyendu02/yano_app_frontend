@@ -15,6 +15,7 @@ interface FormDateInputProps extends TextInputProps {
   rules?: object;
   label?: string;
   placeholder?: string;
+  buttonColor?: string;
 }
 
 const FormDateInput: FC<FormDateInputProps> = ({
@@ -22,6 +23,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
   label,
   rules = {},
   placeholder,
+  buttonColor,
   ...inputProps
 }) => {
   const {control} = useFormContext();
@@ -53,7 +55,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
                   icon={() => (
                     <Image
                       source={StaticImage.CalenderIcon}
-                      style={{width: 30, height: 30}}
+                      style={{width: 30, height: 30, tintColor: buttonColor}}
                     />
                   )}
                   onPress={() => setShowDatePicker(true)}

@@ -13,7 +13,6 @@ import {
 import React from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
-import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PatientElements from '../../../../components/PatientElements';
 import Header from '../../../../components/header/Header';
@@ -22,14 +21,15 @@ import Card from '../../../../components/cards/Card';
 import {DummyImage} from '../../../../assets/dummy/images';
 import {measurements, userData} from '../../../../test/Data';
 import Icons from '../../../../assets/icon/Icon';
-import {IconName} from '../../../../assets/icon/IconNames';
 import {navigate} from '../../../../navigation/RootNavigation';
 import {StaticImage} from '../../../../assets/images';
 
 let data1 = [
   {
     label: userData.gender,
-    icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
+    icon: (
+      <Foundation name="female-symbol" size={20} color={Colors.LightGreen} />
+    ),
   },
   {
     label: userData.age,
@@ -51,18 +51,20 @@ let data1 = [
 let data2 = [
   {
     label: userData.height,
-    icon: <MaterialIcons name="height" size={20} color={'#76BC21'} />,
+    icon: <MaterialIcons name="height" size={20} color={Colors.LightGreen} />,
   },
   {
     label: userData.weight,
-    icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
+    icon: (
+      <Foundation name="female-symbol" size={20} color={Colors.LightGreen} />
+    ),
   },
 ];
 
 export default function PatientMonitoringProfile({}) {
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="My profile" />
+      <Header title="Monitored Patient" />
 
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
         <Card>
@@ -95,14 +97,20 @@ export default function PatientMonitoringProfile({}) {
             ))}
           </View>
 
-          <TouchableOpacity style={styles.addButton}>
-            <FontAwesome5 name="file-medical-alt" size={15} color="white" />
+          <TouchableOpacity
+            style={styles.addButton}
+            onPress={() => navigate('MeasurementTools')}>
+            <Icons.MaterialIcons
+              name="monitor-heart"
+              size={20}
+              color={Colors.White}
+            />
             <Text style={styles.addButtonText}>Measure vital signs</Text>
           </TouchableOpacity>
         </Card>
 
         <Card
-          title="last measurements"
+          title="Last Measurements"
           cardFooter={
             <TouchableOpacity
               style={{
@@ -113,7 +121,7 @@ export default function PatientMonitoringProfile({}) {
                 alignItems: 'center',
                 paddingVertical: 16,
               }}
-              onPress={() => navigate('HealthParametersList')}>
+              onPress={() => navigate('PatientHealthParameters')}>
               <Text
                 style={{
                   fontSize: 15,
@@ -133,7 +141,7 @@ export default function PatientMonitoringProfile({}) {
             }
             scrollEnabled={false}
             style={{width: '100%'}}
-            renderItem={({item, index: _index}) => (
+            renderItem={({item, index}) => (
               <View
                 style={{
                   width: '100%',
@@ -148,6 +156,7 @@ export default function PatientMonitoringProfile({}) {
                       fontSize: 18,
                       fontFamily: 'Roboto',
                       marginBottom: 4,
+                      fontWeight: 'bold',
                       color: Colors.Blue,
                     }}>
                     {item.mType}
@@ -178,11 +187,19 @@ export default function PatientMonitoringProfile({}) {
                     mmol/L
                   </Text>
                 </Text>
-                <Icons.AntDesign
-                  name={IconName.CheckCircle}
-                  color={Colors.Green}
-                  size={22}
-                />
+                {index === 0 ? (
+                  <Icons.AntDesign
+                    name="checkcircleo"
+                    color={Colors.Green}
+                    size={22}
+                  />
+                ) : (
+                  <Icons.AntDesign
+                    name="checkcircle"
+                    color={Colors.Green}
+                    size={22}
+                  />
+                )}
               </View>
             )}
             ItemSeparatorComponent={() => (
@@ -198,7 +215,7 @@ export default function PatientMonitoringProfile({}) {
           />
         </Card>
 
-        <Card>
+        <Card contentContainerStyle={{marginBottom: 200}}>
           <View style={{width: '100%'}}>
             <PatientElements
               name="Medical history"
@@ -229,7 +246,7 @@ export default function PatientMonitoringProfile({}) {
           <View style={styles.stopMonitoringButton}>
             <Icons.Ionicons name="exit-outline" size={20} color={'red'} />
             <TouchableOpacity>
-              <Text style={styles.monintoring}>stop Monitoring</Text>
+              <Text style={styles.monintoring}>Stop Monitoring</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -247,26 +264,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.GhostWhite,
   },
-
   separator: {
     width: 1,
     height: 20,
     backgroundColor: Colors.Black,
     marginHorizontal: 8,
-  },
-  secondContainer: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-    justifyContent: 'space-between',
-    padding: 20,
-  },
-  patientProfileDetails: {
-    alignItems: 'center',
-    marginBottom: 20,
-    padding: 20,
-    borderRadius: 10,
-    backgroundColor: 'white',
-    width: '100%',
   },
   patientName: {
     color: 'black',
