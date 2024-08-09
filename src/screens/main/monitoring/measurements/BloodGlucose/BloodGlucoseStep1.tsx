@@ -1,15 +1,16 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../../../../../components/header/Header';
-import {Colors} from '../../../../../constants/Colors';
+import { Colors } from '../../../../../constants/Colors';
 import FilledButton from '../../../../../components/buttons/FilledButton';
 import Card from '../../../../../components/cards/Card';
 import CustomRadioButton from '../../../../../components/formComp/CustomRadio';
 import RadioButton from '../components/RadioButton';
 import StripCodeScroll from '../components/StripCodeScroll';
+import { StaticImage } from '../../../../../assets/images';
 
-const BloodGlucoseStep1 = ({navigation}: any) => {
+const BloodGlucoseStep1 = ({ navigation }: any) => {
   const [code, setCode] = useState('C20');
   return (
     <SafeAreaView
@@ -31,14 +32,20 @@ const BloodGlucoseStep1 = ({navigation}: any) => {
         }}>
         <Text
           style={{
-            color: Colors.SteelBlue,
-            fontSize: 16,
+            color: Colors.Blue,
+            fontSize: 18,
             marginBottom: 20,
-            fontWeight: '500',
+            fontWeight: '400',
           }}>
-          Select the test strip code, then press the next button.
+          Insert the test strip into the receiving hole, then press next.
         </Text>
-        <StripCodeScroll setCode={setCode} />
+        <View>
+          <Image source={StaticImage.InsertTheStrip} style={{
+            height: 296,
+            width: 296
+          }} />
+        </View>
+
       </View>
 
       <View style={styles.addBtn}>
@@ -47,7 +54,7 @@ const BloodGlucoseStep1 = ({navigation}: any) => {
           // icon={
           // }
           type={'lightGrey'}
-          style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
+          style={{ width: '48%', alignSelf: 'center', marginVertical: 14 }}
           onPress={() => navigation.goBack()}
           activeOpacity={0.8}
         />
@@ -56,8 +63,8 @@ const BloodGlucoseStep1 = ({navigation}: any) => {
           // icon={
           // }
           type={'blue'}
-          style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
-          // onPress={}
+          style={{ width: '48%', alignSelf: 'center', marginVertical: 14 }}
+          onPress={() => navigation.navigate('BloodGlucoseStep2')}
           activeOpacity={0.8}
         />
       </View>

@@ -39,4 +39,7 @@ export const StaticImage = {
   SharerIcon: require('./share.png'),
   SettingsIcon: require('./settings.png'),
   HeartIcon: require('./heart.png'),
+  InsertTheStrip: require('./InsertTheStrip.png'),
+  TakeADropOfBlood: require('./Take_A_Drop_of_Blood.png'),
+  Blood_detected: require('./Blood_detected.png')
 };

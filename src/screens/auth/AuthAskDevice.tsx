@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Colors } from '../../constants/Colors';
 import Header from '../../components/header/Header';
 import { DummyImage } from '../../assets/dummy/images';
@@ -16,9 +16,15 @@ import { navigate } from '../../navigation/RootNavigation';
 import UserContext from '../../contexts/UserContext';
 import { StaticImage } from '../../assets/images';
 import { AuthScreen } from '../../navigation/auth/AuthScreens';
+import Card from '../main/my-profile/UiUpdateComponents/Card';
 
 const AuthAskDevice = ({ navigation }: any) => {
   const { login, isPatient } = useContext(UserContext);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const loginAction = () => {
+    navigation.navigate(AuthScreen.LoadingScreen);
+  };
   return (
     <SafeAreaView
       style={{
@@ -74,6 +80,8 @@ const AuthAskDevice = ({ navigation }: any) => {
                 fontSize: 16,
                 color: Colors.SteelBlue,
                 textAlign: 'center',
+                width: '85%',
+                marginHorizontal: 'auto',
               }}>
               Use our app to connect your Yano device and start taking control
               of your health.
