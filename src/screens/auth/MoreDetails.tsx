@@ -175,13 +175,13 @@ const styles = StyleSheet.create({
   },
   skipButton: {
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: Colors.Blue,
     borderRadius: 8,
     fontSize: 14,
     color: '#00263E',
     fontWeight: 'bold',
     padding: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 18,
     marginRight: 15,
   },
   body: {

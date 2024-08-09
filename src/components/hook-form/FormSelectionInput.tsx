@@ -75,7 +75,7 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
                 <TextInput.Icon
                   icon="chevron-down"
                   size={25}
-                  color={Colors.Grey}
+                  color={Colors.Blue}
                   onPress={() => setShowOptionsModal(true)}
                 />
               }

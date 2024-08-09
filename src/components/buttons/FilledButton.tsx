@@ -110,7 +110,7 @@ const FilledButton: React.FC<ButtonProps> = ({
       <Text
         style={[
           styles.label,
-          {color: ButtonColors[type].textColor, marginLeft: icon ? 4 : 0},
+          {color: ButtonColors[type].textColor, marginLeft: icon ? 6 : 0},
         ]}>
         {label}
       </Text>
@@ -123,7 +123,7 @@ export default FilledButton;
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -131,8 +131,8 @@ const styles = StyleSheet.create({
     marginVertical: 6,
   },
   label: {
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: 'Roboto',
-    fontWeight: 'bold',
+    fontWeight: 'medium',
   },
 });

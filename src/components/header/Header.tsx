@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({
       <View style={styles.navBarLeftContainer}>
         {showBackIcon && (
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icons.AntDesign name="arrowleft" size={28} color={'black'} />
+            <Icons.AntDesign name="arrowleft" size={28} color={Colors.Blue} />
           </TouchableOpacity>
         )}
         <Text style={styles.navbarTitle}>{title}</Text>
@@ -38,7 +38,9 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 20,
+    paddingHorizontal: 14,
+    // paddingLeft: 14,
+    paddingVertical: 20,
     backgroundColor: Colors.White,
     justifyContent: 'space-between',
   },

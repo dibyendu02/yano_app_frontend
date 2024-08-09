@@ -48,7 +48,7 @@ const AuthDeviceInfo = ({navigation}: any) => {
               marginBottom: 20,
             }}>
             <Image
-              source={DummyImage.largeDevice}
+              source={DummyImage.monitor}
               width={250}
               height={250}
               style={{
@@ -60,23 +60,26 @@ const AuthDeviceInfo = ({navigation}: any) => {
             />
             <Text
               style={{
-                fontSize: 20,
+                fontSize: 24,
                 fontWeight: 'bold',
                 color: Colors.Blue,
                 textAlign: 'center',
                 marginBottom: 10,
+                width: '85%',
+                marginHorizontal: 'auto',
               }}>
-              Información del dispositivo
+              Yano Multi-Parameter Monitor
             </Text>
             <Text
               style={{
                 fontSize: 16,
                 color: Colors.SteelBlue,
                 textAlign: 'center',
+                width: '90%',
+                marginHorizontal: 'auto',
               }}>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio
-              veritatis alias quo delectus eos voluptas at doloremque ipsam
-              necessitatibus aut?
+              It will allow you to measure your blood pressure, glucose level,
+              body temperature, heart rate and ECG.
             </Text>
           </View>
         </View>

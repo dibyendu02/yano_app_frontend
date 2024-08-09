@@ -24,6 +24,7 @@ import FilledButton from '../../../../components/buttons/FilledButton';
 import BottomSheet from '../../../../components/bottom-sheet/BottomSheet';
 import {StaticImage} from '../../../../assets/images';
 import MeasuringYourVitalComp from './MeasuringYourVitalComp';
+import OutlineButton from '../../../../components/buttons/OutlineButton';
 
 const MyHealthHomeScreen = ({navigation}) => {
   const [show, setShow] = useState(false);
@@ -58,6 +59,19 @@ const MyHealthHomeScreen = ({navigation}) => {
       />
       <ScrollView>
         <View style={{padding: 15}}>
+          <View style={styles.container}>
+            <Text style={styles.title}>Do you have one of our devices?</Text>
+            <Text style={styles.para}>
+              Connect your Yano device and start taking control of your health.
+            </Text>
+            <OutlineButton
+              type="blue"
+              icon={<PlusIcon size={16} color={Colors.Blue} />}
+              label="Connect Device"
+              onPress={() => navigate('ChooseDevice')}
+              style={{marginTop: 10}}
+            />
+          </View>
           <MeasuringYourVitalComp
             element={
               <View
@@ -181,7 +195,7 @@ const MyHealthHomeScreen = ({navigation}) => {
         icon={
           <Icons.MaterialIcons
             name="health-and-safety"
-            size={24}
+            size={16}
             color={Colors.White}
           />
         }
@@ -277,8 +291,8 @@ const styles = StyleSheet.create({
   addBtn: {
     width: 200,
     position: 'absolute',
-    bottom: 40,
-    right: 20,
+    bottom: 16,
+    right: 16,
   },
   container: {
     backgroundColor: Colors.White,
