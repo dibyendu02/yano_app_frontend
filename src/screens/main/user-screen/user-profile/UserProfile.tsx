@@ -159,7 +159,7 @@ export default function () {
               </View>
             ))}
           </View>
-          <Badge
+          {/* <Badge
             icon={
               <Icons.MaterialIcons
                 name="health-and-safety"
@@ -168,8 +168,8 @@ export default function () {
               />
             }
             text="Healthcare provider: Dr. Eduardo Escobar"
-          />
-          <Badge
+          /> */}
+          {/* <Badge
             icon={
               <Icons.MaterialIcons
                 name="diversity-3"
@@ -179,7 +179,7 @@ export default function () {
             }
             text="Mother of: Pedro Anzola"
             color="#B8DAFF"
-          />
+          /> */}
 
           <View
             style={{

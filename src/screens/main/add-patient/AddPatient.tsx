@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unstable-nested-components */
 import {
   FlatList,
+  Image,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -8,17 +9,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../../../components/header/Header';
-import { Colors } from '../../../constants/Colors';
-import { navigate } from '../../../navigation/RootNavigation';
+import {Colors} from '../../../constants/Colors';
+import {navigate} from '../../../navigation/RootNavigation';
 import FilledButton from '../../../components/buttons/FilledButton';
 import Card from '../../../components/cards/Card';
 import Icons from '../../../assets/icon/Icon';
+import {DummyImage} from '../../../assets/dummy/images';
 
 const AddPatient = () => {
   const [email, setEmail] = useState('');
   const [disabled, setDisabled] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
 
   const OPTIONS = [
     {
@@ -67,51 +70,78 @@ const AddPatient = () => {
         title="Add Patient"
         headerRightComponent={
           <FilledButton
-            label="Find"
+            label={isClicked ? 'Add' : 'Find'}
             type="blue"
             style={styles.findButton}
             disabled={disabled}
-            onPress={() => navigate('EmailNotFoundPatient')}
+            // onPress={() => navigate('EmailNotFoundPatient')}
+            onPress={() => {
+              isClicked ? navigate('TransitionScreen') : setIsClicked(true);
+            }}
           />
         }
       />
-      <View style={styles.body}>
-        <View style={styles.inputField}>
-          <Text style={styles.inputLabel}>Email</Text>
-          <TextInput
-            style={styles.inputBox}
-            value={email}
-            onChangeText={setEmail}
-            placeholder="Ej. paciente@email.com"
-          />
+      {!isClicked ? (
+        <View style={styles.body}>
+          <View style={styles.inputField}>
+            <Text style={styles.inputLabel}>Email</Text>
+            <TextInput
+              style={styles.inputBox}
+              value={email}
+              onChangeText={setEmail}
+              placeholder="Ej. paciente@email.com"
+            />
+          </View>
+          <Card title="OTHER OPTIONS">
+            <FlatList
+              data={OPTIONS}
+              renderItem={({item, index: _index}) => (
+                <TouchableOpacity
+                  style={styles.optionItemContainer}
+                  onPress={() => {
+                    if (item.label === 'Create Patient Account') {
+                      // console.log('create patient account');
+                      navigate('CreatePatientAccount');
+                    }
+                  }}>
+                  <View style={styles.optionItemLeftContainer}>
+                    {item?.icon && item.icon}
+                    <Text style={styles.label}>{item.label}</Text>
+                  </View>
+                  <Icons.MaterialIcons
+                    name="navigate-next"
+                    size={25}
+                    color={Colors.Blue}
+                  />
+                </TouchableOpacity>
+              )}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
+            />
+          </Card>
         </View>
-        <Card title="OTHER OPTIONS">
-          <FlatList
-            data={OPTIONS}
-            renderItem={({ item, index: _index }) => (
-              <TouchableOpacity
-                style={styles.optionItemContainer}
-                onPress={() => {
-                  if (item.label === 'Create Patient Account') {
-                    // console.log('create patient account');
-                    navigate('CreatePatientAccount');
-                  }
-                }}>
-                <View style={styles.optionItemLeftContainer}>
-                  {item?.icon && item.icon}
-                  <Text style={styles.label}>{item.label}</Text>
-                </View>
-                <Icons.MaterialIcons
-                  name="navigate-next"
-                  size={25}
-                  color={Colors.Blue}
-                />
-              </TouchableOpacity>
-            )}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-          />
-        </Card>
-      </View>
+      ) : (
+        <View style={styles.body}>
+          <Card
+            contentContainerStyle={{
+              backgroundColor: Colors.White,
+              marginTop: 20,
+            }}>
+            <Image source={DummyImage.user} style={{height: 70, width: 70}} />
+            <Text
+              style={{
+                fontSize: 18,
+                color: Colors.Blue,
+                fontWeight: 'semibold',
+                marginTop: 10,
+              }}>
+              María Clemente
+            </Text>
+            <Text style={{fontSize: 16, color: Colors.SteelBlue}}>
+              maria.clemente@gmail.com
+            </Text>
+          </Card>
+        </View>
+      )}
     </SafeAreaView>
   );
 };
