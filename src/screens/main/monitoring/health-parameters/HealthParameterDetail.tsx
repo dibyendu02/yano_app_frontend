@@ -11,35 +11,41 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Header from '../../../../components/header/Header';
 import Icons from '../../../../assets/icon/Icon';
-import { Colors } from '../../../../constants/Colors';
-import { CardStyles } from '../../../../components/cards/CardStyle';
+import {Colors} from '../../../../constants/Colors';
+import {CardStyles} from '../../../../components/cards/CardStyle';
 import FilledButton from '../../../../components/buttons/FilledButton';
-import { DummyImage } from '../../../../assets/dummy/images';
+import {DummyImage} from '../../../../assets/dummy/images';
 import Card from '../../../../components/cards/Card';
-import { navigate } from '../../../../navigation/RootNavigation';
+import {navigate} from '../../../../navigation/RootNavigation';
+import {StaticImage} from '../../../../assets/images';
 
 //@ts-ignore
-const HealthParameterDetail = ({ route }) => {
+const HealthParameterDetail = ({route}) => {
   const [isReviewed, setIsReviewed] = useState(false);
 
   let healthParameterDetail = route?.params?.healthParameterDetail;
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <Header
         title={healthParameterDetail?.field_full}
         headerRightComponent={
-          <Icons.Feather name="share-2" color={Colors.Blue} size={25} />
+          <TouchableOpacity>
+            <Image
+              source={StaticImage.SharerIcon}
+              style={{height: 25, width: 25}}
+            />
+          </TouchableOpacity>
         }
       />
-      <View style={{ flex: 1, backgroundColor: Colors.GhostWhite }}>
+      <View style={{flex: 1, backgroundColor: Colors.GhostWhite}}>
         {healthParameterDetail?.field !== 'ECG' ? (
           <View style={[CardStyles.container]}>
-            <View style={{ width: '100%', padding: 20 }}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{width: '100%', padding: 20}}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <View
                   style={{
                     height: 10,
@@ -58,7 +64,7 @@ const HealthParameterDetail = ({ route }) => {
                   {'Normal' + ' ' + healthParameterDetail?.field_full}
                 </Text>
               </View>
-              <Text style={{ fontSize: 12, color: Colors.SteelBlue }}>
+              <Text style={{fontSize: 12, color: Colors.SteelBlue}}>
                 October 7, 2022 - 5:13 PM
               </Text>
             </View>
@@ -72,8 +78,8 @@ const HealthParameterDetail = ({ route }) => {
             <FlatList
               data={healthParameterDetail?.data || []}
               scrollEnabled={false}
-              style={{ width: '100%', paddingHorizontal: 20 }}
-              renderItem={({ item, index: _index }) => (
+              style={{width: '100%', paddingHorizontal: 20}}
+              renderItem={({item, index: _index}) => (
                 <View
                   style={{
                     width: '100%',
@@ -82,7 +88,7 @@ const HealthParameterDetail = ({ route }) => {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                   }}>
-                  <View style={{ width: '50%' }}>
+                  <View style={{width: '50%'}}>
                     <Text
                       style={{
                         fontSize: 16,
@@ -144,13 +150,13 @@ const HealthParameterDetail = ({ route }) => {
                 width: '100%',
               }}
               onPress={() => navigate('HealthStats')}>
-              <View style={{ flexDirection: 'row' }}>
+              <View style={{flexDirection: 'row'}}>
                 <Icons.MaterialIcons
                   name="query-stats"
                   color={Colors.CeruleanBlue}
                   size={20}
                 />
-                <Text style={{ color: Colors.CeruleanBlue, marginLeft: 6 }}>
+                <Text style={{color: Colors.CeruleanBlue, marginLeft: 6}}>
                   See stats
                 </Text>
               </View>
@@ -182,7 +188,7 @@ const HealthParameterDetail = ({ route }) => {
                   name="resize"
                   size={30}
                   color={Colors.Black}
-                  style={{ position: 'absolute', right: '5%', top: '5%' }}
+                  style={{position: 'absolute', right: '5%', top: '5%'}}
                 />
               </ImageBackground>
 
@@ -203,7 +209,7 @@ const HealthParameterDetail = ({ route }) => {
               <FlatList
                 data={healthParameterDetail?.data || []}
                 scrollEnabled={false}
-                style={{ width: '100%', paddingHorizontal: 20 }}
+                style={{width: '100%', paddingHorizontal: 20}}
                 ListHeaderComponent={
                   <Text
                     style={{
@@ -214,7 +220,7 @@ const HealthParameterDetail = ({ route }) => {
                     Sample Details
                   </Text>
                 }
-                renderItem={({ item, index: _index }) => (
+                renderItem={({item, index: _index}) => (
                   <View
                     style={{
                       width: '100%',

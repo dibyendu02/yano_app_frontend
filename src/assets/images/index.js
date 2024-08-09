@@ -34,4 +34,7 @@ export const StaticImage = {
   ThumpTouchesTheMetalpart: require('./ThumpTouchesTheMetalpart.png'),
   MFingureTouchBackMetal: require('./MFingureTouchBackMetal.png'),
   TwoHandShouldNotTouch: require('./TwoHandShouldNotTouch.png'),
+  ClockIcon: require('./clock.png'),
+  FilterIcon: require('./filter.png'),
+  SharerIcon: require('./share.png'),
 };
