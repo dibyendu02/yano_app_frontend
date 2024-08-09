@@ -4,9 +4,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../../../components/header/Header';
 import {Colors} from '../../../../../constants/Colors';
 import FilledButton from '../../../../../components/buttons/FilledButton';
-import Card from '../../../../../components/cards/Card';
-import CustomRadioButton from '../../../../../components/formComp/CustomRadio';
-import RadioButton from '../components/RadioButton';
 import StripCodeScroll from '../components/StripCodeScroll';
 
 const BloodGlucoseSelectStrip = ({navigation}: any) => {
@@ -18,7 +15,7 @@ const BloodGlucoseSelectStrip = ({navigation}: any) => {
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title={'Blood Glucose'} />
+      <Header title={'Blood glucose'} />
       <View
         style={{
           backgroundColor: 'white',
@@ -44,8 +41,6 @@ const BloodGlucoseSelectStrip = ({navigation}: any) => {
       <View style={styles.addBtn}>
         <FilledButton
           label={'Back'}
-          // icon={
-          // }
           type={'lightGrey'}
           style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.goBack()}
@@ -53,8 +48,6 @@ const BloodGlucoseSelectStrip = ({navigation}: any) => {
         />
         <FilledButton
           label={'Next'}
-          // icon={
-          // }
           type={'blue'}
           style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.navigate('BloodGlucoseReading')}

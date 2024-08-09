@@ -19,7 +19,7 @@ const BloodGlucoseResult = ({navigation}: any) => {
         position: 'relative',
       }}>
       <Header
-        title={'Blood Glucose'}
+        title={'Blood glucose'}
         headerRightComponent={
           <Icons.Feather name="share-2" color={Colors.Blue} size={25} />
         }

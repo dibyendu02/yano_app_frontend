@@ -18,7 +18,7 @@ const BloodGlucoseStep3 = ({navigation}: any) => {
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title={'Blood Glucose'} />
+      <Header title={'Blood glucose'} />
       <View
         style={{
           backgroundColor: 'white',
