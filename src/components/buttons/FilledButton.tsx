@@ -16,6 +16,7 @@ export enum ButtonType {
   White = 'white',
   LightGrey = 'lightGrey',
   Green = 'green',
+  BlueGrey = 'blueGrey',
 }
 
 const ButtonColors = {
@@ -43,6 +44,12 @@ const ButtonColors = {
     borderColor: Colors.Transparent,
     borderWidth: 0,
   },
+  [ButtonType.BlueGrey]: {
+    backgroundColor: Colors.BlueGrey,
+    textColor: Colors.Blue,
+    borderColor: Colors.Transparent,
+    borderWidth: 0,
+  },
   [ButtonType.Green]: {
     backgroundColor: Colors.Green,
     textColor: Colors.White,
@@ -51,7 +58,7 @@ const ButtonColors = {
   },
 };
 interface ButtonProps {
-  type: 'blue' | 'red' | 'white' | 'lightGrey' | 'green';
+  type: 'blue' | 'red' | 'white' | 'lightGrey' | 'blueGrey' | 'green';
   label?: string;
   icon?: React.ReactNode;
   onPress?: (event: GestureResponderEvent) => void;
@@ -103,7 +110,7 @@ const FilledButton: React.FC<ButtonProps> = ({
       <Text
         style={[
           styles.label,
-          {color: ButtonColors[type].textColor, marginLeft: icon ? 4 : 0},
+          {color: ButtonColors[type].textColor, marginLeft: icon ? 6 : 0},
         ]}>
         {label}
       </Text>
@@ -116,7 +123,7 @@ export default FilledButton;
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -124,8 +131,8 @@ const styles = StyleSheet.create({
     marginVertical: 6,
   },
   label: {
-    fontSize: 16,
+    fontSize: 14,
     fontFamily: 'Roboto',
-    fontWeight: 'bold',
+    fontWeight: 'medium',
   },
 });

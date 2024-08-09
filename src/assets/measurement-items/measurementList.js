@@ -1,67 +1,67 @@
 export const measurementList = [
-    {
-        title: 'Heart rate',
-        img: require('./images/heart_rate.png'),
-        path: 'HeartRateMeasurement'
-    },
-    {
-        title: "Blood pressure",
-        img: require('./images/pressure.png'),
-        path: 'BloodPressureScreen'
-    },
-    {
-        title: "Blood oxygen",
-        img: require('./images/bloodOxygen.png'),
-        path: 'BloodOxygenMeasurement'
-    },
-    {
-        title: "Body temperature",
-        img: require('./images/temparature.png'),
-        path: 'BodyTemperatureMeasurement'
-    },
-    {
-        title: "ECG",
-        img: require('./images/ecg.png'),
-        path: 'EcgMeasurement'
-    },
-    {
-        title: "Glucose level",
-        img: require('./images/glucose.png'),
-        path: 'BloodGlucoseTest'
-    },
-]
+  {
+    title: 'Heart rate',
+    img: require('./image/heart_rate.png'),
+    path: 'HeartRateMeasurement',
+  },
+  {
+    title: 'Blood pressure',
+    img: require('./image/pressure.png'),
+    path: 'BloodPressureScreen',
+  },
+  {
+    title: 'Blood oxygen',
+    img: require('./image/bloodOxygen.png'),
+    path: 'BloodOxygenMeasurement',
+  },
+  {
+    title: 'Body temperature',
+    img: require('./image/temparature.png'),
+    path: 'BodyTemperatureMeasurement',
+  },
+  {
+    title: 'ECG',
+    img: require('./image/ecg.png'),
+    path: 'EcgMeasurement',
+  },
+  {
+    title: 'Blood glucose',
+    img: require('./image/glucose.png'),
+    path: 'BloodGlucoseTest',
+  },
+];
 export const measurementList2 = [
-    {
-        title: 'Heart rate',
-        img: require('./images/heart_rate.png'),
-        path: 'HeartRateModal'
-    },
-    {
-        title: "Blood pressure",
-        img: require('./images/pressure.png'),
-        path: 'BloodPressureModal'
-    },
-    {
-        title: "Blood oxygen",
-        img: require('./images/bloodOxygen.png'),
-        path: 'BloodOxygenModal'
-    },
-    {
-        title: "Body temperature",
-        img: require('./images/temparature.png'),
-        path: 'BodyTemperatureModal'
-    },
-    {
-        title: "ECG",
-        img: require('./images/ecg.png'),
-        path: 'ECGModal'
-    },
-    {
-        title: "Glucose level",
-        img: require('./images/glucose.png'),
-        path: 'GlucoseLevelModal'
-    },
-]
+  {
+    title: 'Heart rate',
+    img: require('./image/heart_rate.png'),
+    path: 'HeartRateModal',
+  },
+  {
+    title: 'Blood pressure',
+    img: require('./image/pressure.png'),
+    path: 'BloodPressureModal',
+  },
+  {
+    title: 'Blood oxygen',
+    img: require('./image/bloodOxygen.png'),
+    path: 'BloodOxygenModal',
+  },
+  {
+    title: 'Body temperature',
+    img: require('./image/temparature.png'),
+    path: 'BodyTemperatureModal',
+  },
+  {
+    title: 'ECG',
+    img: require('./image/ecg.png'),
+    path: 'ECGModal',
+  },
+  {
+    title: 'Blood glucose ',
+    img: require('./image/glucose.png'),
+    path: 'GlucoseLevelModal',
+  },
+];
 
 export const DeviceSettings = [
   {
@@ -80,3 +80,7 @@ export const DeviceSettings = [
     path: 'YanoSupport',
   },
 ];
+
+// export const MeasureIcons = [
+//     {}
+// ]

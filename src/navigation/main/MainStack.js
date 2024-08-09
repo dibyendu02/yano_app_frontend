@@ -120,6 +120,14 @@ const PatientTabs = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors.LightGreen,
         tabBarInactiveTintColor: Colors.Grey,
+        tabBarStyle: {height: 60, paddingBottom: 8},
+        tabBarLabelStyle: {
+          marginTop: -5, // Move the label closer to the icon
+          fontSize: 12, // Adjust the font size as needed
+        },
+        tabBarIconStyle: {
+          marginBottom: -5, // Move the icon closer to the label
+        },
       }}>
       <Tab.Screen
         name="MyHealth"
@@ -133,7 +141,7 @@ const PatientTabs = () => {
               color={color}
             />
           ),
-          tabBarLabel: 'My Health',
+          tabBarLabel: 'My health',
         }}
       />
       <Tab.Screen
@@ -144,7 +152,7 @@ const PatientTabs = () => {
           tabBarIcon: ({color, size}) => (
             <Icons.FontAwesome5 name="user-circle" size={size} color={color} />
           ),
-          tabBarLabel: 'My Profile',
+          tabBarLabel: 'My profile',
         }}
       />
     </Tab.Navigator>
@@ -157,6 +165,14 @@ const ProviderTabs = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors.LightGreen,
         tabBarInactiveTintColor: Colors.Grey,
+        tabBarStyle: {height: 60, paddingBottom: 8},
+        tabBarLabelStyle: {
+          marginTop: -5, // Move the label closer to the icon
+          fontSize: 12, // Adjust the font size as needed
+        },
+        tabBarIconStyle: {
+          marginBottom: -5, // Move the icon closer to the label
+        },
       }}>
       <Tab.Screen
         name="Monitor"

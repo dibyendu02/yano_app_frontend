@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Colors} from '../../constants/Colors';
 import Header from '../../components/header/Header';
 import {DummyImage} from '../../assets/dummy/images';
@@ -16,9 +16,15 @@ import {navigate} from '../../navigation/RootNavigation';
 import UserContext from '../../contexts/UserContext';
 import {StaticImage} from '../../assets/images';
 import {AuthScreen} from '../../navigation/auth/AuthScreens';
+import Card from '../main/my-profile/UiUpdateComponents/Card';
 
 const AuthAskDevice = ({navigation}: any) => {
   const {login, isPatient} = useContext(UserContext);
+  const [isClicked, setIsClicked] = useState(false);
+
+  const loginAction = () => {
+    navigation.navigate(AuthScreen.LoadingScreen);
+  };
   return (
     <SafeAreaView
       style={{
@@ -32,7 +38,7 @@ const AuthAskDevice = ({navigation}: any) => {
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(AuthScreen.LoadingScreen);
+                setIsClicked(true);
               }}>
               <Text style={styles.skipButton}>Skip</Text>
             </TouchableOpacity>
@@ -50,13 +56,13 @@ const AuthAskDevice = ({navigation}: any) => {
             }}>
             <Image
               source={StaticImage.DeviceStart}
-              width={250}
-              height={250}
+              // width={300}
+              // height={400}
               style={{
                 alignSelf: 'center',
                 marginBottom: 20,
-                width: 150,
-                height: 150,
+                width: '70%',
+                height: 280,
               }}
             />
             <Text
@@ -74,6 +80,8 @@ const AuthAskDevice = ({navigation}: any) => {
                 fontSize: 16,
                 color: Colors.SteelBlue,
                 textAlign: 'center',
+                width: '85%',
+                marginHorizontal: 'auto',
               }}>
               Use our app to connect your Yano device and start taking control
               of your health.
@@ -83,11 +91,23 @@ const AuthAskDevice = ({navigation}: any) => {
       </ScrollView>
       <View style={styles.addBtn}>
         <FilledButton
-          label="Connect this device"
+          label="Connect device"
           type="blue"
           onPress={() => navigation.navigate(AuthScreen.ChooseDevice)}
         />
       </View>
+      {isClicked && (
+        <View style={styles.afterBtnClick}>
+          <Card
+            title={'The device has not been connected yet'}
+            children={
+              'Are you sure you want to exit the device pairing process?'
+            }
+            active={setIsClicked}
+            action={loginAction}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -113,5 +133,16 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 15,
     marginRight: 15,
+  },
+  afterBtnClick: {
+    // backgroundColor: Colors.LightBlack,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    zIndex: 1,
+    flex: 1,
+    alignItems: 'center',
+    padding: 20,
   },
 });
