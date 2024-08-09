@@ -31,8 +31,8 @@ const MeasurementItems: FC<Props> = ({data, active}) => {
             <Image
               source={item.img}
               style={{
-                width: 22,
-                height: 22,
+                width: 25,
+                height: 25,
                 resizeMode: 'contain',
               }}
             />

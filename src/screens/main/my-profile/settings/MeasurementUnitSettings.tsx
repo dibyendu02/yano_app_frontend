@@ -6,13 +6,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
-import { Colors } from '../../../../constants/Colors';
+import React, {useState} from 'react';
+import {Colors} from '../../../../constants/Colors';
 import Header from '../../../../components/header/Header';
-import { MeasurementSettingItems } from '../../../../assets/settings/SettingItem';
+import {MeasurementSettingItems} from '../../../../assets/settings/SettingItem';
 import DeviceItems from '../components/DeviceItems';
 import MeasurementChangeCard from '../UiUpdateComponents/MeasurementChangeCard';
-
 
 type MeasurementItem = {
   img: any; // Replace with the specific type if available
@@ -41,16 +40,16 @@ const MeasurementUnitSettings = () => {
       }}>
       <Header title={'Measurement units'} />
       <ScrollView>
-        <View style={{ padding: 20 }}>
+        <View style={{padding: 20}}>
           {MeasurementSettingItems.map(item => (
             <DeviceItems
               key={item.title}
               element={
                 <Image
                   source={item.img}
-                  height={40}
-                  width={40}
-                  style={{ objectFit: 'contain' }}
+                  height={25}
+                  width={25}
+                  style={{objectFit: 'contain', height: 25, width: 25}}
                 />
               }
               name={item.title}
