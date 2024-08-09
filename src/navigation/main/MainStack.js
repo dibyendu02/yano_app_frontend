@@ -108,6 +108,7 @@ import FaqScreen from '../../screens/main/my-profile/support/FaqScreen';
 import SupportChat from '../../screens/main/my-profile/support/SupportChat';
 import EditProfile from '../../screens/main/my-profile/components/EditProfile/EditProfile';
 import CreatePatientAccount from '../../screens/main/add-patient/CreatePatientAccount';
+import PatientMonitoringMeasurements from '../../screens/main/monitoring/patient-monitoring/PatientMonitoringMeasurements';
 
 const Tab = createBottomTabNavigator();
 
@@ -117,7 +118,7 @@ const PatientTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#76bc21',
+        tabBarActiveTintColor: Colors.LightGreen,
         tabBarInactiveTintColor: Colors.Grey,
       }}>
       <Tab.Screen
@@ -154,7 +155,7 @@ const ProviderTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#76bc21',
+        tabBarActiveTintColor: Colors.LightGreen,
         tabBarInactiveTintColor: Colors.Grey,
       }}>
       <Tab.Screen
@@ -801,6 +802,11 @@ const MainStack = () => {
       <Stack.Screen
         name="CreatePatientAccount"
         component={CreatePatientAccount}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PatientHealthParameters"
+        component={PatientMonitoringMeasurements}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

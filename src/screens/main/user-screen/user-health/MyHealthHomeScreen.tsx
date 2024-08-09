@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   FlatList,
   Image,
@@ -15,19 +15,17 @@ import {
   NotificationIcon,
   PlusIcon,
 } from '../../../../assets/icon/IconNames';
-import { Colors } from '../../../../constants/Colors';
-import ItemWithTileSubtile from '../../../../components/ItemWithTileSubtitle';
+import {Colors} from '../../../../constants/Colors';
 import Icons from '../../../../assets/icon/Icon';
 import Card from '../../../../components/cards/Card';
-import { navigate } from '../../../../navigation/RootNavigation';
-import { measurements } from '../../../../test/Data';
+import {navigate} from '../../../../navigation/RootNavigation';
+import {measurements} from '../../../../test/Data';
 import FilledButton from '../../../../components/buttons/FilledButton';
-import OutlineButton from '../../../../components/buttons/OutlineButton';
 import BottomSheet from '../../../../components/bottom-sheet/BottomSheet';
-import { StaticImage } from '../../../../assets/images';
+import {StaticImage} from '../../../../assets/images';
 import MeasuringYourVitalComp from './MeasuringYourVitalComp';
 
-const MyHealthHomeScreen = ({ navigation }) => {
+const MyHealthHomeScreen = ({navigation}) => {
   const [show, setShow] = useState(false);
   const [selectedDiv, setSelectedDiv] = useState(null);
 
@@ -43,7 +41,7 @@ const MyHealthHomeScreen = ({ navigation }) => {
         headerRightComponent={
           <TouchableOpacity
             onPress={() => navigate('NotificationAlerts')}
-            style={{ position: 'relative' }}>
+            style={{position: 'relative'}}>
             <NotificationIcon size={24} color={Colors.Blue} />
             <View
               style={{
@@ -59,20 +57,7 @@ const MyHealthHomeScreen = ({ navigation }) => {
         }
       />
       <ScrollView>
-        <View style={{ padding: 15 }}>
-          <View style={styles.container}>
-            <Text style={styles.title}>Do you have one of our devices?</Text>
-            <Text style={styles.para}>
-              Connect your Yano device and start taking control of your health.
-            </Text>
-            <OutlineButton
-              type="blue"
-              icon={<PlusIcon size={16} color={Colors.Blue} />}
-              label="Connect Device"
-              onPress={() => navigate('ChooseDevice')}
-              style={{ marginTop: 10 }}
-            />
-          </View>
+        <View style={{padding: 15}}>
           <MeasuringYourVitalComp
             element={
               <View
@@ -129,8 +114,8 @@ const MyHealthHomeScreen = ({ navigation }) => {
                 : []
             }
             scrollEnabled={false}
-            style={{ width: '100%' }}
-            renderItem={({ item, index: _index }) => (
+            style={{width: '100%'}}
+            renderItem={({item, index}) => (
               <View
                 style={{
                   width: '100%',
@@ -139,7 +124,7 @@ const MyHealthHomeScreen = ({ navigation }) => {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                 }}>
-                <View style={{ width: '50%' }}>
+                <View style={{width: '50%'}}>
                   <Text
                     style={{
                       fontSize: 18,
@@ -149,7 +134,7 @@ const MyHealthHomeScreen = ({ navigation }) => {
                     }}>
                     {item.mType}
                   </Text>
-                  <Text style={{ fontSize: 13, fontFamily: 'Roboto' }}>
+                  <Text style={{fontSize: 13, fontFamily: 'Roboto'}}>
                     {item.dt}
                   </Text>
                 </View>
@@ -171,7 +156,7 @@ const MyHealthHomeScreen = ({ navigation }) => {
                   </Text>
                 </Text>
                 <Icons.AntDesign
-                  name={IconName.CheckCircle}
+                  name={index === 0 ? 'checkcircleo' : 'checkcircle'}
                   color={Colors.Green}
                   size={22}
                 />
@@ -204,11 +189,11 @@ const MyHealthHomeScreen = ({ navigation }) => {
         style={styles.addBtn}
       />
       <BottomSheet isVisible={show} onBackdropPress={() => setShow(false)}>
-        <View style={{ padding: 20 }}>
+        <View style={{padding: 20}}>
           <Text
             style={{
-              fontSize: 18,
-              fontWeight: '800',
+              fontSize: 24,
+              fontWeight: '500',
               color: Colors.Blue,
               marginBottom: 10,
             }}>
@@ -221,10 +206,10 @@ const MyHealthHomeScreen = ({ navigation }) => {
               paddingVertical: 10,
               borderRadius: 10,
             }}>
-            <Text style={{ fontSize: 16, color: Colors.SteelBlue }}>
+            <Text style={{fontSize: 16, color: Colors.SteelBlue}}>
               Este servicio no está hecho para emergencias. Sí cree que está
               teniendo una, por favor contacte a{' '}
-              <Text style={{ color: Colors.Red, fontWeight: '600' }}>
+              <Text style={{color: Colors.Red, fontWeight: '600'}}>
                 Emergencias
               </Text>
             </Text>
@@ -271,12 +256,13 @@ const MyHealthHomeScreen = ({ navigation }) => {
             <FilledButton
               label={'Continue'}
               type={'blue'}
-              style={{ width: '100%', alignSelf: 'center', marginVertical: 14 }}
+              style={{width: '100%', alignSelf: 'center', marginVertical: 14}}
               onPress={() => {
                 setShow(false);
                 navigation.navigate('PatientVideoCall');
               }}
               activeOpacity={0.8}
+              disabled={!selectedDiv} // Disable if no option is selected
             />
           </View>
         </View>

@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.White,
   },
   navbarTitle: {
-    color: 'black',
+    color: Colors.Blue,
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'Roboto',

@@ -5,6 +5,7 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import {
+  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -19,6 +20,7 @@ import {CardStyles} from '../../../../components/cards/CardStyle';
 import {LineChart} from 'react-native-gifted-charts';
 import Icons from '../../../../assets/icon/Icon';
 import moment from 'moment';
+import {StaticImage} from '../../../../assets/images';
 
 enum TimePeriod {
   Day = 'Day',
@@ -102,7 +104,8 @@ const HealthStats = () => {
 
   const calculateStandardDeviation = () => {
     let aValues = statData.map(e => e.value);
-    const mean = aValues.reduce((sum, value) => sum + value, 0) / aValues.length;
+    const mean =
+      aValues.reduce((sum, value) => sum + value, 0) / aValues.length;
     const variance =
       aValues.reduce((sum, value) => sum + Math.pow(value - mean, 2), 0) /
       aValues.length;
@@ -227,7 +230,25 @@ const HealthStats = () => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-      <Header title="Heart rate" />
+      <Header
+        title="Heart rate"
+        headerRightComponent={
+          <View style={{flexDirection: 'row', gap: 16}}>
+            <TouchableOpacity>
+              <Image
+                source={StaticImage.FilterIcon}
+                style={{height: 20, width: 20}}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Image
+                source={StaticImage.SharerIcon}
+                style={{height: 25, width: 25}}
+              />
+            </TouchableOpacity>
+          </View>
+        }
+      />
       <View
         style={{
           flex: 1,
@@ -383,11 +404,12 @@ const HealthStats = () => {
             <View style={{width: '100%'}}>
               <Text
                 style={{
-                  fontSize: 12,
-                  color: Colors.SteelBlue,
+                  fontSize: 14,
+                  color: Colors.Blue,
                   fontWeight: 'bold',
                   marginLeft: 14,
-                  marginTop: 12,
+                  marginTop: 25,
+                  marginBottom: 8,
                 }}>
                 AVERAGE
               </Text>
@@ -426,10 +448,12 @@ const HealthStats = () => {
             <View style={{width: '100%'}}>
               <Text
                 style={{
-                  fontSize: 12,
-                  color: Colors.SteelBlue,
+                  fontSize: 14,
+                  color: Colors.Blue,
                   fontWeight: 'bold',
                   marginLeft: 14,
+                  marginTop: 20,
+                  marginBottom: 10,
                 }}>
                 STANDARD DEVIATION
               </Text>
@@ -464,10 +488,12 @@ const HealthStats = () => {
             <View style={{width: '100%'}}>
               <Text
                 style={{
-                  fontSize: 12,
-                  color: Colors.SteelBlue,
+                  fontSize: 14,
+                  color: Colors.Blue,
                   fontWeight: 'bold',
                   marginLeft: 14,
+                  marginTop: 20,
+                  marginBottom: 10,
                 }}>
                 HIGHEST VALUE
               </Text>
@@ -502,10 +528,12 @@ const HealthStats = () => {
             <View style={{width: '100%'}}>
               <Text
                 style={{
-                  fontSize: 12,
-                  color: Colors.SteelBlue,
+                  fontSize: 14,
+                  color: Colors.Blue,
                   fontWeight: 'bold',
                   marginLeft: 14,
+                  marginTop: 20,
+                  marginBottom: 10,
                 }}>
                 LOWEST VALUE
               </Text>
@@ -517,6 +545,7 @@ const HealthStats = () => {
                     justifyContent: 'space-between',
                     paddingVertical: 15,
                     paddingHorizontal: 16,
+                    marginBottom: 30,
                   },
                 ]}>
                 <Text style={{color: Colors.Blue}}>Heart Rate</Text>
