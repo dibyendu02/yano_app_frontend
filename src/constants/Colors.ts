@@ -17,4 +17,5 @@ export const Colors = {
   LightBlack: '#617987',
   LighterGreen: '#76BC2161',
   lightBlue: '#ECF9FD',
+  BlueGrey: '#E5E9EB',
 };

@@ -1,93 +1,82 @@
-import React, {useRef, useState} from 'react';
-import {FlatList, SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import React, {FC, useState, useEffect} from 'react';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Colors} from '../../../../../constants/Colors';
 
-const StripCodeScroll = ({
-  setCode,
-}: {
+interface StripCodeScrollProps {
   setCode: React.Dispatch<React.SetStateAction<string>>;
-}) => {
-  const flatListRef = useRef<FlatList<string>>(null);
-  const data = Array.from({length: 50}, (_, index) => `C${index + 1}`);
+}
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+const StripCodeScroll: FC<StripCodeScrollProps> = ({setCode}) => {
+  const [middleItem, setMiddleItem] = useState('C20'); // Default value to avoid null issues
 
-  const handleScroll = (event: any) => {
-    const contentOffsetY = event.nativeEvent.contentOffset.y;
-    const _selectedIndex = Math.floor(contentOffsetY / 40); // Assuming each item has a height of 40
-    setSelectedIndex(_selectedIndex);
-    setCode(data[_selectedIndex]);
+  const handleViewableItemsChanged = ({viewableItems}: any) => {
+    if (viewableItems && viewableItems.length > 0) {
+      const middleIndex = Math.floor(viewableItems.length / 2);
+      const newMiddleItem = viewableItems[middleIndex]?.item || 'C20'; // Fallback to 'C20' if undefined
+      setMiddleItem(newMiddleItem);
+      setCode(newMiddleItem);
+    }
   };
 
+  const viewabilityConfig = {
+    itemVisiblePercentThreshold: 100, // Item is considered visible if it is 100% visible
+  };
+
+  const data = Array.from({length: 50}, (_, i) => `C${i + 14}`);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.scrollContainer}>
-        <FlatList
-          ref={flatListRef}
-          data={data}
-          renderItem={({item, index}) => (
-            <View style={styles.itemContainer}>
-              <Text
-                style={[
-                  styles.itemText,
-                  {
-                    opacity:
-                      index === selectedIndex
-                        ? 1
-                        : Math.abs(selectedIndex - index) === 1
-                        ? 0.6
-                        : 0.5,
-                    fontSize:
-                      index === selectedIndex
-                        ? 24
-                        : Math.abs(selectedIndex - index) === 1
-                        ? 20
-                        : 16,
-                    fontWeight: index === selectedIndex ? 'bold' : 'normal',
-                  },
-                ]}>
-                {item}
-              </Text>
-            </View>
-          )}
-          keyExtractor={item => item}
-          getItemLayout={(data, index) => ({
-            length: 40,
-            offset: 40 * index,
-            index,
-          })}
-          onScroll={handleScroll}
-          initialScrollIndex={0} // Start with item 0 in the middle
-          showsVerticalScrollIndicator={false}
-        />
-      </View>
-    </SafeAreaView>
+    <View style={styles.container}>
+      <FlatList
+        data={data}
+        contentContainerStyle={{alignItems: 'center'}}
+        style={{width: '100%'}}
+        showsVerticalScrollIndicator={false}
+        snapToInterval={40}
+        decelerationRate="fast"
+        bounces={false}
+        onViewableItemsChanged={handleViewableItemsChanged}
+        viewabilityConfig={viewabilityConfig}
+        renderItem={({item}) => (
+          <View style={styles.itemContainer}>
+            <Text
+              style={[
+                styles.itemText,
+                item === middleItem && styles.selectedText,
+              ]}>
+              {item}
+            </Text>
+          </View>
+        )}
+        keyExtractor={item => item}
+      />
+    </View>
   );
 };
 
-export default StripCodeScroll;
-
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    backgroundColor: Colors.GhostWhite,
-    width: 80,
-    height: 250,
+    height: 200,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
-    marginBottom: 30,
-  },
-  scrollContainer: {
-    height: 200,
+    backgroundColor: Colors.BlueGrey,
+    paddingHorizontal: 25,
+    borderRadius: 20,
   },
   itemContainer: {
-    width: '100%',
-    alignItems: 'center',
+    height: 40,
     justifyContent: 'center',
-    paddingVertical: 10,
+    alignItems: 'center',
+    width: '100%',
   },
   itemText: {
+    fontSize: 18,
+    color: Colors.Grey,
+  },
+  selectedText: {
+    fontSize: 24,
     color: Colors.Blue,
+    fontWeight: 'bold',
   },
 });
+
+export default StripCodeScroll;

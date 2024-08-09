@@ -1,14 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../../../components/header/Header';
-import { Colors } from '../../../../../constants/Colors';
+import {Colors} from '../../../../../constants/Colors';
 import FilledButton from '../../../../../components/buttons/FilledButton';
 import Card from '../../../../../components/cards/Card';
 import CustomRadioButton from '../../../../../components/formComp/CustomRadio';
 import RadioButton from '../components/RadioButton';
 
-const BloodGlucoseTestTime = ({ navigation }: any) => {
+const BloodGlucoseTestTime = ({navigation}: any) => {
   const [time, setTime] = useState('before-breakfast');
   return (
     <SafeAreaView
@@ -17,7 +17,7 @@ const BloodGlucoseTestTime = ({ navigation }: any) => {
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title={'Blood Glucose'} />
+      <Header title={'Blood glucose'} />
 
       {/* <Card title="Please choose the measurement time, then press the next button."> */}
       <View
@@ -42,35 +42,35 @@ const BloodGlucoseTestTime = ({ navigation }: any) => {
           selectedValue={time}
           onValueChange={setTime}
         />
-        <View style={{ width: '100%', height: 1, backgroundColor: '#E9E9E9' }} />
+        <View style={{width: '100%', height: 1, backgroundColor: '#E9E9E9'}} />
         <RadioButton
           label="After Breakfast"
           value="after-breakfast"
           selectedValue={time}
           onValueChange={setTime}
         />
-        <View style={{ width: '100%', height: 1, backgroundColor: '#E9E9E9' }} />
+        <View style={{width: '100%', height: 1, backgroundColor: '#E9E9E9'}} />
         <RadioButton
           label="Before Lunch"
           value="before-lunch"
           selectedValue={time}
           onValueChange={setTime}
         />
-        <View style={{ width: '100%', height: 1, backgroundColor: '#E9E9E9' }} />
+        <View style={{width: '100%', height: 1, backgroundColor: '#E9E9E9'}} />
         <RadioButton
           label="After Lunch"
           value="after-lunch"
           selectedValue={time}
           onValueChange={setTime}
         />
-        <View style={{ width: '100%', height: 1, backgroundColor: '#E9E9E9' }} />
+        <View style={{width: '100%', height: 1, backgroundColor: '#E9E9E9'}} />
         <RadioButton
           label="Before Dinner"
           value="before-dinner"
           selectedValue={time}
           onValueChange={setTime}
         />
-        <View style={{ width: '100%', height: 2, backgroundColor: '#E9E9E9' }} />
+        <View style={{width: '100%', height: 2, backgroundColor: '#E9E9E9'}} />
         <RadioButton
           label="After Dinner"
           value="after-dinner"
@@ -85,7 +85,7 @@ const BloodGlucoseTestTime = ({ navigation }: any) => {
           // icon={
           // }
           type={'lightGrey'}
-          style={{ width: '48%', alignSelf: 'center', marginVertical: 14 }}
+          style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.goBack()}
           activeOpacity={0.8}
         />
@@ -94,7 +94,7 @@ const BloodGlucoseTestTime = ({ navigation }: any) => {
           // icon={
           // }
           type={'blue'}
-          style={{ width: '48%', alignSelf: 'center', marginVertical: 14 }}
+          style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.navigate('BloodGlucoseSelectStrip')}
           activeOpacity={0.8}
         />

@@ -43,10 +43,13 @@ const AuthChooseDevice = () => {
       <ScrollView>
         <View style={{padding: 20}}>
           <PatientElements
-            name="Monitor Multiparámetros Yano"
+            name="Yano Multi-Parameter Monitor"
             onPress={() => navigate(AuthScreen.DeviceInfo)}
             element={
-              <Image source={DummyImage.device} width={30} height={30} />
+              <Image
+                source={DummyImage.largeDevice}
+                style={{width: 50, height: 50}}
+              />
             }
             color=""
           />
@@ -54,7 +57,10 @@ const AuthChooseDevice = () => {
             name="Medidor continuo de glucosa"
             onPress={() => navigate('AuthDeviceInfo')}
             element={
-              <Image source={DummyImage.glucoround} width={30} height={30} />
+              <Image
+                source={DummyImage.glucoround}
+                style={{width: 50, height: 50}}
+              />
             }
             color=""
           />
@@ -62,7 +68,10 @@ const AuthChooseDevice = () => {
             name="Glucómetro"
             onPress={() => navigate('AuthDeviceInfo')}
             element={
-              <Image source={DummyImage.glucometer} width={30} height={30} />
+              <Image
+                source={DummyImage.glucometer}
+                style={{width: 50, height: 50}}
+              />
             }
             color=""
           />
@@ -97,7 +106,7 @@ const styles = StyleSheet.create({
   },
   skipButton: {
     borderWidth: 1,
-    borderColor: 'black',
+    borderColor: Colors.Blue,
     borderRadius: 8,
     fontSize: 14,
     color: '#00263E',

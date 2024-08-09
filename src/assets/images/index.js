@@ -37,4 +37,6 @@ export const StaticImage = {
   ClockIcon: require('./clock.png'),
   FilterIcon: require('./filter.png'),
   SharerIcon: require('./share.png'),
+  SettingsIcon: require('./settings.png'),
+  HeartIcon: require('./heart.png'),
 };

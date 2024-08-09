@@ -86,11 +86,11 @@ const CommonMeasurementScreen: FC<props> = ({
               <View
                 style={{
                   alignItems: 'center',
-                  paddingVertical: 20,
+                  paddingVertical: 0,
                   paddingBottom: 40,
                 }}>
                 <Image
-                  style={{width: 264, height: 368}}
+                  style={{width: 300, height: 400, marginBottom: 20}}
                   source={help[index].img}
                 />
 
@@ -104,6 +104,7 @@ const CommonMeasurementScreen: FC<props> = ({
                       fontWeight: 'bold',
                       fontFamily: 'Roboto',
                       color: Colors.Blue,
+                      marginHorizontal: 40,
                     }}>
                     {help[index].text}
                   </Text>
@@ -181,6 +182,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     // paddingHorizontal: 10,
-    paddingVertical: 20,
+    // paddingVertical: 20,
+    paddingBottom: 10,
   },
 });

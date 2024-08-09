@@ -24,7 +24,7 @@ const AccountVerification = () => {
   //@ts-ignore
   const userType = route?.params?.userType;
   const mode = route.params?.mode;
-  const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  const [selectedKey, setSelectedKey] = useState<string | null>('Email');
   const {control, ...methods} = useForm();
   const {login, isPatient} = useContext(UserContext);
 
@@ -50,6 +50,15 @@ const AccountVerification = () => {
     if (code && code.length === 6) {
       verifyCode(code);
     }
+
+    // if (userType == 'Patient') {
+    //   setTimeout(() => {
+    //     navigate(AuthScreen.Welcome);
+    //   }, 1000);
+    // } else {
+    //   login();
+    //   navigate('tabs');
+    // }
   }, [code]);
 
   const verifyCode = async (_code: string) => {

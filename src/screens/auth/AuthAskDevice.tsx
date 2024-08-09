@@ -32,7 +32,7 @@ const AuthAskDevice = ({ navigation }: any) => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate(AuthScreen.LoadingScreen);
+                setIsClicked(true);
               }}>
               <Text style={styles.skipButton}>Skip</Text>
             </TouchableOpacity>
@@ -50,13 +50,13 @@ const AuthAskDevice = ({ navigation }: any) => {
             }}>
             <Image
               source={StaticImage.DeviceStart}
-              width={250}
-              height={250}
+              // width={300}
+              // height={400}
               style={{
                 alignSelf: 'center',
                 marginBottom: 20,
-                width: 150,
-                height: 150,
+                width: '70%',
+                height: 280,
               }}
             />
             <Text
@@ -69,30 +69,37 @@ const AuthAskDevice = ({ navigation }: any) => {
               }}>
               Do you have one of our devices?
             </Text>
-            <View style={{
-              width: '100%',
-              paddingHorizontal: 20
-            }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  color: Colors.SteelBlue,
-                  textAlign: 'center',
-                }}>
-                Use our app to connect your Yano device and start taking control
-                of your health.
-              </Text>
-            </View>
+            <Text
+              style={{
+                fontSize: 16,
+                color: Colors.SteelBlue,
+                textAlign: 'center',
+              }}>
+              Use our app to connect your Yano device and start taking control
+              of your health.
+            </Text>
           </View>
         </View>
       </ScrollView>
       <View style={styles.addBtn}>
         <FilledButton
-          label="Connect this device"
+          label="Connect device"
           type="blue"
           onPress={() => navigation.navigate(AuthScreen.ChooseDevice)}
         />
       </View>
+      {isClicked && (
+        <View style={styles.afterBtnClick}>
+          <Card
+            title={'The device has not been connected yet'}
+            children={
+              'Are you sure you want to exit the device pairing process?'
+            }
+            active={setIsClicked}
+            action={loginAction}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -118,5 +125,16 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 15,
     marginRight: 15,
+  },
+  afterBtnClick: {
+    // backgroundColor: Colors.LightBlack,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    zIndex: 1,
+    flex: 1,
+    alignItems: 'center',
+    padding: 20,
   },
 });

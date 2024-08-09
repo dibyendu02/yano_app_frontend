@@ -120,6 +120,14 @@ const PatientTabs = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors.LightGreen,
         tabBarInactiveTintColor: Colors.Grey,
+        tabBarStyle: {height: 60, paddingBottom: 8},
+        tabBarLabelStyle: {
+          marginTop: -5, // Move the label closer to the icon
+          fontSize: 12, // Adjust the font size as needed
+        },
+        tabBarIconStyle: {
+          marginBottom: -5, // Move the icon closer to the label
+        },
       }}>
       <Tab.Screen
         name="MyHealth"
@@ -157,6 +165,14 @@ const ProviderTabs = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors.LightGreen,
         tabBarInactiveTintColor: Colors.Grey,
+        tabBarStyle: {height: 60, paddingBottom: 8},
+        tabBarLabelStyle: {
+          marginTop: -5, // Move the label closer to the icon
+          fontSize: 12, // Adjust the font size as needed
+        },
+        tabBarIconStyle: {
+          marginBottom: -5, // Move the icon closer to the label
+        },
       }}>
       <Tab.Screen
         name="Monitoring"

@@ -3,6 +3,7 @@ import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import Icons from '../assets/icon/Icon';
+import {Colors} from '../constants/Colors';
 
 type PatientElementsProps = {
   name: string;
@@ -31,10 +32,12 @@ const PatientElements: React.FC<PatientElementsProps> = ({
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={[styles.container, {...customStyle}]}>
-        {IconComponent && <IconComponent name={icon!} size={25} color={color} />}
+        {IconComponent && (
+          <IconComponent name={icon!} size={25} color={color} />
+        )}
         {element}
         <Text style={styles.name}>{name}</Text>
-        <MaterialIcons name="navigate-next" size={25} color={'black'} />
+        <MaterialIcons name="navigate-next" size={25} color={Colors.Blue} />
       </View>
     </TouchableOpacity>
   );
