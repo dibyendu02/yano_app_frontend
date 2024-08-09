@@ -145,8 +145,10 @@ const FormPhoneNumberInput: FC<FormPhoneNumberInputProps> = ({
                             style={{
                               height: 30,
                               width: 30,
-                              aspectRatio: '16/9',
+                              // aspectRatio: '16/9',
                               marginHorizontal: 10,
+                              borderRadius: 30,
+                              objectFit: 'cover',
                             }}
                           />
                           <Text
@@ -183,6 +185,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.Blue,
     width: '80%',
+    fontSize: 16,
   },
   errorInput: {
     borderColor: Colors.Red,

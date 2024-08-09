@@ -1,5 +1,3 @@
-/* eslint-disable react/self-closing-comp */
-/* eslint-disable react-native/no-inline-styles */
 import React, {FC, useState} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import {Controller, FieldError, useFormContext} from 'react-hook-form';
@@ -25,20 +23,17 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
   optionsListLabel,
   optionsListHeight = 300,
 }) => {
-  let lastValue: any;
   const {control, setValue} = useFormContext();
   const [showOptionsModal, setShowOptionsModal] = useState(false);
-  const handleOptionValueSelection = (value: string) => {
-    setValue(name, value);
-  };
-
-  const [middleItem, setMiddleItem] = useState(0);
-  const [middleDecimalItem, setMiddleDecimalItem] = useState(0);
+  const [middleItem, setMiddleItem] = useState<number | string>(0);
+  const [middleDecimalItem, setMiddleDecimalItem] = useState<number | string>(
+    0,
+  );
 
   const handleViewableItemsChanged = ({viewableItems}) => {
     if (viewableItems.length > 0) {
       const middleIndex = Math.floor(viewableItems.length / 2);
-      setMiddleItem(viewableItems[middleIndex].item);
+      setMiddleItem(Number(viewableItems[middleIndex].item));
     }
   };
 
@@ -54,27 +49,25 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
   };
 
   const data = [];
-  const decimalData = [null, null];
+  const decimalData = [];
+  let unit = '';
+
   if (name === 'weight') {
     for (let i = 10; i <= 120; i++) {
       data.push(`${i}`);
     }
     for (let i = 0; i <= 9; i++) {
-      decimalData.push(`.${i}`);
+      decimalData.push(`${i}`);
     }
-    for (let i = 10; i <= 11; i++) {
-      decimalData.push(null);
-    }
+    unit = 'kg';
   } else if (name === 'height') {
     for (let i = 80; i <= 200; i++) {
       data.push(`${i}`);
     }
     for (let i = 0; i <= 9; i++) {
-      decimalData.push(`.${i}`);
+      decimalData.push(`${i}`);
     }
-    for (let i = 10; i <= 11; i++) {
-      decimalData.push(null);
-    }
+    unit = 'cm';
   }
 
   return (
@@ -120,9 +113,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
             {showOptionsModal && (
               <BottomSheet
                 isVisible={showOptionsModal}
-                onBackdropPress={() => {
-                  setShowOptionsModal(false);
-                }}>
+                onBackdropPress={() => setShowOptionsModal(false)}>
                 <View style={{alignItems: 'center', width: '100%'}}>
                   {optionsListLabel && (
                     <View
@@ -271,22 +262,15 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                                       ? 16
                                       : 12,
                                 }}>
-                                {item}
+                                {`.${item}`}
                               </Text>
                             </View>
                           )
                         }
                       />
-                      {name === 'weight' && (
-                        <View style={styles.unitLabel}>
-                          <Text style={styles.unitText}>kg</Text>
-                        </View>
-                      )}
-                      {name === 'height' && (
-                        <View style={styles.unitLabel}>
-                          <Text style={styles.unitText}>cm</Text>
-                        </View>
-                      )}
+                      <View style={styles.unitLabel}>
+                        <Text style={styles.unitText}>{unit}</Text>
+                      </View>
                     </View>
                   </View>
                   <View
@@ -302,7 +286,6 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                       type="lightGrey"
                       style={styles.bottomSheetBtn}
                       onPress={() => {
-                        setValue(name, lastValue);
                         setShowOptionsModal(false);
                       }}
                     />
@@ -311,7 +294,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                       type="blue"
                       style={styles.bottomSheetBtn}
                       onPress={() => {
-                        const selectedValue = `${middleItem}.${middleDecimalItem}`;
+                        const selectedValue = `${middleItem}.${middleDecimalItem} ${unit}`;
                         setValue(name, selectedValue);
                         setShowOptionsModal(false);
                       }}
