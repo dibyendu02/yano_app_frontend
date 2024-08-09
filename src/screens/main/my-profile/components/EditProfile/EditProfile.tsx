@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable react-native/no-inline-styles */
+import React, { useEffect } from 'react';
 import {
     View,
     Text,
@@ -9,8 +8,9 @@ import {
     ScrollView,
     KeyboardAvoidingView,
     Platform,
+    ToastAndroid,
+    Alert,
 } from 'react-native';
-import React from 'react';
 import Header from '../../../../../components/header/Header';
 import { navigate } from '../../../../../navigation/RootNavigation';
 import { Colors } from '../../../../../constants/Colors';
@@ -20,7 +20,6 @@ import FormInput from '../../../../../components/hook-form/FormInput';
 import { FormInputType } from '../../../../../components/hook-form/types';
 import FormDateInput from '../../../../../components/hook-form/FormDateInput';
 import FormSelectionInput from '../../../../../components/hook-form/FormSelectionInput';
-import FilledButton from '../../../../../components/buttons/FilledButton';
 import FormPhoneNumberInput from '../../../../../components/hook-form/FormPhoneNumberInput';
 import FormImageInput from '../../../../../components/hook-form/FormImageInput';
 import { AuthScreensProps } from '../../../../../navigation/auth/types';
@@ -30,66 +29,18 @@ import { registerDoctor, registerPatient } from '../../../../../services/Endpoin
 import Gender from './Gender';
 
 const DoctorSpecialties = [
-    {
-        id: 'Cardiologist',
-        label: 'Cardiologist',
-        enabled: true,
-    },
-    {
-        id: 'Dermatologist',
-        label: 'Dermatologist',
-        enabled: true,
-    },
-    {
-        id: 'Neurologist',
-        label: 'Neurologist',
-        enabled: true,
-    },
-    {
-        id: 'Pediatrician',
-        label: 'Pediatrician',
-        enabled: true,
-    },
-    {
-        id: 'GeneralSurgeon',
-        label: 'General Surgeon',
-        enabled: true,
-    },
-    {
-        id: 'OrthopedicSurgeon',
-        label: 'Orthopedic Surgeon',
-        enabled: true,
-    },
-    {
-        id: 'Gynecologist',
-        label: 'Gynecologist',
-        enabled: true,
-    },
-    {
-        id: 'Ophthalmologist',
-        label: 'Ophthalmologist',
-        enabled: true,
-    },
-    {
-        id: 'Psychiatrist',
-        label: 'Psychiatrist',
-        enabled: true,
-    },
-    {
-        id: 'Radiologist',
-        label: 'Radiologist',
-        enabled: true,
-    },
-    {
-        id: 'Urologist',
-        label: 'Urologist',
-        enabled: true,
-    },
-    {
-        id: 'Endocrinologist',
-        label: 'Endocrinologist',
-        enabled: true,
-    },
+    { id: 'Cardiologist', label: 'Cardiologist', enabled: true },
+    { id: 'Dermatologist', label: 'Dermatologist', enabled: true },
+    { id: 'Neurologist', label: 'Neurologist', enabled: true },
+    { id: 'Pediatrician', label: 'Pediatrician', enabled: true },
+    { id: 'GeneralSurgeon', label: 'General Surgeon', enabled: true },
+    { id: 'OrthopedicSurgeon', label: 'Orthopedic Surgeon', enabled: true },
+    { id: 'Gynecologist', label: 'Gynecologist', enabled: true },
+    { id: 'Ophthalmologist', label: 'Ophthalmologist', enabled: true },
+    { id: 'Psychiatrist', label: 'Psychiatrist', enabled: true },
+    { id: 'Radiologist', label: 'Radiologist', enabled: true },
+    { id: 'Urologist', label: 'Urologist', enabled: true },
+    { id: 'Endocrinologist', label: 'Endocrinologist', enabled: true },
 ];
 
 const EditProfile: React.FC<AuthScreensProps> = ({ route }) => {
@@ -97,20 +48,48 @@ const EditProfile: React.FC<AuthScreensProps> = ({ route }) => {
     //@ts-ignore
     const userType = route?.params?.userType;
 
-    console.log(userType);
+    // Prefilled dummy data
+    const initialData = {
+        firstName: 'Eduardo',
+        lastName: 'Anzola',
+        email: 'dr.eduardo_anzola@gmail.com',
+        phoneNumber: '+36734567890',
+        dateOfBirth: '1981-017-06',
+        gender: 'Male',
+        specialty: 'General medicine',
+    };
 
     const { ...methods } = useForm({
         mode: 'onChange',
+        defaultValues: initialData,
     });
+
+    useEffect(() => {
+        const subscription = methods.watch((value) => {
+            // Check if the form data has changed from the initial values
+            const isFormChanged = JSON.stringify(value) !== JSON.stringify(initialData);
+            setIsDisabled(!isFormChanged);
+        });
+        return () => subscription.unsubscribe();
+    }, [methods.watch]);
+
+    const showToast = (message) => {
+        if (Platform.OS === 'android') {
+            ToastAndroid.showWithGravity(
+                message,
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+            );
+        } else {
+            Alert.alert("Notification", message);
+        }
+    };
 
     const onSubmit = async (data: any) => {
         let requestData = new FormData();
         if (data?.file) {
             requestData.append('image', {
-                uri:
-                    Platform.OS === 'ios'
-                        ? `file:///${data?.file?.path}`
-                        : data?.file.path,
+                uri: Platform.OS === 'ios' ? `file:///${data?.file?.path}` : data?.file.path,
                 type: data?.file?.mime,
                 name: `${moment()}.jpeg`,
             });
@@ -131,20 +110,19 @@ const EditProfile: React.FC<AuthScreensProps> = ({ route }) => {
             requestData.append(key, payload[key]);
         }
 
-        if (userType === UserType.Patient) {
-            registerPatient(requestData)
-                .then(res => {
-                    console.log(res, '<--------->');
-                })
-                .catch(e => console.log('Error!', e?.response?.data?.message));
-        } else {
-            registerDoctor(requestData)
-                .then(res => {
-                    console.log(res, '<--------->');
-                })
-                .catch(e => console.log('Error!', e?.response?.data?.message));
+        try {
+            if (userType === UserType.Patient) {
+                await registerPatient(requestData);
+            } else {
+                await registerDoctor(requestData);
+            }
+
+            showToast("The changes have been saved.");
+            navigate(AuthScreen.AccountVerification);
+        } catch (e) {
+            console.log('Error!', e?.response?.data?.message);
+            showToast("An error occurred while saving.");
         }
-        navigate(AuthScreen.AccountVerification);
     };
 
     return (
@@ -159,12 +137,11 @@ const EditProfile: React.FC<AuthScreensProps> = ({ route }) => {
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <TouchableOpacity
                                     disabled={isDisabled}
-                                    onPress={() => navigate('Profile')}>
-                                    {
-                                        isDisabled ?
-                                            <Text style={styles.loginButton}>Save</Text> :
-                                            <Text style={styles.loginButtonDisabled}>Save</Text>
-                                    }
+                                    onPress={isDisabled ? null : methods.handleSubmit(onSubmit)}
+                                >
+                                    <Text style={isDisabled ? styles.loginButtonDisabled : styles.loginButton}>
+                                        Save
+                                    </Text>
                                 </TouchableOpacity>
                             </View>
                         }
@@ -176,7 +153,6 @@ const EditProfile: React.FC<AuthScreensProps> = ({ route }) => {
                                 <FormInput
                                     name="firstName"
                                     label="Name"
-                                    // placeholder="Enter your first name"
                                     rules={{
                                         required: {
                                             value: true,
@@ -187,7 +163,6 @@ const EditProfile: React.FC<AuthScreensProps> = ({ route }) => {
                                 <FormInput
                                     name="lastName"
                                     label="Last Name"
-                                    // placeholder="Enter your last name"
                                     rules={{
                                         required: {
                                             value: true,
@@ -199,7 +174,6 @@ const EditProfile: React.FC<AuthScreensProps> = ({ route }) => {
                                     name="email"
                                     label="Email"
                                     type={FormInputType.Email}
-                                    // placeholder="Enter your email"
                                     autoCapitalize="none"
                                     keyboardType="email-address"
                                     rules={{
@@ -212,20 +186,17 @@ const EditProfile: React.FC<AuthScreensProps> = ({ route }) => {
                                 <FormPhoneNumberInput
                                     name="phoneNumber"
                                     label="Phone number"
+                                    defaultValue={initialData.phoneNumber}
                                     rules={{
                                         required: {
                                             value: true,
                                             message: 'Please enter your phone number',
                                         },
+                                        pattern: {
+                                            value: /^\+\d{10,14}$/,
+                                            message: 'Enter valid mobile number!',
+                                        },
                                     }}
-                                />
-                                <Controller
-                                    name="gender"
-                                    control={methods.control}
-                                    defaultValue="1"
-                                    render={({ field: { onChange, value } }) => (
-                                        <Gender selectedRole={value} setSelectedRole={onChange} />
-                                    )}
                                 />
                                 <FormDateInput
                                     name="dateOfBirth"
@@ -238,6 +209,14 @@ const EditProfile: React.FC<AuthScreensProps> = ({ route }) => {
                                             message: 'Please select your DOB',
                                         },
                                     }}
+                                />
+                                <Controller
+                                    name="gender"
+                                    control={methods.control}
+                                    defaultValue="Male"
+                                    render={({ field: { onChange, value } }) => (
+                                        <Gender selectedRole={value} setSelectedRole={onChange} />
+                                    )}
                                 />
                                 <FormSelectionInput
                                     name="specialty"
@@ -258,31 +237,6 @@ const EditProfile: React.FC<AuthScreensProps> = ({ route }) => {
                     </View>
                 </View>
             </KeyboardAvoidingView>
-            <Text
-                style={{
-                    width: '92%',
-                    marginHorizontal: 'auto',
-                    textAlign: 'center',
-                    paddingTop: 10,
-                    color: '#3D5A6C',
-                }}>
-                When registering you are accepting our{' '}
-                <Text style={{ color: Colors.Blue, textDecorationLine: 'underline' }}>
-                    Terms and conditions
-                </Text>{' '}
-                and
-                <Text style={{ color: Colors.Blue, textDecorationLine: 'underline' }}>
-                    {' '}
-                    Privacy policies
-                </Text>
-            </Text>
-            <FilledButton
-                label="Continue"
-                type="blue"
-                style={{ width: '92%', alignSelf: 'center', marginVertical: 10 }}
-                // disabled={!methods.formState.isDirty}
-                onPress={methods.handleSubmit(onSubmit)}
-            />
         </SafeAreaView>
     );
 };
@@ -297,7 +251,7 @@ const styles = StyleSheet.create({
     },
     loginButton: {
         borderWidth: 1,
-        borderColor: Colors.White,
+        borderColor: Colors.Blue,
         backgroundColor: Colors.Blue,
         borderRadius: 8,
         color: Colors.White,
@@ -307,6 +261,7 @@ const styles = StyleSheet.create({
     },
     loginButtonDisabled: {
         borderWidth: 1,
+        borderColor: Colors.Grey,
         backgroundColor: Colors.Grey,
         borderRadius: 8,
         color: Colors.White,
