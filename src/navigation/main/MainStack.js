@@ -109,6 +109,8 @@ import SupportChat from '../../screens/main/my-profile/support/SupportChat';
 import EditProfile from '../../screens/main/my-profile/components/EditProfile/EditProfile';
 import CreatePatientAccount from '../../screens/main/add-patient/CreatePatientAccount';
 import PatientMonitoringMeasurements from '../../screens/main/monitoring/patient-monitoring/PatientMonitoringMeasurements';
+import TransitionScreen from '../../screens/main/TransitionScreen';
+import MonitoredProfile from '../../screens/main/add-patient/MonitoredProfile';
 
 const Tab = createBottomTabNavigator();
 
@@ -823,6 +825,16 @@ const MainStack = () => {
       <Stack.Screen
         name="PatientHealthParameters"
         component={PatientMonitoringMeasurements}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="TransitionScreen"
+        component={TransitionScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="MonitoredProfile"
+        component={MonitoredProfile}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
