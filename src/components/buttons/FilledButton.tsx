@@ -16,6 +16,7 @@ export enum ButtonType {
   White = 'white',
   LightGrey = 'lightGrey',
   Green = 'green',
+  BlueGrey = 'blueGrey',
 }
 
 const ButtonColors = {
@@ -43,6 +44,12 @@ const ButtonColors = {
     borderColor: Colors.Transparent,
     borderWidth: 0,
   },
+  [ButtonType.BlueGrey]: {
+    backgroundColor: Colors.BlueGrey,
+    textColor: Colors.Blue,
+    borderColor: Colors.Transparent,
+    borderWidth: 0,
+  },
   [ButtonType.Green]: {
     backgroundColor: Colors.Green,
     textColor: Colors.White,
@@ -51,7 +58,7 @@ const ButtonColors = {
   },
 };
 interface ButtonProps {
-  type: 'blue' | 'red' | 'white' | 'lightGrey' | 'green';
+  type: 'blue' | 'red' | 'white' | 'lightGrey' | 'blueGrey' | 'green';
   label?: string;
   icon?: React.ReactNode;
   onPress?: (event: GestureResponderEvent) => void;

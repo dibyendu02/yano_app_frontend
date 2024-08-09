@@ -49,7 +49,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
   };
 
   const data = [];
-  const decimalData = [];
+  const decimalData = [8, 9];
   let unit = '';
 
   if (name === 'weight') {
@@ -138,7 +138,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                   <View
                     style={{
                       height: 250,
-                      width: '50%',
+                      width: '55%',
                       paddingHorizontal: 20,
                       justifyContent: 'center',
                       alignItems: 'center',
@@ -177,10 +177,11 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                               width: '100%',
                               justifyContent: 'center',
                               alignItems: 'center',
-                              backgroundColor: Colors.LightGray,
+                              backgroundColor: Colors.BlueGrey,
                               marginVertical: item - middleItem === 0 ? 1 : 0,
-                              borderTopWidth: item === middleItem ? 1 : 0,
-                              borderBottomWidth: item === middleItem ? 1 : 0,
+                              // borderTopWidth: item - middleItem === 0 ? 1 : 0,
+                              // borderBottomWidth:
+                              //   item - middleItem === 0 ? 1 : 0,
                               borderColor: '#D8D7D9',
                             }}
                             key={item}>
@@ -196,7 +197,8 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                                 fontWeight: 'bold',
                                 fontFamily: 'Roboto',
                                 fontSize:
-                                  item === middleItem
+                                  // item === middleItem
+                                  item - middleItem === 0
                                     ? 22
                                     : item - middleItem === 1 ||
                                       item - middleItem === -1
@@ -212,7 +214,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                         data={decimalData}
                         contentContainerStyle={{width: '100%'}}
                         style={{
-                          backgroundColor: Colors.Grey,
+                          backgroundColor: Colors.BlueGrey,
                           width: '50%',
                           borderTopRightRadius: 25,
                           borderBottomRightRadius: 25,
@@ -233,7 +235,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                                 width: '100%',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                backgroundColor: Colors.LightGray,
+                                backgroundColor: Colors.BlueGrey,
                                 marginVertical:
                                   item - middleDecimalItem === 0 ? 1 : 0,
                                 borderTopWidth:
@@ -283,7 +285,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                     }}>
                     <FilledButton
                       label="Cancel"
-                      type="lightGrey"
+                      type="blueGrey"
                       style={styles.bottomSheetBtn}
                       onPress={() => {
                         setShowOptionsModal(false);
@@ -359,7 +361,7 @@ const styles = StyleSheet.create({
   unitLabel: {
     position: 'absolute',
     top: '50%',
-    transform: [{translateY: -5}, {translateX: 65}],
+    transform: [{translateY: -5}, {translateX: 70}],
   },
   unitText: {
     fontSize: 18,
