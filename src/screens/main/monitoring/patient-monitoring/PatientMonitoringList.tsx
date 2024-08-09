@@ -8,13 +8,13 @@ import {
 } from 'react-native';
 import React from 'react';
 import Header from '../../../../components/header/Header';
-import {Colors} from '../../../../constants/Colors';
-import {patientList} from '../../../../test/Data';
+import { Colors } from '../../../../constants/Colors';
+import { patientList } from '../../../../test/Data';
 import PatientListItem from '../components/PatientListItem';
 import Card from '../../../../components/cards/Card';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import Icons from '../../../../assets/icon/Icon';
-import {navigate} from '../../../../navigation/RootNavigation';
+import { navigate } from '../../../../navigation/RootNavigation';
 
 const PatientMonitoringList = () => {
   return (
@@ -28,7 +28,7 @@ const PatientMonitoringList = () => {
               name="notifications"
               size={25}
               color={Colors.Blue}
-              style={{width: 40}}
+              style={{ width: 40 }}
             />
           </TouchableOpacity>
         }
@@ -38,7 +38,7 @@ const PatientMonitoringList = () => {
           <FlatList
             data={patientList}
             showsVerticalScrollIndicator={false}
-            renderItem={({item, index: _index}) => (
+            renderItem={({ item, index: _index }) => (
               <PatientListItem name={item.name} />
             )}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
@@ -81,5 +81,6 @@ const styles = StyleSheet.create({
     bottom: '4%',
     right: '4%',
     width: '40%',
+    borderRadius: 10,
   },
 });

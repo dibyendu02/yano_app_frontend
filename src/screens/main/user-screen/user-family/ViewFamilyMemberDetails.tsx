@@ -10,25 +10,25 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {userData} from '../../../../test/Data';
+import { userData } from '../../../../test/Data';
 import Header from '../../../../components/header/Header';
-import {EditIcon, NotificationIcon} from '../../../../assets/icon/IconNames';
+import { EditIcon, NotificationIcon } from '../../../../assets/icon/IconNames';
 import Card from '../../../../components/cards/Card';
-import {DummyImage} from '../../../../assets/dummy/images';
-import {navigate} from '../../../../navigation/RootNavigation';
-import {Colors} from '../../../../constants/Colors';
+import { DummyImage } from '../../../../assets/dummy/images';
+import { navigate } from '../../../../navigation/RootNavigation';
+import { Colors } from '../../../../constants/Colors';
 import Icons from '../../../../assets/icon/Icon';
-import {CardStyles} from '../../../../components/cards/CardStyle';
+import { CardStyles } from '../../../../components/cards/CardStyle';
 import Badge from '../../../../components/Badge';
 import OutlineButton from '../../../../components/buttons/OutlineButton';
 import SwitchButton from '../../../../components/formComp/SwitchButton';
-import {Switch} from 'react-native-paper';
-import {StaticImage} from '../../../../assets/images';
+import { Switch } from 'react-native-paper';
+import { StaticImage } from '../../../../assets/images';
 
 let data1 = [
   {
@@ -40,14 +40,14 @@ let data1 = [
     icon: (
       <Image
         source={StaticImage.CalenderIcon}
-        style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
+        style={{ height: 20, width: 20, tintColor: Colors.LightGreen }}
       />
     ),
   },
   {
     label: userData.blood,
     icon: (
-      <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
+      <Image source={StaticImage.BloodIcon} style={{ height: 20, width: 20 }} />
     ),
   },
 ];
@@ -140,7 +140,7 @@ export default function ViewFamilyMemberDetails() {
                 name="diversity-3"
                 size={18}
                 color={Colors.Blue}
-                style={{marginRight: 3}}
+                style={{ marginRight: 3 }}
               />
             }
             text="Mother"
@@ -155,7 +155,7 @@ export default function ViewFamilyMemberDetails() {
               paddingHorizontal: 20,
               paddingVertical: 10,
             }}
-            renderItem={({item, index: _i}) => (
+            renderItem={({ item, index: _i }) => (
               <TouchableOpacity
                 onPress={() => navigate(item.path)}
                 style={{
@@ -217,7 +217,12 @@ export default function ViewFamilyMemberDetails() {
         <OutlineButton
           type="red"
           label="Stop monitoring"
-          icon={<FontAwesome5 name="stop" size={15} color={Colors.Red} />}
+          icon={
+            // <FontAwesome5 name="stop" size={15} color={Colors.Red} />
+            <Image source={require('../../../../assets/image/exit_to_app.png')}
+              style={{ height: 20, width: 20, tintColor: Colors.Red }}
+            />
+          }
           onPress={() => console.log('stop monitoring')}
         />
       </View>

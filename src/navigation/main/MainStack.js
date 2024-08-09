@@ -133,7 +133,7 @@ const PatientTabs = () => {
               color={color}
             />
           ),
-          tabBarLabel: 'My Health',
+          tabBarLabel: 'My health',
         }}
       />
       <Tab.Screen
@@ -144,7 +144,7 @@ const PatientTabs = () => {
           tabBarIcon: ({color, size}) => (
             <Icons.FontAwesome5 name="user-circle" size={size} color={color} />
           ),
-          tabBarLabel: 'My Profile',
+          tabBarLabel: 'My profile',
         }}
       />
     </Tab.Navigator>
@@ -159,7 +159,7 @@ const ProviderTabs = () => {
         tabBarInactiveTintColor: Colors.Grey,
       }}>
       <Tab.Screen
-        name="Monitor"
+        name="Monitoring"
         component={PatientMonitoringList}
         options={{
           headerShown: false,

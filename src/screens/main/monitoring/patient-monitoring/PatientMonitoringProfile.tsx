@@ -16,13 +16,13 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PatientElements from '../../../../components/PatientElements';
 import Header from '../../../../components/header/Header';
-import {Colors} from '../../../../constants/Colors';
+import { Colors } from '../../../../constants/Colors';
 import Card from '../../../../components/cards/Card';
-import {DummyImage} from '../../../../assets/dummy/images';
-import {measurements, userData} from '../../../../test/Data';
+import { DummyImage } from '../../../../assets/dummy/images';
+import { measurements, userData } from '../../../../test/Data';
 import Icons from '../../../../assets/icon/Icon';
-import {navigate} from '../../../../navigation/RootNavigation';
-import {StaticImage} from '../../../../assets/images';
+import { navigate } from '../../../../navigation/RootNavigation';
+import { StaticImage } from '../../../../assets/images';
 
 let data1 = [
   {
@@ -36,14 +36,14 @@ let data1 = [
     icon: (
       <Image
         source={StaticImage.CalenderIcon}
-        style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
+        style={{ height: 20, width: 20, tintColor: Colors.LightGreen }}
       />
     ),
   },
   {
     label: userData.blood,
     icon: (
-      <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
+      <Image source={StaticImage.BloodIcon} style={{ height: 20, width: 20 }} />
     ),
   },
 ];
@@ -61,7 +61,7 @@ let data2 = [
   },
 ];
 
-export default function PatientMonitoringProfile({}) {
+export default function PatientMonitoringProfile({ }) {
   return (
     <SafeAreaView style={styles.container}>
       <Header title="Monitored Patient" />
@@ -140,8 +140,8 @@ export default function PatientMonitoringProfile({}) {
                 : []
             }
             scrollEnabled={false}
-            style={{width: '100%'}}
-            renderItem={({item, index}) => (
+            style={{ width: '100%' }}
+            renderItem={({ item, index }) => (
               <View
                 style={{
                   width: '100%',
@@ -150,7 +150,7 @@ export default function PatientMonitoringProfile({}) {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                 }}>
-                <View style={{width: '50%'}}>
+                <View style={{ width: '50%' }}>
                   <Text
                     style={{
                       fontSize: 18,
@@ -215,33 +215,62 @@ export default function PatientMonitoringProfile({}) {
           />
         </Card>
 
-        <Card contentContainerStyle={{marginBottom: 200}}>
-          <View style={{width: '100%'}}>
-            <PatientElements
+        <Card contentContainerStyle={{ marginBottom: 200 }}>
+          <View style={{ width: '100%' }}>
+            <TouchableOpacity onPress={() => navigate('MedicalHistory')}>
+              <View style={styles.container1}>
+                <Image source={require('../../../../assets/image/receipt_long.png')}
+                  style={{ height: 22, width: 22 }}
+                />
+                <Text style={styles.name}>Medical history</Text>
+                <MaterialIcons name="navigate-next" size={25} color={'black'} />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigate('HealthThresholdHomeScreen')}>
+              <View style={styles.container1}>
+                <Image source={require('../../../../assets/image/data_thresholding.png')}
+                  style={{ height: 22, width: 22 }}
+                />
+                <Text style={styles.name}>Health thresholds</Text>
+                <MaterialIcons name="navigate-next" size={25} color={'black'} />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={() => navigate('RemainderScreen')}>
+              <View style={styles.container1}>
+                <Image source={require('../../../../assets/image/notification_add.png')}
+                  style={{ height: 22, width: 22 }}
+                />
+                <Text style={styles.name}>Reminders</Text>
+                <MaterialIcons name="navigate-next" size={25} color={'black'} />
+              </View>
+            </TouchableOpacity>
+            {/* <PatientElements
               name="Medical history"
               icon="file-medical"
               iconsname="FontAwesome5"
               color="#76BC21"
               onPress={() => navigate('MedicalHistory')}
-            />
-            <PatientElements
+            /> */}
+            {/* <PatientElements
               name="Health thresholds"
               icon="history-edu"
               iconsname="MaterialIcons"
               color="#76BC21"
               onPress={() => navigate('HealthThresholdHomeScreen')}
-            />
-            <PatientElements
+            /> */}
+            {/* <PatientElements
               name="Reminders"
               icon="bell-plus"
               iconsname="MaterialCommunityIcons"
               color="#76BC21"
               onPress={() => navigate('RemainderScreen')}
-            />
+            /> */}
           </View>
         </Card>
       </ScrollView>
-      <View style={{paddingBottom: 10}}>
+      <View style={{ paddingBottom: 10 }}>
         <View style={styles.basicDetails}>
           <View style={styles.stopMonitoringButton}>
             <Icons.Ionicons name="exit-outline" size={20} color={'red'} />
@@ -331,5 +360,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'red',
     marginLeft: 5,
+  },
+  container1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 8,
+  },
+  name: {
+    color: '#00263E',
+    fontSize: 18,
+    fontWeight: 'bold',
+    fontFamily: 'Roboto',
+    marginLeft: 15,
+    flex: 1,
   },
 });

@@ -9,14 +9,23 @@ import {
 } from 'react-native';
 import React from 'react';
 import Header from '../../../../components/header/Header';
-import {Colors} from '../../../../constants/Colors';
+import { Colors } from '../../../../constants/Colors';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Adjust the import based on the icon library you use
-import {StaticImage} from '../../../../assets/images';
+import { StaticImage } from '../../../../assets/images';
 
 const SupportChat = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Online support chat" />
+      <Header title="Online support chat"
+        headerRightComponent={
+          <TouchableOpacity>
+            {/* <EditIcon /> */}
+            <Image source={require('../../../../assets/image/tripleDot.png')}
+              style={{ height: 26, width: 24 }}
+            />
+          </TouchableOpacity>
+        }
+      />
       <View style={styles.chatContainer}></View>
       <View style={styles.inputContainer}>
         <TextInput
@@ -32,7 +41,7 @@ const SupportChat = () => {
             {/* <Icon name="camera" size={24} color={Colors.Blue} /> */}
             <Image
               source={StaticImage.CameraIcon}
-              style={{tintColor: '#617987', height: 26, width: 26}}
+              style={{ tintColor: '#617987', height: 26, width: 26 }}
             />
           </TouchableOpacity>
         </View>

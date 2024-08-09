@@ -38,11 +38,11 @@ const AllergyDetails = ({ navigation, route }: any) => {
             <ScrollView>
                 <View style={{ padding: 20 }}>
                     <View style={styles.boxStyle}>
-                        <DetailItems name='Name of the health condition' value={name} />
-                        <DetailItems name='Details of allergy' value={details} />
-                        <DetailItems name='More details' value={moreDetails} />
-                        <DetailItems name='Treated by' value={treatedBy} />
-                        <DetailItems name='Date of diagnosis' value={date} />
+                        <DetailItems name='Allergy name' value={name} />
+                        <DetailItems name='Triggered by' value={details} />
+                        <DetailItems name='Reaction' value={moreDetails} />
+                        <DetailItems name='How often does it occur' value={treatedBy} />
+                        <DetailItems name='Date Of first diagnosis' value={date} />
                         <DetailItems name='Medicine' value={medicine} />
                         <DetailItems name='Additional notes' value={additionalNotes} />
                     </View>

@@ -7,7 +7,7 @@ type itemProps = {
     value: string | number
 }
 
-const DetailItems:FC<itemProps> = ({ name, value }) => {
+const DetailItems: FC<itemProps> = ({ name, value }) => {
     return (
         <View style={{ marginBottom: 20 }}>
             <Text style={styles.para}>{name}</Text>
@@ -18,14 +18,14 @@ const DetailItems:FC<itemProps> = ({ name, value }) => {
 
 export default DetailItems
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
     title: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: "500",
         color: Colors.Blue
     },
     para: {
-        fontSize: 14,
+        fontSize: 12,
         color: Colors.SteelBlue,
         marginBottom: 4
     },

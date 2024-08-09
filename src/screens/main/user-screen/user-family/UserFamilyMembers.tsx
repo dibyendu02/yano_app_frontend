@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from 'react';
 import CommonLayout from '../../../../components/CommonLayout';
 import Header from '../../../../components/header/Header';
 import EmptyScreen from '../../../../components/EmptyScreen';
@@ -12,7 +12,7 @@ const UserFamilyMembers = () => {
     const data = [
         {
             id: 1,
-            name: 'John Doe',
+            name: 'María Clemente',
             relation: 'Mother',
             admissionDate: '2024-07-27T11:38:00.000Z',
             dischargeDate: '2024-07-27T11:38:00.000Z',
