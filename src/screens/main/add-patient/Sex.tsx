@@ -1,14 +1,15 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Colors } from '../../../constants/Colors';
 import { RadioButton } from 'react-native-paper';
 
 interface GenderProps {
     selectedRole: string;
     setSelectedRole: (role: string) => void;
+    isSelected?: boolean;
 }
 
-const Sex: React.FC<GenderProps> = ({ selectedRole, setSelectedRole }) => {
+const Sex: React.FC<GenderProps> = ({ selectedRole, setSelectedRole, isSelected }) => {
     const Config = [
         {
             id: '1',
@@ -19,6 +20,15 @@ const Sex: React.FC<GenderProps> = ({ selectedRole, setSelectedRole }) => {
             label: 'Female',
         },
     ];
+
+    // Ensure selectedRole is set only if isSelected is true
+    useEffect(() => {
+        if (isSelected && !selectedRole) {
+            setSelectedRole('1');
+        } else if (!isSelected && selectedRole) {
+            setSelectedRole('');
+        }
+    }, [isSelected, setSelectedRole]);
 
     const handlePress = (role: string) => {
         setSelectedRole(role);

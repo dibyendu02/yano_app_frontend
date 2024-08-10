@@ -7,15 +7,15 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import React, {useContext, useEffect, useState} from 'react';
-import {Colors} from '../../constants/Colors';
+import React, { useContext, useEffect, useState } from 'react';
+import { Colors } from '../../constants/Colors';
 import Header from '../../components/header/Header';
 import FilledButton from '../../components/buttons/FilledButton';
-import {RadioButton} from 'react-native-paper';
-import {navigate} from '../../navigation/RootNavigation';
-import {AuthScreen} from '../../navigation/auth/AuthScreens';
-import {useRoute} from '@react-navigation/native';
-import {FormProvider, useForm, useWatch} from 'react-hook-form';
+import { RadioButton } from 'react-native-paper';
+import { navigate } from '../../navigation/RootNavigation';
+import { AuthScreen } from '../../navigation/auth/AuthScreens';
+import { useRoute } from '@react-navigation/native';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import FormInput from '../../components/hook-form/FormInput';
 import UserContext from '../../contexts/UserContext';
 
@@ -25,18 +25,17 @@ const AccountVerification = () => {
   const userType = route?.params?.userType;
   const mode = route.params?.mode;
   const [selectedKey, setSelectedKey] = useState<string | null>('Email');
-  const {control, ...methods} = useForm();
-  const {login, isPatient} = useContext(UserContext);
+  const { control, ...methods } = useForm();
+  const { login, isPatient } = useContext(UserContext);
 
   const Options = [
     {
       key: 'Email',
       label: 'Email verification',
-      description: `We will send you a 6-digit verification code to ${
-        userType === 'Patient'
-          ? 'patient.email@example.com'
-          : 'provider.email@example.com'
-      }`,
+      description: `We will send you a 6-digit verification code to ${userType === 'Patient'
+        ? 'patient.email@example.com'
+        : 'provider.email@example.com'
+        }`,
     },
     {
       key: 'Mobile',
@@ -45,7 +44,7 @@ const AccountVerification = () => {
     },
   ];
 
-  const code: string = useWatch({control, name: 'code'}) || '';
+  const code: string = useWatch({ control, name: 'code' }) || '';
   useEffect(() => {
     if (code && code.length === 6) {
       verifyCode(code);
@@ -69,8 +68,9 @@ const AccountVerification = () => {
           navigate(AuthScreen.Welcome);
         }, 1000);
       } else {
-        login();
-        navigate('tabs');
+        // login();
+        navigate(AuthScreen.LoadingScreen);
+        // navigate('tabs');
       }
     } else {
       methods.setError('code', {
@@ -81,7 +81,7 @@ const AccountVerification = () => {
   };
 
   const resendCode = () => {
-    methods.resetField('code', {defaultValue: ''});
+    methods.resetField('code', { defaultValue: '' });
     methods.clearErrors('code');
   };
 
@@ -102,7 +102,7 @@ const AccountVerification = () => {
           )}
         </Text>
         {mode === 'Verification' ? (
-          <View style={{marginTop: 24}}>
+          <View style={{ marginTop: 24 }}>
             <FormProvider control={control} {...methods}>
               <FormInput
                 name="code"
@@ -213,6 +213,7 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     marginLeft: 35,
     fontSize: 14,
+    fontFamily: 'Roboto',
   },
   resendContainer: {
     width: '100%',

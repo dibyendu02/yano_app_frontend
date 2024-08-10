@@ -59,17 +59,17 @@ const BloodOxygenModal = () => {
                                 fields={{
                                     name: 'Heart Rate',
                                     value: values.heartRate,
-                                    unit: 'Beats/min'
+                                    unit: 'Beats/Min'
                                 }}
                                 customStyles={styles.border}
                             />
                         </View>
                         {count !== 0 &&
                             <View style={{
-                                padding: 20,
+                                paddingHorizontal: 20,
                                 backgroundColor: Colors.White,
                                 borderRadius: 10,
-                                marginVertical: 20,
+                                marginVertical: 10,
                             }} >
                                 <View style={{
                                     flexDirection: 'row',
@@ -93,13 +93,13 @@ const BloodOxygenModal = () => {
                                         source={DummyImage.bp}
                                         width={400}
                                         style={{
-                                            width: '100%', 
+                                            width: '100%',
                                             marginTop: 30
                                         }}
                                     />
                                 </View>
                             </View>
-                        } 
+                        }
                     </>
                 </CommonLayoutModal>
             </CustomBottomModal>

@@ -51,10 +51,10 @@ const BodyTemperatureModal = () => {
                         </View>
                         {count !== 0 &&
                             <View style={{
-                                padding: 20,
+                                paddingHorizontal: 20,
                                 backgroundColor: Colors.White,
                                 borderRadius: 10,
-                                marginVertical: 20,
+                                marginVertical: 10,
                             }} >
                                 <View style={{
                                     flexDirection: 'row',

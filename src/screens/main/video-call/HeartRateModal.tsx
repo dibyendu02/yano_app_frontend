@@ -1,11 +1,12 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import CommonVideoCallLayout from './components/CommonVideoCallLayout'
-import CustomBottomModal from '../../../components/bottom-sheet/CommonButtonModal' 
+import CustomBottomModal from '../../../components/bottom-sheet/CommonButtonModal'
 import MeasurementBox from '../my-profile/components/MeasurementBox'
 import { Colors } from '../../../constants/Colors'
-import { DummyImage } from '../../../assets/dummy/images' 
+import { DummyImage } from '../../../assets/dummy/images'
 import CommonLayoutModal from './components/CommonLayoutModal'
+import CommonLayoutModalLocal from './CommonLayOutModal'
 
 const HeartRateModal = () => {
   const [loading, setLoading] = useState(false)
@@ -34,7 +35,7 @@ const HeartRateModal = () => {
         isVisible={true}
         onBackdropPress={() => (<></>)}
       >
-        <CommonLayoutModal heading="Heart Rate" loading={loading} onPress={handleStartMeasurements} >
+        <CommonLayoutModalLocal heading="Heart Rate" loading={loading} onPress={handleStartMeasurements} >
           <>
             <View style={{
               flexDirection: 'row',
@@ -47,7 +48,7 @@ const HeartRateModal = () => {
                 fields={{
                   name: 'Heart Rate',
                   value: values.heartRate,
-                  unit: 'Beats/min'
+                  unit: 'Beats/Min'
                 }}
                 customStyles={{
                   width: '60%',
@@ -69,46 +70,8 @@ const HeartRateModal = () => {
                 }}
               />
             </View>
-            <View>
-              {count !== 0 &&
-                <View style={{
-                  padding: 20,
-                  backgroundColor: Colors.White,
-                  borderRadius: 10,
-                  marginVertical: 20,
-                }} >
-                  <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    gap: 10
-                  }}>
-                    <View style={{
-                      width: 20,
-                      height: 20,
-                      borderRadius: 20,
-                      backgroundColor: Colors.Green
-                    }} ></View>
-                    <Text style={{
-                      fontSize: 20,
-                      fontWeight: '600',
-                      color: Colors.Blue
-                    }} >Normal blood pressure</Text>
-                  </View>
-                  <View>
-                    <Image
-                      source={DummyImage.bp}
-                      width={400}
-                      style={{
-                        width: '100%', 
-                        marginTop: 30
-                      }}
-                    />
-                  </View>
-                </View>
-              }
-            </View>
           </>
-        </CommonLayoutModal> 
+        </CommonLayoutModalLocal>
       </CustomBottomModal>
     </CommonVideoCallLayout>
   )

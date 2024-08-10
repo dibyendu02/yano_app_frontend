@@ -215,7 +215,7 @@ const CreatePatientAccount: React.FC<AuthScreensProps> = ({ route }) => {
                                     control={methods.control}
                                     defaultValue="1"
                                     render={({ field: { onChange, value } }) => (
-                                        <Sex selectedRole={value} setSelectedRole={onChange} />
+                                        <Sex selectedRole={value} setSelectedRole={onChange} isSelected={false} />
                                     )}
                                 />
 

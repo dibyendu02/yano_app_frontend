@@ -8,7 +8,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import React, { useState } from 'react';
-import arrow from '../assets/image/arrow_back.png'
+import { staticIcons } from '../assets/image';
 
 export default function ForgotPass({ navigation }) {
   const [email, setEmail] = useState('');
@@ -18,8 +18,8 @@ export default function ForgotPass({ navigation }) {
       <View style={styles.Navbar}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
-            source={arrow}
-            style={{ height: 30, width: 30, paddingTop: 2 }}
+            source={staticIcons.BackArrow}
+            style={{ height: 20, width: 20, paddingTop: 8, paddingLeft: 4 }}
           />
         </TouchableOpacity>
         <Text style={styles.navbarText}>Forgot Your Password?</Text>
@@ -47,6 +47,7 @@ export default function ForgotPass({ navigation }) {
           disabled={!email}>
           <Text style={styles.submitButtonText}>Send Instruction</Text>
         </TouchableOpacity>
+
       </View>
     </SafeAreaView>
   );
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 20,
-    marginLeft: 10,
+    marginLeft: 20,
     marginBottom: 20,
   },
   navbarText: {
