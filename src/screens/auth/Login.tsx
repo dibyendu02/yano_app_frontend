@@ -90,7 +90,9 @@ const Login = () => {
             justifyContent: 'flex-end',
             marginBottom: 20,
           }}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigate(AuthScreen.ForgotPass)}
+          >
             <Text style={{ color: Colors.Blue }}>Forgot your password?</Text>
           </TouchableOpacity>
         </View>

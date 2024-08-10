@@ -7,22 +7,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
-import {Controller, useFormContext} from 'react-hook-form';
-import {StaticImage} from '../../assets/images';
-import {Colors} from '../../constants/Colors';
+import React, { useState } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
+import { StaticImage } from '../../assets/images';
+import { Colors } from '../../constants/Colors';
 import Icons from '../../assets/icon/Icon';
 import ImagePicker from 'react-native-image-crop-picker';
 import BottomSheet from '../bottom-sheet/BottomSheet';
 import FilledButton from '../buttons/FilledButton';
+import { staticIcons } from '../../assets/image';
 
 interface FormImageProps {
   name: string;
 }
 
-const FormImageInput: React.FC<FormImageProps> = ({name}) => {
+const FormImageInput: React.FC<FormImageProps> = ({ name }) => {
   const [showOptionsModal, setShowOptionsModal] = useState(false);
-  const {control, setValue} = useFormContext();
+  const { control, setValue } = useFormContext();
   const [imagePath, setImagePath] = useState(null);
   const handleImageCapture = (mode: string) => {
     setShowOptionsModal(false);
@@ -65,11 +66,11 @@ const FormImageInput: React.FC<FormImageProps> = ({name}) => {
     <Controller
       name={name}
       control={control}
-      render={({field: {}, fieldState: {}}) => (
+      render={({ field: { }, fieldState: { } }) => (
         <View style={styles.container}>
           <Image
             source={
-              imagePath ? {uri: imagePath} : StaticImage.PersonPlaceholder
+              imagePath ? { uri: imagePath } : StaticImage.PersonPlaceholder
             }
             style={{
               height: 100,
@@ -87,12 +88,13 @@ const FormImageInput: React.FC<FormImageProps> = ({name}) => {
               padding: 6,
               borderRadius: 50,
             }}>
-            <Icons.Feather
+            {/* <Icons.Feather
               name={'edit-2'}
               color={Colors.White}
               size={18}
               onPress={() => setShowOptionsModal(true)}
-            />
+            /> */}
+            <Image source={staticIcons.EditPencil} style={{ width: 14, height: 14, tintColor: '#FFFFFF' }} />
           </View>
           <BottomSheet
             isVisible={showOptionsModal}
@@ -121,9 +123,9 @@ const FormImageInput: React.FC<FormImageProps> = ({name}) => {
                 {/* <Icons.Entypo name="camera" size={30} color={Colors.Blue} /> */}
                 <Image
                   source={StaticImage.CameraIcon}
-                  style={{width: 30, height: 30}}
+                  style={{ width: 30, height: 30 }}
                 />
-                <Text style={{color: Colors.Blue, fontSize: 16}}>Camera</Text>
+                <Text style={{ color: Colors.Blue, fontSize: 16 }}>Camera</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.optionContainer}
@@ -135,9 +137,9 @@ const FormImageInput: React.FC<FormImageProps> = ({name}) => {
                 /> */}
                 <Image
                   source={StaticImage.GalleryIcon}
-                  style={{width: 30, height: 30}}
+                  style={{ width: 30, height: 30 }}
                 />
-                <Text style={{color: Colors.Blue, fontSize: 16}}>Gallery</Text>
+                <Text style={{ color: Colors.Blue, fontSize: 16 }}>Gallery</Text>
               </TouchableOpacity>
             </View>
             <View
@@ -149,7 +151,7 @@ const FormImageInput: React.FC<FormImageProps> = ({name}) => {
               <FilledButton
                 type="lightGrey"
                 label="Cancel"
-                style={{width: '92%'}}
+                style={{ width: '92%' }}
                 onPress={() => setShowOptionsModal(false)}
               />
             </View>

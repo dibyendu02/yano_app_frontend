@@ -1,12 +1,12 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import { Image, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
 import CommonMeasurementScreen from '../components/CommonMeasurementScreen';
 import Header from '../../../../components/header/Header';
 import MeasurementBox from '../components/MeasurementBox';
-import {Colors} from '../../../../constants/Colors';
-import {DummyImage} from '../../../../assets/dummy/images';
-import {ShareIcon} from '../../../../assets/icon/IconNames';
-import {StaticImage} from '../../../../assets/images';
+import { Colors } from '../../../../constants/Colors';
+import { DummyImage } from '../../../../assets/dummy/images';
+import { ShareIcon } from '../../../../assets/icon/IconNames';
+import { StaticImage } from '../../../../assets/images';
 
 const help = [
   {
@@ -56,6 +56,25 @@ const BloodOxygenScreen = () => {
     }, 3000);
     return () => clearInterval(interval);
   };
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Heart Rate: ${values.heartRate} Beats/Min, Blood Oxygen: ${values.spo2} SpO2H`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <>
       <CommonMeasurementScreen
@@ -63,10 +82,17 @@ const BloodOxygenScreen = () => {
         onPress={() => handleStartMeasurements()}
         element={
           <>
-            <Header title="Blood oxygen" headerRightComponent={<ShareIcon />} />
+            <Header title="Blood oxygen" headerRightComponent={
+              <TouchableOpacity onPress={onShare}>
+                <Image
+                  source={StaticImage.SharerIcon}
+                  style={{ width: 24, height: 24 }}
+                />
+              </TouchableOpacity>
+            } />
             <ScrollView>
-              <View style={{padding: 15}}>
-                <View style={{padding: 20}}>
+              <View style={{ padding: 15 }}>
+                <View style={{ padding: 20 }}>
                   <View
                     style={{
                       flexDirection: 'row',

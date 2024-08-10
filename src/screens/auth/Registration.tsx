@@ -12,21 +12,21 @@ import {
 } from 'react-native';
 import React from 'react';
 import Header from '../../components/header/Header';
-import {navigate} from '../../navigation/RootNavigation';
-import {Colors} from '../../constants/Colors';
-import {AuthScreen} from '../../navigation/auth/AuthScreens';
-import {FormProvider, useForm} from 'react-hook-form';
+import { navigate } from '../../navigation/RootNavigation';
+import { Colors } from '../../constants/Colors';
+import { AuthScreen } from '../../navigation/auth/AuthScreens';
+import { FormProvider, useForm } from 'react-hook-form';
 import FormInput from '../../components/hook-form/FormInput';
-import {FormInputType} from '../../components/hook-form/types';
+import { FormInputType } from '../../components/hook-form/types';
 import FormDateInput from '../../components/hook-form/FormDateInput';
 import FormSelectionInput from '../../components/hook-form/FormSelectionInput';
 import FilledButton from '../../components/buttons/FilledButton';
 import FormPhoneNumberInput from '../../components/hook-form/FormPhoneNumberInput';
 import FormImageInput from '../../components/hook-form/FormImageInput';
-import {AuthScreensProps} from '../../navigation/auth/types';
-import {UserType} from '../../constants/enums';
+import { AuthScreensProps } from '../../navigation/auth/types';
+import { UserType } from '../../constants/enums';
 import moment from 'moment';
-import {registerDoctor, registerPatient} from '../../services/Endpoints';
+import { registerDoctor, registerPatient } from '../../services/Endpoints';
 
 const Gender = [
   {
@@ -104,13 +104,13 @@ const DoctorSpecialties = [
   },
 ];
 
-const Registration: React.FC<AuthScreensProps> = ({route}) => {
+const Registration: React.FC<AuthScreensProps> = ({ route }) => {
   //@ts-ignore
   const userType = route?.params?.userType;
 
   console.log(userType);
 
-  const {...methods} = useForm({
+  const { ...methods } = useForm({
     mode: 'onChange',
   });
   const onSubmit = async (data: any) => {
@@ -155,15 +155,15 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
     navigate(AuthScreen.AccountVerification);
   };
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{flex: 1}}>
-        <View style={{flex: 1}}>
+        style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <Header
             title=""
             headerRightComponent={
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Text style={styles.text}>Already registered?</Text>
                 <TouchableOpacity onPress={() => navigate(AuthScreen.Login)}>
                   <Text style={styles.loginButton}>Log in</Text>
@@ -172,16 +172,16 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
             }
           />
           <View style={styles.body}>
-            <Text
-              style={{
-                color: Colors.Blue,
-                fontWeight: 'bold',
-                fontSize: 24,
-                marginTop: 10,
-              }}>
-              Sign up
-            </Text>
             <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
+              <Text
+                style={{
+                  color: Colors.Blue,
+                  fontWeight: 'bold',
+                  fontSize: 24,
+                  marginTop: 10,
+                }}>
+                Sign up
+              </Text>
               <FormProvider {...methods}>
                 <FormImageInput name="file" />
                 <FormInput
@@ -313,11 +313,11 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
           color: '#3D5A6C',
         }}>
         When registering you are accepting our{' '}
-        <Text style={{color: Colors.Blue, textDecorationLine: 'underline'}}>
+        <Text style={{ color: Colors.Blue, textDecorationLine: 'underline' }}>
           Terms and conditions
         </Text>{' '}
         and
-        <Text style={{color: Colors.Blue, textDecorationLine: 'underline'}}>
+        <Text style={{ color: Colors.Blue, textDecorationLine: 'underline' }}>
           {' '}
           Privacy policies
         </Text>
@@ -325,11 +325,11 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
       <FilledButton
         label="Continue"
         type="blue"
-        style={{width: '92%', alignSelf: 'center', marginVertical: 10}}
+        style={{ width: '92%', alignSelf: 'center', marginVertical: 10 }}
         // disabled={!methods.formState.isDirty}
         // onPress={methods.handleSubmit(onSubmit)}
         onPress={() =>
-          navigate(AuthScreen.AccountVerification, {userType: userType})
+          navigate(AuthScreen.AccountVerification, { userType: userType })
         }
       />
     </SafeAreaView>
