@@ -1,4 +1,4 @@
-import { Image, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import CommonMeasurementScreen from '../components/CommonMeasurementScreen';
 import Header from '../../../../components/header/Header';
