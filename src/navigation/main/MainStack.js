@@ -177,7 +177,7 @@ const ProviderTabs = () => {
         },
       }}>
       <Tab.Screen
-        name="Monitor"
+        name="Monitoring"
         component={PatientMonitoringList}
         options={{
           headerShown: false,

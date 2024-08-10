@@ -7,19 +7,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useContext, useState} from 'react';
-import {Colors} from '../../constants/Colors';
+import React, { useContext, useState } from 'react';
+import { Colors } from '../../constants/Colors';
 import Header from '../../components/header/Header';
-import {DummyImage} from '../../assets/dummy/images';
+import { DummyImage } from '../../assets/dummy/images';
 import FilledButton from '../../components/buttons/FilledButton';
-import {navigate} from '../../navigation/RootNavigation';
+import { navigate } from '../../navigation/RootNavigation';
 import UserContext from '../../contexts/UserContext';
-import {StaticImage} from '../../assets/images';
-import {AuthScreen} from '../../navigation/auth/AuthScreens';
+import { StaticImage } from '../../assets/images';
+import { AuthScreen } from '../../navigation/auth/AuthScreens';
 import Card from '../main/my-profile/UiUpdateComponents/Card';
 
-const AuthAskDevice = ({navigation}: any) => {
-  const {login, isPatient} = useContext(UserContext);
+const AuthAskDevice = ({ navigation }: any) => {
+  const { login, isPatient } = useContext(UserContext);
   const [isClicked, setIsClicked] = useState(false);
 
   const loginAction = () => {
@@ -35,7 +35,7 @@ const AuthAskDevice = ({navigation}: any) => {
       <Header
         title=""
         headerRightComponent={
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity
               onPress={() => {
                 setIsClicked(true);
@@ -46,7 +46,7 @@ const AuthAskDevice = ({navigation}: any) => {
         }
       />
       <ScrollView>
-        <View style={{padding: 20}}>
+        <View style={{ padding: 20 }}>
           <View
             style={{
               backgroundColor: Colors.White,

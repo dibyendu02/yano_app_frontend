@@ -4,6 +4,7 @@ import { Colors } from '../../../constants/Colors';
 import { DeleteIcon, EditIcon } from '../../../assets/icon/IconNames';
 import DetailItems from '../components/DetailItems';
 import CommonHeader from '../components/CommonHeader';
+import { Image } from 'react-native';
 
 
 const BasicInfo = ({ navigation }: any) => {
@@ -26,7 +27,7 @@ const BasicInfo = ({ navigation }: any) => {
                     <TouchableOpacity
                         onPress={() => navigation.navigate('AddAndEditBasicInfo', { data })}
                     >
-                        <EditIcon />
+                        <Image source={require('../../../assets/image/EditPencil.png')} style={{ height: 26, width: 24 }} />
                     </TouchableOpacity>
                 }
             // rightComp2={
@@ -40,7 +41,7 @@ const BasicInfo = ({ navigation }: any) => {
                     <View style={styles.boxStyle}>
                         <DetailItems name='Height' value={data.height} />
                         <DetailItems name="Weight" value={data.weight} />
-                        <DetailItems name="Blood Group" value={data.bloodGroup} />
+                        <DetailItems name="Blood type" value={data.bloodGroup} />
                     </View>
                 </View>
             </ScrollView>

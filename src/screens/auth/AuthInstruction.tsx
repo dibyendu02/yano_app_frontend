@@ -7,18 +7,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useContext, useEffect} from 'react';
-import {Colors} from '../../constants/Colors';
+import React, { useContext, useEffect } from 'react';
+import { Colors } from '../../constants/Colors';
 import Header from '../../components/header/Header';
-import {DummyImage} from '../../assets/dummy/images';
+import { DummyImage } from '../../assets/dummy/images';
 import FilledButton from '../../components/buttons/FilledButton';
-import {navigate} from '../../navigation/RootNavigation';
+import { navigate } from '../../navigation/RootNavigation';
 import UserContext from '../../contexts/UserContext';
-import {StaticImage} from '../../assets/images';
-import {AuthScreen} from '../../navigation/auth/AuthScreens';
+import { StaticImage } from '../../assets/images';
+import { AuthScreen } from '../../navigation/auth/AuthScreens';
 
-const AuthInstruction = ({navigation}: any) => {
-  const {login, isPatient} = useContext(UserContext);
+const AuthInstruction = ({ navigation }: any) => {
+  const { login, isPatient } = useContext(UserContext);
   useEffect(() => {
     setTimeout(() => {
       navigate(AuthScreen.DeviceConnected);
@@ -35,7 +35,7 @@ const AuthInstruction = ({navigation}: any) => {
       <Header
         title=""
         headerRightComponent={
-          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <TouchableOpacity
               onPress={() => {
                 login();
@@ -47,7 +47,7 @@ const AuthInstruction = ({navigation}: any) => {
         }
       />
       <ScrollView>
-        <View style={{padding: 20}}>
+        <View style={{ padding: 20 }}>
           <View
             style={{
               backgroundColor: Colors.White,
@@ -65,16 +65,21 @@ const AuthInstruction = ({navigation}: any) => {
               }}>
               Turn on the device
             </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                color: Colors.SteelBlue,
-                textAlign: 'center',
-                paddingHorizontal: 10,
-              }}>
-              Please turn on the Yano Multi-Parameter device by holding down the
-              power button until the blue light flashes.
-            </Text>
+            <View style={{
+              width: '100%',
+              paddingHorizontal: 4
+            }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: Colors.SteelBlue,
+                  textAlign: 'center',
+                  paddingHorizontal: 10,
+                }}>
+                Please turn on the Yano Multi-Parameter device by holding down the
+                power button until the blue light flashes.
+              </Text>
+            </View>
             <Image
               source={StaticImage.DeviceStart}
               style={{

@@ -1,4 +1,4 @@
- 
+
 import React from 'react'
 import CommonHomeScreen from '../components/CommonHomeScreen';
 
@@ -6,40 +6,60 @@ const MedicineHomeScreen = ({ navigation }: any) => {
     const data = [
         {
             "id": 1,
-            "name": "Medicine A",
-            "volume": "10",
-            "unit": "ml",
-            "medicine": "Tablet",
-            "field4": "Value4",
-            "field5": "Value5",
-            "field6": "Value6",
-            "field7": "Value7",
-            "field8": "Value8",
+            "name": "Losartan Potassium",
+            "volume": "100",
+            "unit": "mg",
+            "medicine": "Pill",
+            "field4": "Orally",
+            "field5": "1",
+            "field6": "At breakfast",
+            "field7": "Heterosexual",
+            "field8": "12-12-1998",
             "field9": "2024-07-27T11:38:00.000Z",
             "field10": "2024-07-28T11:38:00.000Z",
             "field11": true,
-            "field12": "Value12",
-            "field13": "Value13",
-            "field14": "Value14"
+            "field12": "Hypertension",
+            "field13": "Dr. Lee",
+            "field14": "Headache",
         },
         {
             "id": 2,
-            "name": "Medicine B",
-            "volume": "20ml",
-            "unit": "ml",
-            "medicine": "Tablet",
-            "field4": "Value4",
-            "field5": "Value5",
-            "field6": "Value6",
-            "field7": "Value7",
-            "field8": "Value8",
+            "name": "Aspirin",
+            "volume": "500",
+            "unit": "mg",
+            "medicine": "Pill",
+            "field4": "Orally",
+            "field5": "1",
+            "field6": "After lunch",
+            "field7": "Avoid alcohol",
+            "field8": "15-08-2023",
             "field9": "2024-07-27T11:38:00.000Z",
-            "field10": "2024-07-27T11:38:00.000Z",
-            "field11": false,
-            "field12": "Value12",
-            "field13": "Value13",
-            "field14": "Value14"
+            "field10": "2024-07-28T11:38:00.000Z",
+            "field11": true,
+            "field12": "Pain relief",
+            "field13": "Dr. Smith",
+            "field14": "Stomach upset"
+        },
+        {
+            "id": 3,
+            "name": "Metformin",
+            "volume": "850",
+            "unit": "mg",
+            "medicine": "Pill",
+            "field4": "Orally",
+            "field5": "1",
+            "field6": "With dinner",
+            "field7": "Take with food",
+            "field8": "01-07-2022",
+            "field9": "2024-07-27T11:38:00.000Z",
+            "field10": "2024-07-28T11:38:00.000Z",
+            "field11": true,
+            "field12": "Diabetes",
+            "field13": "Dr. Lee",
+            "field14": "Nausea"
         }
+
+
     ]
 
 

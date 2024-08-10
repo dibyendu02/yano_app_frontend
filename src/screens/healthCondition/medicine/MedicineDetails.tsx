@@ -1,34 +1,33 @@
-import { Alert, SafeAreaView, ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Alert, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
 import { Colors } from '../../../constants/Colors';
 import Header from '../../../components/header/Header';
 import { DeleteIcon, EditIcon } from '../../../assets/icon/IconNames';
 import DetailItems from '../components/DetailItems';
 import CommonHeader from '../components/CommonHeader';
 
-
 const MedicineDetails = ({ navigation, route }: any) => {
     if (!route || !route.params) {
         Alert.alert('Error', 'Data not passed or invalid data passed');
         return navigation.goBack();
     }
-    const data = route.params.data; 
+    const data = route.params.data;
     const {
         name,
         volume,
         unit,
         medicine,
-        field4,
-        field5,
-        field6,
-        field7,
-        field8,
-        field9,
-        field10,
-        field11,
-        field12,
-        field13,
-        field14,
+        field4, // Intake method
+        field5, // Dose Quantity
+        field6, // When
+        field7, // Other instructions
+        field8, // Duration begins at
+        field9, // Unchanged, potentially related to a date
+        field10, // Unchanged, potentially related to a date
+        field11, // Additional Information: Medicine taken for (boolean)
+        field12, // Prescribed by
+        field13, // Side effects
+        field14, // Medicamento (Additional field)
     } = data;
 
     return (
@@ -56,28 +55,91 @@ const MedicineDetails = ({ navigation, route }: any) => {
             <ScrollView>
                 <View style={{ padding: 20 }}>
                     <View style={styles.boxStyle}>
-                        <DetailItems name='Name of the medicine' value={name} />
-                        <DetailItems name='Forma de la medicina' value={medicine} />
-                        <DetailItems name='Detalles de la medicina' value={volume+unit} />
-                        <DetailItems name='Método de ingesta' value={field4} />
-                        <DetailItems name='Cantidad' value={field5} />
-                        <DetailItems name='Frecuencia' value={field6} />
-                        <DetailItems name='Cuando' value={field7} />
-                        <DetailItems name='Otras instrucciones' value={field8} />
-                        <DetailItems name='Fecha de inicio' value={new Date(field9).toDateString()} />
-                        <DetailItems name='Hasta' value={new Date(field10).toDateString()} />
-                        <DetailItems name='¿Es un medicamento permanente?' value={field11? "Yes": "No"} />
-                        <DetailItems name='Tratado por' value={field12} />
-                        <DetailItems name='Notas adicionales' value={field13} />
-                        <DetailItems name='Medicamento' value={field14} />
+                        <DetailItems name="Medicine name" value={name} />
+                        <View
+                            style={{
+                                paddingTop: 2,
+                                paddingBottom: 12,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    color: Colors.Blue,
+                                }}
+                            >
+                                Medicine form
+                            </Text>
+                        </View>
+                        <DetailItems name="Medicine form" value={medicine} />
+                        <DetailItems name="Medicine strength" value={volume + unit} />
+                        <DetailItems name="Intake method" value={field4} />
+                        <View
+                            style={{
+                                paddingTop: 2,
+                                paddingBottom: 12,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    color: Colors.Blue,
+                                }}
+                            >
+                                Dose
+                            </Text>
+                        </View>
+                        <DetailItems name="Quantity" value={field5} />
+                        <DetailItems name="When" value={field6} />
+                        <DetailItems name="Other instructions" value={field7} />
+                        <View
+                            style={{
+                                paddingTop: 2,
+                                paddingBottom: 12,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    color: Colors.Blue,
+                                }}
+                            >
+                                Duration
+                            </Text>
+                        </View>
+                        <DetailItems name="It begins at" value={new Date(field8).toDateString()} />
+                        <DetailItems name="Until" value={new Date(field9).toDateString()} />
+                        <View
+                            style={{
+                                paddingTop: 2,
+                                paddingBottom: 12,
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 18,
+                                    fontWeight: 'bold',
+                                    color: Colors.Blue,
+                                }}
+                            >
+                                Additional Information
+                            </Text>
+                        </View>
+                        <DetailItems name="Medicine taken for" value={field12} />
+                        <DetailItems name="Prescribed by" value={field13} />
+                        <DetailItems name="Side effects" value={field14} />
+                        {/* <DetailItems name="Additional Info" value={field14} /> */}
                     </View>
                 </View>
             </ScrollView>
         </SafeAreaView>
-    )
-}
+    );
+};
 
-export default MedicineDetails
+export default MedicineDetails;
 
 const styles = StyleSheet.create({
     boxStyle: {
@@ -88,4 +150,4 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginBottom: 20,
     },
-})
+});
