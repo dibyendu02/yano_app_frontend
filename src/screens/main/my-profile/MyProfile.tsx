@@ -20,15 +20,20 @@ import Icons from '../../../assets/icon/Icon';
 import BottomSheet from '../../../components/bottom-sheet/BottomSheet';
 import ShareButton from '../profile/ShareProfileButton';
 import { StaticImage } from '../../../assets/images';
+import { staticIcons } from '../../../assets/image';
 
 const menuData = [
   {
     id: '1',
     icon: (
-      <Icons.MaterialCommunityIcons
-        name="toolbox"
-        size={25}
-        color={Colors.LightGreen}
+      // <Icons.MaterialCommunityIcons
+      //   name="toolbox"
+      //   size={25}
+      //   color={Colors.LightGreen}
+      // />
+      <Image
+        source={staticIcons.MeasurementTool}
+        style={{ height: 20, width: 20 }}
       />
     ),
     text: 'Measurement Tool',
@@ -48,6 +53,10 @@ const menuData = [
         size={25}
         color={Colors.LightGreen}
       />
+      // <Image
+      //   source={staticIcons.Help}
+      //   style={{ height: 20, width: 20 }}
+      // />
     ),
     text: "Yano's support",
     path: 'YanoSupport',
@@ -73,13 +82,13 @@ const MyProfile = ({ navigation }: any) => {
         </View>
       </BottomSheet>
       <Header
-        title="My Profile"
+        title="My profile"
         showBackIcon={false}
         headerRightComponent={
           <TouchableOpacity
             onPress={() => navigation.navigate('EditProfile')}
           >
-            <EditIcon size={20} />
+            <Image source={staticIcons.EditPencil} style={{ height: 24, width: 24 }} />
           </TouchableOpacity>
         }
       />

@@ -73,10 +73,10 @@ const BloodPressureModal = () => {
                         </View>
 
                         {count !== 0 && <View style={{
-                            padding: 20,
+                            paddingHorizontal: 20,
                             backgroundColor: Colors.White,
                             borderRadius: 10,
-                            marginVertical: 20,
+                            marginVertical: 11,
                         }} >
                             <View style={{
                                 flexDirection: 'row',
@@ -117,7 +117,7 @@ const BloodPressureModal = () => {
 
 export default BloodPressureModal
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
     border: {
         borderWidth: 1,
         borderColor: Colors.LightGray,

@@ -20,4 +20,5 @@ export const DummyImage = {
   glucoround: require('./gluco-round.png'),
   monitor: require('./monitor-device.png'),
   grid: require('./grid.png'),
+  bloodTemp: require('./body_temperature_result.png')
 };

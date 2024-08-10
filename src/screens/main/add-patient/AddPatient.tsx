@@ -3,20 +3,23 @@ import {
   FlatList,
   Image,
   SafeAreaView,
+  Share,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../../components/header/Header';
-import {Colors} from '../../../constants/Colors';
-import {navigate} from '../../../navigation/RootNavigation';
+import { Colors } from '../../../constants/Colors';
+import { navigate } from '../../../navigation/RootNavigation';
 import FilledButton from '../../../components/buttons/FilledButton';
 import Card from '../../../components/cards/Card';
 import Icons from '../../../assets/icon/Icon';
-import {DummyImage} from '../../../assets/dummy/images';
+import { DummyImage } from '../../../assets/dummy/images';
+import { StaticImage } from '../../../assets/images';
+import { staticIcons } from '../../../assets/image';
 
 const AddPatient = () => {
   const [email, setEmail] = useState('');
@@ -27,20 +30,18 @@ const AddPatient = () => {
     {
       label: 'Scan QR Code',
       icon: (
-        <Icons.MaterialIcons
-          name="qr-code-scanner"
-          color={Colors.LightGreen}
-          size={25}
+        <Image
+          source={staticIcons.QRCodeScanner}
+          style={{ width: 24, height: 24, tintColor: Colors.LightGreen }}
         />
       ),
     },
     {
       label: 'Invite Patient',
       icon: (
-        <Icons.EvilIcons
-          name="share-google"
-          color={Colors.LightGreen}
-          size={30}
+        <Image
+          source={StaticImage.SharerIcon}
+          style={{ width: 24, height: 24, tintColor: Colors.LightGreen }}
         />
       ),
     },
@@ -56,6 +57,16 @@ const AddPatient = () => {
     },
   ];
 
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: '',
+      });
+    } catch (error) {
+      // alert(error.message);
+    }
+  };
+
   useEffect(() => {
     if (email) {
       setDisabled(false);
@@ -67,7 +78,7 @@ const AddPatient = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header
-        title="Add Patient"
+        title="Add patient"
         headerRightComponent={
           <FilledButton
             label={isClicked ? 'Add' : 'Find'}
@@ -95,13 +106,16 @@ const AddPatient = () => {
           <Card title="OTHER OPTIONS">
             <FlatList
               data={OPTIONS}
-              renderItem={({item, index: _index}) => (
+              renderItem={({ item, index: _index }) => (
                 <TouchableOpacity
                   style={styles.optionItemContainer}
                   onPress={() => {
                     if (item.label === 'Create Patient Account') {
                       // console.log('create patient account');
                       navigate('CreatePatientAccount');
+                    }
+                    if (item.label === 'Invite Patient') {
+                      onShare();
                     }
                   }}>
                   <View style={styles.optionItemLeftContainer}>
@@ -126,7 +140,7 @@ const AddPatient = () => {
               backgroundColor: Colors.White,
               marginTop: 20,
             }}>
-            <Image source={DummyImage.user} style={{height: 70, width: 70}} />
+            <Image source={DummyImage.user} style={{ height: 70, width: 70 }} />
             <Text
               style={{
                 fontSize: 18,
@@ -136,7 +150,7 @@ const AddPatient = () => {
               }}>
               María Clemente
             </Text>
-            <Text style={{fontSize: 16, color: Colors.SteelBlue}}>
+            <Text style={{ fontSize: 16, color: Colors.SteelBlue }}>
               maria.clemente@gmail.com
             </Text>
           </Card>
