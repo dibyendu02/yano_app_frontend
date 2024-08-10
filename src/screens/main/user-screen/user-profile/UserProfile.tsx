@@ -9,6 +9,7 @@ import {
   Image,
   FlatList,
   ScrollView,
+  Share,
 } from 'react-native';
 import React, { useState } from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -112,6 +113,25 @@ const menuData = [
   },
 ];
 
+const onShare = async () => {
+  try {
+    const result = await Share.share({
+      message: ''
+    });
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        // shared with activity type of result.activityType
+      } else {
+        // shared
+      }
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+    }
+  } catch (error) {
+    // alert(error.message);
+  }
+};
+
 export default function () {
   const [showQR, setShowQR] = useState(false);
   return (
@@ -192,6 +212,7 @@ export default function () {
               label="Share Profile"
               type="blue"
               style={{ width: '85%' }}
+              onPress={onShare}
               icon={
                 <Icons.EvilIcons
                   name="share-google"
@@ -261,7 +282,23 @@ export default function () {
       </ScrollView>
       <BottomSheet isVisible={showQR} onBackdropPress={() => setShowQR(false)}>
         <View style={{ padding: 20, alignItems: 'center' }}>
-          <Image source={DummyImage.QR} height={150} width={150} />
+          <View
+            style={{
+              padding: 5,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Roboto",
+                fontSize: 20,
+                fontWeight: '700',
+                color: Colors.Blue
+              }}
+            >Share QR code</Text>
+          </View>
+          <Image source={DummyImage.QR}
+            style={{ width: 200, height: 200 }}
+          />
           <Text
             style={{
               marginVertical: 20,
