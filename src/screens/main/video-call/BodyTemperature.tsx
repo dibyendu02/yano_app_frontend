@@ -6,6 +6,26 @@ import MeasurementBox from '../my-profile/components/MeasurementBox'
 import { Colors } from '../../../constants/Colors'
 import { DummyImage } from '../../../assets/dummy/images'
 import CommonLayoutModal from './components/CommonLayoutModal'
+import { StaticImage } from '../../../assets/images'
+import CommonLayoutModalLocal from './CommonLayOutModal'
+
+const help = [
+    {
+        page: '1',
+        text: 'Point the temperature sensor at the center of the forehead.',
+        img: StaticImage.CentreToForeHead,
+    },
+    {
+        page: '2',
+        text: 'Keep the device at a distance of 1-2 cm from the skin.',
+        img: StaticImage.TwoCmFromForeHead,
+    },
+    {
+        page: '3',
+        text: 'To start measuring press the "Start measuring" button.',
+        img: StaticImage.StartMeasuring,
+    },
+];
 
 const BodyTemperatureModal = () => {
     const [loading, setLoading] = useState(false)
@@ -28,7 +48,9 @@ const BodyTemperatureModal = () => {
                 isVisible={true}
                 onBackdropPress={() => (<></>)}
             >
-                <CommonLayoutModal heading="Body Temperature" loading={loading} onPress={handleStartMeasurements} >
+                <CommonLayoutModalLocal heading="Body Temperature" loading={loading} onPress={handleStartMeasurements}
+                    help={help}
+                >
                     <>
                         <View style={{
                             flexDirection: 'row',
@@ -86,7 +108,7 @@ const BodyTemperatureModal = () => {
                                 </View>
                             </View>}
                     </>
-                </CommonLayoutModal>
+                </CommonLayoutModalLocal>
             </CustomBottomModal>
         </CommonVideoCallLayout>
     )
