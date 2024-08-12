@@ -106,7 +106,9 @@ const HealthParametersList = () => {
                         </Text>
                       ))}
                       {e?.diagram && (
-                        <Image source={e.diagram} height={60} width={80} />
+                        <Image source={e.diagram}
+                          style={{ width: 61, height: 32 }}
+                        />
                       )}
                     </View>
 

@@ -1,11 +1,11 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useState } from 'react'
 import CommonVideoCallLayout from './components/CommonVideoCallLayout'
-import CustomBottomModal from '../../../components/bottom-sheet/CommonButtonModal' 
-import { Colors } from '../../../constants/Colors' 
+import CustomBottomModal from '../../../components/bottom-sheet/CommonButtonModal'
+import { Colors } from '../../../constants/Colors'
 import StripCodeScroll from '../monitoring/measurements/components/StripCodeScroll'
 import Header from '../../../components/header/Header'
-import FilledButton from '../../../components/buttons/FilledButton' 
+import FilledButton from '../../../components/buttons/FilledButton'
 
 const GlucoseLevelModal = ({ navigation }: any) => {
   const [loading, setLoading] = useState(false)
@@ -76,7 +76,7 @@ const GlucoseLevelModal = ({ navigation }: any) => {
               // }
               type={'blue'}
               style={{ width: '48%', alignSelf: 'center', marginVertical: 14 }}
-              // onPress={}
+              onPress={() => navigation.navigate('BloodGlucoseStep1')}
               activeOpacity={0.8}
             />
           </View>
