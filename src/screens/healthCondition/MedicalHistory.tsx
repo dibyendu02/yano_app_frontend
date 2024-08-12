@@ -26,10 +26,11 @@ const MedicalHistory = ({ navigation }: any) => {
                                     key={i}
                                     name={item.title}
                                     element={
-                                        <Image
-                                            source={item.img}
-                                            style={{ width: 30, objectFit: 'contain' }}
-                                        />
+                                        item.image ? item.image :
+                                            <Image
+                                                source={item.img}
+                                                style={{ width: 30, objectFit: 'contain' }}
+                                            />
                                     }
                                     color="black"
                                     customStyle={{
