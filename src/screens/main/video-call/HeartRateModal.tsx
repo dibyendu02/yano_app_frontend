@@ -7,7 +7,36 @@ import { Colors } from '../../../constants/Colors'
 import { DummyImage } from '../../../assets/dummy/images'
 import CommonLayoutModal from './components/CommonLayoutModal'
 import CommonLayoutModalLocal from './CommonLayOutModal'
+import { StaticImage } from '../../../assets/images'
 
+
+const help = [
+  {
+    page: '1',
+    text: 'For best results make sure you are in a place with low light.',
+    img: StaticImage.stopFromSunLight,
+  },
+  {
+    page: '2',
+    text: 'Adjust your position and keep still.',
+    img: StaticImage.SittingPosition,
+  },
+  {
+    page: '3',
+    text: 'Keep the monitor on a flat surface.',
+    img: StaticImage.FlatSurface,
+  },
+  {
+    page: '4',
+    text: 'Put the pad of your middle finger on the sensor at the top of the monitor.',
+    img: StaticImage.TouchTheSensor,
+  },
+  {
+    page: '5',
+    text: 'To start measuring press the "Start measuring" button.',
+    img: StaticImage.StartMeasuring,
+  },
+];
 const HeartRateModal = () => {
   const [loading, setLoading] = useState(false)
   const [count, setCount] = useState(0)
@@ -35,7 +64,9 @@ const HeartRateModal = () => {
         isVisible={true}
         onBackdropPress={() => (<></>)}
       >
-        <CommonLayoutModalLocal heading="Heart Rate" loading={loading} onPress={handleStartMeasurements} >
+        <CommonLayoutModalLocal heading="Heart Rate" loading={loading} onPress={handleStartMeasurements}
+          help={help}
+        >
           <>
             <View style={{
               flexDirection: 'row',
