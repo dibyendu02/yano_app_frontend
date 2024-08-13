@@ -1,16 +1,17 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
-import React, {FC, useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {Colors} from '../../constants/Colors';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import React, { FC, useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Colors } from '../../constants/Colors';
 import Header from '../../components/header/Header';
 import FilledButton from '../../components/buttons/FilledButton';
-import {InputField} from '../../components/form/InputField';
-import {SelectField} from '../../components/form/SelectField';
-import {DatePickerField} from '../../components/form/DatePicker';
-import {TextArea} from '../../components/form/TextAreaField';
+import { InputField } from '../../components/form/InputField';
+import { SelectField } from '../../components/form/SelectField';
+import { DatePickerField } from '../../components/form/DatePicker';
+import { TextArea } from '../../components/form/TextAreaField';
 import CommonHeader from './components/CommonHeader';
+import FormDateInput from '../../components/hook-form/FormDateInput';
 
-const AddHealthRecord = ({navigation, route}: any) => {
+const AddHealthRecord = ({ navigation, route }: any) => {
   let data = null;
   if (route?.params) {
     data = route.params.data;
@@ -25,12 +26,12 @@ const AddHealthRecord = ({navigation, route}: any) => {
     additionalNotes: data?.additionalNotes || '',
   });
   const selectOptions = [
-    {label: 'Active', value: 'Active'},
-    {label: 'Inactive', value: 'Inactive'},
+    { label: 'Active', value: 'Active' },
+    { label: 'Inactive', value: 'Inactive' },
   ];
 
   const handelChange = (id: string, e: string) => {
-    setFormData({...formData, [id]: e});
+    setFormData({ ...formData, [id]: e });
     if (formData.name) setDisabled(false);
     else setDisabled(true);
   };
@@ -61,7 +62,7 @@ const AddHealthRecord = ({navigation, route}: any) => {
         }
       />
       <ScrollView>
-        <View style={{padding: 20}}>
+        <View style={{ padding: 20 }}>
           <View style={styles.inputBox}>
             <InputField
               label="Name of the health condition"
@@ -75,6 +76,18 @@ const AddHealthRecord = ({navigation, route}: any) => {
               name="date"
               onchange={handelChange}
             />
+            {/* <FormDateInput
+              name="dateOfBirth"
+              label="Date of birth"
+              placeholder="Select a date"
+              placeholderTextColor={Colors.Grey}
+            // rules={{
+            //   required: {
+            //     value: true,
+            //     message: 'Please select your DOB',
+            //   },
+            // }}
+            /> */}
             <SelectField
               label="Status"
               name="status"
@@ -116,5 +129,5 @@ const styles = StyleSheet.create({
   formContainer: {},
   inputBox: {
     marginBottom: 20,
-  }, 
+  },
 });

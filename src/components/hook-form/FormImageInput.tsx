@@ -66,7 +66,10 @@ const FormImageInput: React.FC<FormImageProps> = ({ name }) => {
       name={name}
       control={control}
       render={({ field: { }, fieldState: { } }) => (
-        <View style={styles.container}>
+        <TouchableOpacity style={styles.container}
+          onPress={() => setShowOptionsModal(true)}
+          activeOpacity={1}
+        >
           <Image
             source={
               imagePath ? { uri: imagePath } : StaticImage.PersonPlaceholder
@@ -87,11 +90,12 @@ const FormImageInput: React.FC<FormImageProps> = ({ name }) => {
               padding: 6,
               borderRadius: 50,
             }}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => setShowOptionsModal(true)}
-            >
-              <Image source={staticIcons.EditPencil} style={{ height: 20, width: 20, tintColor: Colors.White }} />
-            </TouchableOpacity>
+              activeOpacity={1}
+            > */}
+            <Image source={staticIcons.EditPencil} style={{ height: 20, width: 20, tintColor: Colors.White }} />
+            {/* </TouchableOpacity> */}
             {/* <Icons.Feather
               name={'edit-2'}
               color={Colors.White}
@@ -142,7 +146,7 @@ const FormImageInput: React.FC<FormImageProps> = ({ name }) => {
               </TouchableOpacity>
             </View>
           </BottomSheet>
-        </View>
+        </TouchableOpacity>
       )}
     />
   );

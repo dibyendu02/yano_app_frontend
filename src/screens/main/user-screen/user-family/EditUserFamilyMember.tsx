@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import CommonLayout from '../../../../components/CommonLayout' 
+import CommonLayout from '../../../../components/CommonLayout'
 import { DummyImage } from '../../../../assets/dummy/images'
 import CustomSelect from '../../../../components/formComp/SelectFiled'
 import { useForm } from 'react-hook-form'
@@ -8,9 +8,30 @@ import { Colors } from '../../../../constants/Colors'
 import CommonHeader from '../../../healthCondition/components/CommonHeader'
 import FilledButton from '../../../../components/buttons/FilledButton'
 import { navigate } from '../../../../navigation/RootNavigation'
+import MeasurementChangeCard from '../../my-profile/UiUpdateComponents/MeasurementChangeCard'
+import MeasurementChangeCardLocal from './MeasurementCardLocal'
+
+const options = {
+    unit1: 'Mother',
+    unit2: 'Father',
+    unit3: 'Brother',
+    unit4: 'Husband / Wife',
+    unit5: 'Sibling',
+    unit6: 'Grandparent',
+    unit7: 'Hijo',
+    unit8: 'Other',
+};
 
 const EditUserFamilyMember = () => {
+    const [isClicked, setIsClicked] = React.useState(false);
     const { control } = useForm();
+
+    const [relation, setRelation] = React.useState('');
+
+
+    const handleClicked = () => {
+        setIsClicked(!isClicked);
+    }
     return (
         <CommonLayout>
             <CommonHeader
@@ -58,18 +79,35 @@ const EditUserFamilyMember = () => {
                         name='relation'
                         label='Relación con el familiar'
                         control={control}
-                        options={[
-                            { label: "Mother", value: "Mother" },
-                            { label: "Father", value: "Father" },
-                            { label: "Brother", value: "Brother" },
-                        ]}
+                        onClick={() => setIsClicked(!isClicked)}
                     />
                 </View>
             </View>
+            {isClicked && (
+                <View style={styles.afterClick}>
+                    <MeasurementChangeCardLocal
+                        title={'Family relationship'}
+                        active={handleClicked}
+                        setValue={setRelation}
+                        items={options}
+                    />
+                </View>
+            )}
         </CommonLayout>
     )
 }
 
 export default EditUserFamilyMember
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    afterClick: {
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        zIndex: 1,
+        flex: 1,
+        alignItems: 'center',
+        padding: 20,
+    },
+})

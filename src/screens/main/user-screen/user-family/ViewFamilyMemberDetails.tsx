@@ -86,7 +86,7 @@ const menuData = [
       />
     ),
     text: 'Sus mediciones',
-    path: '',
+    path: 'HealthParametersList',
   },
   {
     id: '3',
