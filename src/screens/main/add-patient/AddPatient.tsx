@@ -110,6 +110,9 @@ const AddPatient = () => {
                 <TouchableOpacity
                   style={styles.optionItemContainer}
                   onPress={() => {
+                    if (item.label === 'Scan QR Code') {
+                      navigate('PatientQRCode');
+                    }
                     if (item.label === 'Create Patient Account') {
                       // console.log('create patient account');
                       navigate('CreatePatientAccount');

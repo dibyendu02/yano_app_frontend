@@ -113,6 +113,7 @@ import TransitionScreen from '../../screens/main/TransitionScreen';
 import MonitoredProfile from '../../screens/main/add-patient/MonitoredProfile';
 import AddFamilyQr from '../../screens/main/user-screen/user-family/AddFamilyQr';
 import Create from '../../screens/main/user-screen/user-family/Create';
+import PatientQRCode from '../../screens/main/add-patient/PatientQRCode';
 
 const Tab = createBottomTabNavigator();
 
@@ -847,6 +848,11 @@ const MainStack = () => {
       <Stack.Screen
         name="AddFamilyQr"
         component={AddFamilyQr}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PatientQRCode"
+        component={PatientQRCode}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
