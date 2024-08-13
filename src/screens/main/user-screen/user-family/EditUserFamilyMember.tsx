@@ -1,15 +1,16 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import CommonLayout from '../../../../components/CommonLayout';
-import {DummyImage} from '../../../../assets/dummy/images';
+import { DummyImage } from '../../../../assets/dummy/images';
 import CustomSelect from '../../../../components/formComp/SelectFiled';
-import {useForm} from 'react-hook-form';
-import {Colors} from '../../../../constants/Colors';
+import { useForm } from 'react-hook-form';
+import { Colors } from '../../../../constants/Colors';
 import CommonHeader from '../../../healthCondition/components/CommonHeader';
 import FilledButton from '../../../../components/buttons/FilledButton';
-import {navigate} from '../../../../navigation/RootNavigation';
+import { navigate } from '../../../../navigation/RootNavigation';
 import MeasurementChangeCard from '../../my-profile/UiUpdateComponents/MeasurementChangeCard';
 import MeasurementChangeCardLocal from './MeasurementCardLocal';
+import CustomSelectLocal from './customSheetLocal';
 
 const options = {
   unit1: 'Mother',
@@ -24,13 +25,17 @@ const options = {
 
 const EditUserFamilyMember = () => {
   const [isClicked, setIsClicked] = React.useState(false);
-  const {control} = useForm();
+  const { control } = useForm();
 
   const [relation, setRelation] = React.useState('');
 
   const handleClicked = () => {
     setIsClicked(!isClicked);
   };
+
+  const setRelationFn = (value: string) => {
+    setRelation(value);
+  }
   return (
     <CommonLayout>
       <CommonHeader
@@ -49,7 +54,7 @@ const EditUserFamilyMember = () => {
           />
         }
       />
-      <View style={{padding: 20}}>
+      <View style={{ padding: 20 }}>
         <View
           style={{
             width: '100%',
@@ -87,10 +92,11 @@ const EditUserFamilyMember = () => {
           </Text>
         </View>
         <View>
-          <CustomSelect
+          <CustomSelectLocal
             name="relation"
             label="Relación con el familiar"
             control={control}
+            text={relation}
             onClick={() => setIsClicked(!isClicked)}
           />
         </View>
@@ -100,7 +106,7 @@ const EditUserFamilyMember = () => {
           <MeasurementChangeCardLocal
             title={'Family relationship'}
             active={handleClicked}
-            setValue={setRelation}
+            setValue={setRelationFn}
             items={options}
           />
         </View>

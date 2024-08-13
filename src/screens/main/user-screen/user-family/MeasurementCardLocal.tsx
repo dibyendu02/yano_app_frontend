@@ -10,13 +10,15 @@ interface MeasurementChangeCardProps {
     contentContainerStyle?: StyleProp<ViewStyle>;
     active: (value: boolean) => void;
     items?: { unit1: string, unit2: string, unit3: string };
+    setValue: (value: string) => void
 }
 
 const MeasurementChangeCardLocal: React.FC<MeasurementChangeCardProps> = ({
     title = '',
     contentContainerStyle,
     active,
-    items
+    items,
+    setValue = () => { }
 }) => {
     const [selectedValue, setSelectedValue] = React.useState<string>('');
 
@@ -40,7 +42,10 @@ const MeasurementChangeCardLocal: React.FC<MeasurementChangeCardProps> = ({
                     <View style={styles.radioItem}>
                         <TouchableOpacity
                             style={styles.radioItem}
-                            onPress={() => active(false)}
+                            onPress={() => {
+                                setValue(items?.unit1 || '');
+                                active(false);
+                            }}
                         >
                             <RadioButton
                                 value={items?.unit1 || ''}
@@ -54,7 +59,10 @@ const MeasurementChangeCardLocal: React.FC<MeasurementChangeCardProps> = ({
                     <View style={styles.radioItem}>
                         <TouchableOpacity
                             style={styles.radioItem}
-                            onPress={() => active(false)}
+                            onPress={() => {
+                                setValue(items?.unit2 || '');
+                                active(false);
+                            }}
                         >
                             <RadioButton
                                 value={items?.unit2 || ''}
@@ -68,7 +76,10 @@ const MeasurementChangeCardLocal: React.FC<MeasurementChangeCardProps> = ({
                     <View style={styles.radioItem}>
                         <TouchableOpacity
                             style={styles.radioItem}
-                            onPress={() => active(false)}
+                            onPress={() => {
+                                setValue(items?.unit3 || '');
+                                active(false);
+                            }}
                         >
                             <RadioButton
                                 value={items?.unit3 || ''}
@@ -82,7 +93,10 @@ const MeasurementChangeCardLocal: React.FC<MeasurementChangeCardProps> = ({
                     <View style={styles.radioItem}>
                         <TouchableOpacity
                             style={styles.radioItem}
-                            onPress={() => active(false)}
+                            onPress={() => {
+                                setValue(items?.unit4 || '');
+                                active(false);
+                            }}
                         >
                             <RadioButton
                                 value={items?.unit4 || ''}
@@ -96,7 +110,10 @@ const MeasurementChangeCardLocal: React.FC<MeasurementChangeCardProps> = ({
                     <View style={styles.radioItem}>
                         <TouchableOpacity
                             style={styles.radioItem}
-                            onPress={() => active(false)}
+                            onPress={() => {
+                                setValue(items?.unit5 || '');
+                                active(false);
+                            }}
                         >
                             <RadioButton
                                 value={items?.unit5 || ''}
@@ -110,7 +127,10 @@ const MeasurementChangeCardLocal: React.FC<MeasurementChangeCardProps> = ({
                     <View style={styles.radioItem}>
                         <TouchableOpacity
                             style={styles.radioItem}
-                            onPress={() => active(false)}
+                            onPress={() => {
+                                setValue(items?.unit6 || '');
+                                active(false);
+                            }}
                         >
                             <RadioButton
                                 value={items?.unit6 || ''}
@@ -124,7 +144,10 @@ const MeasurementChangeCardLocal: React.FC<MeasurementChangeCardProps> = ({
                     <View style={styles.radioItem}>
                         <TouchableOpacity
                             style={styles.radioItem}
-                            onPress={() => active(false)}
+                            onPress={() => {
+                                setValue(items?.unit7 || '');
+                                active(false);
+                            }}
                         >
                             <RadioButton
                                 value={items?.unit7 || ''}
@@ -138,7 +161,10 @@ const MeasurementChangeCardLocal: React.FC<MeasurementChangeCardProps> = ({
                     <View style={styles.radioItem}>
                         <TouchableOpacity
                             style={styles.radioItem}
-                            onPress={() => active(false)}
+                            onPress={() => {
+                                setValue(items?.unit8 || '');
+                                active(false);
+                            }}
                         >
                             <RadioButton
                                 value={items?.unit8 || ''}
