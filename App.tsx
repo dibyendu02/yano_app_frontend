@@ -10,6 +10,7 @@ import {StatusBar} from 'react-native';
 import Welcome from './src/screens/auth/Welcome';
 import MoreDetails from './src/screens/auth/MoreDetails';
 import Registration from './src/screens/auth/Registration';
+import DeviceConnection from './src/screens/DeviceConnection';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,15 +45,18 @@ export default function App() {
   };
 
   return (
-    <NavigationContainer ref={navigationRef} theme={theme}>
-      <StatusBar
-        barStyle="dark-content" // You can use "dark-content" if you prefer dark text
-        backgroundColor="white" // Set the background color you want
-      />
-      <UserContext.Provider
-        value={{login, logout, ProviderLogin, PatientLogin, isPatient}}>
-        {isLoggedIn ? <MainStack /> : <AuthStack />}
-      </UserContext.Provider>
-    </NavigationContainer>
+    // <NavigationContainer ref={navigationRef} theme={theme}>
+    //   <StatusBar
+    //     barStyle="dark-content" // You can use "dark-content" if you prefer dark text
+    //     backgroundColor="white" // Set the background color you want
+    //   />
+    //   <UserContext.Provider
+    //     value={{login, logout, ProviderLogin, PatientLogin, isPatient}}>
+    //     {isLoggedIn ? <MainStack /> : <AuthStack />}
+    //   </UserContext.Provider>
+    // </NavigationContainer>
+    <>
+      <DeviceConnection />
+    </>
   );
 }
