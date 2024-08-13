@@ -11,26 +11,26 @@ import {
   ScrollView,
   Share,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { userData } from '../../../../test/Data';
+import {userData} from '../../../../test/Data';
 import Header from '../../../../components/header/Header';
-import { EditIcon } from '../../../../assets/icon/IconNames';
+import {EditIcon} from '../../../../assets/icon/IconNames';
 import Card from '../../../../components/cards/Card';
-import { DummyImage } from '../../../../assets/dummy/images';
-import { navigate } from '../../../../navigation/RootNavigation';
-import { Colors } from '../../../../constants/Colors';
+import {DummyImage} from '../../../../assets/dummy/images';
+import {navigate} from '../../../../navigation/RootNavigation';
+import {Colors} from '../../../../constants/Colors';
 import PatientElements from '../../../../components/PatientElements';
 import Icons from '../../../../assets/icon/Icon';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import BottomSheet from '../../../../components/bottom-sheet/BottomSheet';
-import { CardStyles } from '../../../../components/cards/CardStyle';
+import {CardStyles} from '../../../../components/cards/CardStyle';
 import Badge from '../../../../components/Badge';
 import ShareButton from './ShareButton';
-import { StaticImage } from '../../../../assets/images';
+import {StaticImage} from '../../../../assets/images';
 
 let data1 = [
   {
@@ -42,14 +42,14 @@ let data1 = [
     icon: (
       <Image
         source={StaticImage.CalenderIcon}
-        style={{ height: 20, width: 20, tintColor: Colors.LightGreen }}
+        style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
       />
     ),
   },
   {
     label: userData.blood,
     icon: (
-      <Image source={StaticImage.BloodIcon} style={{ height: 20, width: 20 }} />
+      <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
     ),
   },
 ];
@@ -88,7 +88,7 @@ const menuData = [
       // />
       <Image
         source={StaticImage.FamilyIcon}
-        style={{ height: 20, width: 20, marginRight: 3 }}
+        style={{height: 20, width: 20, marginRight: 3}}
       />
     ),
     text: 'Family link',
@@ -105,7 +105,7 @@ const menuData = [
     icon: (
       <Image
         source={StaticImage.QuestionIcon}
-        style={{ height: 20, width: 18, marginRight: 3 }}
+        style={{height: 20, width: 18, marginRight: 3}}
       />
     ),
     text: "Yano's support",
@@ -116,7 +116,7 @@ const menuData = [
 const onShare = async () => {
   try {
     const result = await Share.share({
-      message: ''
+      message: '',
     });
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
@@ -141,8 +141,9 @@ export default function () {
         headerRightComponent={
           <TouchableOpacity>
             {/* <EditIcon /> */}
-            <Image source={require('../../../../assets/image/EditPencil.png')}
-              style={{ height: 26, width: 24 }}
+            <Image
+              source={require('../../../../assets/image/EditPencil.png')}
+              style={{height: 26, width: 24}}
             />
           </TouchableOpacity>
         }
@@ -211,7 +212,7 @@ export default function () {
             <ShareButton
               label="Share Profile"
               type="blue"
-              style={{ width: '85%' }}
+              style={{width: '85%'}}
               onPress={onShare}
               icon={
                 <Icons.EvilIcons
@@ -223,12 +224,12 @@ export default function () {
             />
             <FilledButton
               type="lightGrey"
-              style={{ width: '18%', marginLeft: 8 }}
+              style={{width: '18%', marginLeft: 8}}
               icon={
                 // <Icons.AntDesign name="qrcode" color={Colors.Blue} size={25} />
                 <Image
                   source={StaticImage.QrCode}
-                  style={{ width: 20, height: 20 }}
+                  style={{width: 20, height: 20}}
                 />
               }
               onPress={() => setShowQR(true)}
@@ -243,7 +244,7 @@ export default function () {
               paddingHorizontal: 20,
               paddingVertical: 10,
             }}
-            renderItem={({ item, index: _i }) => (
+            renderItem={({item, index: _i}) => (
               <TouchableOpacity
                 onPress={() => navigate(item.path)}
                 style={{
@@ -263,7 +264,8 @@ export default function () {
                     style={{
                       color: Colors.Blue,
                       fontSize: 18,
-                      fontWeight: '800',
+                      // fontWeight: '800',
+                      fontWeight: '600',
                       marginLeft: 14,
                     }}>
                     {item.text}
@@ -281,24 +283,22 @@ export default function () {
         </View>
       </ScrollView>
       <BottomSheet isVisible={showQR} onBackdropPress={() => setShowQR(false)}>
-        <View style={{ padding: 20, alignItems: 'center' }}>
+        <View style={{padding: 20, alignItems: 'center'}}>
           <View
             style={{
               padding: 5,
-            }}
-          >
+            }}>
             <Text
               style={{
-                fontFamily: "Roboto",
+                fontFamily: 'Roboto',
                 fontSize: 20,
                 fontWeight: '700',
-                color: Colors.Blue
-              }}
-            >Share QR code</Text>
+                color: Colors.Blue,
+              }}>
+              Share QR code
+            </Text>
           </View>
-          <Image source={DummyImage.QR}
-            style={{ width: 200, height: 200 }}
-          />
+          <Image source={DummyImage.QR} style={{width: 200, height: 200}} />
           <Text
             style={{
               marginVertical: 20,

@@ -12,12 +12,12 @@ import CommonLayout from '../../../../components/CommonLayout';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import CommonHeader from '../../../healthCondition/components/CommonHeader';
 import CustomInputField from '../../../../components/formComp/CustomInputField';
-import { useForm } from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import Icons from '../../../../assets/icon/Icon';
-import { Colors } from '../../../../constants/Colors';
-import { navigate } from '../../../../navigation/RootNavigation';
-import { CloseIcon, ShareIcon } from '../../../../assets/icon/IconNames';
-import { useNavigation } from '@react-navigation/native';
+import {Colors} from '../../../../constants/Colors';
+import {navigate} from '../../../../navigation/RootNavigation';
+import {CloseIcon, ShareIcon} from '../../../../assets/icon/IconNames';
+import {useNavigation} from '@react-navigation/native';
 
 const menuData = [
   {
@@ -30,7 +30,8 @@ const menuData = [
       />
     ),
     text: 'Scan QR code',
-    path: 'EditFamilyMembers',
+    path: 'AddFamilyQr',
+    // path: 'EditFamilyMembers',
   },
   {
     id: '2',
@@ -48,12 +49,12 @@ const menuData = [
       />
     ),
     text: 'Create family member account',
-    path: 'Create',
+    path: 'CreateFamilyMember',
   },
 ];
 
 const AddUserFamilyMember = () => {
-  const { control, handleSubmit } = useForm();
+  const {control, handleSubmit} = useForm();
   const [isComplete, setIsComplete] = React.useState(false);
   const navigation = useNavigation();
   return (
@@ -98,14 +99,14 @@ const AddUserFamilyMember = () => {
           }
         />
       )}
-      <View style={{ padding: 20 }}>
+      <View style={{padding: 20}}>
         {!isComplete ? (
           <CustomInputField
             name="email"
             label="Email of Family Member"
             placeholder="Enter Email"
             control={control}
-            rules={{ required: 'Email is required' }}
+            rules={{required: 'Email is required'}}
           />
         ) : (
           <View
@@ -146,13 +147,12 @@ const AddUserFamilyMember = () => {
                 paddingHorizontal: 20,
                 paddingVertical: 10,
               }}
-              renderItem={({ item, index: _i }) => (
+              renderItem={({item, index: _i}) => (
                 <TouchableOpacity
                   onPress={() => {
                     if (item.path === 'invite') {
-                      Share.share({ message: 'message' })
-                    } else
-                      navigate(item.path)
+                      Share.share({message: 'join Yano using this link '});
+                    } else navigate(item.path);
                   }}
                   style={{
                     width: '100%',
