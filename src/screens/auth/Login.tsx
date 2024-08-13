@@ -20,13 +20,12 @@ import FilledButton from '../../components/buttons/FilledButton';
 import { StaticImage } from '../../assets/images';
 import UserContext from '../../contexts/UserContext';
 
-const Login = () => {
+const Login = ({ navigation }: any) => {
   const { login } = useContext(UserContext);
   const { ...methods } = useForm({ mode: 'onBlur' });
 
   const onSubmit = () => {
-    login();
-    // navigate('tabs');
+    navigation.navigate(AuthScreen.LoadingScreen);
   };
   useEffect(() => {
     console.log();

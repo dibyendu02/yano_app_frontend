@@ -1,9 +1,9 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import {Controller, Control, FieldValues, FieldError} from 'react-hook-form';
-import {Colors} from '../../constants/Colors';
-
+import { Controller, Control, FieldValues, FieldError } from 'react-hook-form';
+import { Colors } from '../../constants/Colors';
+import ExpandMore from '../../assets/icon/expand_more.svg'
 interface Option {
   label: string;
   value: string | number;
@@ -13,9 +13,10 @@ interface CustomSelectProps {
   name: string;
   control: Control<FieldValues, object>;
   rules?: object;
-  options: Option[];
+  options?: Option[];
   placeholder?: string;
   label?: string;
+  onClick?: () => void;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
@@ -25,11 +26,12 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   rules = {},
   options,
   placeholder,
+  onClick = () => { },
 }) => {
   return (
     <View style={styles.inputBox}>
       {label && <Text style={styles.label}>{label}</Text>}
-      <Controller
+      {/* <Controller
         control={control}
         rules={rules}
         render={({field: {onChange, value}, fieldState: {error}}) => (
@@ -52,7 +54,40 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
           </>
         )}
         name={name}
-      />
+      /> */}
+
+      <View
+        style={{
+          backgroundColor: Colors.White,
+          borderRadius: 8,
+          marginTop: 5,
+          borderWidth: 1,
+          borderColor: Colors.LightGray,
+          height: 56,
+          paddingHorizontal: 15,
+          justifyContent: 'center',
+          flexDirection: 'row', // Align items in a row
+          alignItems: 'center', // Center items vertically
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 16,
+            color: Colors.Grey,
+            flex: 1, // Allow text to take up available space
+          }}
+        >
+          Selecciona la relación
+        </Text>
+
+        <TouchableOpacity
+          onPress={onClick}
+        >
+          <ExpandMore fill={Colors.Blue} />
+        </TouchableOpacity>
+      </View>
+
+
     </View>
   );
 };

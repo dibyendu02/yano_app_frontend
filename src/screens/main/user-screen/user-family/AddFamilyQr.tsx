@@ -1,6 +1,6 @@
 'use strict';
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, Text, TouchableOpacity, Linking, View} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
@@ -10,6 +10,12 @@ import {useNavigation} from '@react-navigation/native';
 
 const ScanScreen = () => {
   const navigation = useNavigation();
+
+  //   useEffect(() => {
+  //     setTimeout(() => {
+  //       navigation.navigate('EditFamilyMembers');
+  //     }, 3000);
+  //   }, []);
 
   const onSuccess = e => {
     Linking.openURL(e.data).catch(err =>

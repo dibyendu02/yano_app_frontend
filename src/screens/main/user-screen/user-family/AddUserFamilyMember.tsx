@@ -1,6 +1,7 @@
 import {
   FlatList,
   ScrollView,
+  Share,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -30,12 +31,13 @@ const menuData = [
     ),
     text: 'Scan QR code',
     path: 'AddFamilyQr',
+    // path: 'EditFamilyMembers',
   },
   {
     id: '2',
     icon: <ShareIcon color={Colors.LightGreen} />,
     text: 'Invite family member',
-    path: '',
+    path: 'invite',
   },
   {
     id: '3',
@@ -47,7 +49,7 @@ const menuData = [
       />
     ),
     text: 'Create family member account',
-    path: 'EditFamilyMembers',
+    path: 'CreateFamilyMember',
   },
 ];
 
@@ -147,7 +149,11 @@ const AddUserFamilyMember = () => {
               }}
               renderItem={({item, index: _i}) => (
                 <TouchableOpacity
-                  onPress={() => navigate(item.path)}
+                  onPress={() => {
+                    if (item.path === 'invite') {
+                      Share.share({message: 'join Yano using this link '});
+                    } else navigate(item.path);
+                  }}
                   style={{
                     width: '100%',
                     flexDirection: 'row',

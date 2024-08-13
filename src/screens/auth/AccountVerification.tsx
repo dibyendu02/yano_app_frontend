@@ -40,7 +40,7 @@ const AccountVerification = () => {
     {
       key: 'Mobile',
       label: 'SMS verification',
-      description: `We will send you a 6-digit verification code to \n+1234567890`,
+      description: `We will send you a 6-digit verification code to +1234567890`,
     },
   ];
 
@@ -98,7 +98,7 @@ const AccountVerification = () => {
               </Text>
             </>
           ) : (
-            "For your safety, we want to make sure it's \nreally you. Select a method to verify your \naccount."
+            "For your safety, we want to make sure it's really you. Select a method to verify your account."
           )}
         </Text>
         {mode === 'Verification' ? (
@@ -196,6 +196,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: Colors.White,
     padding: 16,
+    paddingRight: 30,
     marginVertical: 6,
     borderRadius: 8,
     borderWidth: 2,
