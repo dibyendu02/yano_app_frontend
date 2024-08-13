@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     radioItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 10,
+        marginBottom: 2,
     },
     radioText: {
         marginLeft: 8,
