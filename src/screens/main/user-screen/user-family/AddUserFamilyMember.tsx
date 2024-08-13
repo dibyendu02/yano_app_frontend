@@ -29,7 +29,7 @@ const menuData = [
       />
     ),
     text: 'Scan QR code',
-    path: '',
+    path: 'AddFamilyQr',
   },
   {
     id: '2',
