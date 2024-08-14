@@ -14,10 +14,10 @@ import {
   NativeEventEmitter,
   PermissionsAndroid,
   FlatList,
+  Alert,
 } from 'react-native';
 import BleManager from 'react-native-ble-manager';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {fetchHistory} from '../core/BGMManager/BGMManager';
 
 const BleManagerModule = NativeModules.BleManager;
 const BleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -31,7 +31,18 @@ const App = () => {
   const [isScanning, setIsScanning] = useState(false);
   const [connectedDevices, setConnectedDevices] = useState([]);
   const [discoveredDevices, setDiscoveredDevices] = useState([]);
+  const [selectedPeripheral, setSelectedPeripheral] = useState(null);
+  const [services, setServices] = useState([]);
+  const [characteristics, setCharacteristics] = useState([]);
+  const [selectedService, setSelectedService] = useState(null);
+  const [selectedCharacteristic, setSelectedCharacteristic] = useState(null);
   const peripherals = new Map();
+
+  //   useEffect(() => {
+  // console.log(characteristics)
+  //   }, [characteristics])
+
+  // console.log(characteristics);
 
   const requestBluetoothPermissions = async () => {
     if (Platform.OS === 'android' && Platform.Version >= 31) {
@@ -104,10 +115,23 @@ const App = () => {
       peripheral.connected = true;
       peripherals.set(peripheral.id, peripheral);
       setConnectedDevices(Array.from(peripherals.values()));
+      setSelectedPeripheral(peripheral);
 
-      BleManager.retrieveServices(peripheral.id).then(peripheralInfo => {
-        console.log('Peripheral info:', peripheralInfo);
-      });
+      // Retrieve services and characteristics
+      const peripheralInfo = await BleManager.retrieveServices(peripheral.id);
+      console.log('Peripheral info:', peripheralInfo);
+
+      setServices(peripheralInfo.services);
+
+      if (
+        peripheralInfo.characteristics &&
+        peripheralInfo.characteristics.length > 0
+      ) {
+        setCharacteristics(peripheralInfo.characteristics);
+        console.log('Characteristics:', peripheralInfo.characteristics);
+      } else {
+        console.log('No characteristics found for services');
+      }
     } catch (error) {
       console.error('Connection error:', error);
     }
@@ -121,6 +145,11 @@ const App = () => {
       peripheral.connected = false;
       peripherals.set(peripheral.id, peripheral);
       setConnectedDevices(Array.from(peripherals.values()));
+      setSelectedPeripheral(null);
+      setServices([]);
+      setCharacteristics([]);
+      setSelectedService(null);
+      setSelectedCharacteristic(null);
     } catch (error) {
       console.error('Disconnection error:', error);
     }
@@ -144,7 +173,42 @@ const App = () => {
     }
   };
 
-  const RenderItem = ({peripheral}) => {
+  const handleReadCharacteristic = async () => {
+    if (selectedService && selectedCharacteristic) {
+      try {
+        const readData = await BleManager.read(
+          selectedPeripheral.id,
+          selectedService.uuid,
+          selectedCharacteristic.uuid,
+        );
+        const decodedData = String.fromCharCode(...readData);
+        Alert.alert('Read Data', decodedData);
+        console.log('Read Data:', decodedData);
+      } catch (error) {
+        console.error('Error reading characteristic:', error);
+      }
+    } else {
+      Alert.alert('Error', 'Please select a service and characteristic.');
+    }
+  };
+
+  const RenderServiceItem = ({service}) => (
+    <TouchableOpacity
+      style={styles.serviceItem}
+      onPress={() => setSelectedService(service)}>
+      <Text style={styles.serviceText}>{service.uuid}</Text>
+    </TouchableOpacity>
+  );
+
+  const RenderCharacteristicItem = ({characteristic}) => (
+    <TouchableOpacity
+      style={styles.characteristicItem}
+      onPress={() => setSelectedCharacteristic(characteristic)}>
+      <Text style={styles.characteristicText}>{characteristic.uuid}</Text>
+    </TouchableOpacity>
+  );
+
+  const RenderDeviceItem = ({peripheral}) => {
     const {name, rssi, connected} = peripheral;
     return (
       <>
@@ -212,16 +276,6 @@ const App = () => {
     };
   }, []);
 
-  // getting data
-  const fetchData = async () => {
-    const data = await fetchHistory('HC02-F27D9E', 0);
-    console.log(data);
-  };
-  useEffect(() => {
-    console.log(connectedDevices);
-    fetchData();
-  }, []);
-
   return (
     <SafeAreaView style={[backgroundStyle, styles.mainBody]}>
       <StatusBar
@@ -262,11 +316,47 @@ const App = () => {
       ) : discoveredDevices.length > 0 ? (
         <FlatList
           data={discoveredDevices}
-          renderItem={({item}) => <RenderItem peripheral={item} />}
+          renderItem={({item}) => <RenderDeviceItem peripheral={item} />}
           keyExtractor={item => item.id}
         />
       ) : (
         <Text style={styles.noDevicesText}>No devices found</Text>
+      )}
+
+      {selectedPeripheral && (
+        <>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Services</Text>
+            <FlatList
+              data={services}
+              renderItem={({item}) => <RenderServiceItem service={item} />}
+              keyExtractor={item => item.uuid}
+            />
+          </View>
+
+          {selectedService && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Characteristics</Text>
+              <FlatList
+                data={characteristics.filter(
+                  char => char.service === selectedService.uuid,
+                )}
+                renderItem={({item}) => (
+                  <RenderCharacteristicItem characteristic={item} />
+                )}
+                keyExtractor={item => item.uuid}
+              />
+            </View>
+          )}
+
+          {selectedCharacteristic && (
+            <TouchableOpacity
+              style={styles.readButton}
+              onPress={handleReadCharacteristic}>
+              <Text style={styles.buttonTextStyle}>Read Characteristic</Text>
+            </TouchableOpacity>
+          )}
+        </>
       )}
     </SafeAreaView>
   );
@@ -325,6 +415,43 @@ const styles = StyleSheet.create({
   noDevicesText: {
     textAlign: 'center',
     fontSize: 18,
+    marginTop: 20,
+  },
+  section: {
+    marginVertical: 20,
+    paddingHorizontal: 20,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  serviceItem: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 5,
+  },
+  serviceText: {
+    fontSize: 16,
+  },
+  characteristicItem: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginBottom: 5,
+  },
+  characteristicText: {
+    fontSize: 16,
+  },
+  readButton: {
+    backgroundColor: '#4CAF50',
+    padding: 15,
+    borderRadius: 5,
+    marginHorizontal: 20,
+    alignItems: 'center',
     marginTop: 20,
   },
 });

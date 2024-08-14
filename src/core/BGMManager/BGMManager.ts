@@ -1,7 +1,9 @@
 import {NativeModules} from 'react-native';
 import {BGMErrorCode, BGMManagerType} from './Type';
 
-const {BgmManager: BGMManager} = NativeModules as {BgmManager: BGMManagerType};
+export const {BgmManager: BGMManager} = NativeModules as {
+  BgmManager: BGMManagerType;
+};
 
 export async function fetchHistory(
   deviceSn: string,
