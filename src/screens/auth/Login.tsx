@@ -6,36 +6,82 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
-import React, { useContext, useEffect } from 'react';
+import React, {useContext, useState} from 'react';
 
+import axios from 'axios';
 import Header from '../../components/header/Header';
-import { navigate } from '../../navigation/RootNavigation';
-import { Colors } from '../../constants/Colors';
-import { AuthScreen } from '../../navigation/auth/AuthScreens';
+import {navigate} from '../../navigation/RootNavigation';
+import {Colors} from '../../constants/Colors';
+import {AuthScreen} from '../../navigation/auth/AuthScreens';
 import FormInput from '../../components/hook-form/FormInput';
-import { FormInputType } from '../../components/hook-form/types';
-import { FormProvider, useForm } from 'react-hook-form';
+import {FormInputType} from '../../components/hook-form/types';
+import {FormProvider, useForm} from 'react-hook-form';
 import FilledButton from '../../components/buttons/FilledButton';
-import { StaticImage } from '../../assets/images';
+import {StaticImage} from '../../assets/images';
 import UserContext from '../../contexts/UserContext';
+import {BASE_URL} from '../../../App';
+import {storeData} from '../../utils/Storage';
 
-const Login = ({ navigation }: any) => {
-  const { login } = useContext(UserContext);
-  const { ...methods } = useForm({ mode: 'onBlur' });
+const Login = ({navigation}: any) => {
+  const {login, PatientLogin, ProviderLogin} = useContext(UserContext);
+  const [isClicked, setIsClicked] = useState(false);
+  const [isErr, setIsErr] = useState(true);
+  const methods = useForm({mode: 'onBlur'});
 
-  const onSubmit = () => {
-    navigation.navigate(AuthScreen.LoadingScreen);
+  const onSubmit = async (data: any) => {
+    const {email, password} = data;
+
+    setIsClicked(true);
+
+    try {
+      const response = await axios.post(`${BASE_URL}/api/login`, {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        // Process the result, for example, save the token or user data
+        // login(response.data); // Assuming login function in UserContext handles the result
+        console.log(response.data.userData);
+        console.log(response.data.token);
+        await storeData('token', response.data.token);
+        await storeData('userId', response.data.userData._id);
+        await storeData('isAuth', true);
+        await storeData('userType', response.data.userData.userType);
+        if (response.data.userData.userType == 'patient') {
+          PatientLogin();
+          navigation.navigate(AuthScreen.LoadingScreen);
+        } else {
+          ProviderLogin();
+          navigation.navigate(AuthScreen.LoadingScreen);
+        }
+        // navigation.navigate(AuthScreen.LoadingScreen); // Navigate to the loading screen or the next screen
+      } else {
+        Alert.alert(
+          'Login Failed',
+          response.data.message || 'An error occurred',
+        );
+        setIsClicked(false);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      Alert.alert(
+        'Login Failed',
+        error.response?.data?.message || 'An unexpected error occurred.',
+      );
+      setIsClicked(false);
+    }
   };
-  useEffect(() => {
-    console.log();
-  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <Header
         title=""
         headerRightComponent={
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={styles.text}>Not registered?</Text>
             <TouchableOpacity
               onPress={() => navigate(AuthScreen.SelectUserType)}>
@@ -60,7 +106,6 @@ const Login = ({ navigation }: any) => {
             name="email"
             label="Email"
             type={FormInputType.Email}
-            // placeholder="Enter your email"
             autoCapitalize="none"
             keyboardType="email-address"
             rules={{
@@ -74,7 +119,6 @@ const Login = ({ navigation }: any) => {
             name="password"
             label="Password"
             type={FormInputType.Password}
-            // placeholder="Enter your password"
             rules={{
               required: {
                 value: true,
@@ -82,6 +126,7 @@ const Login = ({ navigation }: any) => {
               },
             }}
           />
+          {isErr && <Text style={{fontSize: 16, color: Colors}}>Err</Text>}
         </FormProvider>
         <View
           style={{
@@ -89,18 +134,20 @@ const Login = ({ navigation }: any) => {
             justifyContent: 'flex-end',
             marginBottom: 20,
           }}>
-          <TouchableOpacity
-            onPress={() => navigate(AuthScreen.ForgotPass)}
-          >
-            <Text style={{ color: Colors.Blue }}>Forgot your password?</Text>
+          <TouchableOpacity onPress={() => navigate(AuthScreen.ForgotPass)}>
+            <Text style={{color: Colors.Blue}}>Forgot your password?</Text>
           </TouchableOpacity>
         </View>
-        <FilledButton
-          label="Log in"
-          type="blue"
-          disabled={!methods.formState.isValid}
-          onPress={methods.handleSubmit(onSubmit)}
-        />
+        {isClicked ? (
+          <ActivityIndicator size={'large'} color={Colors.Blue} />
+        ) : (
+          <FilledButton
+            label="Log in"
+            type="blue"
+            disabled={!methods.formState.isValid}
+            onPress={methods.handleSubmit(onSubmit)}
+          />
+        )}
         <View
           style={{
             flexDirection: 'row',
@@ -109,11 +156,11 @@ const Login = ({ navigation }: any) => {
             marginVertical: 40,
           }}>
           <View
-            style={{ width: '45%', height: 2, backgroundColor: Colors.LightGray }}
+            style={{width: '45%', height: 2, backgroundColor: Colors.LightGray}}
           />
-          <Text style={{ fontSize: 18, color: Colors.Blue }}>o</Text>
+          <Text style={{fontSize: 16, color: Colors.Blue}}>or</Text>
           <View
-            style={{ width: '45%', height: 2, backgroundColor: Colors.LightGray }}
+            style={{width: '45%', height: 2, backgroundColor: Colors.LightGray}}
           />
         </View>
         <FilledButton
