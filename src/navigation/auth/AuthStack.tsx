@@ -17,10 +17,12 @@ import AuthDeviceInfo from '../../screens/auth/AuthDeviceInfo';
 import AuthDeviceConnected from '../../screens/auth/AuthDeviceConnected';
 import AuthInstruction from '../../screens/auth/AuthInstruction';
 import AuthAskDevice from '../../screens/auth/AuthAskDevice';
+import FirstScreen from '../../screens/auth/FirstPage';
 
 const Stack = createNativeStackNavigator<AuthStackParams>();
 
 const authStackConfig: AuthStackConfig[] = [
+  {name: 'FirstScreen', component: FirstScreen, options: {headerShown: false}},
   {name: AuthScreen.Landing, component: Landing, options: {headerShown: false}},
   {
     name: AuthScreen.SelectUserType,

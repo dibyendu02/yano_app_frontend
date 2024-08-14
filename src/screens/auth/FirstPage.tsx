@@ -7,15 +7,14 @@ import {
   Easing,
 } from 'react-native';
 import React, {useContext, useEffect, useRef} from 'react';
-import logo_transparent from '../assets/image/logo_transparent.png';
-import {Image} from 'react-native';
-import UserContext from '../contexts/UserContext';
-import {navigate} from '../navigation/RootNavigation';
-// Assuming Loader is an SVG, you can wrap it with Animated
-import LoaderSvg from '../assets/icon/wrapper.svg';
 
-const LoadingScreen = () => {
-  const {login} = useContext(UserContext);
+import logo_transparent from '../../assets/image/logo_transparent.png';
+import {Image} from 'react-native';
+import UserContext from '../../contexts/UserContext';
+import {navigate} from '../../navigation/RootNavigation';
+import LoaderSvg from '../../assets/icon/wrapper.svg';
+
+const FirstScreen = () => {
   const spinValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -31,10 +30,11 @@ const LoadingScreen = () => {
 
     // Uncomment this when you want to trigger login and navigation
     setTimeout(() => {
-      login();
-      navigate('tabs');
-    }, 1000);
-  }, [spinValue, login]);
+      //   login();
+      //   navigate('tabs');
+      navigate('Landing');
+    }, 2000);
+  }, [spinValue]);
 
   const spin = spinValue.interpolate({
     inputRange: [0, 1],
@@ -61,4 +61,4 @@ const LoadingScreen = () => {
   );
 };
 
-export default LoadingScreen;
+export default FirstScreen;

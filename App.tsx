@@ -1,5 +1,9 @@
-import React from 'react';
-import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {
+  DefaultTheme,
+  NavigationContainer,
+  useNavigation,
+} from '@react-navigation/native';
 import AuthStack from './src/navigation/auth/AuthStack';
 import {useState} from 'react';
 import MainStack from './src/navigation/main/MainStack';
@@ -10,12 +14,13 @@ import {StatusBar} from 'react-native';
 import Welcome from './src/screens/auth/Welcome';
 import MoreDetails from './src/screens/auth/MoreDetails';
 import Registration from './src/screens/auth/Registration';
+import {removeDataByKey, retrieveData} from './src/utils/Storage';
+import {AuthScreen} from './src/navigation/auth/AuthScreens';
+
+export const BASE_URL = 'https://yano-backend.onrender.com';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  //patient view
-
   const [isPatient, setIsPatient] = useState(false);
 
   const PatientLogin = () => {
@@ -33,6 +38,11 @@ export default function App() {
   const logout = () => {
     setIsLoggedIn(false);
     setIsPatient(false);
+
+    removeDataByKey('token');
+    removeDataByKey('userId');
+    removeDataByKey('isAuth');
+    removeDataByKey('userType');
   };
 
   const theme = {
@@ -42,6 +52,45 @@ export default function App() {
       background: Colors.White,
     },
   };
+
+  // variables
+
+  const [isAuth, setIsAuth] = useState(false);
+  const [userType, setUserType] = useState('');
+
+  const gettingAuth = async () => {
+    const data = await retrieveData('isAuth');
+    setIsAuth(data);
+    console.log('isAuth ', isAuth);
+  };
+  const gettingUserType = async () => {
+    const data = await retrieveData('userType');
+    setUserType(data);
+    console.log('userType ', userType);
+  };
+
+  useEffect(() => {
+    gettingAuth();
+    gettingUserType();
+    // if (isAuth) setIsLoggedIn(true);
+    // if (userType == 'patient') setIsPatient(true);
+
+    // if (isAuth && userType == 'patient') {
+    //   PatientLogin();
+    //   navigation.navigate(AuthScreen.LoadingScreen);
+    // }
+  }, []);
+
+  useEffect(() => {
+    if (isAuth && userType == 'patient') {
+      setIsLoggedIn(true);
+      setIsPatient(true);
+    }
+    if (isAuth && userType == 'doctor') {
+      setIsLoggedIn(true);
+      setIsPatient(false);
+    }
+  }, [isAuth, userType]);
 
   return (
     <NavigationContainer ref={navigationRef} theme={theme}>
