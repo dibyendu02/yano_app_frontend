@@ -9,6 +9,7 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
 import React from 'react';
 import Header from '../../components/header/Header';
@@ -27,6 +28,9 @@ import { AuthScreensProps } from '../../navigation/auth/types';
 import { UserType } from '../../constants/enums';
 import moment from 'moment';
 import { registerDoctor, registerPatient } from '../../services/Endpoints';
+import { signUPPatient } from '../../api/POST/signup';
+import axios from 'axios';
+import { ActivityIndicator } from 'react-native-paper';
 
 const Gender = [
   {
@@ -106,54 +110,126 @@ const DoctorSpecialties = [
 
 const Registration: React.FC<AuthScreensProps> = ({ route }) => {
   //@ts-ignore
-  const userType = route?.params?.userType;
 
-  console.log(userType);
+  const [isContinue, setIsContinue] = React.useState(false);
+  const userType = route?.params?.userType;
 
   const { ...methods } = useForm({
     mode: 'onChange',
   });
-  const onSubmit = async (data: any) => {
-    let requestData = new FormData();
-    if (data?.file) {
-      requestData.append('image', {
-        uri:
-          Platform.OS === 'ios'
-            ? `file:///${data?.file?.path}`
-            : data?.file.path,
-        type: data?.file?.mime,
-        name: `${moment()}.jpeg`,
-      });
-    }
+  // const onSubmit = async (data: any) => {
+  //   let requestData = new FormData();
+  //   if (data?.file) {
+  //     requestData.append('image', {
+  //       uri:
+  //         Platform.OS === 'ios'
+  //           ? `file:///${data?.file?.path}`
+  //           : data?.file.path,
+  //       type: data?.file?.mime,
+  //       name: `${moment()}.jpeg`,
+  //     });
+  //   }
 
-    let payload: any = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      gender: '',
-      dateOfBirth: '',
-      password: '',
-      specialty: '',
-    };
-    for (let key in payload) {
-      requestData.append(key, data[key]);
+  //   let payload: any = {
+  //     firstName: '',
+  //     lastName: '',
+  //     email: '',
+  //     phoneNumber: '',
+  //     gender: '',
+  //     dateOfBirth: '',
+  //     password: '',
+  //     specialty: '',
+  //   };
+
+  //   for (let key in payload) {
+  //     requestData.append(key, data[key]);
+  //   }
+
+
+  //   const res = await signUP(requestData)
+  //   console.log(res, 'res')
+
+
+  //   if (userType === UserType.Patient) {
+  //     const res = await signUP(requestData)
+  //     console.log(res, 'res')
+  //   } else {
+  //     registerDoctor(requestData)
+  //       .then(res => {
+  //         console.log(res, '<--------->');
+  //       })
+  //       .catch(e => console.log('Error!', e?.response?.data?.message));
+  //   }
+  //   // navigate(AuthScreen.AccountVerification);
+  // };
+
+  const onSubmit = async (data: any) => {
+    setIsContinue(true);
+    try {
+      let requestData = new FormData();
+
+      // Append all other form data to requestData
+      Object.keys(data).forEach(key => {
+        if (key !== 'file' && key !== 'repeatPassword') { // Exclude 'file' and 'repeatPassword'
+          if (key === 'dateOfBirth') {
+            requestData.append(key, moment(data[key]).format('YYYY-MM-DD'));
+          } else {
+            requestData.append(key, data[key]);
+          }
+        }
+      });
+
+      // Add the country to requestData
+      requestData.append('country', 'India');
+
+      // Handle file separately if it exists
+      if (data.file) {
+        requestData.append('file', {
+          uri: Platform.OS === 'ios' ? `file://${data.file.path}` : data.file.path,
+          type: data.file.mime,
+          name: `photo_${Date.now()}.jpg`,
+        });
+      }
+
+      let res;
+
+      if (userType === UserType.Patient) {
+        res = await signUPPatient(requestData);
+
+        if (res.code === 200) {
+          navigate(AuthScreen.AccountVerification, { userType: userType })
+        }
+      } else {
+        console.log('Form Data being sent:', requestData);
+        res = await registerDoctor(requestData);
+        if (res.code === 200) {
+          navigate(AuthScreen.AccountVerification, { userType: userType })
+        }
+      }
+
+      if (res.code === 400) {
+        Alert.alert('Error', res.error.message || 'Bad Request');
+        setIsContinue(false);
+        return;
+      }
+
+      navigate(AuthScreen.AccountVerification);
+
+      console.log(res, '<--------- Response --------->');
+      // navigate(AuthScreen.AccountVerification); // Uncomment if you need to navigate after successful signup
+
+    } catch (e) {
+      console.error('Error!', e);
+      if (axios.isAxiosError(e) && e.response) {
+        console.error('Server Response:', e.response.data);
+        Alert.alert('Error', e.response.data.message || 'An error occurred');
+      }
+    } finally {
+      setIsContinue(false);
     }
-    if (userType === UserType.Patient) {
-      registerPatient(requestData)
-        .then(res => {
-          console.log(res, '<--------->');
-        })
-        .catch(e => console.log('Error!', e?.response?.data?.message));
-    } else {
-      registerDoctor(requestData)
-        .then(res => {
-          console.log(res, '<--------->');
-        })
-        .catch(e => console.log('Error!', e?.response?.data?.message));
-    }
-    navigate(AuthScreen.AccountVerification);
   };
+
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView
@@ -258,7 +334,7 @@ const Registration: React.FC<AuthScreensProps> = ({ route }) => {
                 />
                 {userType === UserType.Doctor && (
                   <FormSelectionInput
-                    name="specialty"
+                    name="speciality"
                     placeholder="Select your specialty"
                     label="Specialty"
                     options={DoctorSpecialties}
@@ -322,16 +398,18 @@ const Registration: React.FC<AuthScreensProps> = ({ route }) => {
           Privacy policies
         </Text>
       </Text>
-      <FilledButton
-        label="Continue"
-        type="blue"
-        style={{ width: '92%', alignSelf: 'center', marginVertical: 10 }}
-        // disabled={!methods.formState.isDirty}
-        // onPress={methods.handleSubmit(onSubmit)}
-        onPress={() =>
-          navigate(AuthScreen.AccountVerification, { userType: userType })
-        }
-      />
+      {isContinue ? (
+        <ActivityIndicator size={'large'} color={Colors.Blue} />) :
+        <FilledButton
+          label="Continue"
+          type="blue"
+          style={{ width: '92%', alignSelf: 'center', marginVertical: 10 }}
+          // disabled={!methods.formState.isDirty}
+          onPress={methods.handleSubmit(onSubmit)}
+        // onPress={() =>
+        //   navigate(AuthScreen.AccountVerification, { userType: userType })
+        // }
+        />}
     </SafeAreaView>
   );
 };
