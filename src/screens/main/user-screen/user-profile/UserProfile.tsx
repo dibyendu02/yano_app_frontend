@@ -11,12 +11,12 @@ import {
   ScrollView,
   Share,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {userData} from '../../../../test/Data';
+// import {userData} from '../../../../test/Data';
 import Header from '../../../../components/header/Header';
 import {EditIcon} from '../../../../assets/icon/IconNames';
 import Card from '../../../../components/cards/Card';
@@ -31,39 +31,7 @@ import {CardStyles} from '../../../../components/cards/CardStyle';
 import Badge from '../../../../components/Badge';
 import ShareButton from './ShareButton';
 import {StaticImage} from '../../../../assets/images';
-
-let data1 = [
-  {
-    label: userData.gender,
-    icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
-  },
-  {
-    label: userData.age,
-    icon: (
-      <Image
-        source={StaticImage.CalenderIcon}
-        style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
-      />
-    ),
-  },
-  {
-    label: userData.blood,
-    icon: (
-      <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
-    ),
-  },
-];
-
-let data2 = [
-  {
-    label: userData.height,
-    icon: <MaterialIcons name="height" size={20} color={'#76BC21'} />,
-  },
-  {
-    label: userData.weight,
-    icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
-  },
-];
+import UserContext from '../../../../contexts/UserContext';
 
 const menuData = [
   {
@@ -134,6 +102,46 @@ const onShare = async () => {
 
 export default function () {
   const [showQR, setShowQR] = useState(false);
+  const {userData} = useContext(UserContext);
+  console.log(userData);
+
+  const formatDateOfBirth = dateString => {
+    const options = {year: 'numeric', month: 'long', day: 'numeric'};
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  let data1 = [
+    {
+      label: userData.gender,
+      icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
+    },
+    {
+      label: formatDateOfBirth(userData.dateOfBirth || '1985-05-15'),
+      icon: (
+        <Image
+          source={StaticImage.CalenderIcon}
+          style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
+        />
+      ),
+    },
+    {
+      label: userData.bloodType,
+      icon: (
+        <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
+      ),
+    },
+  ];
+
+  let data2 = [
+    {
+      label: userData.height,
+      icon: <MaterialIcons name="height" size={20} color={'#76BC21'} />,
+    },
+    {
+      label: userData.weight,
+      icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
+    },
+  ];
   return (
     <SafeAreaView style={styles.container}>
       <Header
@@ -160,7 +168,9 @@ export default function () {
               borderRadius: 40,
             }}
           />
-          <Text style={styles.patientName}>María Clemente</Text>
+          <Text style={styles.patientName}>
+            {userData.firstName} {userData.lastName}
+          </Text>
           <View style={styles.detailRow}>
             {data1.map((e, i, a) => (
               <View style={styles.detailItem} key={e.label}>

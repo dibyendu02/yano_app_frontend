@@ -9,31 +9,29 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Header from '../../../components/header/Header';
-import { EditIcon } from '../../../assets/icon/IconNames';
-import { Colors } from '../../../constants/Colors';
-import { CardStyles } from '../../../components/cards/CardStyle';
-import { DummyImage } from '../../../assets/dummy/images';
+import {Colors} from '../../../constants/Colors';
+import {CardStyles} from '../../../components/cards/CardStyle';
 import FilledButton from '../../../components/buttons/FilledButton';
-import Icons from '../../../assets/icon/Icon';
 import BottomSheet from '../../../components/bottom-sheet/BottomSheet';
 import ShareButton from '../profile/ShareProfileButton';
-import { StaticImage } from '../../../assets/images';
-import { staticIcons } from '../../../assets/image';
+import {StaticImage} from '../../../assets/images';
+import {staticIcons} from '../../../assets/image';
+import {retrieveData} from '../../../utils/Storage';
+import axios from 'axios';
+import {BASE_URL} from '../../../../App';
+import Icons from '../../../assets/icon/Icon';
+import {DummyImage} from '../../../assets/dummy/images';
+import UserContext from '../../../contexts/UserContext';
 
 const menuData = [
   {
     id: '1',
     icon: (
-      // <Icons.MaterialCommunityIcons
-      //   name="toolbox"
-      //   size={25}
-      //   color={Colors.LightGreen}
-      // />
       <Image
         source={staticIcons.MeasurementTool}
-        style={{ height: 20, width: 20 }}
+        style={{height: 20, width: 20}}
       />
     ),
     text: 'Measurement Tool',
@@ -53,24 +51,61 @@ const menuData = [
         size={25}
         color={Colors.LightGreen}
       />
-      // <Image
-      //   source={staticIcons.Help}
-      //   style={{ height: 20, width: 20 }}
-      // />
     ),
     text: "Yano's support",
     path: 'YanoSupport',
   },
 ];
 
-const MyProfile = ({ navigation }: any) => {
-  let [showQR, setShowQR] = useState(false);
+const MyProfile = ({navigation}: any) => {
+  const [showQR, setShowQR] = useState(false);
+
+  const {userData} = useContext(UserContext);
+  console.log(userData);
+  // const [userId, setUserId] = useState('');
+  // const [userData, setUserData] = useState(null);
+
+  // const fetchDoctorData = async () => {
+  //   try {
+  //     const response = await axios.get(`${BASE_URL}api/userdoctor/${userId}`);
+  //     console.log('API Response:', response.data);
+  //     setUserData(response.data.userData);
+  //   } catch (error) {
+  //     console.error('API Error:', error);
+  //     if (error.response) {
+  //       console.log('Server Error Response:', error.response.data);
+  //     } else {
+  //       console.log('Network Error or other issue:', error.message);
+  //     }
+  //   }
+  // };
+
+  // const gettingUserId = async () => {
+  //   try {
+  //     const data = await retrieveData('userId');
+  //     console.log('Retrieved UserId:', data);
+  //     setUserId(data);
+  //   } catch (error) {
+  //     console.error('Error retrieving UserId:', error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   gettingUserId();
+  // }, []);
+
+  // useEffect(() => {
+  //   if (userId) {
+  //     fetchDoctorData();
+  //   }
+  // }, [userId]);
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <BottomSheet isVisible={showQR} onBackdropPress={() => setShowQR(false)}>
-        <View style={{ padding: 20, alignItems: 'center' }}>
+        <View style={{padding: 20, alignItems: 'center'}}>
           <Image source={DummyImage.QR} height={150} width={150} />
-          <Text style={{ marginVertical: 20 }}>
+          <Text style={{marginVertical: 20}}>
             Scan this QR code with your patient's cell phone to access their
             measurements and health history.
           </Text>
@@ -85,27 +120,30 @@ const MyProfile = ({ navigation }: any) => {
         title="My profile"
         showBackIcon={false}
         headerRightComponent={
-          <TouchableOpacity
-            onPress={() => navigation.navigate('EditProfile')}
-          >
-            <Image source={staticIcons.EditPencil} style={{ height: 24, width: 24 }} />
+          <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
+            <Image
+              source={staticIcons.EditPencil}
+              style={{height: 24, width: 24}}
+            />
           </TouchableOpacity>
         }
       />
-      <View style={{ flex: 1, backgroundColor: Colors.GhostWhite }}>
-        <View style={[CardStyles.container, { marginTop: 10 }]}>
+      <View style={{flex: 1, backgroundColor: Colors.GhostWhite}}>
+        <View style={[CardStyles.container, {marginTop: 10}]}>
           <View
-            style={{ paddingVertical: 24, width: '100%', alignItems: 'center' }}>
+            style={{paddingVertical: 24, width: '100%', alignItems: 'center'}}>
             <Image
               source={DummyImage.DoctorImg}
               height={80}
               width={80}
-              style={{ borderRadius: 40 }}
+              style={{borderRadius: 40}}
             />
-            <Text style={{ color: Colors.Blue, fontSize: 18, fontWeight: '600' }}>
-              Dr. Eduardo Escobar
+            <Text style={{color: Colors.Blue, fontSize: 18, fontWeight: '600'}}>
+              Dr. {userData?.firstName} {userData?.lastName}
             </Text>
-            <Text style={{ color: Colors.SteelBlue }}>General medicine</Text>
+            <Text style={{color: Colors.SteelBlue}}>
+              {userData?.speciality}
+            </Text>
           </View>
 
           <View
@@ -125,7 +163,7 @@ const MyProfile = ({ navigation }: any) => {
             <ShareButton
               label="Share Profile"
               type="blue"
-              style={{ width: '75%' }}
+              style={{width: '75%'}}
               icon={
                 <Icons.EvilIcons
                   name="share-google"
@@ -137,12 +175,15 @@ const MyProfile = ({ navigation }: any) => {
             <FilledButton
               type="lightGrey"
               label=""
-              style={{ width: '18%', marginLeft: 8 }}
+              style={{width: '18%', marginLeft: 8}}
               icon={
-                // <Icons.AntDesign name="qrcode" color={Colors.Blue} size={25} />
-                <Image source={StaticImage.QrCode} style={{
-                  width: 20, height: 20
-                }} />
+                <Image
+                  source={StaticImage.QrCode}
+                  style={{
+                    width: 20,
+                    height: 20,
+                  }}
+                />
               }
               onPress={() => setShowQR(true)}
             />
@@ -152,8 +193,8 @@ const MyProfile = ({ navigation }: any) => {
         <View style={CardStyles.container}>
           <FlatList
             data={menuData}
-            style={{ paddingHorizontal: 20, paddingVertical: 10 }}
-            renderItem={({ item, index: _i }) => (
+            style={{paddingHorizontal: 20, paddingVertical: 10}}
+            renderItem={({item, index: _i}) => (
               <TouchableOpacity
                 onPress={() => navigation.navigate(item.path)}
                 style={{
@@ -163,7 +204,7 @@ const MyProfile = ({ navigation }: any) => {
                   paddingVertical: 14,
                   alignItems: 'center',
                 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   {item.icon}
                   <Text
                     style={{

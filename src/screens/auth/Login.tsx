@@ -1,4 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
+import React, {useContext, useState} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -9,7 +9,6 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-import React, {useContext, useState} from 'react';
 
 import axios from 'axios';
 import Header from '../../components/header/Header';
@@ -28,7 +27,6 @@ import {storeData} from '../../utils/Storage';
 const Login = ({navigation}: any) => {
   const {login, PatientLogin, ProviderLogin} = useContext(UserContext);
   const [isClicked, setIsClicked] = useState(false);
-  const [isErr, setIsErr] = useState(true);
   const methods = useForm({mode: 'onBlur'});
 
   const onSubmit = async (data: any) => {
@@ -43,22 +41,22 @@ const Login = ({navigation}: any) => {
       });
 
       if (response.status === 200) {
-        // Process the result, for example, save the token or user data
-        // login(response.data); // Assuming login function in UserContext handles the result
-        console.log(response.data.userData);
-        console.log(response.data.token);
+        // Store necessary data locally
         await storeData('token', response.data.token);
         await storeData('userId', response.data.userData._id);
         await storeData('isAuth', true);
         await storeData('userType', response.data.userData.userType);
-        if (response.data.userData.userType == 'patient') {
+
+        // Update global userData
+        login(response.data.userData);
+
+        if (response.data.userData.userType === 'patient') {
           PatientLogin();
           navigation.navigate(AuthScreen.LoadingScreen);
         } else {
           ProviderLogin();
           navigation.navigate(AuthScreen.LoadingScreen);
         }
-        // navigation.navigate(AuthScreen.LoadingScreen); // Navigate to the loading screen or the next screen
       } else {
         Alert.alert(
           'Login Failed',
@@ -126,7 +124,6 @@ const Login = ({navigation}: any) => {
               },
             }}
           />
-          {isErr && <Text style={{fontSize: 16, color: Colors}}>Err</Text>}
         </FormProvider>
         <View
           style={{

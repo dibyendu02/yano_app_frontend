@@ -1,5 +1,6 @@
 export const BASE_URL = 'https://yano-backend.onrender.com';
 import axios from 'axios';
+import {storeData} from '../../utils/Storage';
 
 export const signUPPatient = async (data: any) => {
   try {
@@ -14,6 +15,11 @@ export const signUPPatient = async (data: any) => {
         },
       },
     );
+
+    await storeData('token', response.data.token);
+    await storeData('userId', response.data.userData._id);
+    await storeData('isAuth', true);
+    await storeData('userType', response.data.userData.userType);
 
     return response;
   } catch (error) {
@@ -58,6 +64,11 @@ export const registerDoctor = async (data: any) => {
         },
       },
     );
+
+    await storeData('token', response.data.token);
+    await storeData('userId', response.data.userData._id);
+    await storeData('isAuth', true);
+    await storeData('userType', response.data.userData.userType);
 
     return response.data;
   } catch (error) {

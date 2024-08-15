@@ -13,24 +13,24 @@ import {
 } from 'react-native';
 import React from 'react';
 import Header from '../../components/header/Header';
-import { navigate } from '../../navigation/RootNavigation';
-import { Colors } from '../../constants/Colors';
-import { AuthScreen } from '../../navigation/auth/AuthScreens';
-import { FormProvider, useForm } from 'react-hook-form';
+import {navigate} from '../../navigation/RootNavigation';
+import {Colors} from '../../constants/Colors';
+import {AuthScreen} from '../../navigation/auth/AuthScreens';
+import {FormProvider, useForm} from 'react-hook-form';
 import FormInput from '../../components/hook-form/FormInput';
-import { FormInputType } from '../../components/hook-form/types';
+import {FormInputType} from '../../components/hook-form/types';
 import FormDateInput from '../../components/hook-form/FormDateInput';
 import FormSelectionInput from '../../components/hook-form/FormSelectionInput';
 import FilledButton from '../../components/buttons/FilledButton';
 import FormPhoneNumberInput from '../../components/hook-form/FormPhoneNumberInput';
 import FormImageInput from '../../components/hook-form/FormImageInput';
-import { AuthScreensProps } from '../../navigation/auth/types';
-import { UserType } from '../../constants/enums';
+import {AuthScreensProps} from '../../navigation/auth/types';
+import {UserType} from '../../constants/enums';
 import moment from 'moment';
-import { registerDoctor, registerPatient } from '../../services/Endpoints';
-import { signUPPatient } from '../../api/POST/signup';
+import {registerPatient} from '../../services/Endpoints';
+import {signUPPatient, registerDoctor} from '../../api/POST/signup';
 import axios from 'axios';
-import { ActivityIndicator } from 'react-native-paper';
+import {ActivityIndicator} from 'react-native-paper';
 
 const Gender = [
   {
@@ -108,13 +108,13 @@ const DoctorSpecialties = [
   },
 ];
 
-const Registration: React.FC<AuthScreensProps> = ({ route }) => {
+const Registration: React.FC<AuthScreensProps> = ({route}) => {
   //@ts-ignore
 
   const [isContinue, setIsContinue] = React.useState(false);
   const userType = route?.params?.userType;
 
-  const { ...methods } = useForm({
+  const {...methods} = useForm({
     mode: 'onChange',
   });
   // const onSubmit = async (data: any) => {
@@ -145,10 +145,8 @@ const Registration: React.FC<AuthScreensProps> = ({ route }) => {
   //     requestData.append(key, data[key]);
   //   }
 
-
   //   const res = await signUP(requestData)
   //   console.log(res, 'res')
-
 
   //   if (userType === UserType.Patient) {
   //     const res = await signUP(requestData)
@@ -170,7 +168,8 @@ const Registration: React.FC<AuthScreensProps> = ({ route }) => {
 
       // Append all other form data to requestData
       Object.keys(data).forEach(key => {
-        if (key !== 'file' && key !== 'repeatPassword') { // Exclude 'file' and 'repeatPassword'
+        if (key !== 'file' && key !== 'repeatPassword') {
+          // Exclude 'file' and 'repeatPassword'
           if (key === 'dateOfBirth') {
             requestData.append(key, moment(data[key]).format('YYYY-MM-DD'));
           } else {
@@ -185,7 +184,8 @@ const Registration: React.FC<AuthScreensProps> = ({ route }) => {
       // Handle file separately if it exists
       if (data.file) {
         requestData.append('file', {
-          uri: Platform.OS === 'ios' ? `file://${data.file.path}` : data.file.path,
+          uri:
+            Platform.OS === 'ios' ? `file://${data.file.path}` : data.file.path,
           type: data.file.mime,
           name: `photo_${Date.now()}.jpg`,
         });
@@ -197,13 +197,13 @@ const Registration: React.FC<AuthScreensProps> = ({ route }) => {
         res = await signUPPatient(requestData);
 
         if (res.code === 200) {
-          navigate(AuthScreen.AccountVerification, { userType: userType })
+          navigate(AuthScreen.AccountVerification, {userType: userType});
         }
       } else {
         console.log('Form Data being sent:', requestData);
         res = await registerDoctor(requestData);
         if (res.code === 200) {
-          navigate(AuthScreen.AccountVerification, { userType: userType })
+          navigate(AuthScreen.AccountVerification, {userType: userType});
         }
       }
 
@@ -217,7 +217,6 @@ const Registration: React.FC<AuthScreensProps> = ({ route }) => {
 
       console.log(res, '<--------- Response --------->');
       // navigate(AuthScreen.AccountVerification); // Uncomment if you need to navigate after successful signup
-
     } catch (e) {
       console.error('Error!', e);
       if (axios.isAxiosError(e) && e.response) {
@@ -229,17 +228,16 @@ const Registration: React.FC<AuthScreensProps> = ({ route }) => {
     }
   };
 
-
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
+        style={{flex: 1}}>
+        <View style={{flex: 1}}>
           <Header
             title=""
             headerRightComponent={
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Text style={styles.text}>Already registered?</Text>
                 <TouchableOpacity onPress={() => navigate(AuthScreen.Login)}>
                   <Text style={styles.loginButton}>Log in</Text>
@@ -389,27 +387,29 @@ const Registration: React.FC<AuthScreensProps> = ({ route }) => {
           color: '#3D5A6C',
         }}>
         When registering you are accepting our{' '}
-        <Text style={{ color: Colors.Blue, textDecorationLine: 'underline' }}>
+        <Text style={{color: Colors.Blue, textDecorationLine: 'underline'}}>
           Terms and conditions
         </Text>{' '}
         and
-        <Text style={{ color: Colors.Blue, textDecorationLine: 'underline' }}>
+        <Text style={{color: Colors.Blue, textDecorationLine: 'underline'}}>
           {' '}
           Privacy policies
         </Text>
       </Text>
       {isContinue ? (
-        <ActivityIndicator size={'large'} color={Colors.Blue} />) :
+        <ActivityIndicator size={25} color={Colors.Blue} />
+      ) : (
         <FilledButton
           label="Continue"
           type="blue"
-          style={{ width: '92%', alignSelf: 'center', marginVertical: 10 }}
+          style={{width: '92%', alignSelf: 'center', marginVertical: 10}}
           // disabled={!methods.formState.isDirty}
           onPress={methods.handleSubmit(onSubmit)}
-        // onPress={() =>
-        //   navigate(AuthScreen.AccountVerification, { userType: userType })
-        // }
-        />}
+          // onPress={() =>
+          //   navigate(AuthScreen.AccountVerification, { userType: userType })
+          // }
+        />
+      )}
     </SafeAreaView>
   );
 };

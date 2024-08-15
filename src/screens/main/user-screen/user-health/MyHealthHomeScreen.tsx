@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   FlatList,
   Image,
@@ -25,10 +25,13 @@ import BottomSheet from '../../../../components/bottom-sheet/BottomSheet';
 import {StaticImage} from '../../../../assets/images';
 import MeasuringYourVitalComp from './MeasuringYourVitalComp';
 import OutlineButton from '../../../../components/buttons/OutlineButton';
+import UserContext from '../../../../contexts/UserContext';
 
 const MyHealthHomeScreen = ({navigation}) => {
   const [show, setShow] = useState(false);
   const [selectedDiv, setSelectedDiv] = useState(null);
+  const {userData} = useContext(UserContext);
+  console.log(userData);
 
   const handleDivPress = div => {
     setSelectedDiv(div);
@@ -38,7 +41,7 @@ const MyHealthHomeScreen = ({navigation}) => {
     <CommonLayout>
       <Header
         showBackIcon={false}
-        title="Hi, Pedro"
+        title={`Hi, ${userData.firstName}`}
         headerRightComponent={
           <TouchableOpacity
             onPress={() => navigate('NotificationAlerts')}
