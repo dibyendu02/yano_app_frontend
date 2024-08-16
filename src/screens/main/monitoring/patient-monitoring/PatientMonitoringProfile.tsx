@@ -16,13 +16,13 @@ import Foundation from 'react-native-vector-icons/Foundation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PatientElements from '../../../../components/PatientElements';
 import Header from '../../../../components/header/Header';
-import { Colors } from '../../../../constants/Colors';
+import {Colors} from '../../../../constants/Colors';
 import Card from '../../../../components/cards/Card';
-import { DummyImage } from '../../../../assets/dummy/images';
-import { measurements, userData } from '../../../../test/Data';
+import {DummyImage} from '../../../../assets/dummy/images';
+import {measurements, userData} from '../../../../test/Data';
 import Icons from '../../../../assets/icon/Icon';
-import { navigate } from '../../../../navigation/RootNavigation';
-import { StaticImage } from '../../../../assets/images';
+import {navigate} from '../../../../navigation/RootNavigation';
+import {StaticImage} from '../../../../assets/images';
 
 let data1 = [
   {
@@ -36,14 +36,14 @@ let data1 = [
     icon: (
       <Image
         source={StaticImage.CalenderIcon}
-        style={{ height: 20, width: 20, tintColor: Colors.LightGreen }}
+        style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
       />
     ),
   },
   {
     label: userData.blood,
     icon: (
-      <Image source={StaticImage.BloodIcon} style={{ height: 20, width: 20 }} />
+      <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
     ),
   },
 ];
@@ -61,7 +61,7 @@ let data2 = [
   },
 ];
 
-export default function PatientMonitoringProfile({ }) {
+export default function PatientMonitoringProfile({}) {
   return (
     <SafeAreaView style={styles.container}>
       <Header title="Monitored Patient" />
@@ -140,8 +140,8 @@ export default function PatientMonitoringProfile({ }) {
                 : []
             }
             scrollEnabled={false}
-            style={{ width: '100%' }}
-            renderItem={({ item, index }) => (
+            style={{width: '100%'}}
+            renderItem={({item, index}) => (
               <View
                 style={{
                   width: '100%',
@@ -150,7 +150,7 @@ export default function PatientMonitoringProfile({ }) {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                 }}>
-                <View style={{ width: '50%' }}>
+                <View style={{width: '50%'}}>
                   <Text
                     style={{
                       fontSize: 18,
@@ -215,22 +215,25 @@ export default function PatientMonitoringProfile({ }) {
           />
         </Card>
 
-        <Card contentContainerStyle={{ marginBottom: 200 }}>
-          <View style={{ width: '100%' }}>
+        <Card contentContainerStyle={{marginBottom: 50}}>
+          <View style={{width: '100%'}}>
             <TouchableOpacity onPress={() => navigate('MedicalHistory')}>
               <View style={styles.container1}>
-                <Image source={require('../../../../assets/image/receipt_long.png')}
-                  style={{ height: 22, width: 22 }}
+                <Image
+                  source={require('../../../../assets/image/receipt_long.png')}
+                  style={{height: 22, width: 22}}
                 />
                 <Text style={styles.name}>Medical history</Text>
                 <MaterialIcons name="navigate-next" size={25} color={'black'} />
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigate('HealthThresholdHomeScreen')}>
+            <TouchableOpacity
+              onPress={() => navigate('HealthThresholdHomeScreen')}>
               <View style={styles.container1}>
-                <Image source={require('../../../../assets/image/data_thresholding.png')}
-                  style={{ height: 22, width: 22 }}
+                <Image
+                  source={require('../../../../assets/image/data_thresholding.png')}
+                  style={{height: 22, width: 22}}
                 />
                 <Text style={styles.name}>Health thresholds</Text>
                 <MaterialIcons name="navigate-next" size={25} color={'black'} />
@@ -239,8 +242,9 @@ export default function PatientMonitoringProfile({ }) {
 
             <TouchableOpacity onPress={() => navigate('RemainderScreen')}>
               <View style={styles.container1}>
-                <Image source={require('../../../../assets/image/notification_add.png')}
-                  style={{ height: 22, width: 22 }}
+                <Image
+                  source={require('../../../../assets/image/notification_add.png')}
+                  style={{height: 22, width: 22}}
                 />
                 <Text style={styles.name}>Reminders</Text>
                 <MaterialIcons name="navigate-next" size={25} color={'black'} />
@@ -269,17 +273,11 @@ export default function PatientMonitoringProfile({ }) {
             /> */}
           </View>
         </Card>
+        <TouchableOpacity style={styles.stopMonitoringButton}>
+          <Icons.Ionicons name="exit-outline" size={20} color={'red'} />
+          <Text style={styles.monintoring}>Stop Monitoring</Text>
+        </TouchableOpacity>
       </ScrollView>
-      <View style={{ paddingBottom: 10 }}>
-        <View style={styles.basicDetails}>
-          <View style={styles.stopMonitoringButton}>
-            <Icons.Ionicons name="exit-outline" size={20} color={'red'} />
-            <TouchableOpacity>
-              <Text style={styles.monintoring}>Stop Monitoring</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </View>
     </SafeAreaView>
   );
 }
@@ -348,7 +346,8 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     alignSelf: 'center',
     padding: 10,
-    width: '100%',
+    width: '94%',
+    marginBottom: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,

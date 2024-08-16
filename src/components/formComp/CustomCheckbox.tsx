@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: Colors.White,
     height: 56,
-    borderRadius: 10,
+    borderRadius: 8,
     justifyContent: 'center',
     paddingHorizontal: 20,
     borderWidth: 1,

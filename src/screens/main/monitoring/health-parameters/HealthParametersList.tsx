@@ -18,36 +18,36 @@ import {
   HSDGN,
 } from '../../../../test/HealthStatsData';
 import Card from '../../../../components/cards/Card';
-import { IconName } from '../../../../assets/icon/IconNames';
-import { Colors } from '../../../../constants/Colors';
+import {IconName} from '../../../../assets/icon/IconNames';
+import {Colors} from '../../../../constants/Colors';
 import Icons from '../../../../assets/icon/Icon';
 import moment from 'moment';
-import { navigate } from '../../../../navigation/RootNavigation';
+import {navigate} from '../../../../navigation/RootNavigation';
 
 const HealthParametersList = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header
         title="Your measurements"
-      // headerRightComponent={
-      //   <Icons.MaterialIcons
-      //     name="checklist-rtl"
-      //     color={Colors.Blue}
-      //     size={25}
-      //   />
-      // }
+        // headerRightComponent={
+        //   <Icons.MaterialIcons
+        //     name="checklist-rtl"
+        //     color={Colors.Blue}
+        //     size={25}
+        //   />
+        // }
       />
-      <View style={{ backgroundColor: Colors.GhostWhite, flex: 1 }}>
+      <View style={{backgroundColor: Colors.GhostWhite, flex: 1}}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={HSDGN}
-          style={{ marginVertical: 6 }}
-          renderItem={({ item, index: _index }) => (
+          style={{marginVertical: 6}}
+          renderItem={({item, index: _index}) => (
             <Card key={item.month} title={item.month}>
               <FlatList
                 scrollEnabled={false}
                 data={item.data}
-                renderItem={({ item: e, index: _i }) => (
+                renderItem={({item: e, index: _i}) => (
                   <TouchableOpacity
                     activeOpacity={0.5}
                     style={{
@@ -64,7 +64,7 @@ const HealthParametersList = () => {
                       })
                     }
                     key={e.field}>
-                    <View style={{ width: '50%' }}>
+                    <View style={{width: '50%'}}>
                       <Text
                         style={{
                           fontSize: 18,
@@ -106,8 +106,13 @@ const HealthParametersList = () => {
                         </Text>
                       ))}
                       {e?.diagram && (
-                        <Image source={e.diagram}
-                          style={{ width: 61, height: 32 }}
+                        <Image
+                          source={e.diagram}
+                          style={{
+                            width: 61,
+                            height: 32,
+                            tintColor: Colors.Blue,
+                          }}
                         />
                       )}
                     </View>

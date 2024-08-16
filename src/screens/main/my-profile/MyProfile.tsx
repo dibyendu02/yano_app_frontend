@@ -62,20 +62,23 @@ const MyProfile = ({navigation}: any) => {
 
   const {userData} = useContext(UserContext);
   console.log(userData);
+
   // const [userId, setUserId] = useState('');
   // const [userData, setUserData] = useState(null);
 
   // const fetchDoctorData = async () => {
   //   try {
-  //     const response = await axios.get(`${BASE_URL}api/userdoctor/${userId}`);
+  //     const response = await axios.get(`${BASE_URL}/api/userdoctor/${userId}`);
   //     console.log('API Response:', response.data);
   //     setUserData(response.data.userData);
-  //   } catch (error) {
+  //   } catch (error: any) {
   //     console.error('API Error:', error);
   //     if (error.response) {
   //       console.log('Server Error Response:', error.response.data);
+  //     } else if (error.request) {
+  //       console.log('No response received:', error.request);
   //     } else {
-  //       console.log('Network Error or other issue:', error.message);
+  //       console.log('Error', error.message);
   //     }
   //   }
   // };
@@ -104,8 +107,22 @@ const MyProfile = ({navigation}: any) => {
     <SafeAreaView style={{flex: 1}}>
       <BottomSheet isVisible={showQR} onBackdropPress={() => setShowQR(false)}>
         <View style={{padding: 20, alignItems: 'center'}}>
-          <Image source={DummyImage.QR} height={150} width={150} />
-          <Text style={{marginVertical: 20}}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: 'medium',
+              color: Colors.Blue,
+              marginBottom: 10,
+            }}>
+            Share QR Code
+          </Text>
+          <Image source={DummyImage.QR} style={{width: 150, height: 150}} />
+          <Text
+            style={{
+              marginVertical: 20,
+              color: Colors.SteelBlue,
+              textAlign: 'center',
+            }}>
             Scan this QR code with your patient's cell phone to access their
             measurements and health history.
           </Text>
@@ -120,7 +137,8 @@ const MyProfile = ({navigation}: any) => {
         title="My profile"
         showBackIcon={false}
         headerRightComponent={
-          <TouchableOpacity onPress={() => navigation.navigate('EditProfile')}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('EditDoctorProfile')}>
             <Image
               source={staticIcons.EditPencil}
               style={{height: 24, width: 24}}
@@ -172,10 +190,15 @@ const MyProfile = ({navigation}: any) => {
                 />
               }
             />
-            <FilledButton
+            {/* <FilledButton
               type="lightGrey"
               label=""
-              style={{width: '18%', marginLeft: 8}}
+              style={{
+                width: '18%',
+                marginLeft: 8,
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}
               icon={
                 <Image
                   source={StaticImage.QrCode}
@@ -186,7 +209,27 @@ const MyProfile = ({navigation}: any) => {
                 />
               }
               onPress={() => setShowQR(true)}
-            />
+            /> */}
+            <TouchableOpacity
+              onPress={() => setShowQR(true)}
+              style={{
+                width: '18%',
+                backgroundColor: Colors.LightGray,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginVertical: 5,
+                marginLeft: 8,
+              }}>
+              <Image
+                source={StaticImage.QrCode}
+                style={{
+                  width: 20,
+                  height: 20,
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
 
@@ -211,7 +254,7 @@ const MyProfile = ({navigation}: any) => {
                       color: Colors.Blue,
                       fontSize: 16,
                       fontWeight: '600',
-                      marginLeft: 6,
+                      marginLeft: 14,
                     }}>
                     {item.text}
                   </Text>

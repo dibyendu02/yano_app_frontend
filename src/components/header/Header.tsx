@@ -38,9 +38,9 @@ const styles = StyleSheet.create({
   navbar: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 14,
+    paddingHorizontal: 10,
     // paddingLeft: 14,
-    paddingVertical: 20,
+    paddingVertical: 12,
     backgroundColor: Colors.White,
     justifyContent: 'space-between',
   },

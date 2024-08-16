@@ -42,7 +42,7 @@ const MeasurementMonitoring = ({navigation}: any) => {
       />
 
       <ScrollView>
-        <View style={{padding: 20}}>
+        <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
           <View style={styles.boxStyle}>
             <TouchableOpacity
               style={[
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: '500',
     paddingTop: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
   },
   boxStyle: {
     flexDirection: 'row',

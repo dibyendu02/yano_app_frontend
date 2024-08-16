@@ -1,4 +1,11 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from 'react-native';
 import React, {FC} from 'react';
 import CommonLayout from '../../../../components/CommonLayout';
 import {Colors} from '../../../../constants/Colors';
@@ -7,7 +14,7 @@ import {HelpIcon} from '../../../../assets/icon/IconNames';
 import BottomSheet from './BottomSheetLocal/BottomSheet';
 
 type props = {
-  help: object;
+  help: {img: any; text: string}[];
   element: React.ReactNode;
   loading: boolean;
   onPress?: () => void;
@@ -28,9 +35,9 @@ const CommonMeasurementScreen: FC<props> = ({
       setIndex(index + 1);
     }
 
-    if (index == help.length - 2) {
+    if (index === help.length - 2) {
       setUnderStand(true);
-    } else if (index == help.length - 1) {
+    } else if (index === help.length - 1) {
       setOpen(false);
       setTimeout(() => {
         setUnderStand(false);
@@ -43,7 +50,7 @@ const CommonMeasurementScreen: FC<props> = ({
     if (index > 0) {
       setIndex(index - 1);
       setUnderStand(false);
-    } else if (index == 0) {
+    } else if (index === 0) {
       setOpen(false);
       setUnderStand(false);
       setIndex(0);
@@ -83,60 +90,23 @@ const CommonMeasurementScreen: FC<props> = ({
           isVisible={open}
           children={
             <View style={styles.bottomSheetContent}>
-              <View
-                style={{
-                  alignItems: 'center',
-                  paddingVertical: 0,
-                  paddingBottom: 40,
-                }}>
-                <Image
-                  style={{width: 300, height: 400, marginBottom: 20}}
-                  source={help[index].img}
-                />
+              <ScrollView contentContainerStyle={styles.scrollContainer}>
+                <Image style={styles.helpImage} source={help[index].img} />
 
-                <View
-                  style={{
-                    paddingHorizontal: 20,
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 22,
-                      fontWeight: 'bold',
-                      fontFamily: 'Roboto',
-                      color: Colors.Blue,
-                      marginHorizontal: 40,
-                    }}>
-                    {help[index].text}
-                  </Text>
-                </View>
-              </View>
+                <Text style={styles.helpText}>{help[index].text}</Text>
+              </ScrollView>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginHorizontal: 'auto',
-                  //   gap: 10,
-                  alignSelf: 'flex-end',
-                  height: '12%',
-                  paddingHorizontal: 20,
-                  //   backgroundColor: 'red',
-                  width: '100%',
-                }}>
+              <View style={styles.buttonContainer}>
                 <FilledButton
                   label="Back"
                   type="lightGrey"
-                  style={{
-                    width: '47%',
-                  }}
+                  style={styles.button}
                   onPress={() => decCnt()}
                 />
                 <FilledButton
                   label={underStand ? 'Understood' : 'Next'}
                   type="blue"
-                  style={{
-                    width: '47%',
-                  }}
+                  style={styles.button}
                   onPress={() => incCnt()}
                 />
               </View>
@@ -176,13 +146,35 @@ const styles = StyleSheet.create({
     width: '80%',
   },
   bottomSheetContent: {
-    height: '90%',
-    flexDirection: 'column',
+    flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%',
-    // paddingHorizontal: 10,
-    // paddingVertical: 20,
     paddingBottom: 10,
+  },
+  scrollContainer: {
+    alignItems: 'center',
+    paddingBottom: 20, // Ensure there's space below the content
+  },
+  helpImage: {
+    width: 300,
+    height: 400,
+    marginBottom: 20,
+  },
+  helpText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    fontFamily: 'Roboto',
+    color: Colors.Blue,
+    marginHorizontal: 40,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+  },
+  button: {
+    width: '47%',
   },
 });

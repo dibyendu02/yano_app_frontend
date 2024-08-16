@@ -106,7 +106,14 @@ const PatientMonitoringMeasurements = () => {
                         </Text>
                       ))}
                       {e?.diagram && (
-                        <Image source={e.diagram} height={40} width={60} />
+                        <Image
+                          source={e.diagram}
+                          style={{
+                            height: 40,
+                            width: 60,
+                            tintColor: Colors.Blue,
+                          }}
+                        />
                       )}
                     </View>
 

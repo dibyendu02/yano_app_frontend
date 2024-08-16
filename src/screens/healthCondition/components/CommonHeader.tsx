@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 20,
     paddingHorizontal: 10,
-    paddingEnd: 20,
+    paddingEnd: 10,
     backgroundColor: Colors.White,
   },
   navbarTitle: {

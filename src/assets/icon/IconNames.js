@@ -1,4 +1,4 @@
-import { Colors } from '../../constants/Colors';
+import {Colors} from '../../constants/Colors';
 import Icons from './Icon';
 
 export const IconName = {
@@ -14,7 +14,7 @@ export const DeleteIcon = () => {
     />
   );
 };
-export const EditIcon = ({ size = 18 }) => {
+export const EditIcon = ({size = 18}) => {
   return <Icons.Feather name={'edit-2'} color={Colors.Blue} size={size} />;
 };
 
@@ -22,15 +22,13 @@ export const RightIcon = () => {
   return <Icons.Entypo name={'chevron-right'} color={Colors.Blue} size={20} />;
 };
 
-export const PlusIcon = ({ size = 16, color = Colors.White }) => {
+export const PlusIcon = ({size = 16, color = Colors.White}) => {
   return (
     <Icons.FontAwesome5
       name={'plus'}
-
       color={color}
       size={size}
-      style={{ marginEnd: 6 }}
-
+      style={{marginEnd: 6}}
     />
   );
 };
@@ -61,36 +59,26 @@ export const CheckboxOutline = () => {
   );
 };
 
-export const CheckCircleIcon = ({ size = 20, color = Colors.Green }) => {
+export const CheckCircleIcon = ({size = 20, color = Colors.Green}) => {
   return (
-    <Icons.MaterialIcons
-      name={'radio-button-on'}
-      color={color}
-      size={size}
-    />
+    <Icons.MaterialIcons name={'radio-button-on'} color={color} size={size} />
   );
-
-}
-export const CheckIcon = ({ size = 20, color = Colors.Blue }) => {
-
+};
+export const CheckIcon = ({size = 20, color = Colors.Blue}) => {
   return (
-    <Icons.MaterialIcons
-      name={'radio-button-off'}
-      color={color}
-      size={size}
-    />
+    <Icons.MaterialIcons name={'radio-button-off'} color={color} size={size} />
   );
 };
 
-export const DownloadIcon = ({ size = 20, color = Colors.Blue }) => {
+export const DownloadIcon = ({size = 20, color = Colors.Blue}) => {
   return <Icons.Feather name={'download'} color={color} size={size} />;
 };
 
-export const NextIcon = ({ size = 25, color = Colors.Black }) => {
+export const NextIcon = ({size = 25, color = Colors.Black}) => {
   return <Icons.MaterialIcons name="navigate-next" size={size} color={color} />;
 };
 
-export const BluetoothConnected = ({ size = 20 }) => {
+export const BluetoothConnected = ({size = 20}) => {
   return (
     <Icons.MaterialCommunityIcons
       name="bluetooth-connect"
@@ -108,7 +96,7 @@ export const BluetoothDisconnected = () => {
     />
   );
 };
-export const BatteryCharge = ({ size = 20 }) => {
+export const BatteryCharge = ({size = 20}) => {
   return (
     <Icons.MaterialCommunityIcons
       name="battery-70"
@@ -121,7 +109,7 @@ export const LogoutIcon = () => {
   return <Icons.MaterialIcons name="logout" size={25} color={Colors.Red} />;
 };
 
-export const OkIcon = ({ size = 20, color = Colors.Green }) => {
+export const OkIcon = ({size = 20, color = Colors.Green}) => {
   return (
     <Icons.MaterialCommunityIcons
       name="checkbox-marked-circle"
@@ -131,37 +119,37 @@ export const OkIcon = ({ size = 20, color = Colors.Green }) => {
   );
 };
 
-export const ViewPassIcon = ({ size = 20, color = Colors.lightBlack }) => {
+export const ViewPassIcon = ({size = 20, color = Colors.lightBlack}) => {
   return <Icons.Ionicons name="eye" size={size} color={color} />;
 };
-export const NotViewPassIcon = ({ size = 20, color = Colors.lightBlack }) => {
+export const NotViewPassIcon = ({size = 20, color = Colors.lightBlack}) => {
   return <Icons.Ionicons name="eye-off" size={size} color={color} />;
 };
-export const SettingsIcon = ({ size = 20, color = Colors.Blue }) => {
+export const SettingsIcon = ({size = 20, color = Colors.Blue}) => {
   return <Icons.Ionicons name="settings" size={size} color={color} />;
 };
-export const NotificationIcon = ({ size = 20, color = Colors.LightGreen }) => {
+export const NotificationIcon = ({size = 20, color = Colors.LightGreen}) => {
   return <Icons.Ionicons name="notifications" size={size} color={color} />;
 };
-export const ErrorIcon = ({ size = 20, color = Colors.Red }) => {
+export const ErrorIcon = ({size = 20, color = Colors.Red}) => {
   return <Icons.MaterialIcons name="error" size={size} color={color} />;
 };
-export const CloseIcon = ({ size = 20, color = Colors.Blue }) => {
+export const CloseIcon = ({size = 20, color = Colors.Blue}) => {
   return <Icons.Ionicons name="close" size={size} color={color} />;
 };
-export const CheckListIcon = ({ size = 20, color = Colors.Blue }) => {
+export const CheckListIcon = ({size = 20, color = Colors.Blue}) => {
   return <Icons.MaterialIcons name="checklist-rtl" size={size} color={color} />;
 };
-export const ReminderIcon = ({ size = 20, color = Colors.Green }) => {
+export const ReminderIcon = ({size = 20, color = Colors.Green}) => {
   return <Icons.Ionicons name="alarm-sharp" size={size} color={color} />;
 };
-export const RepeatIcon = ({ size = 20, color = Colors.Blue }) => {
+export const RepeatIcon = ({size = 20, color = Colors.Blue}) => {
   return <Icons.FontAwesome name="repeat" size={size} color={color} />;
 };
-export const TimeIcon = ({ size = 20, color = Colors.Blue }) => {
+export const TimeIcon = ({size = 20, color = Colors.Blue}) => {
   return <Icons.MaterialIcons name="access-time" size={size} color={color} />;
 };
-export const UTurnIcon = ({ size = 20, color = Colors.Blue }) => {
+export const UTurnIcon = ({size = 20, color = Colors.Blue}) => {
   return (
     <Icons.MaterialCommunityIcons
       name="undo-variant"
@@ -170,21 +158,9 @@ export const UTurnIcon = ({ size = 20, color = Colors.Blue }) => {
     />
   );
 };
-export const HelpIcon = ({ size = 20, color = '#FFAC07' }) => {
-  return (
-    <Icons.MaterialIcons
-      name='help'
-      size={size}
-      color={color}
-    />
-  )
-}
-export const ShareIcon = ({ size = 20, color = Colors.Blue }) => {
-  return (
-    <Icons.MaterialIcons
-      name='share'
-      size={size}
-      color={color}
-    />
-  )
-}
+export const HelpIcon = ({size = 20, color = '#FFAC07'}) => {
+  return <Icons.MaterialIcons name="help" size={size} color={color} />;
+};
+export const ShareIcon = ({size = 20, color = Colors.Blue}) => {
+  return <Icons.MaterialIcons name="share" size={size} color={color} />;
+};

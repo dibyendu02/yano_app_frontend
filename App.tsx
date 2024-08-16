@@ -52,59 +52,52 @@ export default function App() {
   const [isAuth, setIsAuth] = useState(false);
   const [userType, setUserType] = useState('');
 
-  const gettingAuth = async () => {
-    const data = await retrieveData('isAuth');
-    setIsAuth(data);
-    console.log('isAuth ', isAuth);
-  };
-
-  const gettingUserType = async () => {
-    const data = await retrieveData('userType');
-    setUserType(data);
-    console.log('userType ', userType);
-  };
-
-  const gettingUserId = async () => {
-    const data = await retrieveData('userId');
-    setUserId(data);
-    console.log('userId ', userId);
-  };
-
   useEffect(() => {
-    gettingAuth();
-    gettingUserType();
-    gettingUserId();
+    const initializeAuth = async () => {
+      const authData = await retrieveData('isAuth');
+      const typeData = await retrieveData('userType');
+      const idData = await retrieveData('userId');
+
+      setIsAuth(authData);
+      setUserType(typeData);
+      setUserId(idData);
+
+      console.log('isAuth ', authData);
+      console.log('userType ', typeData);
+      console.log('userId ', idData);
+    };
+
+    initializeAuth();
   }, []);
 
-  const fetchPatientData = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}api/userpatient/${userId}`);
-      setUserData(response.data.userData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const fetchDoctorData = async () => {
-    try {
-      const response = await axios.get(`${BASE_URL}api/userdoctor/${userId}`);
-      setUserData(response.data.userData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    if (isAuth && userType === 'patient') {
-      fetchPatientData();
-      setIsLoggedIn(true);
-      setIsPatient(true);
-    } else if (isAuth && userType === 'doctor') {
-      fetchDoctorData();
-      setIsLoggedIn(true);
-      setIsPatient(false);
+    const fetchData = async () => {
+      try {
+        if (userId) {
+          if (userType === 'patient') {
+            const response = await axios.get(
+              `${BASE_URL}/api/userpatient/${userId}`,
+            );
+            setUserData(response.data.userData);
+            PatientLogin();
+          } else if (userType === 'doctor') {
+            const response = await axios.get(
+              `${BASE_URL}/api/userdoctor/${userId}`,
+            );
+            setUserData(response.data.userData);
+            ProviderLogin();
+          }
+          setIsLoggedIn(true);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    if (isAuth) {
+      fetchData();
     }
-  }, [isAuth, userType]);
+  }, [isAuth, userType, userId]);
 
   return (
     <NavigationContainer ref={navigationRef} theme={theme}>

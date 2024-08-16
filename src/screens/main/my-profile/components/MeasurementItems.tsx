@@ -1,8 +1,8 @@
-import {Image, StyleSheet} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import React, {FC} from 'react';
-import PatientElements from '../../../../components/PatientElements';
 import {Colors} from '../../../../constants/Colors';
 import {navigate} from '../../../../navigation/RootNavigation';
+import SettingsElements from './SettingsElements';
 
 type Props = {
   data: {
@@ -21,10 +21,11 @@ const MeasurementItems: FC<Props> = ({data, active}) => {
       active(true);
     }
   };
+
   return (
-    <>
+    <View style={{backgroundColor: 'white', padding: 10, borderRadius: 8}}>
       {data.map((item, i) => (
-        <PatientElements
+        <SettingsElements
           key={i}
           name={item.title}
           element={
@@ -39,15 +40,17 @@ const MeasurementItems: FC<Props> = ({data, active}) => {
           }
           color="black"
           customStyle={{
-            paddingVertical: 20,
+            paddingBottom: i !== data.length - 1 ? 16 : 0,
+            paddingTop: i !== 0 ? 16 : 0,
             borderRadius: 0,
-            borderBottomWidth: 1,
-            borderBottomColor: Colors.LightGray,
+            borderBottomWidth: i !== data.length - 1 ? 1 : 0, // Only add border for all except the last item
+            borderBottomColor:
+              i !== data.length - 1 ? Colors.LightGray : 'transparent',
           }}
           onPress={() => handleOnPress(item.path)}
         />
       ))}
-    </>
+    </View>
   );
 };
 

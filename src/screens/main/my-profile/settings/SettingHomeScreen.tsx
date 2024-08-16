@@ -5,19 +5,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useContext, useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, {useContext, useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../../components/header/Header';
-import { Settings } from '../../../../assets/settings/SettingItem';
-import { LogoutIcon } from '../../../../assets/icon/IconNames';
-import { Colors } from '../../../../constants/Colors';
+import {Settings} from '../../../../assets/settings/SettingItem';
+import {LogoutIcon} from '../../../../assets/icon/IconNames';
+import {Colors} from '../../../../constants/Colors';
 import MeasurementItems from '../components/MeasurementItems';
 import UserContext from '../../../../contexts/UserContext';
 import Card from '../UiUpdateComponents/Card';
 
 const SettingHomeScreen = () => {
   const [isClicked, setIsClicked] = useState(false);
-  const { logout } = useContext(UserContext);
+  const {logout} = useContext(UserContext);
 
   const logoutBtn = () => {
     setIsClicked(true);
@@ -32,10 +32,11 @@ const SettingHomeScreen = () => {
       <View>
         <Header title={'Settings'} />
         <ScrollView>
-          <View style={{ padding: 20 }}>
+          <View style={{width: '94%', margin: 'auto', marginTop: 10}}>
             <MeasurementItems data={Settings} />
             <View style={styles.versionBox}>
-              <View style={{ borderBottomWidth: 1, borderColor: Colors.LightGray }}>
+              <View
+                style={{borderBottomWidth: 1, borderColor: Colors.LightGray}}>
                 <Text style={styles.title}>Version information</Text>
                 <View
                   style={{
@@ -48,10 +49,12 @@ const SettingHomeScreen = () => {
                   <Text style={styles.versionText}>1.5</Text>
                 </View>
               </View>
-              <TouchableOpacity style={styles.logoutBtn} onPress={() => logoutBtn()}>
+              <TouchableOpacity
+                style={styles.logoutBtn}
+                onPress={() => logoutBtn()}>
                 <LogoutIcon />
                 <Text
-                  style={{ color: Colors.Red, fontSize: 20, fontWeight: '400' }}>
+                  style={{color: Colors.Red, fontSize: 16, fontWeight: '400'}}>
                   Log out
                 </Text>
               </TouchableOpacity>
@@ -60,16 +63,16 @@ const SettingHomeScreen = () => {
         </ScrollView>
       </View>
 
-      {
-        isClicked &&
+      {isClicked && (
         <View style={styles.afterLogoutBtnClick}>
-          <Card title={'Log out'} children={'Are you sure you want to log out of Yano?'}
+          <Card
+            title={'Log out'}
+            children={'Are you sure you want to log out of Yano?'}
             active={setIsClicked}
             action={logout}
           />
         </View>
-      }
-
+      )}
     </SafeAreaView>
   );
 };
@@ -85,13 +88,13 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: 'bold',
     color: Colors.Blue,
     marginBottom: 10,
   },
   versionText: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '500',
     color: Colors.SteelBlue,
   },

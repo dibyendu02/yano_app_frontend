@@ -5,7 +5,7 @@ export const CardStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
     marginVertical: 6,
-    borderRadius: 10,
+    borderRadius: 8,
     backgroundColor: Colors.White,
     width: '94%',
     alignSelf: 'center',

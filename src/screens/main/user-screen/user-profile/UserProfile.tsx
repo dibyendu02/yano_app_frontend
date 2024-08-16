@@ -49,11 +49,6 @@ const menuData = [
   {
     id: '2',
     icon: (
-      // <Icons.MaterialIcons
-      //   name="diversity-3"
-      //   size={25}
-      //   color={Colors.LightGreen}
-      // />
       <Image
         source={StaticImage.FamilyIcon}
         style={{height: 20, width: 20, marginRight: 3}}
@@ -84,7 +79,7 @@ const menuData = [
 const onShare = async () => {
   try {
     const result = await Share.share({
-      message: '',
+      message: 'Join me on Yano',
     });
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
@@ -232,7 +227,7 @@ export default function () {
                 />
               }
             />
-            <FilledButton
+            {/* <FilledButton
               type="lightGrey"
               style={{width: '18%', marginLeft: 8}}
               icon={
@@ -243,7 +238,27 @@ export default function () {
                 />
               }
               onPress={() => setShowQR(true)}
-            />
+            /> */}
+            <TouchableOpacity
+              onPress={() => setShowQR(true)}
+              style={{
+                width: '18%',
+                backgroundColor: Colors.LightGray,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginVertical: 5,
+                marginLeft: 8,
+              }}>
+              <Image
+                source={StaticImage.QrCode}
+                style={{
+                  width: 20,
+                  height: 20,
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </Card>
 
@@ -308,7 +323,7 @@ export default function () {
               Share QR code
             </Text>
           </View>
-          <Image source={DummyImage.QR} style={{width: 200, height: 200}} />
+          <Image source={DummyImage.QR} style={{width: 150, height: 150}} />
           <Text
             style={{
               marginVertical: 20,

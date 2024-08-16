@@ -255,152 +255,154 @@ const HealthStats = () => {
           backgroundColor: Colors.GhostWhite,
           alignItems: 'center',
         }}>
-        <View
-          style={[
-            CardStyles.container,
-            {
-              flexDirection: 'row',
-              padding: 6,
-              marginTop: 8,
-              justifyContent: 'space-around',
-            },
-          ]}>
-          {OPTIONS.map((option, index: number) => (
-            <TouchableOpacity
-              style={{
-                width: '24%',
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingVertical: 10,
-                backgroundColor:
-                  selectedIndex === index ? Colors.Blue : Colors.White,
-                borderRadius: 6,
-              }}
-              activeOpacity={0.8}
-              key={option}
-              onPress={() => handleOptionChange(index)}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: selectedIndex === index ? '600' : '400',
-                  color: selectedIndex === index ? Colors.White : Colors.Blue,
-                }}>
-                {option}
-              </Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-        <View style={[CardStyles.container]}>
-          <View
-            style={{
-              flexDirection: 'row',
-              width: '100%',
-              paddingHorizontal: 10,
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingVertical: 10,
-            }}>
-            <Icons.MaterialIcons
-              name="navigate-before"
-              size={30}
-              color={Colors.Blue}
-              onPress={() => getFormattedText(-1)}
-              suppressHighlighting
-            />
-            <Text style={{color: Colors.Blue, fontSize: 16, fontWeight: '600'}}>
-              {formattedText}
-            </Text>
-            <Icons.MaterialIcons
-              name="navigate-next"
-              size={30}
-              color={Colors.Blue}
-              onPress={() => getFormattedText(1)}
-              suppressHighlighting
-            />
-          </View>
-          <View
-            style={{
-              width: '100%',
-              height: 1,
-              backgroundColor: Colors.LightGray,
-            }}
-          />
-          <View
-            style={{
-              width: '90%',
-              overflow: 'hidden',
-              marginVertical: 20,
-            }}>
-            <LineChart
-              data={statData}
-              color={Colors.LightBlue}
-              thickness={2}
-              spacing={chartSpacing}
-              xAxisColor={Colors.White}
-              yAxisColor={Colors.White}
-              yAxisTextStyle={{color: Colors.Grey}}
-              xAxisLabelTextStyle={{color: Colors.Grey}}
-              yAxisLabelContainerStyle={{width: 24}}
-              yAxisOffset={40}
-              stepValue={10}
-              maxValue={80}
-              height={200}
-              customDataPoint={(item: {value: number}, _index: number) => (
-                <View
-                  style={{
-                    height: 10,
-                    width: 10,
-                    borderRadius: 10,
-                    borderColor:
-                      item?.value <= 20
-                        ? Colors.Green
-                        : item?.value > 20 && item?.value < 50
-                        ? Colors.Orange
-                        : Colors.Red,
-                    backgroundColor: Colors.White,
-                    borderWidth: 2,
-                    alignSelf: 'center',
-                  }}
-                />
-              )}
-            />
-          </View>
-          <View
-            style={{
-              width: '100%',
-              height: 1,
-              backgroundColor: Colors.LightGray,
-            }}
-          />
-          <View
-            style={{
-              flexDirection: 'row',
-              paddingVertical: 16,
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              width: '100%',
-              paddingHorizontal: 16,
-            }}>
-            <View
-              style={{
-                height: 3,
-                width: 12,
-                backgroundColor: Colors.LightBlue,
-                marginHorizontal: 6,
-              }}
-            />
-            <Text
-              style={{
-                color: Colors.Grey,
-                fontSize: 12,
-                fontWeight: 'bold',
-              }}>
-              HEART RATE
-            </Text>
-          </View>
-        </View>
         <View style={{flex: 1, width: '100%'}}>
           <ScrollView showsVerticalScrollIndicator={false}>
+            <View
+              style={[
+                CardStyles.container,
+                {
+                  flexDirection: 'row',
+                  padding: 6,
+                  marginTop: 8,
+                  justifyContent: 'space-around',
+                },
+              ]}>
+              {OPTIONS.map((option, index: number) => (
+                <TouchableOpacity
+                  style={{
+                    width: '24%',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingVertical: 10,
+                    backgroundColor:
+                      selectedIndex === index ? Colors.Blue : Colors.White,
+                    borderRadius: 6,
+                  }}
+                  activeOpacity={0.8}
+                  key={option}
+                  onPress={() => handleOptionChange(index)}>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      fontWeight: selectedIndex === index ? '600' : '400',
+                      color:
+                        selectedIndex === index ? Colors.White : Colors.Blue,
+                    }}>
+                    {option}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+            <View style={[CardStyles.container]}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  width: '100%',
+                  paddingHorizontal: 10,
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  paddingVertical: 10,
+                }}>
+                <Icons.MaterialIcons
+                  name="navigate-before"
+                  size={30}
+                  color={Colors.Blue}
+                  onPress={() => getFormattedText(-1)}
+                  suppressHighlighting
+                />
+                <Text
+                  style={{color: Colors.Blue, fontSize: 16, fontWeight: '600'}}>
+                  {formattedText}
+                </Text>
+                <Icons.MaterialIcons
+                  name="navigate-next"
+                  size={30}
+                  color={Colors.Blue}
+                  onPress={() => getFormattedText(1)}
+                  suppressHighlighting
+                />
+              </View>
+              <View
+                style={{
+                  width: '100%',
+                  height: 1,
+                  backgroundColor: Colors.LightGray,
+                }}
+              />
+              <View
+                style={{
+                  width: '90%',
+                  overflow: 'hidden',
+                  marginVertical: 20,
+                }}>
+                <LineChart
+                  data={statData}
+                  color={Colors.LightBlue}
+                  thickness={2}
+                  spacing={chartSpacing}
+                  xAxisColor={Colors.White}
+                  yAxisColor={Colors.White}
+                  yAxisTextStyle={{color: Colors.Grey}}
+                  xAxisLabelTextStyle={{color: Colors.Grey}}
+                  yAxisLabelContainerStyle={{width: 24}}
+                  yAxisOffset={40}
+                  stepValue={10}
+                  maxValue={80}
+                  height={200}
+                  customDataPoint={(item: {value: number}, _index: number) => (
+                    <View
+                      style={{
+                        height: 10,
+                        width: 10,
+                        borderRadius: 10,
+                        borderColor:
+                          item?.value <= 20
+                            ? Colors.Green
+                            : item?.value > 20 && item?.value < 50
+                            ? Colors.Orange
+                            : Colors.Red,
+                        backgroundColor: Colors.White,
+                        borderWidth: 2,
+                        alignSelf: 'center',
+                      }}
+                    />
+                  )}
+                />
+              </View>
+              <View
+                style={{
+                  width: '100%',
+                  height: 1,
+                  backgroundColor: Colors.LightGray,
+                }}
+              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  paddingVertical: 16,
+                  justifyContent: 'flex-start',
+                  alignItems: 'center',
+                  width: '100%',
+                  paddingHorizontal: 16,
+                }}>
+                <View
+                  style={{
+                    height: 3,
+                    width: 12,
+                    backgroundColor: Colors.LightBlue,
+                    marginHorizontal: 6,
+                  }}
+                />
+                <Text
+                  style={{
+                    color: Colors.Grey,
+                    fontSize: 12,
+                    fontWeight: 'bold',
+                  }}>
+                  HEART RATE
+                </Text>
+              </View>
+            </View>
             <View style={{width: '100%'}}>
               <Text
                 style={{

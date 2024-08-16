@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     borderWidth: 1,
     borderColor: Colors.LightGray,
+    borderRadius: 8,
     fontSize: 16,
     height: 56,
     color: Colors.Blue,

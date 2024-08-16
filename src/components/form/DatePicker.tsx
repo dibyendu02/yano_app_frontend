@@ -46,7 +46,7 @@ export const DatePickerField: FC<inputProps> = ({ label, name, onchange }) => {
                     style={{
                         backgroundColor: Colors.White,
                         width: '92%',
-                        borderRadius: 10,
+                        borderRadius: 8,
                         overflow: 'hidden',
                     }}>
                     <View

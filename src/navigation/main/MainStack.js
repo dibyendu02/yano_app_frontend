@@ -106,7 +106,6 @@ import NoDataScreen from '../../screens/main/my-profile/settings/NoDataScreen';
 import MyDevices from '../../screens/main/my-profile/measurement-tools/MyDevices';
 import FaqScreen from '../../screens/main/my-profile/support/FaqScreen';
 import SupportChat from '../../screens/main/my-profile/support/SupportChat';
-import EditProfile from '../../screens/main/my-profile/components/EditProfile/EditProfile';
 import CreatePatientAccount from '../../screens/main/add-patient/CreatePatientAccount';
 import PatientMonitoringMeasurements from '../../screens/main/monitoring/patient-monitoring/PatientMonitoringMeasurements';
 import TransitionScreen from '../../screens/main/TransitionScreen';
@@ -114,6 +113,7 @@ import MonitoredProfile from '../../screens/main/add-patient/MonitoredProfile';
 import AddFamilyQr from '../../screens/main/user-screen/user-family/AddFamilyQr';
 import Create from '../../screens/main/user-screen/user-family/Create';
 import PatientQRCode from '../../screens/main/add-patient/PatientQRCode';
+import EditDoctorProfile from '../../screens/main/my-profile/components/EditProfile/EditDoctorProfile';
 
 const Tab = createBottomTabNavigator();
 
@@ -816,8 +816,8 @@ const MainStack = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="EditProfile"
-        component={EditProfile}
+        name="EditDoctorProfile"
+        component={EditDoctorProfile}
         options={{headerShown: false}}
       />
       <Stack.Screen

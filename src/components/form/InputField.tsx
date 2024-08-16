@@ -1,6 +1,6 @@
-import { FC } from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
-import { Colors } from '../../constants/Colors';
+import {FC} from 'react';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {Colors} from '../../constants/Colors';
 
 type inputProps = {
   label?: string;
@@ -26,7 +26,7 @@ export const InputField: FC<inputProps> = ({
       <TextInput
         style={[
           styles.input,
-          isTextarea && { height: 200, textAlignVertical: 'top' },
+          isTextarea && {height: 200, textAlignVertical: 'top'},
         ]}
         value={value}
         multiline={false}
@@ -57,6 +57,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     height: 56,
     color: Colors.Blue,
-    borderRadius: 10,
+    borderRadius: 8,
   },
 });
