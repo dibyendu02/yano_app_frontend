@@ -27,6 +27,7 @@ public class BgmManagerModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void init() {
         Log.d("BgmManagerModule", "Initializing BgmManager");
+        // init func was here
         BgmManager.getInstance().init(reactContext);
         Log.d("BgmManagerModule", "BgmManager initialized successfully");
     }

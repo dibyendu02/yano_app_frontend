@@ -18,6 +18,8 @@ import {
 } from 'react-native';
 import BleManager from 'react-native-ble-manager';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {fetchHistory} from '../core/BGMManager/BGMManager';
+const {BgmManager} = NativeModules;
 
 const BleManagerModule = NativeModules.BleManager;
 const BleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -112,6 +114,8 @@ const App = () => {
       await BleManager.connect(peripheral.id);
       console.log('Connected to', peripheral.name);
 
+      BgmManager.init();
+
       peripheral.connected = true;
       peripherals.set(peripheral.id, peripheral);
       setConnectedDevices(Array.from(peripherals.values()));
@@ -128,7 +132,7 @@ const App = () => {
         peripheralInfo.characteristics.length > 0
       ) {
         setCharacteristics(peripheralInfo.characteristics);
-        console.log('Characteristics:', peripheralInfo.characteristics);
+        // console.log('Characteristics:', peripheralInfo.characteristics);
       } else {
         console.log('No characteristics found for services');
       }
@@ -276,6 +280,15 @@ const App = () => {
     };
   }, []);
 
+  const handleTest = async () => {
+    try {
+      const res = fetchHistory('2a02', 0);
+      console.log(res);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <SafeAreaView style={[backgroundStyle, styles.mainBody]}>
       <StatusBar
@@ -323,7 +336,13 @@ const App = () => {
         <Text style={styles.noDevicesText}>No devices found</Text>
       )}
 
-      {selectedPeripheral && (
+      <TouchableOpacity
+        style={{height: 50, width: '100%', backgroundColor: 'green'}}
+        onPress={handleTest}>
+        <Text>Test</Text>
+      </TouchableOpacity>
+
+      {/* {selectedPeripheral && (
         <>
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Services</Text>
@@ -357,7 +376,7 @@ const App = () => {
             </TouchableOpacity>
           )}
         </>
-      )}
+      )} */}
     </SafeAreaView>
   );
 };

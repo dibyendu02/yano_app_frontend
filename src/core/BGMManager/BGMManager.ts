@@ -1,17 +1,21 @@
 import {NativeModules} from 'react-native';
 import {BGMErrorCode, BGMManagerType} from './Type';
 
-export const {BgmManager: BGMManager} = NativeModules as {
-  BgmManager: BGMManagerType;
-};
+const {BgmManager} = NativeModules;
+// as {
+//   BgmManager: BGMManagerType;
+// };
 
 export async function fetchHistory(
   deviceSn: string,
   eventIndex: number,
 ): Promise<string | null> {
   try {
-    await BGMManager.init();
-    const result = await BGMManager.getHistory(deviceSn, eventIndex);
+    // setTimeout(() => {
+    //   BgmManager.init();
+    // }, 3000);
+    const result = await BgmManager.getHistory(deviceSn, eventIndex);
+    console.log(JSON.parse(result));
     return result;
   } catch (err: any) {
     // if (err.code) {
