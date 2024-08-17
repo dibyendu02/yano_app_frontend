@@ -40,7 +40,7 @@ const MeasurementUnitSettings = () => {
       }}>
       <Header title={'Measurement units'} />
       <ScrollView>
-        <View style={{padding: 20}}>
+        <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
           {MeasurementSettingItems.map(item => (
             <DeviceItems
               key={item.title}

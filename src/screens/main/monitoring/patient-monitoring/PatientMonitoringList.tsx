@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.GhostWhite,
     width: '100%',
     position: 'relative',
+    paddingVertical: 10,
   },
   separator: {
     backgroundColor: Colors.LightGray,

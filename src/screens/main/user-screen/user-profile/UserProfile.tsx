@@ -100,6 +100,8 @@ export default function () {
   const {userData} = useContext(UserContext);
   console.log(userData);
 
+  console.log(userData?.userImg?.secure_url);
+
   const formatDateOfBirth = dateString => {
     const options = {year: 'numeric', month: 'long', day: 'numeric'};
     return new Date(dateString).toLocaleDateString(undefined, options);
@@ -156,7 +158,7 @@ export default function () {
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
         <Card>
           <Image
-            source={DummyImage.user}
+            source={{uri: userData?.userImg?.secure_url || DummyImage.user}}
             style={{
               height: 80,
               width: 80,

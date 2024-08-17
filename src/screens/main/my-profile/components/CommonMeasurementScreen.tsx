@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     color: Colors.Blue,
     marginHorizontal: 40,
-    textAlign: 'center',
+    // textAlign: 'center',
   },
   buttonContainer: {
     flexDirection: 'row',

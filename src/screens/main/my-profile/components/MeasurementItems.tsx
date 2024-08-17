@@ -23,7 +23,13 @@ const MeasurementItems: FC<Props> = ({data, active}) => {
   };
 
   return (
-    <View style={{backgroundColor: 'white', padding: 10, borderRadius: 8}}>
+    <View
+      style={{
+        backgroundColor: 'white',
+        padding: 10,
+        paddingVertical: 18,
+        borderRadius: 8,
+      }}>
       {data.map((item, i) => (
         <SettingsElements
           key={i}

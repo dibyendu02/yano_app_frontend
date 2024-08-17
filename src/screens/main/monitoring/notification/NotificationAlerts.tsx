@@ -71,56 +71,78 @@ const NotificationAlerts = ({navigation}) => {
               />
             )}
           </View>
-          {Notifications.map((item, index) => (
-            <View
-              style={[
-                styles.container,
-                item.isView && {backgroundColor: Colors.lightBlue},
-              ]}
-              key={index}>
-              <Image
-                source={item.image}
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 50,
-                  marginBottom: 10,
-                }}
-              />
-              <View style={{width: '80%'}}>
-                <View style={styles.titleBox}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontWeight: '600',
-                      color: Colors.Blue,
-                    }}>
-                    {item.name}
-                  </Text>
-                  <Text
-                    style={{
-                      fontSize: 12,
-                      fontWeight: '600',
-                      color: Colors.SteelBlue,
-                    }}>
-                    {' '}
-                    {item.time}
-                  </Text>
-                </View>
-                <View style={{flexDirection: 'row', gap: 6}}>
-                  <ErrorIcon size={16} />
-                  <Text
-                    style={{
-                      color: Colors.SteelBlue,
-                      fontSize: 14,
-                      fontWeight: '400',
-                    }}>
-                    {item.message}
-                  </Text>
+          <ScrollView
+            style={
+              {
+                // padding: 10,
+                // borderRadius: 8,
+                // backgroundColor: Colors.White,
+              }
+            }>
+            {Notifications.map((item, index) => (
+              <View
+                style={[
+                  styles.container,
+                  item.isView && {backgroundColor: '#ecf9fd'},
+                  index == 0 && {
+                    borderTopRightRadius: 8,
+                    borderTopLeftRadius: 8,
+                  },
+                  index == 0 && {
+                    borderBottomWidth: 1,
+                    borderBlockColor: Colors.LightGray,
+                  },
+
+                  index == Notifications.length - 1 && {
+                    borderBottomRightRadius: 8,
+                    borderBottomLeftRadius: 8,
+                  },
+                ]}
+                key={index}>
+                <Image
+                  source={item.image}
+                  style={{
+                    width: 50,
+                    height: 50,
+                    borderRadius: 50,
+                    marginBottom: 10,
+                  }}
+                />
+                <View style={{width: '80%'}}>
+                  <View style={styles.titleBox}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'semibold',
+                        color: Colors.Blue,
+                      }}>
+                      {item.name}
+                    </Text>
+                    <Text
+                      style={{
+                        fontSize: 12,
+                        fontWeight: 'semibold',
+                        color: Colors.SteelBlue,
+                      }}>
+                      {' '}
+                      {item.time}
+                    </Text>
+                  </View>
+                  <View style={{flexDirection: 'row', gap: 6}}>
+                    <ErrorIcon size={16} />
+                    <Text
+                      style={{
+                        color: Colors.SteelBlue,
+                        fontSize: 14,
+                        fontWeight: '400',
+                      }}>
+                      {item.message}
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          ))}
+            ))}
+          </ScrollView>
         </View>
       </ScrollView>
     </CommonLayout>
@@ -133,10 +155,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     gap: 15,
-    marginBottom: 20,
+    // marginBottom: 20,
     backgroundColor: Colors.White,
     padding: 20,
-    borderRadius: 10,
+    // borderRadius: 10,
   },
   titleBox: {
     flexDirection: 'row',

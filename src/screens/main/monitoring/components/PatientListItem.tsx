@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   name: {
     color: '#00263E',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: 'semibold',
     fontFamily: 'Roboto',
     marginLeft: 15,
     flex: 1,
