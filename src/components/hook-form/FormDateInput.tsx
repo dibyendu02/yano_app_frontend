@@ -27,15 +27,6 @@ const FormDateInput: FC<FormDateInputProps> = ({
   buttonColor,
   ...inputProps
 }) => {
-  let locale = dayjs.locale(
-    'en',
-    {
-      ...dayjs.Ls.en,
-      weekdaysShort: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
-    },
-    true,
-  );
-
   const {control} = useFormContext();
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
