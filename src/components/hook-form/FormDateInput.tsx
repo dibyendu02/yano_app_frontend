@@ -9,7 +9,8 @@ import moment from 'moment';
 import {StaticImage} from '../../assets/images';
 import DateTimePicker from 'react-native-ui-datepicker';
 import DialogBase from '../dialog/DialogBase';
-import {CalendarViews} from 'react-native-ui-datepicker/lib/typescript/src/enums';
+import dayjs from 'dayjs';
+import 'dayjs/locale/en';
 interface FormDateInputProps extends TextInputProps {
   name: string;
   rules?: object;
@@ -26,6 +27,15 @@ const FormDateInput: FC<FormDateInputProps> = ({
   buttonColor,
   ...inputProps
 }) => {
+  let locale = dayjs.locale(
+    'en',
+    {
+      ...dayjs.Ls.en,
+      weekdaysShort: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+    },
+    true,
+  );
+
   const {control} = useFormContext();
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -117,6 +127,10 @@ const FormDateInput: FC<FormDateInputProps> = ({
                     headerContainerStyle={{paddingVertical: 10}}
                     weekDaysContainerStyle={{borderBottomWidth: 0}}
                     weekDaysTextStyle={{color: Colors.GreyText}}
+                    locale={{
+                      ...dayjs.Ls.en,
+                      weekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+                    }}
                     yearContainerStyle={{
                       backgroundColor: Colors.Transparent,
                       borderWidth: 0,
