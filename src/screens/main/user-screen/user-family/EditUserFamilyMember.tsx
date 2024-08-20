@@ -1,13 +1,13 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import CommonLayout from '../../../../components/CommonLayout';
-import { DummyImage } from '../../../../assets/dummy/images';
+import {DummyImage} from '../../../../assets/dummy/images';
 import CustomSelect from '../../../../components/formComp/SelectFiled';
-import { useForm } from 'react-hook-form';
-import { Colors } from '../../../../constants/Colors';
+import {useForm} from 'react-hook-form';
+import {Colors} from '../../../../constants/Colors';
 import CommonHeader from '../../../healthCondition/components/CommonHeader';
 import FilledButton from '../../../../components/buttons/FilledButton';
-import { navigate } from '../../../../navigation/RootNavigation';
+import {navigate} from '../../../../navigation/RootNavigation';
 import MeasurementChangeCard from '../../my-profile/UiUpdateComponents/MeasurementChangeCard';
 import MeasurementChangeCardLocal from './MeasurementCardLocal';
 import CustomSelectLocal from './customSheetLocal';
@@ -25,7 +25,7 @@ const options = {
 
 const EditUserFamilyMember = () => {
   const [isClicked, setIsClicked] = React.useState(false);
-  const { control } = useForm();
+  const {control} = useForm();
 
   const [relation, setRelation] = React.useState('');
 
@@ -35,7 +35,7 @@ const EditUserFamilyMember = () => {
 
   const setRelationFn = (value: string) => {
     setRelation(value);
-  }
+  };
   return (
     <CommonLayout>
       <CommonHeader
@@ -54,7 +54,7 @@ const EditUserFamilyMember = () => {
           />
         }
       />
-      <View style={{ padding: 20 }}>
+      <View style={{paddingHorizontal: 12, paddingVertical: 12}}>
         <View
           style={{
             width: '100%',

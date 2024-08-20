@@ -7,6 +7,7 @@ import {
   BluetoothDisconnected,
   NextIcon,
 } from '../../../../assets/icon/IconNames';
+import {staticIcons} from '../../../../assets/image';
 
 type props = {
   name: string;
@@ -28,7 +29,7 @@ const CommonItem: FC<props> = ({
           backgroundColor: Colors.White,
           borderRadius: 10,
           padding: 20,
-          marginBottom: 20,
+          marginBottom: 12,
         }}>
         <TouchableOpacity
           onPress={onPress}
@@ -58,7 +59,10 @@ const CommonItem: FC<props> = ({
             </Text>
           </View>
           <View>
-            <NextIcon />
+            <Image
+              source={staticIcons.nextIcon}
+              style={{height: 12, width: 10, objectFit: 'contain'}}
+            />
           </View>
         </TouchableOpacity>
         <View

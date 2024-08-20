@@ -11,43 +11,27 @@ import {
   ToastAndroid,
   Alert,
 } from 'react-native';
-import Header from '../../../../../components/header/Header';
-import {navigate} from '../../../../../navigation/RootNavigation';
-import {Colors} from '../../../../../constants/Colors';
-import {AuthScreen} from '../../../../../navigation/auth/AuthScreens';
+// import Header from '../../../../../components/header/Header';
+import Header from '../../../../components/header/Header';
+import {navigate} from '../../../../navigation/RootNavigation';
+import {Colors} from '../../../../constants/Colors';
+import {AuthScreen} from '../../../../navigation/auth/AuthScreens';
 import {FormProvider, useForm, Controller} from 'react-hook-form';
-import FormInput from '../../../../../components/hook-form/FormInput';
-import {FormInputType} from '../../../../../components/hook-form/types';
-import FormDateInput from '../../../../../components/hook-form/FormDateInput';
-import FormSelectionInput from '../../../../../components/hook-form/FormSelectionInput';
-import FormPhoneNumberInput from '../../../../../components/hook-form/FormPhoneNumberInput';
-import FormImageInput from '../../../../../components/hook-form/FormImageInput';
-import {AuthScreensProps} from '../../../../../navigation/auth/types';
-import {UserType} from '../../../../../constants/enums';
+import FormInput from '../../../../components/hook-form/FormInput';
+import {FormInputType} from '../../../../components/hook-form/types';
+import FormDateInput from '../../../../components/hook-form/FormDateInput';
+import FormSelectionInput from '../../../../components/hook-form/FormSelectionInput';
+import FormPhoneNumberInput from '../../../../components/hook-form/FormPhoneNumberInput';
+import FormImageInput from '../../../../components/hook-form/FormImageInput';
+import {AuthScreensProps} from '../../../../navigation/auth/types';
+import {UserType} from '../../../../constants/enums';
 import moment from 'moment';
-import {
-  registerDoctor,
-  registerPatient,
-} from '../../../../../services/Endpoints';
+import {registerDoctor, registerPatient} from '../../../../services/Endpoints';
 import Gender from './Gender';
-import UserContext from '../../../../../contexts/UserContext';
+import UserContext from '../../../../contexts/UserContext';
+import HeaderWithButton from '../../add-patient/component/HeaderWithButton';
 
-const DoctorSpecialties = [
-  {id: 'Cardiologist', label: 'Cardiologist', enabled: true},
-  {id: 'Dermatologist', label: 'Dermatologist', enabled: true},
-  {id: 'Neurologist', label: 'Neurologist', enabled: true},
-  {id: 'Pediatrician', label: 'Pediatrician', enabled: true},
-  {id: 'GeneralSurgeon', label: 'General Surgeon', enabled: true},
-  {id: 'OrthopedicSurgeon', label: 'Orthopedic Surgeon', enabled: true},
-  {id: 'Gynecologist', label: 'Gynecologist', enabled: true},
-  {id: 'Ophthalmologist', label: 'Ophthalmologist', enabled: true},
-  {id: 'Psychiatrist', label: 'Psychiatrist', enabled: true},
-  {id: 'Radiologist', label: 'Radiologist', enabled: true},
-  {id: 'Urologist', label: 'Urologist', enabled: true},
-  {id: 'Endocrinologist', label: 'Endocrinologist', enabled: true},
-];
-
-const EditDoctorProfile: React.FC<AuthScreensProps> = ({route}) => {
+const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
   const [isDisabled, setIsDisabled] = React.useState(true);
   const {userData} = useContext(UserContext);
   //@ts-ignore
@@ -141,10 +125,15 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({route}) => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{flex: 1}}>
         <View style={{flex: 1}}>
-          <Header
+          <HeaderWithButton
             title="Edit profile"
             headerRightComponent={
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  paddingVertical: 3,
+                }}>
                 <TouchableOpacity
                   disabled={isDisabled}
                   onPress={isDisabled ? null : methods.handleSubmit(onSubmit)}>
@@ -230,7 +219,7 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({route}) => {
                 <Controller
                   name="gender"
                   control={methods.control}
-                  defaultValue="Male"
+                  defaultValue={initialData.gender}
                   render={({field: {onChange, value}}) => (
                     <Gender selectedRole={value} setSelectedRole={onChange} />
                   )}
@@ -249,20 +238,6 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({route}) => {
                     },
                   }}
                 /> */}
-                <FormSelectionInput
-                  name="speciality"
-                  placeholder="Select your specialty"
-                  label="Specialty"
-                  options={DoctorSpecialties}
-                  optionsListLabel="Select your specialty"
-                  optionsListHeight={400}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: 'Please select your specialty',
-                    },
-                  }}
-                />
               </FormProvider>
             </ScrollView>
           </View>
@@ -272,7 +247,7 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({route}) => {
   );
 };
 
-export default EditDoctorProfile;
+export default EditPatientProfile;
 
 const styles = StyleSheet.create({
   text: {
@@ -297,7 +272,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     color: Colors.White,
     fontWeight: 'bold',
-    padding: 10,
+    padding: 8,
     paddingHorizontal: 15,
   },
   body: {

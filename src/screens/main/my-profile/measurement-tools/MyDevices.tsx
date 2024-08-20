@@ -20,7 +20,7 @@ const MyDevices = () => {
       <Header title="My devices" />
       {visible ? (
         <ScrollView>
-          <View style={{padding: 20}}>
+          <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
             <CommonItem
               name="Yano Multi-parameter Monitor"
               onPress={() => navigate('MeasurementMonitoring')}

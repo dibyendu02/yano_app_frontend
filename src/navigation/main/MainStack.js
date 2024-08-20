@@ -114,6 +114,7 @@ import AddFamilyQr from '../../screens/main/user-screen/user-family/AddFamilyQr'
 import Create from '../../screens/main/user-screen/user-family/Create';
 import PatientQRCode from '../../screens/main/add-patient/PatientQRCode';
 import EditDoctorProfile from '../../screens/main/my-profile/components/EditProfile/EditDoctorProfile';
+import EditPatientProfile from '../../screens/main/user-screen/user-profile/EditPatientProfile';
 
 const Tab = createBottomTabNavigator();
 
@@ -818,6 +819,11 @@ const MainStack = () => {
       <Stack.Screen
         name="EditDoctorProfile"
         component={EditDoctorProfile}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="EditPatientProfile"
+        component={EditPatientProfile}
         options={{headerShown: false}}
       />
       <Stack.Screen

@@ -79,8 +79,8 @@ const styles = StyleSheet.create({
   },
   floatingBtn: {
     position: 'absolute',
-    bottom: '4%',
-    right: '4%',
+    bottom: 15,
+    right: 15,
     width: '40%',
     borderRadius: 10,
   },

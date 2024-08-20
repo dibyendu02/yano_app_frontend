@@ -147,7 +147,7 @@ const MyProfile = ({navigation}: any) => {
         }
       />
       <View style={{flex: 1, backgroundColor: Colors.GhostWhite}}>
-        <View style={[CardStyles.container, {marginTop: 10}]}>
+        <View style={[CardStyles.container, {marginTop: 12}]}>
           <View
             style={{paddingVertical: 24, width: '100%', alignItems: 'center'}}>
             <Image
@@ -233,7 +233,7 @@ const MyProfile = ({navigation}: any) => {
           </View>
         </View>
 
-        <View style={CardStyles.container}>
+        <View style={[CardStyles.container, {marginVertical: 6}]}>
           <FlatList
             data={menuData}
             style={{paddingHorizontal: 20, paddingVertical: 10}}
@@ -259,10 +259,14 @@ const MyProfile = ({navigation}: any) => {
                     {item.text}
                   </Text>
                 </View>
-                <Icons.MaterialIcons
+                {/* <Icons.MaterialIcons
                   name="navigate-next"
                   size={30}
                   color={Colors.Blue}
+                /> */}
+                <Image
+                  source={staticIcons.nextIcon}
+                  style={{height: 12, width: 10, objectFit: 'contain'}}
                 />
               </TouchableOpacity>
             )}

@@ -32,6 +32,7 @@ import Badge from '../../../../components/Badge';
 import ShareButton from './ShareButton';
 import {StaticImage} from '../../../../assets/images';
 import UserContext from '../../../../contexts/UserContext';
+import {useNavigation} from '@react-navigation/native';
 
 const menuData = [
   {
@@ -98,9 +99,6 @@ const onShare = async () => {
 export default function () {
   const [showQR, setShowQR] = useState(false);
   const {userData} = useContext(UserContext);
-  console.log(userData);
-
-  console.log(userData?.userImg?.secure_url);
 
   const formatDateOfBirth = dateString => {
     const options = {year: 'numeric', month: 'long', day: 'numeric'};
@@ -139,12 +137,14 @@ export default function () {
       icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
     },
   ];
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <Header
         title="My profile"
         headerRightComponent={
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('EditPatientProfile')}>
             {/* <EditIcon /> */}
             <Image
               source={require('../../../../assets/image/EditPencil.png')}
@@ -156,9 +156,9 @@ export default function () {
       />
 
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
-        <Card>
+        <Card contentContainerStyle={{marginTop: 12, marginBottom: 8}}>
           <Image
-            source={{uri: userData?.userImg?.secure_url || DummyImage.user}}
+            source={{uri: userData?.userImg?.secure_url} || DummyImage.user}
             style={{
               height: 80,
               width: 80,
@@ -268,7 +268,8 @@ export default function () {
           <FlatList
             data={menuData}
             style={{
-              paddingHorizontal: 20,
+              paddingLeft: 20,
+              paddingRight: 13,
               paddingVertical: 10,
             }}
             renderItem={({item, index: _i}) => (

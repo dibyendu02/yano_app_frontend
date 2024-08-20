@@ -32,8 +32,9 @@ export const DatePickerField: FC<inputProps> = ({label, name, onchange}) => {
         onPress={() => setShowDatePicker(true)} // Corrected state here
         style={{position: 'relative'}}>
         <TextInput
-          style={[styles.input, {color: Colors.Black}]}
-          value={selectedDate.toDateString()} // Updated value to selectedDate
+          style={[styles.input, {color: Colors.Blue}]}
+          value={moment(selectedDate).format('DD-MM-YYYY')}
+          // value={selectedDate.toDateString()} // Updated value to selectedDate
           placeholder={'Select a date'}
           editable={false}
         />
@@ -46,7 +47,7 @@ export const DatePickerField: FC<inputProps> = ({label, name, onchange}) => {
           {/* <DateIcon /> */}
           <Image
             source={StaticImage.CalenderIcon}
-            style={{width: 25, height: 25, tintColor: Colors.SteelBlue}}
+            style={{width: 25, height: 25, tintColor: Colors.Grey}}
           />
         </View>
       </Pressable>

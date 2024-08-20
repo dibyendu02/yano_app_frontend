@@ -4,6 +4,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import Icons from '../../../../assets/icon/Icon';
 import {Colors} from '../../../../constants/Colors';
+import {Image} from 'react-native';
+import {staticIcons} from '../../../../assets/image';
 
 type SettingsElementsProps = {
   name: string;
@@ -37,7 +39,11 @@ const SettingsElements: React.FC<SettingsElementsProps> = ({
         )}
         {element}
         <Text style={styles.name}>{name}</Text>
-        <MaterialIcons name="navigate-next" size={25} color={Colors.Blue} />
+        {/* <MaterialIcons name="navigate-next" size={25} color={Colors.Blue} /> */}
+        <Image
+          source={staticIcons.nextIcon}
+          style={{height: 12, width: 10, objectFit: 'contain'}}
+        />
       </View>
     </TouchableOpacity>
   );

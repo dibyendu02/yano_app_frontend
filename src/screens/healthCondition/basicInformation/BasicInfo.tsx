@@ -44,7 +44,7 @@ const BasicInfo = ({navigation}: any) => {
         // }
       />
       <ScrollView>
-        <View style={{padding: 20}}>
+        <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
           <View style={styles.boxStyle}>
             <DetailItems name="Height" value={data.height} />
             <DetailItems name="Weight" value={data.weight} />

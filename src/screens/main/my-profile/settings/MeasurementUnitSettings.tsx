@@ -1,11 +1,4 @@
-import {
-  Image,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import {Colors} from '../../../../constants/Colors';
 import Header from '../../../../components/header/Header';
@@ -23,12 +16,25 @@ type MeasurementItem = {
 };
 
 const MeasurementUnitSettings = () => {
-  const [isClicked, setIsClicked] = useState(true);
+  const [isClicked, setIsClicked] = useState(false);
   const [items, setItems] = useState<MeasurementItem | undefined>(undefined);
+  const [selectedUnits, setSelectedUnits] = useState<{[key: string]: string}>(
+    {},
+  );
 
   const handlePress = (item: MeasurementItem) => {
     setItems(item);
     setIsClicked(true);
+  };
+
+  const handleUnitChange = (unit: string) => {
+    if (items) {
+      setSelectedUnits(prevUnits => ({
+        ...prevUnits,
+        [items.title]: unit,
+      }));
+    }
+    setIsClicked(false);
   };
 
   return (
@@ -53,7 +59,7 @@ const MeasurementUnitSettings = () => {
                 />
               }
               name={item.title}
-              subtitle={item.subtitle}
+              subtitle={selectedUnits[item.title] || item.unit1}
               customStyle={{
                 borderBottomWidth: 1,
                 borderBottomColor: Colors.LightGray,
@@ -69,6 +75,7 @@ const MeasurementUnitSettings = () => {
             title={`${items.title} unit`}
             active={setIsClicked}
             items={items}
+            onUnitChange={handleUnitChange} // Pass the handler for unit change
           />
         </View>
       )}

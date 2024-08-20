@@ -7,7 +7,7 @@ import {
   Easing,
 } from 'react-native';
 import React, {useContext, useEffect, useRef} from 'react';
-import logo_transparent from '../assets/image/logo_transparent.png';
+import logo_transparent from '../assets/image/logo_transparent_two.png';
 import {Image} from 'react-native';
 import UserContext from '../contexts/UserContext';
 import {navigate} from '../navigation/RootNavigation';
@@ -30,6 +30,7 @@ const LoadingScreen = () => {
     ).start();
 
     // Uncomment this when you want to trigger login and navigation
+
     setTimeout(() => {
       login();
       navigate('tabs');
@@ -49,7 +50,10 @@ const LoadingScreen = () => {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
-      <Image source={logo_transparent} style={{height: 60, marginBottom: 20}} />
+      <Image
+        source={logo_transparent}
+        style={{height: 60, marginBottom: 20, objectFit: 'contain'}}
+      />
       {/* If you want to use ActivityIndicator */}
       {/* <ActivityIndicator color={'#fff'} size="large" animating={true} /> */}
 

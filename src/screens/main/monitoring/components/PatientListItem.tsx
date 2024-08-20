@@ -4,6 +4,7 @@ import {navigate} from '../../../../navigation/RootNavigation';
 import Icons from '../../../../assets/icon/Icon';
 import {DummyImage} from '../../../../assets/dummy/images';
 import {Colors} from '../../../../constants/Colors';
+import {staticIcons} from '../../../../assets/image';
 
 interface PatientListItem {
   name: string;
@@ -14,10 +15,14 @@ const PatientListItem: React.FC<PatientListItem> = props => {
       <View style={styles.container}>
         <Image source={DummyImage.user} style={styles.avatar} />
         <Text style={styles.name}>{props.name}</Text>
-        <Icons.MaterialIcons
+        {/* <Icons.MaterialIcons
           name="navigate-next"
           size={30}
           color={Colors.Blue}
+        /> */}
+        <Image
+          source={staticIcons.nextIcon}
+          style={{height: 12, width: 10, objectFit: 'contain'}}
         />
       </View>
     </TouchableOpacity>

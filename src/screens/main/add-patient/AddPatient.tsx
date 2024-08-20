@@ -10,16 +10,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../../../components/header/Header';
-import { Colors } from '../../../constants/Colors';
-import { navigate } from '../../../navigation/RootNavigation';
+import {Colors} from '../../../constants/Colors';
+import {navigate} from '../../../navigation/RootNavigation';
 import FilledButton from '../../../components/buttons/FilledButton';
 import Card from '../../../components/cards/Card';
 import Icons from '../../../assets/icon/Icon';
-import { DummyImage } from '../../../assets/dummy/images';
-import { StaticImage } from '../../../assets/images';
-import { staticIcons } from '../../../assets/image';
+import {DummyImage} from '../../../assets/dummy/images';
+import {StaticImage} from '../../../assets/images';
+import {staticIcons} from '../../../assets/image';
+import HeaderWithButton from './component/HeaderWithButton';
 
 const AddPatient = () => {
   const [email, setEmail] = useState('');
@@ -32,7 +33,7 @@ const AddPatient = () => {
       icon: (
         <Image
           source={staticIcons.QRCodeScanner}
-          style={{ width: 24, height: 24, tintColor: Colors.LightGreen }}
+          style={{width: 24, height: 24, tintColor: Colors.LightGreen}}
         />
       ),
     },
@@ -41,7 +42,7 @@ const AddPatient = () => {
       icon: (
         <Image
           source={StaticImage.SharerIcon}
-          style={{ width: 24, height: 24, tintColor: Colors.LightGreen }}
+          style={{width: 24, height: 24, tintColor: Colors.LightGreen}}
         />
       ),
     },
@@ -77,7 +78,7 @@ const AddPatient = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Header
+      <HeaderWithButton
         title="Add patient"
         headerRightComponent={
           <FilledButton
@@ -106,7 +107,7 @@ const AddPatient = () => {
           <Card title="OTHER OPTIONS">
             <FlatList
               data={OPTIONS}
-              renderItem={({ item, index: _index }) => (
+              renderItem={({item, index: _index}) => (
                 <TouchableOpacity
                   style={styles.optionItemContainer}
                   onPress={() => {
@@ -125,10 +126,9 @@ const AddPatient = () => {
                     {item?.icon && item.icon}
                     <Text style={styles.label}>{item.label}</Text>
                   </View>
-                  <Icons.MaterialIcons
-                    name="navigate-next"
-                    size={25}
-                    color={Colors.Blue}
+                  <Image
+                    source={staticIcons.nextIcon}
+                    style={{height: 12, width: 10, objectFit: 'contain'}}
                   />
                 </TouchableOpacity>
               )}
@@ -143,7 +143,7 @@ const AddPatient = () => {
               backgroundColor: Colors.White,
               marginTop: 20,
             }}>
-            <Image source={DummyImage.user} style={{ height: 70, width: 70 }} />
+            <Image source={DummyImage.user} style={{height: 70, width: 70}} />
             <Text
               style={{
                 fontSize: 18,
@@ -153,7 +153,7 @@ const AddPatient = () => {
               }}>
               María Clemente
             </Text>
-            <Text style={{ fontSize: 16, color: Colors.SteelBlue }}>
+            <Text style={{fontSize: 16, color: Colors.SteelBlue}}>
               maria.clemente@gmail.com
             </Text>
           </Card>
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#00263E',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
     marginLeft: 15,
@@ -220,5 +220,6 @@ const styles = StyleSheet.create({
   },
   findButton: {
     width: '55%',
+    paddingVertical: 10,
   },
 });

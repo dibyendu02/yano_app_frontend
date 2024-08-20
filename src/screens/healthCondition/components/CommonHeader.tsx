@@ -13,8 +13,12 @@ type props = {
 
 const CommonHeader: FC<props> = ({title, leftIcon, rightComp1, rightComp2}) => {
   const navigation = useNavigation();
+
+  // Determine paddingVertical based on whether right components are present
+  const paddingVertical = rightComp1 || rightComp2 ? 2 : 10;
+
   return (
-    <View style={[styles.navbar, styles.flexBox]}>
+    <View style={[styles.navbar, styles.flexBox, {paddingVertical}]}>
       <View style={[styles.flexBox, {justifyContent: 'center'}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           {leftIcon ? (
@@ -40,7 +44,6 @@ export default CommonHeader;
 const styles = StyleSheet.create({
   navbar: {
     alignItems: 'center',
-    paddingVertical: 20,
     paddingHorizontal: 10,
     paddingEnd: 10,
     backgroundColor: Colors.White,
@@ -50,7 +53,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
-
     paddingLeft: 15,
   },
   boxStyle: {

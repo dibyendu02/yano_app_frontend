@@ -4,7 +4,7 @@ import {Colors} from '../../constants/Colors';
 export const CardStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    marginVertical: 6,
+    marginVertical: 5,
     borderRadius: 8,
     backgroundColor: Colors.White,
     width: '94%',

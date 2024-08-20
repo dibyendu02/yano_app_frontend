@@ -41,7 +41,7 @@ const MyHealthHomeScreen = ({navigation}) => {
     <CommonLayout>
       <Header
         showBackIcon={false}
-        title={`Hi, ${userData.firstName}`}
+        title={`Hi, ${userData?.firstName}`}
         headerRightComponent={
           <TouchableOpacity
             onPress={() => navigate('NotificationAlerts')}
@@ -61,7 +61,7 @@ const MyHealthHomeScreen = ({navigation}) => {
         }
       />
       <ScrollView>
-        <View style={{padding: 15}}>
+        <View style={{paddingVertical: 10, width: '94%', margin: 'auto'}}>
           <View style={styles.container}>
             <Text style={styles.title}>Do you have one of our devices?</Text>
             <Text style={styles.para}>
@@ -123,7 +123,10 @@ const MyHealthHomeScreen = ({navigation}) => {
                 See More
               </Text>
             </TouchableOpacity>
-          }>
+          }
+          contentContainerStyle={{
+            marginVertical: 0,
+          }}>
           <FlatList
             data={
               measurements.length >= 2
@@ -294,7 +297,7 @@ const styles = StyleSheet.create({
   addBtn: {
     width: 200,
     position: 'absolute',
-    bottom: 16,
+    bottom: 12,
     right: 16,
   },
   container: {

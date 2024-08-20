@@ -41,7 +41,8 @@ const HealthParameterDetail = ({route}) => {
           </TouchableOpacity>
         }
       />
-      <View style={{flex: 1, backgroundColor: Colors.GhostWhite}}>
+      <View
+        style={{flex: 1, backgroundColor: Colors.GhostWhite, paddingTop: 10}}>
         {healthParameterDetail?.field !== 'ECG' ? (
           <View style={[CardStyles.container]}>
             <View style={{width: '100%', padding: 20}}>

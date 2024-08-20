@@ -23,6 +23,7 @@ import {measurements, userData} from '../../../../test/Data';
 import Icons from '../../../../assets/icon/Icon';
 import {navigate} from '../../../../navigation/RootNavigation';
 import {StaticImage} from '../../../../assets/images';
+import {staticIcons} from '../../../../assets/image';
 
 let data1 = [
   {
@@ -153,7 +154,7 @@ export default function PatientMonitoringProfile({}) {
                 <View style={{width: '50%'}}>
                   <Text
                     style={{
-                      fontSize: 18,
+                      fontSize: 16,
                       fontFamily: 'Roboto',
                       marginBottom: 4,
                       fontWeight: 'bold',
@@ -224,10 +225,20 @@ export default function PatientMonitoringProfile({}) {
                   style={{height: 22, width: 22}}
                 />
                 <Text style={styles.name}>Medical history</Text>
-                <MaterialIcons name="navigate-next" size={25} color={'black'} />
+                <Image
+                  source={staticIcons.nextIcon}
+                  style={{height: 12, width: 10, objectFit: 'contain'}}
+                />
               </View>
             </TouchableOpacity>
-
+            <View
+              style={{
+                height: 1,
+                width: '100%',
+                backgroundColor: Colors.LightGray,
+                alignSelf: 'center',
+              }}
+            />
             <TouchableOpacity
               onPress={() => navigate('HealthThresholdHomeScreen')}>
               <View style={styles.container1}>
@@ -236,10 +247,20 @@ export default function PatientMonitoringProfile({}) {
                   style={{height: 22, width: 22}}
                 />
                 <Text style={styles.name}>Health thresholds</Text>
-                <MaterialIcons name="navigate-next" size={25} color={'black'} />
+                <Image
+                  source={staticIcons.nextIcon}
+                  style={{height: 12, width: 10, objectFit: 'contain'}}
+                />
               </View>
             </TouchableOpacity>
-
+            <View
+              style={{
+                height: 1,
+                width: '100%',
+                backgroundColor: Colors.LightGray,
+                alignSelf: 'center',
+              }}
+            />
             <TouchableOpacity onPress={() => navigate('RemainderScreen')}>
               <View style={styles.container1}>
                 <Image
@@ -247,7 +268,10 @@ export default function PatientMonitoringProfile({}) {
                   style={{height: 22, width: 22}}
                 />
                 <Text style={styles.name}>Reminders</Text>
-                <MaterialIcons name="navigate-next" size={25} color={'black'} />
+                <Image
+                  source={staticIcons.nextIcon}
+                  style={{height: 12, width: 10, objectFit: 'contain'}}
+                />
               </View>
             </TouchableOpacity>
             {/* <PatientElements
@@ -289,6 +313,7 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
+    paddingTop: 6,
     backgroundColor: Colors.GhostWhite,
   },
   separator: {
@@ -365,12 +390,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'white',
-    padding: 20,
+    paddingVertical: 16,
+    paddingHorizontal: 10,
     borderRadius: 8,
   },
   name: {
     color: '#00263E',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
     marginLeft: 15,

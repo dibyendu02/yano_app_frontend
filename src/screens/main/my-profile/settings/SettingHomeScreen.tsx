@@ -32,7 +32,7 @@ const SettingHomeScreen = () => {
       <View>
         <Header title={'Settings'} />
         <ScrollView>
-          <View style={{width: '94%', margin: 'auto', marginTop: 10}}>
+          <View style={{width: '94%', margin: 'auto', marginTop: 12}}>
             <MeasurementItems data={Settings} />
             <View style={styles.versionBox}>
               <View
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     backgroundColor: Colors.White,
-    marginVertical: 20,
+    marginVertical: 12,
   },
   title: {
     fontSize: 16,
