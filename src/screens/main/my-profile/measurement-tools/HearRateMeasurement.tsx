@@ -101,8 +101,9 @@ const HeartRateMeasurement = () => {
               }
             />
             <ScrollView>
-              <View style={{padding: 15}}>
-                <View style={{padding: 20}}>
+              <View>
+                <View
+                  style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -118,6 +119,8 @@ const HeartRateMeasurement = () => {
                       }}
                       customStyles={{
                         width: '60%',
+                        borderTopLeftRadius: 8,
+                        borderBottomLeftRadius: 8,
                       }}
                     />
                     <MeasurementBox
@@ -129,6 +132,8 @@ const HeartRateMeasurement = () => {
                       }}
                       customStyles={{
                         width: '40%',
+                        borderTopRightRadius: 8,
+                        borderBottomRightRadius: 8,
                       }}
                     />
                   </View>

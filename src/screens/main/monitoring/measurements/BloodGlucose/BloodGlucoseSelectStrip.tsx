@@ -1,12 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../../../components/header/Header';
-import { Colors } from '../../../../../constants/Colors';
+import {Colors} from '../../../../../constants/Colors';
 import FilledButton from '../../../../../components/buttons/FilledButton';
 import StripCodeScroll from '../components/StripCodeScroll';
 
-const BloodGlucoseSelectStrip = ({ navigation }: any) => {
+const BloodGlucoseSelectStrip = ({navigation}: any) => {
   const [code, setCode] = useState('C20');
   return (
     <SafeAreaView
@@ -22,7 +22,9 @@ const BloodGlucoseSelectStrip = ({ navigation }: any) => {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          margin: 15,
+          marginTop: 12,
+          width: '94%',
+          margin: 'auto',
           borderRadius: 10,
           padding: 15,
         }}>
@@ -42,14 +44,14 @@ const BloodGlucoseSelectStrip = ({ navigation }: any) => {
         <FilledButton
           label={'Back'}
           type={'lightGrey'}
-          style={{ width: '48%', alignSelf: 'center', marginVertical: 14 }}
+          style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.goBack()}
           activeOpacity={0.8}
         />
         <FilledButton
           label={'Next'}
           type={'blue'}
-          style={{ width: '48%', alignSelf: 'center', marginVertical: 14 }}
+          style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.navigate('BloodGlucoseStep1')}
           activeOpacity={0.8}
         />

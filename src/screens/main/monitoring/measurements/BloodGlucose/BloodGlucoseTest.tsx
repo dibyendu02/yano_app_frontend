@@ -17,7 +17,9 @@ const BloodGlucoseTest = ({navigation}: any) => {
       <View
         style={{
           backgroundColor: 'white',
-          margin: 10,
+          marginTop: 12,
+          width: '94%',
+          margin: 'auto',
           height: 120,
           borderRadius: 8,
           flexDirection: 'column',

@@ -23,7 +23,9 @@ const BloodGlucoseTestTime = ({navigation}: any) => {
       <View
         style={{
           backgroundColor: Colors.White,
-          margin: 15,
+          marginTop: 12,
+          width: '94%',
+          margin: 'auto',
           borderRadius: 10,
           padding: 15,
         }}>

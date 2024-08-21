@@ -5,7 +5,7 @@ import Header from '../../../../../components/header/Header';
 import {Colors} from '../../../../../constants/Colors';
 import FilledButton from '../../../../../components/buttons/FilledButton';
 import {UTurnIcon} from '../../../../../assets/icon/IconNames';
-import Scale from '../../../../../assets/measurements/images/scale.png';
+import Scale from '../../../../../assets/measurements/images/bloodGlucose.png';
 import Icons from '../../../../../assets/icon/Icon';
 
 const BloodGlucoseResult = ({navigation}: any) => {
@@ -27,7 +27,9 @@ const BloodGlucoseResult = ({navigation}: any) => {
       <View
         style={{
           backgroundColor: 'white',
-          margin: 10,
+          marginVertical: 12,
+          width: '94%',
+          margin: 'auto',
           height: 120,
           borderRadius: 8,
           flexDirection: 'column',
@@ -42,7 +44,7 @@ const BloodGlucoseResult = ({navigation}: any) => {
       <View
         style={{
           backgroundColor: 'white',
-          margin: 10,
+          marginHorizontal: 10,
           height: 120,
           borderRadius: 8,
           flexDirection: 'column',
@@ -50,7 +52,14 @@ const BloodGlucoseResult = ({navigation}: any) => {
           //   alignItems: 'center',
           //   justifyContent: 'center',
         }}>
-        <View style={{flexDirection: 'row', gap: 10, alignItems: 'center'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 10,
+            // alignItems: 'center',
+            position: 'relative',
+            height: '120%',
+          }}>
           <View
             style={{
               width: 20,
@@ -63,7 +72,17 @@ const BloodGlucoseResult = ({navigation}: any) => {
             Normal glucose level
           </Text>
         </View>
-        <Image source={Scale} style={{marginTop: 20}} />
+        <Image
+          source={Scale}
+          style={{
+            marginTop: 15,
+            width: '100%',
+            objectFit: 'contain',
+            position: 'absolute',
+            bottom: -60,
+            left: 20,
+          }}
+        />
       </View>
 
       <View style={styles.addBtn}>

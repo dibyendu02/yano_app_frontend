@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { FC } from 'react';
-import { Colors } from '../../../../constants/Colors';
+import {StyleSheet, Text, View} from 'react-native';
+import React, {FC} from 'react';
+import {Colors} from '../../../../constants/Colors';
 import Spinner from '../../../../components/Spinner';
 import HeartAnimation from '../../../../assets/images/heartAnimate';
 
@@ -16,13 +16,13 @@ type props = {
 
 const MeasurementBox: FC<props> = ({
   loading,
-  fields: { name, value, unit },
+  fields: {name, value, unit},
   customStyles,
 }) => {
   // console.log('MeasurementBox', name, value, unit);
   return (
     <>
-      <View style={[styles.container, { ...customStyles }]}>
+      <View style={[styles.container, {...customStyles}]}>
         <Text style={styles.heading}>{name}</Text>
         {loading ? (
           unit == 'Beats/Min' ? (
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     width: '33%',
     backgroundColor: Colors.White,
     padding: 20,
-    borderRadius: 10,
+    // borderRadius: 10,
   },
   heading: {
     fontSize: 14,

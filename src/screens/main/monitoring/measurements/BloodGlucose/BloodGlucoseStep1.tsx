@@ -1,16 +1,16 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {Image, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../../../components/header/Header';
-import { Colors } from '../../../../../constants/Colors';
+import {Colors} from '../../../../../constants/Colors';
 import FilledButton from '../../../../../components/buttons/FilledButton';
 import Card from '../../../../../components/cards/Card';
 import CustomRadioButton from '../../../../../components/formComp/CustomRadio';
 import RadioButton from '../components/RadioButton';
 import StripCodeScroll from '../components/StripCodeScroll';
-import { StaticImage } from '../../../../../assets/images';
+import {StaticImage} from '../../../../../assets/images';
 
-const BloodGlucoseStep1 = ({ navigation }: any) => {
+const BloodGlucoseStep1 = ({navigation}: any) => {
   const [code, setCode] = useState('C20');
   return (
     <SafeAreaView
@@ -26,7 +26,9 @@ const BloodGlucoseStep1 = ({ navigation }: any) => {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          margin: 15,
+          marginTop: 12,
+          width: '94%',
+          margin: 'auto',
           borderRadius: 10,
           padding: 15,
         }}>
@@ -40,12 +42,14 @@ const BloodGlucoseStep1 = ({ navigation }: any) => {
           Insert the test strip into the receiving hole, then press next.
         </Text>
         <View>
-          <Image source={StaticImage.InsertTheStrip} style={{
-            height: 296,
-            width: 296
-          }} />
+          <Image
+            source={StaticImage.InsertTheStrip}
+            style={{
+              height: 296,
+              width: 296,
+            }}
+          />
         </View>
-
       </View>
 
       <View style={styles.addBtn}>
@@ -54,7 +58,7 @@ const BloodGlucoseStep1 = ({ navigation }: any) => {
           // icon={
           // }
           type={'lightGrey'}
-          style={{ width: '48%', alignSelf: 'center', marginVertical: 14 }}
+          style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.goBack()}
           activeOpacity={0.8}
         />
@@ -63,7 +67,7 @@ const BloodGlucoseStep1 = ({ navigation }: any) => {
           // icon={
           // }
           type={'blue'}
-          style={{ width: '48%', alignSelf: 'center', marginVertical: 14 }}
+          style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.navigate('BloodGlucoseStep2')}
           activeOpacity={0.8}
         />

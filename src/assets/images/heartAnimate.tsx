@@ -50,5 +50,6 @@ const styles = StyleSheet.create({
   heart: {
     width: 30, // Adjust size as needed
     height: 27,
+    objectFit: 'contain',
   },
 });
