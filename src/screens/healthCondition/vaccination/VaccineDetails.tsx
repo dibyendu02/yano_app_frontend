@@ -11,6 +11,8 @@ import {Colors} from '../../../constants/Colors';
 import {DeleteIcon, EditIcon} from '../../../assets/icon/IconNames';
 import DetailItems from '../components/DetailItems';
 import CommonHeader from '../components/CommonHeader';
+import {Image} from 'react-native';
+import {staticIcons} from '../../../assets/image';
 
 const VaccineDetails = ({navigation, route}: any) => {
   if (!route || !route.params) {
@@ -31,13 +33,21 @@ const VaccineDetails = ({navigation, route}: any) => {
         title={name}
         rightComp1={
           <TouchableOpacity
-            onPress={() => navigation.navigate('AddAndEditVaccine', {data})}>
-            <EditIcon />
+            onPress={() =>
+              navigation.navigate('AddAndEditHospitalization', {data})
+            }>
+            <Image
+              source={staticIcons.EditPencil}
+              style={{height: 22, width: 22}}
+            />
           </TouchableOpacity>
         }
         rightComp2={
           <TouchableOpacity>
-            <DeleteIcon />
+            <Image
+              source={staticIcons.DeleteIcon}
+              style={{height: 22, width: 22}}
+            />
           </TouchableOpacity>
         }
       />

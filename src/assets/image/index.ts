@@ -1,5 +1,6 @@
 export const staticIcons = {
   EditPencil: require('./EditPencil.png'),
+  DeleteIcon: require('./delete.png'),
   BackArrow: require('./arrow_back_high_Quality.png'),
   QRCodeScanner: require('./qr_code_scanner.png'),
   PersonAdd: require('./person_add.png'),

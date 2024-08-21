@@ -1,5 +1,6 @@
 import {
   Alert,
+  Image,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -13,6 +14,7 @@ import Header from '../../../components/header/Header';
 import {DeleteIcon, EditIcon} from '../../../assets/icon/IconNames';
 import DetailItems from '../components/DetailItems';
 import CommonHeader from '../components/CommonHeader';
+import {staticIcons} from '../../../assets/image';
 
 const MedicineDetails = ({navigation, route}: any) => {
   if (!route || !route.params) {
@@ -49,13 +51,21 @@ const MedicineDetails = ({navigation, route}: any) => {
         title={name}
         rightComp1={
           <TouchableOpacity
-            onPress={() => navigation.navigate('AddAndEditMedicine', {data})}>
-            <EditIcon />
+            onPress={() =>
+              navigation.navigate('AddAndEditHospitalization', {data})
+            }>
+            <Image
+              source={staticIcons.EditPencil}
+              style={{height: 22, width: 22}}
+            />
           </TouchableOpacity>
         }
         rightComp2={
           <TouchableOpacity>
-            <DeleteIcon />
+            <Image
+              source={staticIcons.DeleteIcon}
+              style={{height: 22, width: 22}}
+            />
           </TouchableOpacity>
         }
       />

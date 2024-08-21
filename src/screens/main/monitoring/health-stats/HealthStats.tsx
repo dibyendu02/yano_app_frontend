@@ -237,7 +237,7 @@ const HealthStats = () => {
             <TouchableOpacity>
               <Image
                 source={StaticImage.FilterIcon}
-                style={{height: 20, width: 20}}
+                style={{height: 28, width: 28, objectFit: 'contain'}}
               />
             </TouchableOpacity>
             <TouchableOpacity>

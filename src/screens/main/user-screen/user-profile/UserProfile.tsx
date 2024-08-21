@@ -33,6 +33,7 @@ import ShareButton from './ShareButton';
 import {StaticImage} from '../../../../assets/images';
 import UserContext from '../../../../contexts/UserContext';
 import {useNavigation} from '@react-navigation/native';
+import {staticIcons} from '../../../../assets/image';
 
 const menuData = [
   {
@@ -147,7 +148,7 @@ export default function () {
             onPress={() => navigation.navigate('EditPatientProfile')}>
             {/* <EditIcon /> */}
             <Image
-              source={require('../../../../assets/image/EditPencil.png')}
+              source={staticIcons.EditPencil}
               style={{height: 26, width: 24}}
             />
           </TouchableOpacity>
