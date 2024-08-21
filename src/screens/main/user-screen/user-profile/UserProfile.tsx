@@ -108,11 +108,11 @@ export default function () {
 
   let data1 = [
     {
-      label: userData.gender,
+      label: userData?.gender,
       icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
     },
     {
-      label: formatDateOfBirth(userData.dateOfBirth || '1985-05-15'),
+      label: formatDateOfBirth(userData?.dateOfBirth || '1985-05-15'),
       icon: (
         <Image
           source={StaticImage.CalenderIcon}
@@ -121,7 +121,7 @@ export default function () {
       ),
     },
     {
-      label: userData.bloodType,
+      label: userData?.bloodType,
       icon: (
         <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
       ),
@@ -130,11 +130,11 @@ export default function () {
 
   let data2 = [
     {
-      label: userData.height,
+      label: userData?.height,
       icon: <MaterialIcons name="height" size={20} color={'#76BC21'} />,
     },
     {
-      label: userData.weight,
+      label: userData?.weight,
       icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
     },
   ];

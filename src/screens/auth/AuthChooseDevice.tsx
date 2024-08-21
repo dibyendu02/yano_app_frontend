@@ -40,8 +40,13 @@ const AuthChooseDevice = () => {
           </View>
         }
       />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View
+          style={{
+            backgroundColor: Colors.White,
+            paddingHorizontal: 12,
+            borderRadius: 8,
+          }}>
           <PatientElements
             name="Yano Multi-Parameter Monitor"
             onPress={() => navigate(AuthScreen.DeviceInfo)}
@@ -51,6 +56,13 @@ const AuthChooseDevice = () => {
                 style={{width: 50, height: 50}}
               />
             }
+            customStyle={{
+              borderBottomWidth: 1,
+              borderColor: Colors.LightGray,
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+              paddingHorizontal: 5,
+            }}
             color=""
           />
           <PatientElements
@@ -62,6 +74,12 @@ const AuthChooseDevice = () => {
                 style={{width: 50, height: 50}}
               />
             }
+            customStyle={{
+              borderBottomWidth: 1,
+              borderColor: Colors.LightGray,
+              borderRadius: 0,
+              paddingHorizontal: 5,
+            }}
             color=""
           />
           <PatientElements
@@ -73,6 +91,11 @@ const AuthChooseDevice = () => {
                 style={{width: 50, height: 50}}
               />
             }
+            customStyle={{
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+              paddingHorizontal: 5,
+            }}
             color=""
           />
         </View>

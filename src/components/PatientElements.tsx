@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Roboto',
     marginLeft: 15,
+    marginRight: 10,
     flex: 1,
   },
 });

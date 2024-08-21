@@ -17,7 +17,7 @@ const MeasurementToolsHomeScreen = () => {
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title="Measurement Tools" />
+      <Header title="Measurement tools" />
       {visible ? (
         <ScrollView>
           <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
@@ -29,10 +29,15 @@ const MeasurementToolsHomeScreen = () => {
               }
             />
             <CommonItem
-              name="Monitor Multiparámetros Yano"
+              name="Glucómetro Yano"
               onPress={() => navigate('DeviceInfo')}
               leftIcon={
-                <Image source={DummyImage.device} width={30} height={30} />
+                <Image
+                  source={DummyImage.glucometer}
+                  style={{height: 50, width: 50}}
+                  width={30}
+                  height={30}
+                />
               }
               isConnected={true}
             />

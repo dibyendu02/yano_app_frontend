@@ -65,10 +65,12 @@ let data2 = [
 export default function PatientMonitoringProfile({}) {
   return (
     <SafeAreaView style={styles.container}>
-      <Header title="Monitored Patient" />
+      <Header title="Monitored patient" />
 
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
-        <Card>
+        <Card
+        // contentContainerStyle={{backgroundColor: 'grey'}}
+        >
           <Image
             source={DummyImage.user}
             style={{
@@ -98,16 +100,27 @@ export default function PatientMonitoringProfile({}) {
             ))}
           </View>
 
-          <TouchableOpacity
-            style={styles.addButton}
-            onPress={() => navigate('MeasurementTools')}>
-            <Icons.MaterialIcons
-              name="monitor-heart"
-              size={20}
-              color={Colors.White}
-            />
-            <Text style={styles.addButtonText}>Measure vital signs</Text>
-          </TouchableOpacity>
+          <View
+            style={{
+              // backgroundColor: 'red',
+              width: '105%',
+              borderTopWidth: 1,
+              borderBlockColor: Colors.LightGray,
+              marginTop: 10,
+              padding: 10,
+              height: 75,
+            }}>
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={() => navigate('MeasurementTools')}>
+              <Icons.MaterialIcons
+                name="monitor-heart"
+                size={20}
+                color={Colors.White}
+              />
+              <Text style={styles.addButtonText}>Measure vital signs</Text>
+            </TouchableOpacity>
+          </View>
         </Card>
 
         <Card
@@ -130,7 +143,7 @@ export default function PatientMonitoringProfile({}) {
                   fontFamily: 'Roboto',
                   color: Colors.SteelBlue,
                 }}>
-                View More
+                See more
               </Text>
             </TouchableOpacity>
           }>

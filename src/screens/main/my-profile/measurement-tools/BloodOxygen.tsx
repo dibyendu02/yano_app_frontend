@@ -119,7 +119,7 @@ const BloodOxygenScreen = () => {
                         unit: 'SpO2H',
                       }}
                       customStyles={{
-                        width: '66%',
+                        width: '69.5%',
                         borderTopLeftRadius: 8,
                         borderBottomLeftRadius: 8,
                       }}
@@ -127,13 +127,14 @@ const BloodOxygenScreen = () => {
                     <MeasurementBox
                       loading={loading}
                       fields={{
-                        name: 'Heart Rate',
+                        name: 'Heart rate',
                         value: values.heartRate,
                         unit: 'Beats/Min',
                       }}
                       customStyles={{
                         borderTopRightRadius: 8,
                         borderBottomRightRadius: 8,
+                        width: '30%',
                       }}
                     />
                   </View>

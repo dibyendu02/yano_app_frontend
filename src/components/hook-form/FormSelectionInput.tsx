@@ -117,7 +117,6 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
                     style={{
                       height: optionsListHeight,
                       width: '100%',
-                      paddingHorizontal: 20,
                       marginBottom: 10,
                     }}>
                     <RadioButton.Group
@@ -195,6 +194,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    // gap: 20
     borderBottomWidth: 1,
     borderBottomColor: Colors.LightGray,
     paddingVertical: 6,
@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.Blue,
     fontSize: 16,
+    marginLeft: -10,
   },
   errorInput: {
     borderColor: Colors.Red,

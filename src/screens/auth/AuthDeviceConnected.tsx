@@ -13,6 +13,7 @@ import FilledButton from '../../components/buttons/FilledButton';
 import {OkIcon} from '../../assets/icon/IconNames';
 import UserContext from '../../contexts/UserContext';
 import {AuthScreen} from '../../navigation/auth/AuthScreens';
+import {staticIcons} from '../../assets/image';
 
 const AuthDeviceConnected = ({navigation}: any) => {
   const {login} = useContext(UserContext);
@@ -42,12 +43,12 @@ const AuthDeviceConnected = ({navigation}: any) => {
           ¡Felicidades!
         </Text>
       </View>
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View
             style={{
               backgroundColor: Colors.White,
-              paddingVertical: 40,
+              paddingVertical: 24,
               paddingHorizontal: 40,
               borderRadius: 10,
               marginBottom: 20,
@@ -55,11 +56,14 @@ const AuthDeviceConnected = ({navigation}: any) => {
             <View
               style={{
                 alignSelf: 'center',
-                marginBottom: 20,
+                marginBottom: 0,
                 width: 100,
                 height: 100,
               }}>
-              <OkIcon size={90} />
+              <Image
+                source={staticIcons.checkIcon}
+                style={{height: 88, width: 88}}
+              />
             </View>
             <Text
               style={{

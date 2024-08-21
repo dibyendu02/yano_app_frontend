@@ -234,12 +234,12 @@ const HealthStats = () => {
         title="Heart rate"
         headerRightComponent={
           <View style={{flexDirection: 'row', gap: 16}}>
-            <TouchableOpacity>
+            {/* <TouchableOpacity>
               <Image
                 source={StaticImage.FilterIcon}
                 style={{height: 28, width: 28, objectFit: 'contain'}}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <TouchableOpacity>
               <Image
                 source={StaticImage.SharerIcon}

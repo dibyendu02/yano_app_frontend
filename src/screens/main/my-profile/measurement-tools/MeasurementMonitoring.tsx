@@ -47,7 +47,11 @@ const MeasurementMonitoring = ({navigation}: any) => {
             <TouchableOpacity
               style={[
                 styles.connectBtn,
-                {borderRightWidth: 2, borderColor: Colors.LightGray},
+                {
+                  borderRightWidth: 2,
+                  borderColor: Colors.LightGray,
+                  paddingVertical: 15,
+                },
               ]}>
               <BluetoothConnected size={22} />
               {/* <Image source={} /> */}
@@ -92,9 +96,9 @@ const styles = StyleSheet.create({
   boxStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 80,
+    height: 100,
     backgroundColor: Colors.White,
-    marginBottom: 20,
+    marginBottom: 12,
     borderRadius: 10,
   },
   connectBtn: {

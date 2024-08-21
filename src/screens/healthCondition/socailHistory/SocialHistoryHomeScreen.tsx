@@ -1,8 +1,9 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Colors} from '../../../constants/Colors';
 import DetailItems from '../components/DetailItems';
 import CommonHomeScreen2 from '../components/CommonHomeScreen2';
+import YesNoAnswer from '../components/YesNoAnswer';
 
 const SocialHistoryHomeScreen = ({navigation}: any) => {
   const data = {
@@ -45,6 +46,7 @@ const SocialHistoryHomeScreen = ({navigation}: any) => {
                   name="Do you consume alcohol?"
                   value={data.consumeAlcohol}
                 />
+
                 <DetailItems
                   name="Use of other substances"
                   value={data.substance}

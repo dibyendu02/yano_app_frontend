@@ -7,6 +7,7 @@ import {useForm, Control, FieldValues, FormProvider} from 'react-hook-form';
 import {DatePickerField} from '../../../components/form/DatePicker';
 import CommonHeader from '../components/CommonHeader';
 import FormSelectionInput from '../../../components/hook-form/FormSelectionInput';
+import YesNoAnswer from '../components/YesNoAnswer';
 
 interface FormValues {
   occupation: string;
@@ -69,6 +70,9 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
     if (defaultValues.occupation) setDisabled(false);
     else setDisabled(true);
   };
+
+  const [value, setvalue] = useState('No');
+  const [valuesecond, setvaluesecond] = useState('No');
 
   return (
     <SafeAreaView
@@ -141,6 +145,24 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
                 showActionButtons={true}
                 optionsListHeight={300}
               />
+              <CustomInputField
+                label="No of children"
+                name="children"
+                control={control as unknown as Control<FieldValues, object>}
+                placeholder="Children"
+              />
+              <CustomInputField
+                label="Religion"
+                name="religion"
+                control={control as unknown as Control<FieldValues, object>}
+                placeholder="Religion"
+              />
+              <CustomInputField
+                label="Diet"
+                name="diet"
+                control={control as unknown as Control<FieldValues, object>}
+                placeholder="Diet"
+              />
               <FormSelectionInput
                 name="sex"
                 label="Sexual Orientation"
@@ -154,7 +176,7 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
                 showActionButtons={true}
                 optionsListHeight={300}
               />
-              <FormSelectionInput
+              {/* <FormSelectionInput
                 name="isSmoke"
                 label="Do you smoke?"
                 options={[
@@ -164,8 +186,13 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
                 selectedId={defaultValues.isSmoke}
                 showActionButtons={true}
                 optionsListHeight={150}
+              /> */}
+              <YesNoAnswer
+                selectedRole={value}
+                setSelectedRole={setvalue}
+                title="Do you smoke?"
               />
-              <FormSelectionInput
+              {/* <FormSelectionInput
                 name="consumeAlcohol"
                 label="Do you consume alcohol?"
                 options={[
@@ -175,26 +202,14 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
                 selectedId={defaultValues.consumeAlcohol}
                 showActionButtons={true}
                 optionsListHeight={150}
+              /> */}
+              <YesNoAnswer
+                selectedRole={valuesecond}
+                setSelectedRole={setvaluesecond}
+                title="Do you consume alcohol?"
               />
             </FormProvider>
-            <CustomInputField
-              label="Children"
-              name="children"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Children"
-            />
-            <CustomInputField
-              label="Religion"
-              name="religion"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Religion"
-            />
-            <CustomInputField
-              label="Diet"
-              name="diet"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Diet"
-            />
+
             <CustomInputField
               label="Use of other substances"
               name="substance"
@@ -202,7 +217,7 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
               placeholder="Use of other substances"
             />
             <CustomInputField
-              label="Do you exercise?"
+              label="Exercise"
               name="exercise"
               control={control as unknown as Control<FieldValues, object>}
               placeholder="Do you exercise?"

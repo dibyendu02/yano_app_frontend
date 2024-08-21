@@ -115,8 +115,7 @@ const EcgMeasurement = () => {
                 </TouchableOpacity>
               }
             />
-            <ScrollView
-              style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+            <ScrollView>
               <View>
                 <View
                   style={{
@@ -124,12 +123,14 @@ const EcgMeasurement = () => {
                     width: '100%',
                     borderRadius: 10,
                     padding: 20,
+                    flexDirection: 'column',
+                    alignItems: 'center',
                   }}>
                   <Image
                     source={timer == 31 ? DummyImage.grid : DummyImage.graph}
                     style={{
-                      width: 328,
-                      height: 170,
+                      width: '100%',
+                      height: 165,
                       objectFit: 'cover',
                     }}
                   />
@@ -157,45 +158,57 @@ const EcgMeasurement = () => {
                     </Text>
                   </View>
                 </View>
-                <View style={{paddingVertical: 12}}>
+                <View style={{padding: 15}}>
                   <View style={{padding: 0}}>
                     {count === 0 ? (
                       <View
                         style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          gap: 2,
+                          padding: 10,
+                          backgroundColor: Colors.White,
+                          borderRadius: 8,
+                          paddingVertical: 15,
                         }}>
-                        <MeasurementBox
-                          loading={loading}
-                          fields={{
-                            name: 'Heart Rate',
-                            value: values.heartRate,
-                            unit: 'Beats/Min',
-                          }}
-                          customStyles={{
-                            width: '66%',
-                            borderTopLeftRadius: 8,
-                            borderBottomLeftRadius: 8,
-                          }}
-                        />
-                        <MeasurementBox
-                          loading={false}
-                          fields={{
-                            name: 'Time Left',
-                            value: timer % 31,
-                            unit: 'Seconds',
-                          }}
-                          customStyles={{
-                            borderTopRightRadius: 8,
-                            borderBottomRightRadius: 8,
-                          }}
-                        />
+                        <View
+                          style={{
+                            backgroundColor: Colors.LightGray,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            gap: 2,
+                            borderRadius: 8,
+                          }}>
+                          <MeasurementBox
+                            loading={loading}
+                            fields={{
+                              name: 'Heart Rate',
+                              value: values.heartRate,
+                              unit: 'Beats/Min',
+                            }}
+                            customStyles={{
+                              width: '50.5%',
+                              borderTopLeftRadius: 8,
+                              borderBottomLeftRadius: 8,
+                            }}
+                          />
+                          <MeasurementBox
+                            loading={false}
+                            fields={{
+                              name: 'Time Left',
+                              value: timer % 31,
+                              unit: 'Seconds',
+                            }}
+                            customStyles={{
+                              width: '49.5%',
+                              borderTopRightRadius: 8,
+                              borderBottomRightRadius: 8,
+                            }}
+                          />
+                        </View>
                       </View>
                     ) : (
                       <View
                         style={{
-                          padding: 20,
+                          paddingHorizontal: 20,
+                          paddingTop: 20,
                           backgroundColor: Colors.White,
                           borderRadius: 10,
                           // borderWidth: 1,
@@ -361,7 +374,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.LightGray,
   },
   title: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: '600',
     color: Colors.Blue,
     marginBottom: 6,

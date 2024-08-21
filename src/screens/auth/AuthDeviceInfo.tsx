@@ -38,8 +38,8 @@ const AuthDeviceInfo = ({navigation}: any) => {
           </View>
         }
       />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View
             style={{
               backgroundColor: Colors.White,
@@ -75,11 +75,21 @@ const AuthDeviceInfo = ({navigation}: any) => {
                 fontSize: 16,
                 color: Colors.SteelBlue,
                 textAlign: 'center',
-                width: '90%',
+                width: '96%',
                 marginHorizontal: 'auto',
               }}>
               It will allow you to measure your blood pressure, glucose level,
-              body temperature, heart rate and ECG.
+              body
+            </Text>
+            <Text
+              style={{
+                fontSize: 16,
+                color: Colors.SteelBlue,
+                textAlign: 'center',
+                width: '96%',
+                marginHorizontal: 'auto',
+              }}>
+              temperature, heart rate and ECG.
             </Text>
           </View>
         </View>

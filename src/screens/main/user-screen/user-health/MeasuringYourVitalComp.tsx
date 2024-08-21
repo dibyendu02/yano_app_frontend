@@ -32,7 +32,7 @@ const MeasuringYourVitalComp: React.FC<ItemWithTileSubtileProps> = ({
           <View
             style={{
               marginStart: 15,
-              width: '67%',
+              width: '68%',
             }}>
             <Text style={styles.title}>{title}</Text>
             <Text style={{marginTop: 4, color: Colors.SteelBlue}}>

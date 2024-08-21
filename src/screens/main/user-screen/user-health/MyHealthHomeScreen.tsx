@@ -60,8 +60,8 @@ const MyHealthHomeScreen = ({navigation}) => {
           </TouchableOpacity>
         }
       />
-      <ScrollView>
-        <View style={{paddingVertical: 10, width: '94%', margin: 'auto'}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View style={styles.container}>
             <Text style={styles.title}>Do you have one of our devices?</Text>
             <Text style={styles.para}>
@@ -70,7 +70,7 @@ const MyHealthHomeScreen = ({navigation}) => {
             <OutlineButton
               type="blue"
               icon={<PlusIcon size={16} color={Colors.Blue} />}
-              label="Connect Device"
+              label="Connect device"
               onPress={() => navigate('ChooseDevice')}
               style={{marginTop: 10}}
             />
@@ -125,7 +125,8 @@ const MyHealthHomeScreen = ({navigation}) => {
             </TouchableOpacity>
           }
           contentContainerStyle={{
-            marginVertical: 0,
+            marginVertical: 12,
+            width: '100%',
           }}>
           <FlatList
             data={
@@ -303,6 +304,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.White,
     padding: 20,
+    paddingHorizontal: 15,
     borderRadius: 10,
     marginBottom: 10,
   },

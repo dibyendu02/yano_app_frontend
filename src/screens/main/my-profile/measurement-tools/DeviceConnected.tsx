@@ -11,6 +11,7 @@ import {Colors} from '../../../../constants/Colors';
 import Header from '../../../../components/header/Header';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import {OkIcon} from '../../../../assets/icon/IconNames';
+import {staticIcons} from '../../../../assets/image';
 
 const DeviceConnected = ({navigation}: any) => {
   return (
@@ -21,24 +22,27 @@ const DeviceConnected = ({navigation}: any) => {
         position: 'relative',
       }}>
       <Header title="" />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View
             style={{
               backgroundColor: Colors.White,
-              paddingVertical: 40,
-              paddingHorizontal: 40,
+              paddingVertical: 24,
+              paddingHorizontal: 30,
               borderRadius: 10,
               marginBottom: 20,
             }}>
             <View
               style={{
                 alignSelf: 'center',
-                marginBottom: 20,
+                marginBottom: 0,
                 width: 100,
                 height: 100,
               }}>
-              <OkIcon size={90} />
+              <Image
+                source={staticIcons.checkIcon}
+                style={{height: 88, width: 88}}
+              />
             </View>
             <Text
               style={{

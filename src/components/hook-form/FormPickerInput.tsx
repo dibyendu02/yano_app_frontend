@@ -1,8 +1,8 @@
-import React, { FC, useState } from 'react';
-import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { Controller, FieldError, useFormContext } from 'react-hook-form';
-import { Colors } from '../../constants/Colors';
-import { TextInput } from 'react-native-paper';
+import React, {FC, useState} from 'react';
+import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {Controller, FieldError, useFormContext} from 'react-hook-form';
+import {Colors} from '../../constants/Colors';
+import {TextInput} from 'react-native-paper';
 import BottomSheet from '../bottom-sheet/BottomSheet';
 import FilledButton from '../buttons/FilledButton';
 
@@ -23,21 +23,21 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
   optionsListLabel,
   optionsListHeight = 300,
 }) => {
-  const { control, setValue } = useFormContext();
+  const {control, setValue} = useFormContext();
   const [showOptionsModal, setShowOptionsModal] = useState(false);
   const [middleItem, setMiddleItem] = useState<number | string>(0);
   const [middleDecimalItem, setMiddleDecimalItem] = useState<number | string>(
     0,
   );
 
-  const handleViewableItemsChanged = ({ viewableItems }) => {
+  const handleViewableItemsChanged = ({viewableItems}) => {
     if (viewableItems.length > 0) {
       const middleIndex = Math.floor(viewableItems.length / 2);
       setMiddleItem(Number(viewableItems[middleIndex].item));
     }
   };
 
-  const handleDecimalViewableItemsChanged = ({ viewableItems }) => {
+  const handleDecimalViewableItemsChanged = ({viewableItems}) => {
     if (viewableItems.length > 0) {
       const middleIndex = Math.floor(viewableItems.length / 2);
       setMiddleDecimalItem(viewableItems[middleIndex].item);
@@ -74,11 +74,11 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
     <View style={styles.inputBox}>
       <Controller
         control={control}
-        rules={{ ...rules }}
-        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+        rules={{...rules}}
+        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
           <View>
             {label && (
-              <Text style={[styles.label, error && { color: Colors.Red }]}>
+              <Text style={[styles.label, error && {color: Colors.Red}]}>
                 {label}
               </Text>
             )}
@@ -114,7 +114,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
               <BottomSheet
                 isVisible={showOptionsModal}
                 onBackdropPress={() => setShowOptionsModal(false)}>
-                <View style={{ alignItems: 'center', width: '100%' }}>
+                <View style={{alignItems: 'center', width: '100%'}}>
                   {optionsListLabel && (
                     <View
                       style={{
@@ -149,13 +149,13 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                         alignItems: 'center',
                         justifyContent: 'center',
                         height: 200,
-                        borderRadius: 10,
+                        borderRadius: 8,
                         backgroundColor: Colors.White,
                         overflow: 'hidden',
                       }}>
                       <FlatList
                         data={data}
-                        contentContainerStyle={{ width: '100%' }}
+                        contentContainerStyle={{width: '100%'}}
                         style={{
                           backgroundColor: Colors.Grey,
                           borderRightWidth: 2,
@@ -170,7 +170,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                         bounces={false}
                         onViewableItemsChanged={handleViewableItemsChanged}
                         viewabilityConfig={viewabilityConfig}
-                        renderItem={({ item, index: _i }) => (
+                        renderItem={({item, index: _i}) => (
                           <View
                             style={{
                               height: 40,
@@ -190,8 +190,8 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                                 color: Colors.Blue,
                                 opacity:
                                   item - middleItem === 0 ||
-                                    item - middleItem === 1 ||
-                                    item - middleItem === -1
+                                  item - middleItem === 1 ||
+                                  item - middleItem === -1
                                     ? 1
                                     : 0.6,
                                 fontWeight: 'bold',
@@ -202,8 +202,8 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                                     ? 22
                                     : item - middleItem === 1 ||
                                       item - middleItem === -1
-                                      ? 16
-                                      : 12,
+                                    ? 16
+                                    : 12,
                               }}>
                               {item}
                             </Text>
@@ -212,7 +212,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                       />
                       <FlatList
                         data={decimalData}
-                        contentContainerStyle={{ width: '100%' }}
+                        contentContainerStyle={{width: '100%'}}
                         style={{
                           backgroundColor: Colors.BlueGrey,
                           width: '50%',
@@ -227,7 +227,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                           handleDecimalViewableItemsChanged
                         }
                         viewabilityConfig={viewabilityConfig}
-                        renderItem={({ item, index: _i }) =>
+                        renderItem={({item, index: _i}) =>
                           item !== null && (
                             <View
                               style={{
@@ -250,8 +250,8 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                                   color: Colors.Black,
                                   opacity:
                                     item - middleDecimalItem === 0 ||
-                                      item - middleDecimalItem === 0.1 ||
-                                      item - middleDecimalItem === -0.1
+                                    item - middleDecimalItem === 0.1 ||
+                                    item - middleDecimalItem === -0.1
                                       ? 1
                                       : 0.6,
                                   fontWeight: 'bold',
@@ -261,8 +261,8 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                                       ? 22
                                       : item - middleDecimalItem === 1 ||
                                         item - middleDecimalItem === -1
-                                        ? 16
-                                        : 12,
+                                      ? 16
+                                      : 12,
                                 }}>
                                 {`.${item}`}
                               </Text>
@@ -350,6 +350,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.LightGray,
     fontSize: 16,
     height: 56,
+    borderRadius: 8,
     color: Colors.Blue,
   },
   outline: {
@@ -361,7 +362,7 @@ const styles = StyleSheet.create({
   unitLabel: {
     position: 'absolute',
     top: '50%',
-    transform: [{ translateY: -5 }, { translateX: 65 }],
+    transform: [{translateY: -5}, {translateX: 70}],
   },
   unitText: {
     fontSize: 18,

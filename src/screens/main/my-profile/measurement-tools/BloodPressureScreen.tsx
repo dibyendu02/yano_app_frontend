@@ -126,6 +126,7 @@ const BloodPressureScreen = () => {
                   customStyles={{
                     borderTopLeftRadius: 8,
                     borderBottomLeftRadius: 8,
+                    width: '34.5%',
                   }}
                 />
                 <MeasurementBox

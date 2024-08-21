@@ -12,4 +12,5 @@ export const staticIcons = {
   MicOff: require('./micOff.png'),
   MonitorHeart: require('./monitorHeart.png'),
   nextIcon: require('./nextIcon.png'),
+  checkIcon: require('./check.png'),
 };

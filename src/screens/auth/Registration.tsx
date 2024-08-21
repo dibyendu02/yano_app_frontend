@@ -161,15 +161,15 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
   //   // navigate(AuthScreen.AccountVerification);
   // };
 
+  console.log(userType);
+
   const onSubmit = async (data: any) => {
     setIsContinue(true);
     try {
+      // Prepare form data
       let requestData = new FormData();
-
-      // Append all other form data to requestData
       Object.keys(data).forEach(key => {
         if (key !== 'file' && key !== 'repeatPassword') {
-          // Exclude 'file' and 'repeatPassword'
           if (key === 'dateOfBirth') {
             requestData.append(key, moment(data[key]).format('YYYY-MM-DD'));
           } else {
@@ -178,10 +178,8 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
         }
       });
 
-      // Add the country to requestData
       requestData.append('country', 'India');
 
-      // Handle file separately if it exists
       if (data.file) {
         requestData.append('file', {
           uri:
@@ -195,28 +193,21 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
 
       if (userType === UserType.Patient) {
         res = await signUPPatient(requestData);
-
-        if (res.code === 200) {
-          navigate(AuthScreen.AccountVerification, {userType: userType});
-        }
       } else {
-        console.log('Form Data being sent:', requestData);
         res = await registerDoctor(requestData);
-        if (res.code === 200) {
-          navigate(AuthScreen.AccountVerification, {userType: userType});
-        }
       }
 
-      if (res.code === 400) {
-        Alert.alert('Error', res.error.message || 'Bad Request');
-        setIsContinue(false);
-        return;
-      }
+      console.log('Navigating with userType:', userType);
+      navigate(AuthScreen.AccountVerification, {userType: userType});
 
-      navigate(AuthScreen.AccountVerification);
-
-      console.log(res, '<--------- Response --------->');
-      // navigate(AuthScreen.AccountVerification); // Uncomment if you need to navigate after successful signup
+      // if (res.code === 200) {
+      //   console.log('Navigating with userType:', userType); // Log userType
+      //   navigate(AuthScreen.AccountVerification, {userType: userType});
+      // } else if (res.code === 400) {
+      //   Alert.alert('Error', res.error.message || 'Bad Request');
+      //   setIsContinue(false);
+      //   return;
+      // }
     } catch (e) {
       console.error('Error!', e);
       if (axios.isAxiosError(e) && e.response) {
@@ -271,7 +262,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
                 />
                 <FormInput
                   name="lastName"
-                  label="Last Name"
+                  label="Last name"
                   // placeholder="Enter your last name"
                   rules={{
                     required: {

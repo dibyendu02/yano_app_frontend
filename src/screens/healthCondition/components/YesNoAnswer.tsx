@@ -1,22 +1,28 @@
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import React from 'react';
-import {Colors} from '../../../../constants/Colors';
-import {RadioButton} from 'react-native-paper';
 
-interface GenderProps {
+import {RadioButton} from 'react-native-paper';
+import {Colors} from '../../../constants/Colors';
+
+interface YesNoAnswerProps {
   selectedRole: string;
   setSelectedRole: (role: string) => void;
+  title: string;
 }
 
-const Gender: React.FC<GenderProps> = ({selectedRole, setSelectedRole}) => {
+const YesNoAnswer: React.FC<YesNoAnswerProps> = ({
+  selectedRole,
+  setSelectedRole,
+  title,
+}) => {
   const Config = [
     {
       id: '1',
-      label: 'Male',
+      label: 'No',
     },
     {
       id: '2',
-      label: 'Female',
+      label: 'Yes',
     },
   ];
 
@@ -26,7 +32,7 @@ const Gender: React.FC<GenderProps> = ({selectedRole, setSelectedRole}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.headerText}>Gender</Text>
+      <Text style={styles.headerText}>{title}</Text>
       <View style={styles.buttonContainer}>
         {Config.map(item => (
           <TouchableOpacity
@@ -64,7 +70,7 @@ const Gender: React.FC<GenderProps> = ({selectedRole, setSelectedRole}) => {
   );
 };
 
-export default Gender;
+export default YesNoAnswer;
 
 const styles = StyleSheet.create({
   container: {

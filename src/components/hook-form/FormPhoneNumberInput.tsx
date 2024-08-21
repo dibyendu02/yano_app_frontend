@@ -51,7 +51,7 @@ const FormPhoneNumberInput: FC<FormPhoneNumberInputProps> = ({
           ...rules,
           pattern: {
             value: new RegExp(selectedCountry.regex),
-            message: 'Enter valid mobile number!',
+            message: 'Enter valid phone number!',
           },
         }}
         render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (

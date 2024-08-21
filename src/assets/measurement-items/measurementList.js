@@ -25,7 +25,7 @@ export const measurementList = [
     path: 'EcgMeasurement',
   },
   {
-    title: 'Blood glucose',
+    title: 'Glucose level',
     img: require('./image/glucose.png'),
     path: 'BloodGlucoseTest',
   },

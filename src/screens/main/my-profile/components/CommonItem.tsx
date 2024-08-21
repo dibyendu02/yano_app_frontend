@@ -53,7 +53,7 @@ const CommonItem: FC<props> = ({
                 fontSize: 18,
                 fontWeight: '600',
                 color: Colors.Blue,
-                width: '70%',
+                width: '75%',
               }}>
               {name}
             </Text>

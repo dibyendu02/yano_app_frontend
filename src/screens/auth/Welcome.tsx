@@ -22,7 +22,13 @@ const Welcome = () => {
         <Text style={{fontSize: 30, color: Colors.White, fontWeight: '600'}}>
           Hi, {name}
         </Text>
-        <Text style={{color: Colors.White, fontSize: 18, marginBottom: 12}}>
+        <Text
+          style={{
+            color: Colors.White,
+            fontSize: 16,
+            marginBottom: 12,
+            width: '97%',
+          }}>
           To make sure your experience with Yano is the best it can be, we need
           to get to know you a little better.
         </Text>
@@ -41,6 +47,7 @@ const Welcome = () => {
             alignItems: 'center',
             paddingVertical: 20,
             borderRadius: 10,
+            marginTop: 15,
           }}>
           <Text style={{color: Colors.White, fontSize: 16, fontWeight: '500'}}>
             Continue
