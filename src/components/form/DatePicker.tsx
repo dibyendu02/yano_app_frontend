@@ -14,6 +14,8 @@ import DialogBase from '../dialog/DialogBase';
 import moment from 'moment';
 import DateTimePicker from 'react-native-ui-datepicker';
 import {StaticImage} from '../../assets/images';
+import dayjs from 'dayjs';
+import 'dayjs/locale/en';
 
 type inputProps = {
   label: string;
@@ -89,6 +91,10 @@ export const DatePickerField: FC<inputProps> = ({label, name, onchange}) => {
               headerContainerStyle={{paddingVertical: 10}}
               weekDaysContainerStyle={{borderBottomWidth: 0}}
               weekDaysTextStyle={{color: Colors.GreyText}}
+              locale={{
+                ...dayjs.Ls.en,
+                weekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+              }}
               yearContainerStyle={{
                 backgroundColor: Colors.Transparent,
                 borderWidth: 0,

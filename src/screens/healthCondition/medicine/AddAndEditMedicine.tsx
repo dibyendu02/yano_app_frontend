@@ -3,12 +3,12 @@ import {View, StyleSheet, SafeAreaView, ScrollView, Text} from 'react-native';
 import {Colors} from '../../../constants/Colors';
 import CommonHeader from '../components/CommonHeader';
 import FilledButton from '../../../components/buttons/FilledButton';
-import {useForm, Control, FieldValues} from 'react-hook-form';
+import {useForm, Control, FieldValues, FormProvider} from 'react-hook-form';
 import CustomInputField from '../../../components/formComp/CustomInputField';
-import CustomSelect from '../../../components/formComp/SelectFiled';
 import CustomTextarea from '../../../components/formComp/TextAreaField';
 import CustomCheckbox from '../../../components/formComp/CustomCheckbox';
 import {DatePickerField} from '../../../components/form/DatePicker';
+import FormSelectionInput from '../../../components/hook-form/FormSelectionInput';
 
 interface FormValues {
   name: string;
@@ -58,6 +58,7 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
     reset,
     formState: {errors},
   } = useForm<FormValues>({defaultValues});
+  const methods = useForm();
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
@@ -104,20 +105,22 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
               rules={{required: 'name is required'}}
             />
             <Text style={styles.heading}>Forma de la medicina</Text>
-            <CustomSelect
-              label="Forma de la medicina"
-              name="medicine"
-              control={control as unknown as Control<FieldValues, object>}
-              rules={{required: 'Medicine is required'}}
-              placeholder="Select Medicine"
-              options={[
-                {label: 'Tablet', value: 'Tablet'},
-                {label: 'Capsule', value: 'Capsule'},
-                {label: 'Syrup', value: 'Syrup'},
-                {label: 'Injection', value: 'Injection'},
-                {label: 'Other', value: 'Other'},
-              ]}
-            />
+            <FormProvider {...methods}>
+              <FormSelectionInput
+                name="medicine"
+                label="Forma de la medicina"
+                options={[
+                  {label: 'Tablet', id: 'Tablet'},
+                  {label: 'Capsule', id: 'Capsule'},
+                  {label: 'Syrup', id: 'Syrup'},
+                  {label: 'Injection', id: 'Injection'},
+                  {label: 'Other', id: 'Other'},
+                ]}
+                selectedId={defaultValues.medicine}
+                showActionButtons={true}
+                optionsListHeight={320}
+              />
+            </FormProvider>
             <View style={{flexDirection: 'row', gap: 10, alignItems: 'center'}}>
               <View style={{width: '60%'}}>
                 <CustomInputField
@@ -129,19 +132,22 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
                 />
               </View>
               <View style={{width: '38%'}}>
-                <CustomSelect
-                  label="Unit of volume"
-                  name="unit"
-                  control={control as unknown as Control<FieldValues, object>}
-                  placeholder="unit"
-                  options={[
-                    {label: 'mg', value: 'mg'},
-                    {label: 'ml', value: 'ml'},
-                    {label: 'g', value: 'g'},
-                    {label: 'IU', value: 'IU'},
-                    {label: 'Other', value: 'Other'},
-                  ]}
-                />
+                <FormProvider {...methods}>
+                  <FormSelectionInput
+                    name="unit"
+                    label="Unit of volume"
+                    options={[
+                      {label: 'mg', id: 'mg'},
+                      {label: 'ml', id: 'ml'},
+                      {label: 'g', id: 'g'},
+                      {label: 'IU', id: 'IU'},
+                      {label: 'Other', id: 'Other'},
+                    ]}
+                    selectedId={defaultValues.unit}
+                    showActionButtons={true}
+                    optionsListHeight={320}
+                  />
+                </FormProvider>
               </View>
             </View>
             <CustomInputField

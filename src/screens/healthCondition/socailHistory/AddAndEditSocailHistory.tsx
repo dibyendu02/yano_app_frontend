@@ -3,10 +3,10 @@ import {View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 import {Colors} from '../../../constants/Colors';
 import FilledButton from '../../../components/buttons/FilledButton';
 import CustomInputField from '../../../components/formComp/CustomInputField';
-import {useForm, Control, FieldValues} from 'react-hook-form';
-import CustomSelect from '../../../components/formComp/SelectFiled';
+import {useForm, Control, FieldValues, FormProvider} from 'react-hook-form';
 import {DatePickerField} from '../../../components/form/DatePicker';
 import CommonHeader from '../components/CommonHeader';
+import FormSelectionInput from '../../../components/hook-form/FormSelectionInput';
 
 interface FormValues {
   occupation: string;
@@ -57,6 +57,8 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
     formState: {errors},
   } = useForm<FormValues>({defaultValues});
 
+  const methods = useForm();
+
   const onSubmit = (data: FormValues) => {
     console.log(data);
     reset();
@@ -82,7 +84,7 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
             type="blue"
             label="Save"
             onPress={handleSubmit(onSubmit)}
-            disabled={!disabled}
+            disabled={disabled}
             style={{
               width: 70,
               paddingVertical: 10,
@@ -125,18 +127,56 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
               control={control as unknown as Control<FieldValues, object>}
               placeholder="Place of birth"
             />
-            <CustomSelect
-              label="Marital status"
-              name="maritalStatus"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Select marital status"
-              options={[
-                {label: 'Single', value: 'single'},
-                {label: 'Married', value: 'married'},
-                {label: 'Divorced', value: 'divorced'},
-                {label: 'Widowed', value: 'widowed'},
-              ]}
-            />
+            <FormProvider {...methods}>
+              <FormSelectionInput
+                name="maritalStatus"
+                label="Marital Status"
+                options={[
+                  {label: 'Single', id: 'single'},
+                  {label: 'Married', id: 'married'},
+                  {label: 'Divorced', id: 'divorced'},
+                  {label: 'Widowed', id: 'widowed'},
+                ]}
+                selectedId={defaultValues.maritalStatus}
+                showActionButtons={true}
+                optionsListHeight={300}
+              />
+              <FormSelectionInput
+                name="sex"
+                label="Sexual Orientation"
+                options={[
+                  {label: 'Heterosexual', id: 'heterosexual'},
+                  {label: 'Homosexual', id: 'homosexual'},
+                  {label: 'Bisexual', id: 'bisexual'},
+                  {label: 'Asexual', id: 'asexual'},
+                ]}
+                selectedId={defaultValues.sex}
+                showActionButtons={true}
+                optionsListHeight={300}
+              />
+              <FormSelectionInput
+                name="isSmoke"
+                label="Do you smoke?"
+                options={[
+                  {label: 'Yes', id: 'yes'},
+                  {label: 'No', id: 'no'},
+                ]}
+                selectedId={defaultValues.isSmoke}
+                showActionButtons={true}
+                optionsListHeight={150}
+              />
+              <FormSelectionInput
+                name="consumeAlcohol"
+                label="Do you consume alcohol?"
+                options={[
+                  {label: 'Yes', id: 'yes'},
+                  {label: 'No', id: 'no'},
+                ]}
+                selectedId={defaultValues.consumeAlcohol}
+                showActionButtons={true}
+                optionsListHeight={150}
+              />
+            </FormProvider>
             <CustomInputField
               label="Children"
               name="children"
@@ -154,35 +194,6 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
               name="diet"
               control={control as unknown as Control<FieldValues, object>}
               placeholder="Diet"
-            />
-            <CustomSelect
-              label="Sexual Orientation"
-              name="sex"
-              control={control as unknown as Control<FieldValues, object>}
-              options={[
-                {label: 'Heterosexual', value: 'heterosexual'},
-                {label: 'Homosexual', value: 'homosexual'},
-                {label: 'Bisexual', value: 'bisexual'},
-                {label: 'Asexual', value: 'asexual'},
-              ]}
-            />
-            <CustomSelect
-              label="Do you smoke?"
-              name="isSmoke"
-              control={control as unknown as Control<FieldValues, object>}
-              options={[
-                {label: 'Yes', value: 'yes'},
-                {label: 'No', value: 'no'},
-              ]}
-            />
-            <CustomSelect
-              label="Do you consume alcohol?"
-              name="consumeAlcohol"
-              control={control as unknown as Control<FieldValues, object>}
-              options={[
-                {label: 'Yes', value: 'yes'},
-                {label: 'No', value: 'no'},
-              ]}
             />
             <CustomInputField
               label="Use of other substances"
@@ -218,13 +229,6 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
 const styles = StyleSheet.create({
   inputBox: {
     marginBottom: 20,
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: '600',
-    color: Colors.Blue,
-    marginBottom: 10,
-    marginTop: 5,
   },
 });
 
