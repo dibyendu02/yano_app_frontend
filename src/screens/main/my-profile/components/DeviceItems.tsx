@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Card from '../UiUpdateComponents/Card';
 
@@ -20,7 +20,6 @@ const DeviceItems: React.FC<DeviceItemsProps> = ({
   isVisibleIcon = true,
   onPress,
 }) => {
-
   return (
     <>
       <TouchableOpacity onPress={onPress}>
@@ -49,7 +48,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'white',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     paddingVertical: 20,
     borderRadius: 8,
   },
