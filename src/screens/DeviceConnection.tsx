@@ -123,7 +123,7 @@ const App = () => {
 
       // Retrieve services and characteristics
       const peripheralInfo = await BleManager.retrieveServices(peripheral.id);
-      console.log('Peripheral info:', peripheralInfo);
+      console.log('Peripheral info:', JSON.stringify(peripheralInfo));
 
       setServices(peripheralInfo.services);
 
@@ -282,7 +282,7 @@ const App = () => {
 
   const handleTest = async () => {
     try {
-      const res = fetchHistory('2a02', 0);
+      const res = fetchHistory('0', -1);
       console.log(res);
     } catch (error) {
       console.error(error);

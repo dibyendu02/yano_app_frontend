@@ -11,6 +11,7 @@ import Welcome from './src/screens/auth/Welcome';
 import MoreDetails from './src/screens/auth/MoreDetails';
 import Registration from './src/screens/auth/Registration';
 import DeviceConnection from './src/screens/DeviceConnection';
+import DeviceGetData from './src/screens/DeviceGetData';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -56,7 +57,8 @@ export default function App() {
     //   </UserContext.Provider>
     // </NavigationContainer>
     <>
-      <DeviceConnection />
+      {/* <DeviceConnection /> */}
+      <DeviceGetData />
     </>
   );
 }

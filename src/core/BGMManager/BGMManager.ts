@@ -11,9 +11,9 @@ export async function fetchHistory(
   eventIndex: number,
 ): Promise<string | null> {
   try {
-    // setTimeout(() => {
-    //   BgmManager.init();
-    // }, 3000);
+    setTimeout(() => {
+      BgmManager.init();
+    }, 3000);
     const result = await BgmManager.getHistory(deviceSn, eventIndex);
     console.log(JSON.parse(result));
     return result;
