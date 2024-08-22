@@ -164,6 +164,7 @@ export default function () {
               height: 80,
               width: 80,
               borderRadius: 40,
+              marginTop: 2,
             }}
           />
           <Text style={styles.patientName}>
@@ -188,37 +189,19 @@ export default function () {
               </View>
             ))}
           </View>
-          {/* <Badge
-            icon={
-              <Icons.MaterialIcons
-                name="health-and-safety"
-                size={18}
-                color={Colors.Blue}
-              />
-            }
-            text="Healthcare provider: Dr. Eduardo Escobar"
-          /> */}
-          {/* <Badge
-            icon={
-              <Icons.MaterialIcons
-                name="diversity-3"
-                size={18}
-                color={Colors.Blue}
-              />
-            }
-            text="Mother of: Pedro Anzola"
-            color="#B8DAFF"
-          /> */}
+
+          <View style={styles.horizontalSeparator} />
 
           <View
             style={{
               width: '100%',
               flexDirection: 'row',
               justifyContent: 'center',
-              padding: 14,
+              paddingHorizontal: 14,
+              paddingTop: 14,
             }}>
             <ShareButton
-              label="Share Profile"
+              label="Share profile"
               type="blue"
               style={{width: '85%'}}
               onPress={onShare}
@@ -230,18 +213,6 @@ export default function () {
                 />
               }
             />
-            {/* <FilledButton
-              type="lightGrey"
-              style={{width: '18%', marginLeft: 8}}
-              icon={
-                // <Icons.AntDesign name="qrcode" color={Colors.Blue} size={25} />
-                <Image
-                  source={StaticImage.QrCode}
-                  style={{width: 20, height: 20}}
-                />
-              }
-              onPress={() => setShowQR(true)}
-            /> */}
             <TouchableOpacity
               onPress={() => setShowQR(true)}
               style={{
@@ -369,6 +340,12 @@ const styles = StyleSheet.create({
     height: 20,
     backgroundColor: '#E9E9E9',
     marginHorizontal: 8,
+  },
+  horizontalSeparator: {
+    width: '120%',
+    height: 1.4,
+    backgroundColor: '#e9e9e9',
+    marginTop: 10,
   },
   secondContainer: {
     flex: 1,

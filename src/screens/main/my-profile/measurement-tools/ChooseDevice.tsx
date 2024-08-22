@@ -46,44 +46,63 @@ const ChooseDevice = () => {
       }}>
       <Header title="Choose Device" />
       <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
-        <View style={{}}>
-          {devices.map((device, index) => {
-            let containerStyle = {};
-            if (index === 0) {
-              // First device
-              containerStyle = {
-                borderTopLeftRadius: 8,
-                borderTopRightRadius: 8,
-              };
-            } else if (index === devices.length - 1) {
-              // Last device
-              containerStyle = {
-                borderBottomLeftRadius: 8,
-                borderBottomRightRadius: 8,
-              };
-            }
-
-            return (
-              <PatientElements
-                key={device.id}
-                name={device.name}
-                onPress={() => navigate(device.navigateTo)}
-                element={
-                  <Image
-                    source={device.image}
-                    style={{width: 50, height: 50}}
-                  />
-                }
-                color=""
-                customStyle={[
-                  // styles.deviceContainer,
-                  // containerStyle,
-                  // index === 1 && styles.middleDevice, // Middle device
-                  {borderRadius: 0},
-                ]}
+        <View
+          style={{
+            backgroundColor: Colors.White,
+            paddingHorizontal: 12,
+            borderRadius: 8,
+          }}>
+          <PatientElements
+            name="Yano Multi-Parameter Monitor"
+            onPress={() => navigate(AuthScreen.DeviceInfo)}
+            element={
+              <Image
+                source={DummyImage.largeDevice}
+                style={{width: 50, height: 50}}
               />
-            );
-          })}
+            }
+            customStyle={{
+              borderBottomWidth: 1,
+              borderColor: Colors.LightGray,
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+              paddingHorizontal: 5,
+            }}
+            color=""
+          />
+          <PatientElements
+            name="Medidor continuo de glucosa"
+            onPress={() => navigate(AuthScreen.DeviceInfo)}
+            element={
+              <Image
+                source={DummyImage.glucoround}
+                style={{width: 50, height: 50}}
+              />
+            }
+            customStyle={{
+              borderBottomWidth: 1,
+              borderColor: Colors.LightGray,
+              borderRadius: 0,
+              paddingHorizontal: 5,
+            }}
+            color=""
+          />
+          <PatientElements
+            name="Glucómetro"
+            onPress={() => navigate(AuthScreen.DeviceInfo)}
+            element={
+              <Image
+                source={DummyImage.glucometer}
+                style={{width: 50, height: 50}}
+              />
+            }
+            customStyle={{
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+              paddingHorizontal: 5,
+            }}
+            color=""
+          />
         </View>
       </ScrollView>
       <View style={styles.addBtn}>

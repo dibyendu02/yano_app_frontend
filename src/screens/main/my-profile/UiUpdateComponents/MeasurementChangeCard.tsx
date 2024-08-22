@@ -41,6 +41,12 @@ const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
     active(false); // Trigger the onPress action
   };
 
+  const handleSelect = (value: string) => {
+    setSelectedValue(value);
+    onUnitChange(value);
+    active(false); // Set selected value and close modal
+  };
+
   return (
     <View style={[styles.container, contentContainerStyle]}>
       <View style={styles.content}>
@@ -51,7 +57,9 @@ const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
         <RadioButton.Group
           onValueChange={handleValueChange}
           value={selectedValue || ''}>
-          <View style={styles.radioItem}>
+          <TouchableOpacity
+            style={styles.radioItem}
+            onPress={() => handleSelect(items?.unit1 || '')}>
             <RadioButton
               value={items?.unit1 || ''}
               mode="android"
@@ -59,8 +67,11 @@ const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
               uncheckedColor={Colors.Grey}
             />
             <Text style={styles.radioText}>{items?.unit1 || ''}</Text>
-          </View>
-          <View style={styles.radioItem}>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.radioItem}
+            onPress={() => handleSelect(items?.unit1 || '')}>
             <RadioButton
               value={items?.unit2 || ''}
               mode="android"
@@ -68,7 +79,7 @@ const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
               uncheckedColor={Colors.Grey}
             />
             <Text style={styles.radioText}>{items?.unit2 || ''}</Text>
-          </View>
+          </TouchableOpacity>
         </RadioButton.Group>
       </View>
 

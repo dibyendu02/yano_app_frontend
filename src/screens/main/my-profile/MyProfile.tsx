@@ -34,7 +34,7 @@ const menuData = [
         style={{height: 20, width: 20}}
       />
     ),
-    text: 'Measurement Tool',
+    text: 'Measurement tool',
     path: 'MeasurementTools',
   },
   {
@@ -149,7 +149,12 @@ const MyProfile = ({navigation}: any) => {
       <View style={{flex: 1, backgroundColor: Colors.GhostWhite}}>
         <View style={[CardStyles.container, {marginTop: 12}]}>
           <View
-            style={{paddingVertical: 24, width: '100%', alignItems: 'center'}}>
+            style={{
+              paddingBottom: 24,
+              paddingTop: 16,
+              width: '100%',
+              alignItems: 'center',
+            }}>
             <Image
               source={DummyImage.DoctorImg}
               height={80}
@@ -179,7 +184,7 @@ const MyProfile = ({navigation}: any) => {
               padding: 14,
             }}>
             <ShareButton
-              label="Share Profile"
+              label="Share profile"
               type="blue"
               style={{width: '75%'}}
               icon={

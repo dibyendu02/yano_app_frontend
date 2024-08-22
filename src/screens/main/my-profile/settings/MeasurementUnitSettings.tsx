@@ -47,7 +47,7 @@ const MeasurementUnitSettings = () => {
       <Header title={'Measurement units'} />
       <ScrollView>
         <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
-          {MeasurementSettingItems.map(item => (
+          {MeasurementSettingItems.map((item, index) => (
             <DeviceItems
               key={item.title}
               element={
@@ -61,8 +61,15 @@ const MeasurementUnitSettings = () => {
               name={item.title}
               subtitle={selectedUnits[item.title] || item.unit1}
               customStyle={{
+                borderTopRightRadius: index == 0 ? 8 : 0,
+                borderTopLeftRadius: index == 0 ? 8 : 0,
+                borderBottomRightRadius:
+                  index == MeasurementSettingItems.length - 1 ? 8 : 0,
+                borderBottomLeftRadius:
+                  index == MeasurementSettingItems.length - 1 ? 8 : 0,
                 borderBottomWidth: 1,
                 borderBottomColor: Colors.LightGray,
+                borderRadius: 0,
               }}
               onPress={() => handlePress(item)}
             />

@@ -21,8 +21,8 @@ const DeviceInfo = ({navigation}: any) => {
         position: 'relative',
       }}>
       <Header title="" />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View
             style={{
               backgroundColor: Colors.White,
