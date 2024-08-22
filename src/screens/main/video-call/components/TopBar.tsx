@@ -21,8 +21,11 @@ export const TopBar: React.FC<props> = ({doctorName, duration}) => {
           alignItems: 'center',
           width: '55%',
         }}>
-        <Image source={chatIcon} />
-        <Image source={verticalLine} />
+        <Image source={chatIcon} style={{height: 20, width: 20}} />
+        <View style={{marginHorizontal: 25}}>
+          <Image source={verticalLine} />
+        </View>
+
         <View>
           <Text style={[style.textColor, {fontWeight: '600', fontSize: 16}]}>
             {doctorName}
@@ -45,7 +48,10 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    margin: 10,
+    // margin: 10,
+    width: '88%',
+    margin: 'auto',
+    marginVertical: 12,
   },
   textColor: {
     color: 'white',

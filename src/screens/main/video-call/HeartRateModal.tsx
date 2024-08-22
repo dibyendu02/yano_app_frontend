@@ -1,14 +1,13 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
-import React, { useState } from 'react'
-import CommonVideoCallLayout from './components/CommonVideoCallLayout'
-import CustomBottomModal from '../../../components/bottom-sheet/CommonButtonModal'
-import MeasurementBox from '../my-profile/components/MeasurementBox'
-import { Colors } from '../../../constants/Colors'
-import { DummyImage } from '../../../assets/dummy/images'
-import CommonLayoutModal from './components/CommonLayoutModal'
-import CommonLayoutModalLocal from './CommonLayOutModal'
-import { StaticImage } from '../../../assets/images'
-
+import {Image, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import CommonVideoCallLayout from './components/CommonVideoCallLayout';
+import CustomBottomModal from '../../../components/bottom-sheet/CommonButtonModal';
+import MeasurementBox from '../my-profile/components/MeasurementBox';
+import {Colors} from '../../../constants/Colors';
+import {DummyImage} from '../../../assets/dummy/images';
+import CommonLayoutModal from './components/CommonLayoutModal';
+import CommonLayoutModalLocal from './CommonLayOutModal';
+import {StaticImage} from '../../../assets/images';
 
 const help = [
   {
@@ -37,75 +36,86 @@ const help = [
     img: StaticImage.StartMeasuring,
   },
 ];
-const HeartRateModal = () => {
-  const [loading, setLoading] = useState(false)
-  const [count, setCount] = useState(0)
+const HeartRateModal = ({
+  setTypeofMeasurement,
+}: {
+  setTypeofMeasurement: any;
+}) => {
+  const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(0);
 
   const [values, setValues] = useState({
     spo2: 0,
-    heartRate: 0
-  })
+    heartRate: 0,
+  });
   const handleStartMeasurements = () => {
     setLoading(true);
     const interval = setInterval(() => {
       setLoading(false);
       setValues({
         spo2: 100,
-        heartRate: 74
-      })
-      setCount(count + 1)
+        heartRate: 74,
+      });
+      setCount(count + 1);
     }, 3000);
     return () => clearInterval(interval);
-  }
+  };
 
   return (
-    <CommonVideoCallLayout>
-      <CustomBottomModal
-        isVisible={true}
-        onBackdropPress={() => (<></>)}
-      >
-        <CommonLayoutModalLocal heading="Heart Rate" loading={loading} onPress={handleStartMeasurements}
-          help={help}
-        >
-          <>
-            <View style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              gap: 2,
-              marginBottom: 20
-            }}>
-              <MeasurementBox
-                loading={loading}
-                fields={{
-                  name: 'Heart Rate',
-                  value: values.heartRate,
-                  unit: 'Beats/Min'
-                }}
-                customStyles={{
-                  width: '60%',
-                  borderWidth: 1,
-                  borderColor: Colors.LightGray,
-                }}
-              />
-              <MeasurementBox
-                loading={loading}
-                fields={{
-                  name: 'Blood Oxygen',
-                  value: values.spo2,
-                  unit: 'SpO2H'
-                }}
-                customStyles={{
-                  width: '40%',
-                  borderWidth: 1,
-                  borderColor: Colors.LightGray,
-                }}
-              />
-            </View>
-          </>
-        </CommonLayoutModalLocal>
-      </CustomBottomModal>
-    </CommonVideoCallLayout>
-  )
-}
+    // <CustomBottomModal
+    //   isVisible={true}
+    //   onBackdropPress={() => setTypeofMeasurement('')}>
+    <CommonLayoutModalLocal
+      heading="Heart Rate"
+      loading={loading}
+      onPress={handleStartMeasurements}
+      onBackPress={() => {
+        setTypeofMeasurement('start');
+      }}
+      help={help}>
+      <>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            // gap: 2,
+            marginBottom: 20,
+          }}>
+          <MeasurementBox
+            loading={loading}
+            fields={{
+              name: 'Heart Rate',
+              value: values.heartRate,
+              unit: 'Beats/Min',
+            }}
+            customStyles={{
+              width: '60%',
+              borderWidth: 1,
+              borderColor: Colors.LightGray,
+              borderTopLeftRadius: 8,
+              borderBottomLeftRadius: 8,
+            }}
+          />
+          <MeasurementBox
+            loading={loading}
+            fields={{
+              name: 'Blood Oxygen',
+              value: values.spo2,
+              unit: 'SpO2H',
+            }}
+            customStyles={{
+              width: '40%',
+              borderWidth: 1,
+              borderColor: Colors.LightGray,
+              borderTopRightRadius: 8,
+              borderBottomRightRadius: 8,
+            }}
+          />
+        </View>
+      </>
+    </CommonLayoutModalLocal>
+    // </CustomBottomModal>
+  );
+};
 
-export default HeartRateModal
+export default HeartRateModal;
