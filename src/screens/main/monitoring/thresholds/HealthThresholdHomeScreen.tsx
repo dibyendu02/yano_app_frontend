@@ -45,8 +45,8 @@ const HealthThresholdHomeScreen = () => {
             <Header
                 title={'Health thresholds'}
             />
-            <ScrollView>
-                <View style={{ padding: 20 }}>
+            <ScrollView style={{ paddingVertical: 12, width: '94%', margin: 'auto' }}>
+                <View >
                     <SwitchButton
                         customStyle={{ paddingHorizontal: 16, paddingVertical: 20 }}
                         label={'Activate health thresholds'}

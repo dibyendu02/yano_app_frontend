@@ -49,10 +49,10 @@ const SingleThresholdInputWrapper: React.FC<
           ))}
         </View>
         <SaveConfirmationModal
-          isVisible={true}
-          onClose={() => {
-            console.log('Modal closed');
-          }}
+          isVisible={false}
+          // onClose={() => {
+          //   console.log('Modal closed');
+          // }}
           text="Updated health threshold."
         />
       </CommonThresholdLayout>

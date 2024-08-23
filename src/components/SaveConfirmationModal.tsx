@@ -7,7 +7,7 @@ import { Colors } from '../constants/Colors';
 
 interface SaveConfirmationModalProps {
     isVisible: boolean;
-    onClose: (event?: GestureResponderEvent) => void;
+    onClose?: (event?: GestureResponderEvent) => void;
     text: string;
 }
 
