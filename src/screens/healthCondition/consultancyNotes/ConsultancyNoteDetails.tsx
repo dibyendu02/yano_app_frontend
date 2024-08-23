@@ -35,24 +35,29 @@ const ConsultancyNotesDetails = ({navigation, route}: any) => {
             <DownloadIcon />
           </TouchableOpacity>
         }
+        customStyle={{paddingVertical: 12}}
       />
       <ScrollView>
-        <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View style={{paddingTop: 12, width: '94%', margin: 'auto'}}>
           <View style={styles.boxStyle}>
             <Text
               style={{
-                fontSize: 24,
+                fontSize: 18,
                 fontWeight: 'bold',
                 marginBottom: 15,
                 color: Colors.Blue,
               }}>
-              Consultation notes
+              Consultation note
             </Text>
             <DetailItems name="Consultation date" value={date} />
             <DetailItems name="Consultation time" value={time} />
             <DetailItems name="Note" value={note} />
-            <DetailItems name="Recommendation" value={recommendation} />
-            <DetailItems name="Attended by" value={attendedBy} />
+            <DetailItems name="Recommendations" value={recommendation} />
+            <DetailItems
+              name="Attended by"
+              value={attendedBy}
+              customtitleStyle={{fontWeight: 'regular'}}
+            />
           </View>
         </View>
       </ScrollView>
@@ -67,7 +72,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: Colors.White,
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingTop: 16,
     borderRadius: 10,
     marginBottom: 20,
   },

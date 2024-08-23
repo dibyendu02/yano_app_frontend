@@ -36,6 +36,7 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
   const onSubmit = (_data: FormValues) => {
     console.log(_data);
     reset();
+    navigation.goBack();
   };
 
   return (
@@ -64,52 +65,34 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
       <ScrollView>
         <View style={{padding: 20}}>
           <View style={styles.inputBox}>
-            <CustomInputField
-              label="Height"
-              name="height"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Enter height"
-              rules={{required: 'required*'}}
-            />
-            <CustomInputField
-              label="Weight"
-              name="weight"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Enter weight"
-            />
-            {/* <CustomSelect
-              label="Blood Group"
-              name="bloodGroup"
-              control={control as unknown as Control<FieldValues, object>}
-              options={[
-                {label: 'A+', value: 'A+'},
-                {label: 'b+', value: 'b+'},
-                {label: 'AB+', value: 'AB+'},
-                {label: 'O+', value: 'O+'},
-                {label: 'A-', value: 'A-'},
-                {label: 'B-', value: 'B-'},
-                {label: 'O-', value: 'O-'},
-                {label: 'AB-', value: 'AB-'},
-              ]}
-            /> */}
             <FormProvider {...methods}>
-              {/* <FormPickerInputInput
+              <FormPickerInputInput
+                name="height"
+                label="Height"
+                placeholder="Select your height"
+                optionsListLabel="Select your height"
+                optionsListHeight={500}
+              />
+              <FormPickerInputInput
                 name="weight"
                 label="Weight"
+                placeholder="Select your weight"
+                optionsListLabel="Select your weight"
                 optionsListHeight={500}
-              /> */}
+              />
               <FormSelectionInput
                 name="bloodGroup"
                 label="Blood Group"
+                optionsListLabel="Choose your blood type"
                 options={[
-                  {label: 'A Positive(A+)', id: 'A+'},
-                  {label: 'B Positive(b+)', id: 'b+'},
-                  {label: 'AB Positive(AB+)', id: 'AB+'},
-                  {label: 'O Positive(O+)', id: 'O+'},
-                  {label: 'A Negative(A-)', id: 'A-'},
-                  {label: 'B Negative(B-)', id: 'B-'},
-                  {label: 'O Negative(O-)', id: 'O-'},
-                  {label: 'AB Negative(AB-)', id: 'AB-'},
+                  {label: 'A Positivo (A+)', id: 'A+'},
+                  {label: 'A Negativo (A-)', id: 'A-'},
+                  {label: 'B Positivo (B+)', id: 'B+'},
+                  {label: 'B Negativo (B-)', id: 'B-'},
+                  {label: 'AB Positivo (AB+)', id: 'AB+'},
+                  {label: 'AB Negativo (AB-)', id: 'AB-'},
+                  {label: 'O Positivo (O+)', id: 'O+'},
+                  {label: 'O Negativo (O-)', id: 'O-'},
                 ]}
                 selectedId="O+"
                 showActionButtons={true}

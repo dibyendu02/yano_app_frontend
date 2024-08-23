@@ -57,29 +57,31 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
                 {label}
               </Text>
             )}
-            <TextInput
-              style={[styles.input, error && styles.errorInput]}
-              mode="outlined"
-              outlineColor="transparent"
-              activeOutlineColor="transparent"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              outlineStyle={styles.outline}
-              cursorColor={Colors.Black}
-              selectionColor={Colors.Black}
-              editable={false}
-              placeholder={placeholder}
-              placeholderTextColor={Colors.LightBlack}
-              right={
-                <TextInput.Icon
-                  icon="chevron-down"
-                  size={25}
-                  color={Colors.Blue}
-                  onPress={() => setShowOptionsModal(true)}
-                />
-              }
-            />
+            <TouchableOpacity onPress={() => setShowOptionsModal(true)}>
+              <TextInput
+                style={[styles.input, error && styles.errorInput]}
+                mode="outlined"
+                outlineColor="transparent"
+                activeOutlineColor="transparent"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                outlineStyle={styles.outline}
+                cursorColor={Colors.Black}
+                selectionColor={Colors.Black}
+                editable={false}
+                placeholder={placeholder}
+                placeholderTextColor={Colors.LightBlack}
+                right={
+                  <TextInput.Icon
+                    icon="chevron-down"
+                    size={25}
+                    color={Colors.Blue}
+                    onPress={() => setShowOptionsModal(true)}
+                  />
+                }
+              />
+            </TouchableOpacity>
             {error && (
               <Text style={styles.errorText}>
                 {(error as FieldError).message}
@@ -155,7 +157,7 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
                         justifyContent: 'space-around',
                         alignItems: 'center',
                         width: '90%',
-                        paddingVertical: 10,
+                        paddingTop: 10,
                       }}>
                       <FilledButton
                         label="Cancel"

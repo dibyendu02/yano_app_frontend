@@ -25,7 +25,7 @@ const CommonHeaderLocal: FC<props> = ({
           {leftIcon ? (
             leftIcon
           ) : (
-            <Icons.AntDesign name="arrowleft" size={28} color={'black'} />
+            <Icons.AntDesign name="arrowleft" size={25} color={'black'} />
           )}
         </TouchableOpacity>
         <Text style={styles.navbarTitle}>

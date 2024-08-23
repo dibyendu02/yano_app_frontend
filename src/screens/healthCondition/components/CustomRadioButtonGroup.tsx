@@ -1,7 +1,16 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, Modal, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  StyleSheet,
+  TextInput,
+  Image,
+} from 'react-native';
 import {RadioButton} from 'react-native-paper';
 import {Colors} from '../../../constants/Colors';
+import {staticIcons} from '../../../assets/image';
 
 interface CustomRadioSelectProps {
   label: string;
@@ -36,6 +45,10 @@ const CustomRadioSelect: React.FC<CustomRadioSelectProps> = ({
           {options.find(option => option.value === selectedValue)?.label ||
             'Select an option'}
         </Text>
+        <Image
+          source={staticIcons.downIcon}
+          style={{width: 12, height: 12, objectFit: 'contain', marginRight: 12}}
+        />
       </TouchableOpacity>
 
       <Modal
@@ -98,6 +111,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 15,
     backgroundColor: Colors.White,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   inputText: {
     fontSize: 16,

@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({
       <View style={styles.navBarLeftContainer}>
         {showBackIcon && (
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icons.AntDesign name="arrowleft" size={28} color={Colors.Blue} />
+            <Icons.AntDesign name="arrowleft" size={25} color={Colors.Blue} />
           </TouchableOpacity>
         )}
         <Text style={styles.navbarTitle}>{title}</Text>

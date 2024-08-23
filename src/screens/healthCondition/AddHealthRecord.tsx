@@ -1,17 +1,18 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
-import React, { FC, useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { Colors } from '../../constants/Colors';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import React, {FC, useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {Colors} from '../../constants/Colors';
 import Header from '../../components/header/Header';
 import FilledButton from '../../components/buttons/FilledButton';
-import { InputField } from '../../components/form/InputField';
-import { SelectField } from '../../components/form/SelectField';
-import { DatePickerField } from '../../components/form/DatePicker';
-import { TextArea } from '../../components/form/TextAreaField';
+import {InputField} from '../../components/form/InputField';
+import {SelectField} from '../../components/form/SelectField';
+import {DatePickerField} from '../../components/form/DatePicker';
+import {TextArea} from '../../components/form/TextAreaField';
 import CommonHeader from './components/CommonHeader';
 import FormDateInput from '../../components/hook-form/FormDateInput';
+import CustomRadioSelect from './components/CustomRadioButtonGroup';
 
-const AddHealthRecord = ({ navigation, route }: any) => {
+const AddHealthRecord = ({navigation, route}: any) => {
   let data = null;
   if (route?.params) {
     data = route.params.data;
@@ -26,12 +27,12 @@ const AddHealthRecord = ({ navigation, route }: any) => {
     additionalNotes: data?.additionalNotes || '',
   });
   const selectOptions = [
-    { label: 'Active', value: 'Active' },
-    { label: 'Inactive', value: 'Inactive' },
+    {label: 'Active', value: 'Active'},
+    {label: 'Inactive', value: 'Inactive'},
   ];
 
   const handelChange = (id: string, e: string) => {
-    setFormData({ ...formData, [id]: e });
+    setFormData({...formData, [id]: e});
     if (formData.name) setDisabled(false);
     else setDisabled(true);
   };
@@ -49,8 +50,8 @@ const AddHealthRecord = ({ navigation, route }: any) => {
         title={data ? 'Edit' : 'Add'}
         rightComp1={
           <FilledButton
-            type='blue'
-            label="Save"
+            type="blue"
+            label="Add"
             onPress={handelSubmit}
             disabled={disabled}
             style={{
@@ -62,7 +63,7 @@ const AddHealthRecord = ({ navigation, route }: any) => {
         }
       />
       <ScrollView>
-        <View style={{ padding: 20 }}>
+        <View style={{padding: 20}}>
           <View style={styles.inputBox}>
             <InputField
               label="Name of the health condition"
@@ -88,12 +89,21 @@ const AddHealthRecord = ({ navigation, route }: any) => {
             //   },
             // }}
             /> */}
-            <SelectField
+            {/* <SelectField
               label="Status"
               name="status"
               value={formData.status}
               data={selectOptions}
               onchange={handelChange}
+            /> */}
+            <CustomRadioSelect
+              label="Status"
+              value={formData.status} // Make sure you're passing the selected value here
+              options={[
+                {label: 'Chronic', value: 'Chronic'},
+                {label: 'Overcome', value: 'Overcome'},
+              ]}
+              onChange={newValue => handelChange(newValue)}
             />
             <InputField
               label="Treated By"

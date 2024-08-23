@@ -14,26 +14,39 @@ const HomeItems: FC<props> = ({data, path, navigation}) => {
     <>
       <ScrollView>
         <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
-          {data.map((item, i) => (
-            <PatientElementComp
-              key={i}
-              name={item.name}
-              element={<></>}
-              details={item.note}
-              color="black"
-              customStyle={{
-                paddingVertical: 20,
-                borderRadius: 0,
-                borderBottomWidth: 1,
-                borderBottomColor: Colors.LightGray,
-                borderTopRightRadius: i === 0 ? 10 : 0,
-                borderTopLeftRadius: i === 0 ? 10 : 0,
-                borderBottomLeftRadius: i === data.length - 1 ? 10 : 0,
-                borderBottomRightRadius: i === data.length - 1 ? 10 : 0,
-              }}
-              onPress={() => navigation.navigate(path, {data: item})}
-            />
-          ))}
+          <View
+            style={{
+              paddingHorizontal: 10,
+              borderRadius: 8,
+              backgroundColor: Colors.White,
+            }}>
+            {data.map((item, i) => {
+              console.log(item?.note);
+              return (
+                <PatientElementComp
+                  key={i}
+                  name={item.name}
+                  element={<></>}
+                  details={item?.note ? item?.note : ''}
+                  color="black"
+                  customStyle={{
+                    paddingVertical: 20,
+                    borderRadius: 0,
+                    borderBottomWidth: i === data.length - 1 ? 0 : 1,
+                    borderBottomColor: Colors.LightGray,
+                    borderTopRightRadius: i === 0 ? 10 : 0,
+                    borderTopLeftRadius: i === 0 ? 10 : 0,
+                    borderBottomLeftRadius: i === data.length - 1 ? 10 : 0,
+                    borderBottomRightRadius: i === data.length - 1 ? 10 : 0,
+                    // paddingLeft: 10,
+                    padding: 0,
+                    // backgroundColor: 'red',
+                  }}
+                  onPress={() => navigation.navigate(path, {data: item})}
+                />
+              );
+            })}
+          </View>
         </View>
       </ScrollView>
     </>

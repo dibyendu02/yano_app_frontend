@@ -50,6 +50,7 @@ const HealthConditionDetails = ({navigation, route}: any) => {
             />
           </TouchableOpacity>
         }
+        customStyle={{paddingVertical: 12}}
       />
       <ScrollView>
         <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>

@@ -9,22 +9,30 @@ type props = {
   leftIcon?: React.ReactNode;
   rightComp1?: React.ReactNode;
   rightComp2?: React.ReactNode;
+  customStyle?: object;
 };
 
-const CommonHeader: FC<props> = ({title, leftIcon, rightComp1, rightComp2}) => {
+const CommonHeader: FC<props> = ({
+  title,
+  leftIcon,
+  rightComp1,
+  rightComp2,
+  customStyle,
+}) => {
   const navigation = useNavigation();
 
   // Determine paddingVertical based on whether right components are present
-  const paddingVertical = rightComp1 || rightComp2 ? 2 : 10;
+  const paddingVertical = rightComp1 || rightComp2 ? 1 : 10;
 
   return (
-    <View style={[styles.navbar, styles.flexBox, {paddingVertical}]}>
+    <View
+      style={[styles.navbar, styles.flexBox, {paddingVertical}, customStyle]}>
       <View style={[styles.flexBox, {justifyContent: 'center'}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           {leftIcon ? (
             leftIcon
           ) : (
-            <Icons.AntDesign name="arrowleft" size={28} color={'black'} />
+            <Icons.AntDesign name="arrowleft" size={25} color={'black'} />
           )}
         </TouchableOpacity>
         <Text style={styles.navbarTitle}>

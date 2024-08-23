@@ -43,7 +43,7 @@ const BottomSheet: React.FC<BottomSheetProps> = ({
         }}>
         <View
           style={{
-            width: 72,
+            width: 45,
             height: 8,
             backgroundColor: Colors.LightGray,
             marginVertical: 8,

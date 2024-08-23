@@ -37,6 +37,7 @@ const BasicInfo = ({navigation}: any) => {
             />
           </TouchableOpacity>
         }
+        customStyle={{paddingVertical: 12}}
         // rightComp2={
         //     <TouchableOpacity>
         //         <DeleteIcon />

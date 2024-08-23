@@ -5,13 +5,14 @@ import {Colors} from '../../../constants/Colors';
 type itemProps = {
   name: string;
   value: string | number;
+  customtitleStyle?: object;
 };
 
-const DetailItems: FC<itemProps> = ({name, value}) => {
+const DetailItems: FC<itemProps> = ({name, value, customtitleStyle}) => {
   return (
     <View style={{marginBottom: 20}}>
       <Text style={styles.para}>{name}</Text>
-      <Text style={styles.title}>{value}</Text>
+      <Text style={[styles.title, customtitleStyle]}>{value}</Text>
     </View>
   );
 };
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
     color: Colors.Blue,
   },
   para: {
-    fontSize: 14,
+    fontSize: 12,
     color: Colors.SteelBlue,
     marginBottom: 4,
   },
