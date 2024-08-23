@@ -72,7 +72,12 @@ const MyHealthHomeScreen = ({navigation}) => {
               icon={<PlusIcon size={16} color={Colors.Blue} />}
               label="Connect device"
               onPress={() => navigate('ChooseDevice')}
-              style={{marginTop: 10}}
+              style={{
+                marginTop: 10,
+                width: '88%',
+                marginHorizontal: 'auto',
+                paddingVertical: 12,
+              }}
             />
           </View>
           <MeasuringYourVitalComp
@@ -155,7 +160,12 @@ const MyHealthHomeScreen = ({navigation}) => {
                     }}>
                     {item.mType}
                   </Text>
-                  <Text style={{fontSize: 13, fontFamily: 'Roboto'}}>
+                  <Text
+                    style={{
+                      fontSize: 13,
+                      fontFamily: 'Roboto',
+                      color: Colors.SteelBlue,
+                    }}>
                     {item.dt}
                   </Text>
                 </View>
@@ -320,6 +330,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.SteelBlue,
     marginBottom: 10,
+    marginHorizontal: 15,
   },
   divContainer: {
     padding: 20,

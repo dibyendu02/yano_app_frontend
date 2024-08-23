@@ -20,6 +20,7 @@ import Icons from '../../../assets/icon/Icon';
 import {StaticImage} from '../../../assets/images';
 import {DummyImage} from '../../../assets/dummy/images';
 import {UTurnIcon} from '../../../assets/icon/IconNames';
+import BloodGlucoseLayoutModalLocal from './BloodGlucoseLayoutModal';
 
 const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
   const navigation = useNavigation();
@@ -57,33 +58,24 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
   }, [step]);
 
   return (
-    <CustomBottomModal
-      isVisible={true}
-      onBackdropPress={() => setTypeofMeasurement('')}>
-      <View style={{paddingLeft: 15}}>
-        <CommonHeaderLocal
-          title={'Blood Glucose'}
-          leftIcon={
-            <TouchableOpacity onPress={() => setTypeofMeasurement('start')}>
-              <Icons.MaterialIcons
-                name="arrow-back"
-                size={30}
-                color={Colors.Blue}
-              />
-            </TouchableOpacity>
-          }
-        />
+    // <CustomBottomModal
+    //   isVisible={true}
+    //   onBackdropPress={() => setTypeofMeasurement('')}>
+    <BloodGlucoseLayoutModalLocal
+      heading="Blood glucose"
+      onBackPress={() => {
+        setTypeofMeasurement('start');
+      }}>
+      <View style={{paddingLeft: 0}}>
         {step == 'start' && (
           <View
             style={{
               backgroundColor: Colors.White,
               // marginTop: 12,
-              width: '94%',
+              width: '96%',
               margin: 'auto',
               borderRadius: 10,
-              padding: 15,
-              paddingLeft: 0,
-              paddingTop: 0,
+              paddingRight: 15,
             }}>
             <Text
               style={{
@@ -95,7 +87,7 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
               Please choose the measurement time, then press the next button.
             </Text>
             <RadioButton
-              label="Before Breakfast"
+              label="Before breakfast"
               value="before-breakfast"
               selectedValue={time}
               onValueChange={setTime}
@@ -104,7 +96,7 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
               style={{width: '100%', height: 1, backgroundColor: '#E9E9E9'}}
             />
             <RadioButton
-              label="After Breakfast"
+              label="After breakfast"
               value="after-breakfast"
               selectedValue={time}
               onValueChange={setTime}
@@ -113,7 +105,7 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
               style={{width: '100%', height: 1, backgroundColor: '#E9E9E9'}}
             />
             <RadioButton
-              label="Before Lunch"
+              label="Before lunch"
               value="before-lunch"
               selectedValue={time}
               onValueChange={setTime}
@@ -122,7 +114,7 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
               style={{width: '100%', height: 1, backgroundColor: '#E9E9E9'}}
             />
             <RadioButton
-              label="After Lunch"
+              label="After lunch"
               value="after-lunch"
               selectedValue={time}
               onValueChange={setTime}
@@ -131,7 +123,7 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
               style={{width: '100%', height: 1, backgroundColor: '#E9E9E9'}}
             />
             <RadioButton
-              label="Before Dinner"
+              label="Before dinner"
               value="before-dinner"
               selectedValue={time}
               onValueChange={setTime}
@@ -140,7 +132,7 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
               style={{width: '100%', height: 2, backgroundColor: '#E9E9E9'}}
             />
             <RadioButton
-              label="After Dinner"
+              label="After dinner"
               value="after-dinner"
               selectedValue={time}
               onValueChange={setTime}
@@ -218,7 +210,7 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
               justifyContent: 'center',
               alignItems: 'center',
               // marginTop: 12,
-              width: '100%',
+              width: '105%',
               margin: 'auto',
               borderRadius: 10,
               padding: 15,
@@ -254,7 +246,7 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
               justifyContent: 'center',
               alignItems: 'center',
               // marginTop: 12,
-              width: '100%',
+              width: '105%',
               margin: 'auto',
               borderRadius: 10,
               padding: 15,
@@ -319,7 +311,7 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
               style={{
                 backgroundColor: 'white',
                 // marginVertical: 12,
-                width: '94%',
+                width: '96%',
                 margin: 'auto',
                 height: 90,
                 borderRadius: 8,
@@ -452,7 +444,8 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
           )}
         </View>
       </View>
-    </CustomBottomModal>
+    </BloodGlucoseLayoutModalLocal>
+    // </CustomBottomModal>
   );
 };
 

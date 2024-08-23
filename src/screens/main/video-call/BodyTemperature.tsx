@@ -40,7 +40,7 @@ const BodyTemperatureModal = ({
     setLoading(true);
     const interval = setInterval(() => {
       setLoading(false);
-      setValues(37);
+      setValues(37.1);
       setCount(count + 1);
     }, 3000);
     return () => clearInterval(interval);
@@ -51,7 +51,7 @@ const BodyTemperatureModal = ({
     //   isVisible={true}
     //   onBackdropPress={() => setTypeofMeasurement('')}>
     <CommonLayoutModalLocal
-      heading="Body Temperature"
+      heading="Body temperature"
       loading={loading}
       onPress={handleStartMeasurements}
       onBackPress={() => {
@@ -64,11 +64,12 @@ const BodyTemperatureModal = ({
             flexDirection: 'row',
             justifyContent: 'space-between',
             gap: 2,
+            marginBottom: 12,
           }}>
           <MeasurementBox
             loading={loading}
             fields={{
-              name: 'Body Temperature',
+              // name: 'Body Temperature',
               value: values,
               unit: '°C',
             }}
@@ -77,6 +78,7 @@ const BodyTemperatureModal = ({
               borderWidth: 1,
               borderColor: Colors.LightGray,
               borderRadius: 8,
+              paddingTop: 0,
             }}
           />
         </View>
@@ -86,7 +88,11 @@ const BodyTemperatureModal = ({
               paddingHorizontal: 20,
               backgroundColor: Colors.White,
               borderRadius: 10,
-              marginVertical: 10,
+              // marginVertical: 11,
+              marginBottom: 12,
+              borderWidth: 1.4,
+              borderColor: Colors.LightGray,
+              paddingVertical: 10,
             }}>
             <View
               style={{
@@ -103,23 +109,23 @@ const BodyTemperatureModal = ({
                 }}></View>
               <Text
                 style={{
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: '600',
                   color: Colors.Blue,
                 }}>
-                Normal Body Temperature
+                Normal
               </Text>
             </View>
             <View>
               <Image
-                source={DummyImage.bp}
+                source={DummyImage.bloodOxygen}
                 width={400}
                 style={{
                   width: '100%',
                   // height: 10,
-                  marginTop: -60,
-                  marginBottom: -100,
+                  marginTop: -50,
                   objectFit: 'contain',
+                  marginBottom: -70,
                 }}
               />
             </View>

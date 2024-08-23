@@ -31,8 +31,15 @@ const DeleteAccount = () => {
         position: 'relative',
       }}>
       <Header title={'Delete this account'} />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView
+        style={{
+          //   paddingVertical: 12,
+          width: '94%',
+          margin: 'auto',
+          marginTop: -5,
+          //   backgroundColor: 'red',
+        }}>
+        <View>
           <View style={styles.versionBox}>
             <View style={styles.confirmationContainer}>
               <Image
@@ -64,7 +71,14 @@ const DeleteAccount = () => {
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{paddingStart: 20, fontSize: 16}}>•</Text>
+                <Text
+                  style={{
+                    paddingStart: 20,
+                    fontSize: 16,
+                    color: Colors.SteelBlue,
+                  }}>
+                  •
+                </Text>
                 <Text style={styles.list}>
                   Your measurements will be erased.
                 </Text>

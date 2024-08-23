@@ -163,6 +163,7 @@ const styles = StyleSheet.create({
   helpText: {
     fontSize: 22,
     fontWeight: 'bold',
+    // fontWeight: '500',
     fontFamily: 'Roboto',
     color: Colors.Blue,
     marginHorizontal: 40,

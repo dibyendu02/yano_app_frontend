@@ -74,7 +74,7 @@ const BloodPressureModal = ({
     //   isVisible={true}
     //   onBackdropPress={() => setTypeofMeasurement('')}>
     <CommonLayoutModalLocal
-      heading="Blood Pressure"
+      heading="Blood pressure"
       loading={loading}
       onPress={handleStartMeasurements}
       onBackPress={() => {
@@ -85,8 +85,9 @@ const BloodPressureModal = ({
         <View
           style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            // justifyContent: 'space-between',
             // gap: 2,
+            marginBottom: 12,
           }}>
           <MeasurementBox
             loading={loading}
@@ -114,6 +115,8 @@ const BloodPressureModal = ({
               borderWidth: 1,
               borderColor: Colors.LightGray,
               width: '34%',
+              borderTopRightRadius: 8,
+              borderBottomRightRadius: 8,
             }}
           />
           <MeasurementBox
@@ -126,9 +129,9 @@ const BloodPressureModal = ({
             customStyles={{
               borderWidth: 1,
               borderColor: Colors.LightGray,
-              borderTopRightRadius: 8,
-              borderBottomRightRadius: 8,
-              width: '32%',
+              borderRadius: 8,
+              width: '30%',
+              marginLeft: 5,
             }}
           />
         </View>
@@ -139,7 +142,11 @@ const BloodPressureModal = ({
               paddingHorizontal: 20,
               backgroundColor: Colors.White,
               borderRadius: 10,
-              marginVertical: 11,
+              // marginVertical: 11,
+              marginBottom: 12,
+              borderWidth: 1.4,
+              borderColor: Colors.LightGray,
+              paddingVertical: 10,
             }}>
             <View
               style={{
@@ -156,7 +163,7 @@ const BloodPressureModal = ({
                 }}></View>
               <Text
                 style={{
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: '600',
                   color: Colors.Blue,
                 }}>

@@ -66,7 +66,7 @@ const HeartRateModal = ({
     //   isVisible={true}
     //   onBackdropPress={() => setTypeofMeasurement('')}>
     <CommonLayoutModalLocal
-      heading="Heart Rate"
+      heading="Heart rate"
       loading={loading}
       onPress={handleStartMeasurements}
       onBackPress={() => {
@@ -84,12 +84,12 @@ const HeartRateModal = ({
           <MeasurementBox
             loading={loading}
             fields={{
-              name: 'Heart Rate',
+              // name: 'Heart Rate',
               value: values.heartRate,
               unit: 'Beats/Min',
             }}
             customStyles={{
-              width: '60%',
+              width: '67%',
               borderWidth: 1,
               borderColor: Colors.LightGray,
               borderTopLeftRadius: 8,
@@ -99,12 +99,12 @@ const HeartRateModal = ({
           <MeasurementBox
             loading={loading}
             fields={{
-              name: 'Blood Oxygen',
+              name: 'Blood oxygen',
               value: values.spo2,
               unit: 'SpO2H',
             }}
             customStyles={{
-              width: '40%',
+              width: '35%',
               borderWidth: 1,
               borderColor: Colors.LightGray,
               borderTopRightRadius: 8,

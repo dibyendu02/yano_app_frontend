@@ -47,8 +47,8 @@ const CustomBottomModal: FC<CustomBottomModalProps> = ({
         }}>
         <View
           style={{
-            width: 50,
-            height: 4,
+            width: 38,
+            height: 6,
             backgroundColor: Colors.LightGray,
             marginVertical: 6,
             borderRadius: 4,

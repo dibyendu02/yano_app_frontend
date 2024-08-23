@@ -33,6 +33,7 @@ const BloodGlucoseReading = ({navigation}: any) => {
           margin: 15,
           borderRadius: 10,
           padding: 15,
+          paddingHorizontal: 10,
         }}>
         <Text
           style={{

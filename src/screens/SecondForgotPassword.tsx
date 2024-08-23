@@ -19,18 +19,18 @@ export default function SecondForgotPassword({navigation}) {
             style={{height: 30, width: 30, paddingTop: 2}}
           />
         </TouchableOpacity>
-        <Text style={styles.navbarText}>Forgot Your Password?</Text>
+        <Text style={styles.navbarText}>Forgot your password?</Text>
       </View>
 
       <View style={styles.SecondContainer}>
         <Text style={styles.headingText}>The link is on the way</Text>
         <Text style={styles.descriptionText}>
-          Soon you will receive an email with the link for password change.
+          You will soon receive an email with the link to change your password.
         </Text>
         <TouchableOpacity
           style={styles.submitButton}
           onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.submitButtonText}>Back to Login</Text>
+          <Text style={styles.submitButtonText}>Back to login</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     color: '#3D5A6C',
     fontSize: 16,
     fontFamily: 'Roboto',
+    marginRight: 20,
   },
   submitButton: {
     height: 50,

@@ -92,6 +92,7 @@ const HealthParametersList = () => {
                             fontFamily: 'Roboto',
                             marginBottom: 4,
                             fontWeight: '500',
+                            color: Colors.SteelBlue,
                           }}
                           key={itm.unit}>
                           {itm.value}{' '}
@@ -100,6 +101,7 @@ const HealthParametersList = () => {
                               fontSize: 16,
                               fontFamily: 'Roboto',
                               fontWeight: 'light',
+                              color: Colors.SteelBlue,
                             }}>
                             {itm.unit}
                           </Text>

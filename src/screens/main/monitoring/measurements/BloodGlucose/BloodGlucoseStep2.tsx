@@ -32,6 +32,7 @@ const BloodGlucoseStep2 = ({navigation}: any) => {
           margin: 'auto',
           borderRadius: 10,
           padding: 15,
+          paddingHorizontal: 0,
         }}>
         <Text
           style={{

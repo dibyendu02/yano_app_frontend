@@ -12,6 +12,7 @@ type PatientElementsProps = {
   color: string;
   element?: React.ReactNode;
   customStyle?: object;
+  customTextStyle?: object;
   onPress?: () => void;
 };
 
@@ -22,6 +23,7 @@ const PatientElements: React.FC<PatientElementsProps> = ({
   color,
   element,
   customStyle,
+  customTextStyle,
   onPress,
 }) => {
   const navigation = useNavigation();
@@ -36,7 +38,7 @@ const PatientElements: React.FC<PatientElementsProps> = ({
           <IconComponent name={icon!} size={25} color={color} />
         )}
         {element}
-        <Text style={styles.name}>{name}</Text>
+        <Text style={[styles.name, customTextStyle]}>{name}</Text>
         <MaterialIcons name="navigate-next" size={25} color={Colors.Blue} />
       </View>
     </TouchableOpacity>

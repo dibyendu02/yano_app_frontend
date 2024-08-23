@@ -156,9 +156,9 @@ const BottomSection: React.FC<BottomSectionProps> = () => {
         <Text style={style.textColor}>Vitals</Text>
       </View>
       <CustomBottomModal
-        boxStyle={{height: getHeightForMeasurement(typeofMeasurement)}}
+        // boxStyle={{height: getHeightForMeasurement(typeofMeasurement)}}
         isVisible={
-          vitals && typeofMeasurement != 'bloodglucose'
+          vitals
           // && (typeofMeasurement == 'type' || typeofMeasurement == '')
         }
         onBackdropPress={() => setVitals(false)}>
@@ -173,7 +173,7 @@ const BottomSection: React.FC<BottomSectionProps> = () => {
                   color: Colors.Blue,
                   marginBottom: 10,
                 }}>
-                Measurement Tools
+                Measurement tools
               </Text>
               <TouchableOpacity
                 onPress={() => {
@@ -185,8 +185,11 @@ const BottomSection: React.FC<BottomSectionProps> = () => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  padding: 10,
+                  // padding: 10,
+                  paddingRight: 10,
+                  paddingVertical: 10,
                   backgroundColor: Colors.White,
+                  // backgroundColor: 'blue',
                   borderRadius: 10,
                   marginBottom: 10,
                 }}>
@@ -195,6 +198,7 @@ const BottomSection: React.FC<BottomSectionProps> = () => {
                     flexDirection: 'row',
                     alignItems: 'center',
                     gap: 15,
+                    // backgroundColor: 'red',
                   }}>
                   <Image
                     source={DummyImage.largeDevice}
@@ -251,9 +255,11 @@ const BottomSection: React.FC<BottomSectionProps> = () => {
               }
             />
             <View
-              style={{
-                height: '100%',
-              }}>
+              style={
+                {
+                  // height: '80%',
+                }
+              }>
               <MeasurementItemsLocal
                 data={measurementList2}
                 setTypeofMeasurement={setTypeofMeasurement}
@@ -277,6 +283,9 @@ const BottomSection: React.FC<BottomSectionProps> = () => {
         {typeofMeasurement == 'ecg' && (
           <ECGModal setTypeofMeasurement={setTypeofMeasurement} />
         )}
+        {typeofMeasurement == 'bloodglucose' && (
+          <GlucoseLevelModal setTypeofMeasurement={setTypeofMeasurement} />
+        )}
       </CustomBottomModal>
 
       {/* {typeofMeasurement == 'heartrate' && (
@@ -294,9 +303,9 @@ const BottomSection: React.FC<BottomSectionProps> = () => {
       {/* {typeofMeasurement == 'ecg' && (
         <ECGModal setTypeofMeasurement={setTypeofMeasurement} />
       )} */}
-      {typeofMeasurement == 'bloodglucose' && (
+      {/* {typeofMeasurement == 'bloodglucose' && (
         <GlucoseLevelModal setTypeofMeasurement={setTypeofMeasurement} />
-      )}
+      )} */}
     </View>
   );
 };

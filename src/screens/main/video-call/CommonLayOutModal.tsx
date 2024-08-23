@@ -1,4 +1,11 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {FC} from 'react';
 import Header from '../../../components/header/Header';
 import FilledButton from '../../../components/buttons/FilledButton';
@@ -106,7 +113,13 @@ const CommonLayoutModalLocal: FC<Props> = ({
                   <HelpIcon size={26} />
                 </TouchableOpacity>
               </View>
-              <View style={{width: '80%'}}>
+              <View
+                style={{
+                  width: '80%',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  // backgroundColor: 'red',
+                }}>
                 <FilledButton
                   label="Start measuring"
                   type="blue"
@@ -121,55 +134,78 @@ const CommonLayoutModalLocal: FC<Props> = ({
       <BottomSheet
         isVisible={open}
         children={
+          // <View style={styles.bottomSheetContent}>
+          //   <View
+          //     style={{
+          //       alignItems: 'center',
+          //       paddingVertical: 0,
+          //       paddingBottom: 40,
+          //     }}>
+          //     <Image
+          //       style={{width: 300, height: 400, marginBottom: 20}}
+          //       source={
+          //         help[index]?.img ||
+          //         require('../../../assets/images/blood.png')
+          //       } // Use a fallback image if undefined
+          //     />
+
+          //     <View style={{paddingHorizontal: 20}}>
+          //       <Text
+          //         style={{
+          //           fontSize: 22,
+          //           fontWeight: 'bold',
+          //           fontFamily: 'Roboto',
+          //           color: Colors.Blue,
+          //           marginHorizontal: 40,
+          //         }}>
+          //         {help[index]?.text || 'No help text available.'}{' '}
+          //         {/* Fallback text */}
+          //       </Text>
+          //     </View>
+          //   </View>
+
+          //   <View
+          //     style={{
+          //       flexDirection: 'row',
+          //       justifyContent: 'space-between',
+          //       alignSelf: 'flex-end',
+          //       height: '12%',
+          //       paddingHorizontal: 20,
+          //       width: '100%',
+          //     }}>
+          //     <FilledButton
+          //       label="Back"
+          //       type="lightGrey"
+          //       style={{width: '47%'}}
+          //       onPress={() => decCnt()}
+          //     />
+          //     <FilledButton
+          //       label={underStand ? 'Understood' : 'Next'}
+          //       type="blue"
+          //       style={{width: '47%'}}
+          //       onPress={() => incCnt()}
+          //     />
+          //   </View>
+          // </View>
+
           <View style={styles.bottomSheetContent}>
-            <View
-              style={{
-                alignItems: 'center',
-                paddingVertical: 0,
-                paddingBottom: 40,
-              }}>
-              <Image
-                style={{width: 300, height: 400, marginBottom: 20}}
-                source={
-                  help[index]?.img ||
-                  require('../../../assets/images/blood.png')
-                } // Use a fallback image if undefined
-              />
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+              <Image style={styles.helpImage} source={help[index].img} />
 
-              <View style={{paddingHorizontal: 20}}>
-                <Text
-                  style={{
-                    fontSize: 22,
-                    fontWeight: 'bold',
-                    fontFamily: 'Roboto',
-                    color: Colors.Blue,
-                    marginHorizontal: 40,
-                  }}>
-                  {help[index]?.text || 'No help text available.'}{' '}
-                  {/* Fallback text */}
-                </Text>
-              </View>
-            </View>
+              <Text style={styles.helpText}>{help[index].text}</Text>
+            </ScrollView>
 
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignSelf: 'flex-end',
-                height: '12%',
-                paddingHorizontal: 20,
-                width: '100%',
-              }}>
+            <View style={styles.buttonContainer}>
               <FilledButton
                 label="Back"
                 type="lightGrey"
-                style={{width: '47%'}}
+                style={styles.button}
                 onPress={() => decCnt()}
               />
               <FilledButton
                 label={underStand ? 'Understood' : 'Next'}
                 type="blue"
-                style={{width: '47%'}}
+                style={styles.button}
                 onPress={() => incCnt()}
               />
             </View>
@@ -187,10 +223,11 @@ const styles = StyleSheet.create({
   addBtn: {
     width: '100%',
     backgroundColor: Colors.White,
-    padding: 10,
+    paddingBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+    gap: 10,
   },
   bottomSheetContent: {
     height: '90%',
@@ -199,5 +236,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     paddingBottom: 10,
+  },
+  scrollContainer: {
+    alignItems: 'center',
+    paddingBottom: 20, // Ensure there's space below the content
+  },
+  helpImage: {
+    width: 300,
+    height: 400,
+    marginBottom: 20,
+  },
+  helpText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    fontFamily: 'Roboto',
+    color: Colors.Blue,
+    marginHorizontal: 62,
+    // textAlign: 'center',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: 20,
+  },
+  button: {
+    width: '47%',
   },
 });

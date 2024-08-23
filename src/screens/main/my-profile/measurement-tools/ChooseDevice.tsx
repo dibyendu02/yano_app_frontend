@@ -44,7 +44,7 @@ const ChooseDevice = () => {
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title="Choose Device" />
+      <Header title="Choose a device" />
       <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
         <View
           style={{
@@ -54,10 +54,12 @@ const ChooseDevice = () => {
           }}>
           <PatientElements
             name="Yano Multi-Parameter Monitor"
-            onPress={() => navigate(AuthScreen.DeviceInfo)}
+            onPress={() =>
+              navigate(AuthScreen.DeviceInfo, {devicename: 'multimeter'})
+            }
             element={
               <Image
-                source={DummyImage.largeDevice}
+                source={DummyImage.monitor}
                 style={{width: 50, height: 50}}
               />
             }
@@ -68,11 +70,14 @@ const ChooseDevice = () => {
               borderBottomRightRadius: 0,
               paddingHorizontal: 5,
             }}
+            customTextStyle={{marginRight: 20}}
             color=""
           />
           <PatientElements
             name="Medidor continuo de glucosa"
-            onPress={() => navigate(AuthScreen.DeviceInfo)}
+            onPress={() =>
+              navigate(AuthScreen.DeviceInfo, {devicename: 'medidor'})
+            }
             element={
               <Image
                 source={DummyImage.glucoround}
@@ -85,11 +90,14 @@ const ChooseDevice = () => {
               borderRadius: 0,
               paddingHorizontal: 5,
             }}
+            customTextStyle={{marginRight: 25}}
             color=""
           />
           <PatientElements
             name="Glucómetro"
-            onPress={() => navigate(AuthScreen.DeviceInfo)}
+            onPress={() =>
+              navigate(AuthScreen.DeviceInfo, {devicename: 'glucometer'})
+            }
             element={
               <Image
                 source={DummyImage.glucometer}
@@ -101,6 +109,7 @@ const ChooseDevice = () => {
               borderTopRightRadius: 0,
               paddingHorizontal: 5,
             }}
+            customTextStyle={{marginRight: 20}}
             color=""
           />
         </View>

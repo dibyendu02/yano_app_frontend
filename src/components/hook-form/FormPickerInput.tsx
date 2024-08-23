@@ -59,12 +59,18 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
     for (let i = 0; i <= 9; i++) {
       decimalData.push(`${i}`);
     }
+    for (let i = 0; i <= 2; i++) {
+      decimalData.push(`${i}`);
+    }
     unit = 'kg';
   } else if (name === 'height') {
     for (let i = 80; i <= 200; i++) {
       data.push(`${i}`);
     }
     for (let i = 0; i <= 9; i++) {
+      decimalData.push(`${i}`);
+    }
+    for (let i = 0; i <= 2; i++) {
       decimalData.push(`${i}`);
     }
     unit = 'cm';

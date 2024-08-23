@@ -76,7 +76,7 @@ const ECGModal = ({setTypeofMeasurement}: {setTypeofMeasurement: any}) => {
             backgroundColor: Colors.White,
             width: '100%',
             borderRadius: 10,
-            padding: 20,
+            // paddingVertical: 20,
           }}>
           <Image
             source={DummyImage.graph}
@@ -109,27 +109,34 @@ const ECGModal = ({setTypeofMeasurement}: {setTypeofMeasurement: any}) => {
             </Text>
           </View>
         </View>
-        <View style={{padding: 20}}>
+        <View style={{marginVertical: 12}}>
           {count === 0 ? (
             <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 // gap: 2,
+                // padding: 12,
+                paddingTop: 12,
+                borderWidth: 1,
+                borderColor: Colors.LightGray,
+                borderRadius: 8,
               }}>
               <MeasurementBox
                 loading={loading}
                 fields={{
                   name: 'Heart Rate',
                   value: values.heartRate,
-                  unit: 'Beats/min',
+                  unit: 'Beats/Min',
                 }}
                 customStyles={{
-                  width: '68%',
-                  borderWidth: 1,
+                  width: '50%',
+                  borderRightWidth: 1,
                   borderColor: Colors.LightGray,
                   borderTopLeftRadius: 8,
                   borderBottomLeftRadius: 8,
+                  height: '70%',
+                  paddingVertical: 0,
                 }}
               />
               <MeasurementBox
@@ -140,18 +147,21 @@ const ECGModal = ({setTypeofMeasurement}: {setTypeofMeasurement: any}) => {
                   unit: 'Seconds',
                 }}
                 customStyles={{
-                  borderWidth: 1,
-                  borderColor: Colors.LightGray,
+                  // borderWidth: 1,
+                  // borderColor: Colors.LightGray,
                   borderTopRightRadius: 8,
                   borderBottomRightRadius: 8,
-                  width: '32.5%',
+                  width: '50%',
+                  paddingVertical: 0,
+                  paddingBottom: 12,
                 }}
               />
             </View>
           ) : (
             <View
               style={{
-                padding: 20,
+                paddingHorizontal: 20,
+                paddingTop: 20,
                 backgroundColor: Colors.White,
                 borderRadius: 10,
                 borderWidth: 1,
@@ -239,7 +249,7 @@ const ECGModal = ({setTypeofMeasurement}: {setTypeofMeasurement: any}) => {
                   19
                 </Text>
               </View>
-              <View style={styles.boxStyle}>
+              <View style={[styles.boxStyle, {borderBottomWidth: 0}]}>
                 <Text style={styles.text}>Mood:</Text>
                 <Text
                   style={[
