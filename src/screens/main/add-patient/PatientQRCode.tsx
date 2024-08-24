@@ -7,14 +7,15 @@ import { RNCamera } from 'react-native-camera';
 import Icons from '../../../assets/icon/Icon';
 import { Colors } from '../../../constants/Colors';
 import { useNavigation } from '@react-navigation/native';
+import { navigate } from '../../../navigation/RootNavigation';
 
 const PatientQRCode = () => {
     const navigation = useNavigation();
 
     useEffect(() => {
         setTimeout(() => {
-            // navigation.navigate('EditFamilyMembers');
-            navigation.goBack()
+            navigate('AfterQR')
+            // navigation.goBack()
         }, 4000);
     }, []);
 
