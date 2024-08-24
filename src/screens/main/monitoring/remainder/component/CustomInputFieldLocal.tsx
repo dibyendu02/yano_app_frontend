@@ -6,7 +6,7 @@ import { DateIcon } from '../../../../../assets/icon/IconNames';
 
 interface CustomInputProps extends TextInputProps {
     name: string;
-    control: Control<FieldValues, object>;
+    control?: Control<FieldValues, object>;
     rules?: object;
     label?: string;
     icon?: React.ReactNode;
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         marginTop: 2,
     },
     inputBox: {
-        // marginBottom: 15,
+        marginBottom: 5,
     },
     label: {
         fontSize: 16,
@@ -85,8 +85,9 @@ const styles = StyleSheet.create({
         borderColor: Colors.LightGray,
         paddingHorizontal: 15,
         fontSize: 16,
-        paddingRight: 40,
-        height: 56,
+        // paddingRight: 40,
+        // height: 56,
+        paddingVertical: 12,
         color: Colors.Blue,
     },
     padRight: {

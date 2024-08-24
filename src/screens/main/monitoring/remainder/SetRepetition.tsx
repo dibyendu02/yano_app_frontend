@@ -29,6 +29,8 @@ import FormDateInput from '../../../../components/hook-form/FormDateInput';
 import RepetitionModal from './component/RepetationChange';
 import CustomInputFieldLocal from './component/CustomInputFieldLocal';
 import FormInputLocal from './component/FormInputLocal';
+import { Image } from 'react-native';
+import { staticIcons } from '../../../../assets/image';
 
 const SetRepetition = () => {
   const methods = useForm({
@@ -43,6 +45,7 @@ const SetRepetition = () => {
 
   const { control, handleSubmit, watch, setValue } = methods;
   const [modalVisible, setModalVisible] = useState(false);
+  const [changeValue, setChangeValue] = useState('1');
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -98,6 +101,18 @@ const SetRepetition = () => {
                     </Text>
                   )}
                 />
+                <View style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: 20,
+                  height: 20,
+
+                }}>
+                  <Image source={staticIcons.downIcon}
+                    style={{ width: 10, height: 10, objectFit: 'contain' }}
+                  />
+                </View>
+
               </TouchableOpacity>
 
             </View>
@@ -133,20 +148,20 @@ const SetRepetition = () => {
                       )}
                       <Text style={styles.label}> On</Text>
                       <View style={{ width: '50%' }}>
-                        {value === 'date' && (
-                          <FormInputLocal
-                            name="date"
-                            control={
-                              control as unknown as Control<FieldValues, object>
-                            }
-                            rules={{
-                              required: {
-                                value: value === 'date',
-                                message: 'Please select a date',
-                              },
-                            }}
-                          />
-                        )}
+                        {/* {value === 'date' && ( */}
+                        <FormInputLocal
+                          name="date"
+                          control={
+                            control as unknown as Control<FieldValues, object>
+                          }
+                          rules={{
+                            required: {
+                              value: value === 'date',
+                              message: 'Please select a date',
+                            },
+                          }}
+                        />
+                        {/* )} */}
                       </View>
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -158,19 +173,20 @@ const SetRepetition = () => {
                         <CheckIcon color={Colors.LightGreen} size={25} />
                       )}
                       <Text style={styles.label}>After</Text>
-                      {value === 'after' && (
-                        <>
-                          <CustomInputField
-                            name="occurrence"
-                            value="1"
-                            control={
-                              control as unknown as Control<FieldValues, object>
-                            }
-                            rules={{ required: 'This field is required' }}
-                          />
-                          <Text style={styles.label}>repetition</Text>
-                        </>
-                      )}
+                      {/* {value === 'after' && ( */}
+                      <>
+                        <CustomInputFieldLocal
+                          name="occurrence"
+                          value={changeValue}
+                          // control={
+                          //   control as unknown as Control<FieldValues, object>
+                          // }
+                          // onChange={setChangeValue}
+                          rules={{ required: 'This field is required' }}
+                        />
+                        <Text style={styles.label}>repetition</Text>
+                      </>
+                      {/* )} */}
                     </TouchableOpacity>
                   </View>
                 )}
@@ -209,7 +225,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 0,
   },
   errorText: {
     color: 'red',
@@ -228,17 +244,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 10,
     marginBottom: 20,
+    // backgroundColor: Colors.Red,
   },
   frequencyInput: {
     width: 100,
   },
   frequencySelect: {
+    flexDirection: 'row',
     width: '70%',
     borderWidth: 1,
     borderColor: Colors.LightGray,
     borderRadius: 8,
     padding: 15,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     backgroundColor: Colors.White,
   },
   frequencyTypeText: {
