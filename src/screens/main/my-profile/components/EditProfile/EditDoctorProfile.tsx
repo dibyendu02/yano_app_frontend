@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -10,20 +10,21 @@ import {
   Platform,
   ToastAndroid,
   Alert,
+  Image,
 } from 'react-native';
 import Header from '../../../../../components/header/Header';
-import {navigate} from '../../../../../navigation/RootNavigation';
-import {Colors} from '../../../../../constants/Colors';
-import {AuthScreen} from '../../../../../navigation/auth/AuthScreens';
-import {FormProvider, useForm, Controller} from 'react-hook-form';
+import { navigate } from '../../../../../navigation/RootNavigation';
+import { Colors } from '../../../../../constants/Colors';
+import { AuthScreen } from '../../../../../navigation/auth/AuthScreens';
+import { FormProvider, useForm, Controller, set } from 'react-hook-form';
 import FormInput from '../../../../../components/hook-form/FormInput';
-import {FormInputType} from '../../../../../components/hook-form/types';
+import { FormInputType } from '../../../../../components/hook-form/types';
 import FormDateInput from '../../../../../components/hook-form/FormDateInput';
 import FormSelectionInput from '../../../../../components/hook-form/FormSelectionInput';
 import FormPhoneNumberInput from '../../../../../components/hook-form/FormPhoneNumberInput';
 import FormImageInput from '../../../../../components/hook-form/FormImageInput';
-import {AuthScreensProps} from '../../../../../navigation/auth/types';
-import {UserType} from '../../../../../constants/enums';
+import { AuthScreensProps } from '../../../../../navigation/auth/types';
+import { UserType } from '../../../../../constants/enums';
 import moment from 'moment';
 import {
   registerDoctor,
@@ -31,27 +32,31 @@ import {
 } from '../../../../../services/Endpoints';
 import Gender from './Gender';
 import UserContext from '../../../../../contexts/UserContext';
+import Modal from 'react-native-modal';
+import { CloseIcon } from '../../../../../assets/icon/IconNames';
+import { staticIcons } from '../../../../../assets/image';
 
 const DoctorSpecialties = [
-  {id: 'Cardiologist', label: 'Cardiologist', enabled: true},
-  {id: 'Dermatologist', label: 'Dermatologist', enabled: true},
-  {id: 'Neurologist', label: 'Neurologist', enabled: true},
-  {id: 'Pediatrician', label: 'Pediatrician', enabled: true},
-  {id: 'GeneralSurgeon', label: 'General Surgeon', enabled: true},
-  {id: 'OrthopedicSurgeon', label: 'Orthopedic Surgeon', enabled: true},
-  {id: 'Gynecologist', label: 'Gynecologist', enabled: true},
-  {id: 'Ophthalmologist', label: 'Ophthalmologist', enabled: true},
-  {id: 'Psychiatrist', label: 'Psychiatrist', enabled: true},
-  {id: 'Radiologist', label: 'Radiologist', enabled: true},
-  {id: 'Urologist', label: 'Urologist', enabled: true},
-  {id: 'Endocrinologist', label: 'Endocrinologist', enabled: true},
+  { id: 'Cardiologist', label: 'Cardiologist', enabled: true },
+  { id: 'Dermatologist', label: 'Dermatologist', enabled: true },
+  { id: 'Neurologist', label: 'Neurologist', enabled: true },
+  { id: 'Pediatrician', label: 'Pediatrician', enabled: true },
+  { id: 'GeneralSurgeon', label: 'General surgeon', enabled: true },
+  { id: 'OrthopedicSurgeon', label: 'Orthopedic surgeon', enabled: true },
+  { id: 'Gynecologist', label: 'Gynecologist', enabled: true },
+  { id: 'Ophthalmologist', label: 'Ophthalmologist', enabled: true },
+  { id: 'Psychiatrist', label: 'Psychiatrist', enabled: true },
+  { id: 'Radiologist', label: 'Radiologist', enabled: true },
+  { id: 'Urologist', label: 'Urologist', enabled: true },
+  { id: 'Endocrinologist', label: 'Endocrinologist', enabled: true },
 ];
 
-const EditDoctorProfile: React.FC<AuthScreensProps> = ({route}) => {
+const EditDoctorProfile: React.FC<AuthScreensProps> = ({ route }) => {
   const [isDisabled, setIsDisabled] = React.useState(true);
-  const {userData} = useContext(UserContext);
+  const { userData } = useContext(UserContext);
   //@ts-ignore
   const userType = route?.params?.userType;
+  const [saved, setSaved] = useState(false);
 
   // Prefilled dummy data
   const initialData = {
@@ -65,7 +70,7 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({route}) => {
     specialty: 'General medicine',
   };
 
-  const {...methods} = useForm({
+  const { ...methods } = useForm({
     mode: 'onChange',
     defaultValues: initialData,
   });
@@ -93,6 +98,7 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({route}) => {
   };
 
   const onSubmit = async (data: any) => {
+    setSaved(true);
     let requestData = new FormData();
     if (data?.file) {
       requestData.append('image', {
@@ -127,24 +133,30 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({route}) => {
         await registerDoctor(requestData);
       }
 
+
+
       showToast('The changes have been saved.');
       navigate(AuthScreen.AccountVerification);
     } catch (e) {
-      console.log('Error!', e?.response?.data?.message);
-      showToast('An error occurred while saving.');
+      console.log('Error!', e?.response?.data);
+      // showToast('An error occurred while saving.');
+    } finally {
+      setTimeout(() => {
+        setSaved(false);
+      }, 3000);
     }
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{flex: 1}}>
-        <View style={{flex: 1}}>
+        style={{ flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <Header
             title="Edit profile"
             headerRightComponent={
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <TouchableOpacity
                   disabled={isDisabled}
                   onPress={isDisabled ? null : methods.handleSubmit(onSubmit)}>
@@ -179,7 +191,7 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({route}) => {
                 />
                 <FormInput
                   name="lastName"
-                  label="Last Name"
+                  label="Last name"
                   rules={{
                     required: {
                       value: true,
@@ -231,7 +243,7 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({route}) => {
                   name="gender"
                   control={methods.control}
                   defaultValue="Male"
-                  render={({field: {onChange, value}}) => (
+                  render={({ field: { onChange, value } }) => (
                     <Gender selectedRole={value} setSelectedRole={onChange} />
                   )}
                 />
@@ -268,6 +280,36 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({route}) => {
           </View>
         </View>
       </KeyboardAvoidingView>
+      <Modal
+        isVisible={saved}
+        onBackdropPress={() => setSaved(false)}
+        onSwipeComplete={() => setSaved(false)}
+        swipeDirection="down"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0}
+        animationInTiming={1000}
+        animationOutTiming={3000}
+        style={styles.modal}
+      >
+        <View style={styles.modalContent}>
+          <View style={{ flexDirection: 'row', gap: 10 }}>
+            <Image
+              source={staticIcons.checkcircle}
+              style={{
+                height: 20,
+                width: 20,
+                objectFit: 'contain',
+                tintColor: 'white',
+              }}
+            />
+            <Text style={styles.modalText}>The changes have been saved.</Text>
+          </View>
+          <TouchableOpacity onPress={() => setSaved(false)}>
+            <CloseIcon color="white" />
+          </TouchableOpacity>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -304,5 +346,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.GhostWhite,
     paddingHorizontal: 14,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: Colors.Green,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 20,
+    marginLeft: 60,
+  },
+  modalText: {
+    color: Colors.White,
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
