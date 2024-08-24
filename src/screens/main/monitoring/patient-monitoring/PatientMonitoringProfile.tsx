@@ -184,23 +184,28 @@ export default function PatientMonitoringProfile({}) {
                     {item.dt}
                   </Text>
                 </View>
+
                 <Text
                   style={{
                     fontSize: 18,
                     fontFamily: 'Roboto',
                     marginBottom: 4,
-                    fontWeight: '500',
-                  }}>
+                    fontWeight: Platform.OS === 'android' ? 'bold' : '600',
+                    color: Colors.Blue,
+                  }}
+                  key={item.amt}>
                   {item.amt}{' '}
                   <Text
                     style={{
                       fontSize: 16,
                       fontFamily: 'Roboto',
                       fontWeight: 'light',
+                      color: Colors.SteelBlue,
                     }}>
                     mmol/L
                   </Text>
                 </Text>
+
                 {index === 0 ? (
                   <Icons.AntDesign
                     name="checkcircleo"
