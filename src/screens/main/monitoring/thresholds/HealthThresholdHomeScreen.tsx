@@ -45,9 +45,10 @@ const HealthThresholdHomeScreen = () => {
             <Header
                 title={'Health thresholds'}
             />
-            <ScrollView>
-                <View style={{ padding: 20 }}>
+            <ScrollView style={{ paddingVertical: 12, width: '94%', margin: 'auto' }}>
+                <View >
                     <SwitchButton
+                        customStyle={{ paddingHorizontal: 16, paddingVertical: 20 }}
                         label={'Activate health thresholds'}
                         getValue={(val: boolean) => setValue(val)}
                     />
@@ -64,10 +65,14 @@ const HealthThresholdHomeScreen = () => {
                                     name={item.name}
                                     color="black"
                                     customStyle={{
-                                        paddingVertical: 20,
+                                        paddingVertical: 18.5,
+                                        paddingHorizontal: 16,
                                         borderRadius: 0,
                                         borderBottomWidth: 1,
                                         borderBottomColor: Colors.LightGray,
+                                    }}
+                                    customTextStyle={{
+                                        marginLeft: 0
                                     }}
                                     onPress={() => (value && navigate(item.path))}
                                 />

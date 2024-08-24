@@ -17,4 +17,5 @@ export const staticIcons = {
   downIcon: require('./down-arrow.png'),
   CheckBoxIcon: require('./check_box.png'),
   BlankCheckBoxIcon: require('./blank_check_box.png'),
+  checkCircle: require('./check_circle.png'),
 };
