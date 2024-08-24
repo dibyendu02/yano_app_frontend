@@ -1,10 +1,14 @@
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { Colors } from '../../../../constants/Colors'
 import Header from '../../../../components/header/Header'
 import CustomPasswordField from '../../../../components/formComp/CustomPasswordField'
 import { Control, FieldValues, useForm } from 'react-hook-form'
 import FilledButton from '../../../../components/buttons/FilledButton'
+import Modal from 'react-native-modal';
+import { CloseIcon } from '../../../../assets/icon/IconNames'
+import { Image } from 'react-native'
+import { staticIcons } from '../../../../assets/image'
 
 interface FormValues {
     oldPassword: "",
@@ -17,7 +21,13 @@ const ChangePassword = () => {
     const { control, handleSubmit, reset, formState: { errors, isValid } } = useForm<FormValues>();
     const onSubmit = (value: FormValues) => {
         console.log(value)
+        setSaved(true)
+        setTimeout(() => {
+            setSaved(false)
+        }, 3000)
     }
+    const [saved, setSaved] = useState(false)
+
     return (
         <SafeAreaView
             style={{
@@ -69,10 +79,63 @@ const ChangePassword = () => {
 
                 </View>
             </ScrollView>
+            <Modal
+                isVisible={saved}
+                onBackdropPress={() => setSaved(false)}
+                onSwipeComplete={() => setSaved(false)}
+                swipeDirection="down"
+                animationIn="slideInUp"
+                animationOut="slideOutDown"
+                backdropOpacity={0}
+                animationInTiming={1000}
+                animationOutTiming={3000}
+                style={styles.modal}
+            >
+                <View style={styles.modalContent}>
+                    <View style={{ flexDirection: 'row', gap: 10 }}>
+                        <Image
+                            source={staticIcons.checkcircle}
+                            style={{
+                                height: 20,
+                                width: 20,
+                                objectFit: 'contain',
+                                tintColor: 'white',
+                            }}
+                        />
+                        <Text style={styles.modalText}>The changes have been saved.</Text>
+                    </View>
+                    <TouchableOpacity onPress={() => setSaved(false)}>
+                        <CloseIcon color="white" />
+                    </TouchableOpacity>
+                </View>
+            </Modal>
         </SafeAreaView>
     )
 }
 
 export default ChangePassword
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    modal: {
+        justifyContent: 'flex-end',
+        margin: 0,
+    },
+    modalContent: {
+        backgroundColor: Colors.Green,
+        paddingHorizontal: 20,
+        paddingVertical: 14,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderRadius: 10,
+        width: '90%',
+        alignSelf: 'center',
+        marginBottom: 20,
+        marginLeft: 60,
+    },
+    modalText: {
+        color: Colors.White,
+        fontSize: 14,
+        fontWeight: 'bold',
+    },
+})

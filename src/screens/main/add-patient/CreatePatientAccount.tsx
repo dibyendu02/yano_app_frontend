@@ -145,7 +145,8 @@ const CreatePatientAccount: React.FC<AuthScreensProps> = ({ route }) => {
                 })
                 .catch(e => console.log('Error!', e?.response?.data?.message));
         }
-        navigate(AuthScreen.AccountVerification);
+        // navigate(AuthScreen.AccountVerification);
+        navigate("PatientMonitoringProfileLocal")
     };
 
     return (
