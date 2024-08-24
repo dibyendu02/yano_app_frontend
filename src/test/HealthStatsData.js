@@ -753,7 +753,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Glucose level',
         measurements: [
           {
             value: '5.6',
@@ -761,7 +761,7 @@ export const HSDGN = [
           },
         ],
         measurement_time: {
-          value: 'After Lunch',
+          value: 'After lunch',
           unit: '',
         },
         timestamp: '2024-07-28T00:00:00Z',
@@ -769,7 +769,7 @@ export const HSDGN = [
       },
       {
         field: 'BP',
-        field_full: 'Blood Pressure',
+        field_full: 'Blood pressure',
         measurements: [
           {
             value: '121',
@@ -785,7 +785,7 @@ export const HSDGN = [
       },
       {
         field: 'BO',
-        field_full: 'Blood Oxygen',
+        field_full: 'Blood oxygen',
         measurements: [
           {
             value: '98',
@@ -797,7 +797,7 @@ export const HSDGN = [
       },
       {
         field: 'HR',
-        field_full: 'Heart Rhythm',
+        field_full: 'Heart rhythm',
         measurements: [
           {
             value: '84',
@@ -809,7 +809,7 @@ export const HSDGN = [
       },
       {
         field: 'BT',
-        field_full: 'Body Temperature',
+        field_full: 'Body temperature',
         measurements: [
           {
             value: '36.7',
@@ -821,7 +821,7 @@ export const HSDGN = [
       },
       {
         field: 'ECG',
-        field_full: 'Electrocardiogram',
+        field_full: 'ECG',
         measurements: [],
         diagram: DummyImage.Electrocardiogram,
         timestamp: '2024-07-28T00:00:00Z',
