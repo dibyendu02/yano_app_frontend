@@ -84,8 +84,14 @@ const HealthParametersList = () => {
                         {moment(e.timestamp).format('M/D/YYYY - h:mm A')}
                       </Text>
                     </View>
-                    <View>
-                      {e.measurements.map(itm => (
+                    <View
+                      style={{
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        width: '30%',
+                        marginRight: 14,
+                      }}>
+                      {/* {e.measurements.map(itm => (
                         <Text
                           style={{
                             fontSize: 18,
@@ -93,6 +99,29 @@ const HealthParametersList = () => {
                             marginBottom: 4,
                             fontWeight: '500',
                             color: Colors.SteelBlue,
+                          }}
+                          key={itm.unit}>
+                          {itm.value}{' '}
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              fontFamily: 'Roboto',
+                              fontWeight: 'light',
+                              color: Colors.SteelBlue,
+                            }}>
+                            {itm.unit}
+                          </Text>
+                        </Text>
+                      ))} */}
+                      {e.measurements.map(itm => (
+                        <Text
+                          style={{
+                            fontSize: 18,
+                            fontFamily: 'Roboto',
+                            marginBottom: 4,
+                            fontWeight:
+                              Platform.OS === 'android' ? 'bold' : '600',
+                            color: Colors.Blue,
                           }}
                           key={itm.unit}>
                           {itm.value}{' '}

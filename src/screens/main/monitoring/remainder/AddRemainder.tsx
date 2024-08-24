@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -5,20 +6,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
 import CommonLayout from '../../../../components/CommonLayout';
 import Header from '../../../../components/header/Header';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import CustomInputField from '../../../../components/formComp/CustomInputField';
-import { Control, FieldValues, useForm, FormProvider } from 'react-hook-form';
-import { RepeatIcon } from '../../../../assets/icon/IconNames';
-import { Colors } from '../../../../constants/Colors';
-import { navigate } from '../../../../navigation/RootNavigation';
+import {Control, FieldValues, useForm, FormProvider} from 'react-hook-form';
+import {RepeatIcon} from '../../../../assets/icon/IconNames';
+import {Colors} from '../../../../constants/Colors';
+import {navigate} from '../../../../navigation/RootNavigation';
 import FormDateInput from '../../../../components/hook-form/FormDateInput';
-import FormTimeInput from './component/CustomModalTimePicker'; // Ensure this path is correct
-import CustomTimePicker from '../../../../components/formComp/CustomTimePicker';
+import FormTimePicker from '../../../../components/hook-form/FormTimeInput';
 
-const AddReminder = ({ route }: any) => {
+const AddReminder = ({route}: any) => {
   let data = null;
   if (route.params) {
     data = route.params.data;
@@ -55,23 +54,24 @@ const AddReminder = ({ route }: any) => {
               }}
             />
           }
+          customStyle={{paddingVertical: 2}}
         />
         <ScrollView>
-          <View style={{ padding: 20 }}>
+          <View style={{padding: 20}}>
             <CustomInputField
               label="What do you need to remind the patient?"
               name="name"
               control={
                 methods.control as unknown as Control<FieldValues, object>
               }
-              rules={{ required: 'This field is required' }}
+              rules={{required: 'This field is required'}}
             />
 
             <FormDateInput
               name="date"
               label="Date"
               placeholder="Select a date"
-              placeholderTextColor={Colors.Grey}
+              placeholderTextColor={Colors.SteelBlue}
               rules={{
                 required: {
                   value: true,
@@ -80,6 +80,7 @@ const AddReminder = ({ route }: any) => {
               }}
               buttonColor={Colors.Blue}
             />
+
             <View
               style={{
                 flexDirection: 'row',
@@ -87,14 +88,14 @@ const AddReminder = ({ route }: any) => {
                 gap: 10,
                 marginVertical: 10,
               }}>
-              <View style={{ width: 100 }}>
+              <View style={{width: 100}}>
                 <CustomInputField
                   label="Frequency"
                   name="frequency"
                   control={
                     methods.control as unknown as Control<FieldValues, object>
                   }
-                  rules={{ required: 'This field is required' }}
+                  rules={{required: 'This field is required'}}
                 />
               </View>
               <Text
@@ -106,23 +107,15 @@ const AddReminder = ({ route }: any) => {
                 a day
               </Text>
             </View>
-            <View style={{ width: '50%', marginVertical: 10 }}>
-              {/* <FormTimeInput
+
+            <View style={{width: '50%', marginVertical: 10}}>
+              <FormTimePicker
                 name="time"
                 label="At"
-                control={
-                  methods.control as unknown as Control<FieldValues, object>
-                }
-                placeholder="Choose a time"
-              /> */}
-              <CustomTimePicker
-                name="time"
-                label="At"
-                control={
-                  methods.control as unknown as Control<FieldValues, object>
-                }
+                rules={{required: 'This field is required'}}
               />
             </View>
+
             <View
               style={{
                 borderTopWidth: 1,
@@ -143,10 +136,9 @@ const AddReminder = ({ route }: any) => {
                 <Text
                   style={{
                     fontSize: 18,
-                    // fontWeight: '600',
                     color: Colors.Blue,
                   }}>
-                  Set repetation
+                  Set repetition
                 </Text>
               </TouchableOpacity>
             </View>
