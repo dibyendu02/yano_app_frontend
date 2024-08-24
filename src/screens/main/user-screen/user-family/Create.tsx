@@ -31,18 +31,13 @@ import FilledButton from '../../../../components/buttons/FilledButton';
 import {useNavigation} from '@react-navigation/native';
 
 const DoctorSpecialties = [
-  {id: 'Cardiologist', label: 'Cardiologist', enabled: true},
-  {id: 'Dermatologist', label: 'Dermatologist', enabled: true},
-  {id: 'Neurologist', label: 'Neurologist', enabled: true},
-  {id: 'Pediatrician', label: 'Pediatrician', enabled: true},
-  {id: 'GeneralSurgeon', label: 'General Surgeon', enabled: true},
-  {id: 'OrthopedicSurgeon', label: 'Orthopedic Surgeon', enabled: true},
-  {id: 'Gynecologist', label: 'Gynecologist', enabled: true},
-  {id: 'Ophthalmologist', label: 'Ophthalmologist', enabled: true},
-  {id: 'Psychiatrist', label: 'Psychiatrist', enabled: true},
-  {id: 'Radiologist', label: 'Radiologist', enabled: true},
-  {id: 'Urologist', label: 'Urologist', enabled: true},
-  {id: 'Endocrinologist', label: 'Endocrinologist', enabled: true},
+  {id: 'Cardiologist', label: 'Mother', enabled: true},
+  {id: 'Dermatologist', label: 'Father', enabled: true},
+  {id: 'Neurologist', label: 'Husband/Wife', enabled: true},
+  {id: 'Pediatrician', label: 'Sibling', enabled: true},
+  {id: 'GeneralSurgeon', label: 'Grandparent', enabled: true},
+  {id: 'OrthopedicSurgeon', label: 'Hijo', enabled: true},
+  {id: 'Gynecologist', label: 'Other', enabled: true},
 ];
 
 const Create: React.FC<AuthScreensProps> = ({route}) => {
@@ -211,27 +206,27 @@ const Create: React.FC<AuthScreensProps> = ({route}) => {
                     <Gender selectedRole={value} setSelectedRole={onChange} />
                   )}
                 />
-                {/* <FormSelectionInput
-                                    name="specialty"
-                                    placeholder="Select your specialty"
-                                    label="Specialty"
-                                    options={DoctorSpecialties}
-                                    optionsListLabel="Select your specialty"
-                                    optionsListHeight={400}
-                                    rules={{
-                                        required: {
-                                            value: true,
-                                            message: 'Please select your specialty',
-                                        },
-                                    }}
-                                /> */}
+                <FormSelectionInput
+                  name="familyrelationship"
+                  placeholder="Family relationship"
+                  label="Family relationship"
+                  options={DoctorSpecialties}
+                  optionsListLabel="Family relationship"
+                  optionsListHeight={400}
+                  rules={{
+                    required: {
+                      value: true,
+                      message: 'Please select your specialty',
+                    },
+                  }}
+                />
               </FormProvider>
             </ScrollView>
           </View>
         </View>
       </KeyboardAvoidingView>
       <FilledButton
-        label="Create cuenta"
+        label="Create account"
         type="blue"
         style={{width: '92%', alignSelf: 'center', marginVertical: 10}}
         // disabled={!methods.formState.isDirty}

@@ -16,7 +16,7 @@ const DownloadData = () => {
         backgroundColor: Colors.GhostWhite,
         // position: 'relative',
       }}>
-      <Header title={'Download Your Data'} />
+      <Header title={'Download your data'} />
       <ScrollView
         style={{
           //   paddingVertical: 12,

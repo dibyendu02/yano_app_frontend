@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {SafeAreaView} from 'react-native';
 import {Colors} from '../../../../constants/Colors';
 import Header from '../../../../components/header/Header';
@@ -8,6 +8,7 @@ import {Control, FieldValues, useForm} from 'react-hook-form';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import CustomPasswordField from '../../../../components/formComp/CustomPasswordField';
 import emergencyHome from '../../../../assets/image/emergencyHome.png';
+import UserContext from '../../../../contexts/UserContext';
 
 const DeleteAccount = () => {
   const {
@@ -22,6 +23,7 @@ const DeleteAccount = () => {
   const onSubmit = (value: string) => {
     console.log(value);
   };
+  const {logout} = useContext(UserContext);
 
   return (
     <SafeAreaView
@@ -59,7 +61,14 @@ const DeleteAccount = () => {
                 paddingRight: 10,
               }}>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{paddingStart: 20, fontSize: 16}}>•</Text>
+                <Text
+                  style={{
+                    paddingStart: 20,
+                    fontSize: 16,
+                    color: Colors.SteelBlue,
+                  }}>
+                  •
+                </Text>
                 <Text style={styles.list}>
                   The account will be deleted from Yano and all your devices.
                 </Text>
@@ -102,6 +111,7 @@ const DeleteAccount = () => {
                 label="Delete account"
                 disabled={password.length < 6}
                 type="red"
+                onPress={() => logout()}
               />
             </View>
           </View>

@@ -8,7 +8,7 @@ export const healthStatsData = [
     month: 'July',
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5,6',
@@ -80,10 +80,10 @@ export const healthStatsData = [
 const healthParameterDetails = {
   GL: {
     field: 'GL',
-    field_full: 'Glucose Level',
+    field_full: 'Blood glucose',
     data: [
       {
-        label: 'Glucose Level',
+        label: 'Blood glucose',
         value: '5.6',
         unit: 'mmol/L',
       },
@@ -99,10 +99,10 @@ const healthParameterDetails = {
 export const healthParameterDetailsN = {
   GL: {
     field: 'GL',
-    field_full: 'Glucose level',
+    field_full: 'Blood glucose',
     data: [
       {
-        label: 'Glucose level',
+        label: 'Blood glucose',
         value: '5.6',
         unit: 'mmol/L',
       },
@@ -224,7 +224,7 @@ export const healthParameterDetailsN = {
 
 export const GlucoseDetail = [
   {
-    label: 'Glucose Level',
+    label: 'Blood glucose',
     value: '5.6',
     unit: 'mmol/L',
   },
@@ -241,7 +241,7 @@ export const HSDG = [
     sequence: 7,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5.6',
@@ -317,7 +317,7 @@ export const HSDG = [
     sequence: 6,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5.7',
@@ -389,7 +389,7 @@ export const HSDG = [
     sequence: 5,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5.8',
@@ -461,7 +461,7 @@ export const HSDG = [
     sequence: 4,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5.9',
@@ -533,7 +533,7 @@ export const HSDG = [
     sequence: 3,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '6.0',
@@ -605,7 +605,7 @@ export const HSDG = [
     sequence: 2,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5.5',
@@ -677,7 +677,7 @@ export const HSDG = [
     sequence: 1,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5.4',
@@ -753,7 +753,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '5.6',
@@ -835,7 +835,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '5.7',
@@ -913,7 +913,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '5.8',
@@ -991,7 +991,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '5.9',
@@ -1069,7 +1069,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '6.0',
@@ -1147,7 +1147,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '5.5',
@@ -1225,7 +1225,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '5.4',
