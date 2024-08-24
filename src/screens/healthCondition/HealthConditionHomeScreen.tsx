@@ -8,9 +8,9 @@ const HealthConditionHomeScreen = ({navigation}: any) => {
       id: 1,
       name: 'Hypertension',
       date: '09-06-2012',
-      status: 'Active',
+      status: 'Chronic',
       treatedBy: 'Dr. John Doe',
-      medicine: 'Medicine Name',
+      medicine: 'Losartan Potassium',
       additionalNotes: 'Additional Notes',
     },
   ];

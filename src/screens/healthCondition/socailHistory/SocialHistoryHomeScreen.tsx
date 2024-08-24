@@ -20,7 +20,7 @@ const SocialHistoryHomeScreen = ({navigation}: any) => {
     substance: 'None',
     exercise: 'Jogging',
     stressFactor: 'Relaxed',
-    spokenLanguages: 'Inglés, francés y espYearl',
+    spokenLanguages: 'English, French and Spanish',
   };
 
   return (
@@ -28,7 +28,8 @@ const SocialHistoryHomeScreen = ({navigation}: any) => {
       <CommonHomeScreen2
         data={data}
         navigation={navigation}
-        heading="Social History"
+        heading="Social history"
+        customHeaderStyle={{paddingVertical: 12}}
         component={
           <ScrollView>
             <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: Colors.White,
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingTop: 16,
     borderRadius: 10,
     marginBottom: 20,
   },

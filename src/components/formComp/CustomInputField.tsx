@@ -33,6 +33,7 @@ const CustomInputField: FC<CustomInputProps> = ({
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              placeholderTextColor={Colors.SteelBlue}
               {...inputProps}
             />
             {icon && (

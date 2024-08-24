@@ -7,6 +7,11 @@ import {useForm, Control, FieldValues} from 'react-hook-form';
 import CustomTextarea from '../../../components/formComp/TextAreaField';
 import {DatePickerField} from '../../../components/form/DatePicker';
 import CommonHeader from '../components/CommonHeader';
+import Modal from 'react-native-modal';
+import {Image} from 'react-native';
+import {Text} from 'react-native';
+import {CloseIcon} from '../../../assets/icon/IconNames';
+import {staticIcons} from '../../../assets/image';
 
 interface FormValues {
   name: string;
@@ -22,6 +27,7 @@ const AddAndEditVaccine = ({navigation, route}: any) => {
   if (route?.params) {
     data = route.params.data;
   }
+  const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [defaultValues, setDefaultValues] = useState<any>({
     name: data?.name || '',
@@ -41,7 +47,14 @@ const AddAndEditVaccine = ({navigation, route}: any) => {
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
-    reset();
+    if (data) {
+      setSaved(true);
+      setTimeout(() => {
+        setSaved(false);
+      }, 2000);
+    } else {
+      navigation.goBack();
+    }
   };
 
   const handleChange = (id: string, value: string) => {
@@ -77,45 +90,72 @@ const AddAndEditVaccine = ({navigation, route}: any) => {
         <View style={{padding: 20}}>
           <View style={styles.inputBox}>
             <CustomInputField
-              label="Name of the Vaccine"
+              label="Vaccination for"
               name="name"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. Diabetes tipo II, Hypertension, etc... "
+              placeholder="Ex. Covid 19, VPH, etc... "
               rules={{required: 'name is required'}}
             />
             <DatePickerField
-              label="Fecha de la toma"
+              label="Shot date"
               name="field1"
               value={defaultValues.field1}
               onchange={handleChange}
             />
             <CustomInputField
-              label="Nombre de la vacuna"
+              label="Vaccine name"
               name="field2"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. 2 times a day, after meal, etc..."
+              placeholder="Ex. Verocell"
             />
             <CustomInputField
-              label="Detalles de la vacuna"
+              label="Vaccine details"
               name="field3"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. 2 days, 3 weeks, etc..."
+              placeholder="Ex. First dose"
             />
             <CustomInputField
-              label="Número del lote"
+              label="Lot number"
               name="field4"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. 2 days, 3 weeks, etc..."
+              placeholder="Ex. #U45RT5"
             />
             <CustomTextarea
               label="Additional notes"
               name="field5"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Text"
+              // placeholder="Text"
             />
           </View>
         </View>
       </ScrollView>
+      <Modal
+        isVisible={saved}
+        onBackdropPress={() => setSaved(false)}
+        onSwipeComplete={() => setSaved(false)}
+        swipeDirection="down"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0} // Adjust the opacity of the background
+        animationInTiming={1000}
+        animationOutTiming={3000}
+        style={styles.modal}>
+        <View style={styles.modalContent}>
+          <View style={{flexDirection: 'row', gap: 10}}>
+            <Image
+              source={staticIcons.checkcircle}
+              style={{
+                height: 20,
+                width: 20,
+                objectFit: 'contain',
+                tintColor: 'white',
+              }}
+            />
+            <Text style={styles.modalText}>The changes have been made.</Text>
+          </View>
+          <CloseIcon color="white" />
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -123,6 +163,28 @@ const AddAndEditVaccine = ({navigation, route}: any) => {
 const styles = StyleSheet.create({
   inputBox: {
     marginBottom: 20,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: Colors.Green,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 20,
+    marginLeft: 60,
+  },
+  modalText: {
+    color: Colors.White,
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 

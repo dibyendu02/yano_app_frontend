@@ -33,6 +33,7 @@ export const InputField: FC<inputProps> = ({
         numberOfLines={isTextarea ? 10 : 1}
         placeholder={placeholder}
         onChangeText={e => onchange(name, e)}
+        placeholderTextColor={Colors.SteelBlue}
       />
     </View>
   );

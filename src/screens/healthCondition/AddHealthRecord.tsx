@@ -1,22 +1,23 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
-import React, {FC, useState} from 'react';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Colors} from '../../constants/Colors';
-import Header from '../../components/header/Header';
 import FilledButton from '../../components/buttons/FilledButton';
 import {InputField} from '../../components/form/InputField';
-import {SelectField} from '../../components/form/SelectField';
 import {DatePickerField} from '../../components/form/DatePicker';
 import {TextArea} from '../../components/form/TextAreaField';
 import CommonHeader from './components/CommonHeader';
-import FormDateInput from '../../components/hook-form/FormDateInput';
 import CustomRadioSelect from './components/CustomRadioButtonGroup';
+import Modal from 'react-native-modal';
+import {staticIcons} from '../../assets/image';
+import {CloseIcon} from '../../assets/icon/IconNames';
 
 const AddHealthRecord = ({navigation, route}: any) => {
   let data = null;
   if (route?.params) {
     data = route.params.data;
   }
+  const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [formData, setFormData] = useState({
     name: data?.name || '',
@@ -26,19 +27,25 @@ const AddHealthRecord = ({navigation, route}: any) => {
     medicine: data?.medicine || '',
     additionalNotes: data?.additionalNotes || '',
   });
-  const selectOptions = [
-    {label: 'Active', value: 'Active'},
-    {label: 'Inactive', value: 'Inactive'},
-  ];
 
-  const handelChange = (id: string, e: string) => {
+  const handleChange = (id: string, e: string) => {
     setFormData({...formData, [id]: e});
     if (formData.name) setDisabled(false);
     else setDisabled(true);
   };
-  const handelSubmit = () => {
+
+  const handleSubmit = () => {
     console.log(formData);
+    if (data) {
+      setSaved(true);
+      setTimeout(() => {
+        setSaved(false);
+      }, 2000);
+    } else {
+      navigation.goBack();
+    }
   };
+
   return (
     <SafeAreaView
       style={{
@@ -52,7 +59,7 @@ const AddHealthRecord = ({navigation, route}: any) => {
           <FilledButton
             type="blue"
             label="Add"
-            onPress={handelSubmit}
+            onPress={handleSubmit}
             disabled={disabled}
             style={{
               width: 70,
@@ -68,67 +75,75 @@ const AddHealthRecord = ({navigation, route}: any) => {
             <InputField
               label="Name of the health condition"
               name="name"
-              placeholder="Ej. Diabetes tipo II, Hypertension, etc... "
+              placeholder="Ex. Diabetes tipo II, Hypertension, etc... "
               value={formData.name}
-              onchange={handelChange}
+              onchange={handleChange}
             />
             <DatePickerField
               label="Date of diagnosis"
               name="date"
-              onchange={handelChange}
+              onchange={handleChange}
             />
-            {/* <FormDateInput
-              name="dateOfBirth"
-              label="Date of birth"
-              placeholder="Select a date"
-              placeholderTextColor={Colors.Grey}
-            // rules={{
-            //   required: {
-            //     value: true,
-            //     message: 'Please select your DOB',
-            //   },
-            // }}
-            /> */}
-            {/* <SelectField
-              label="Status"
-              name="status"
-              value={formData.status}
-              data={selectOptions}
-              onchange={handelChange}
-            /> */}
             <CustomRadioSelect
               label="Status"
-              value={formData.status} // Make sure you're passing the selected value here
+              value={formData.status}
               options={[
                 {label: 'Chronic', value: 'Chronic'},
                 {label: 'Overcome', value: 'Overcome'},
               ]}
-              onChange={newValue => handelChange(newValue)}
+              onChange={newValue => handleChange('status', newValue)}
             />
             <InputField
-              label="Treated By"
+              label="Treated by"
               name="treatedBy"
-              placeholder="Ej. Dr. House"
+              placeholder="Ex. Dr. House"
               value={formData.treatedBy}
-              onchange={handelChange}
+              onchange={handleChange}
             />
             <InputField
               label="Medicine"
               name="medicine"
-              placeholder="Ej. Losartán Potásico,  metformina, etc."
+              placeholder="Ex. Losartán Potásico, metformina, etc."
               value={formData.medicine}
-              onchange={handelChange}
+              onchange={handleChange}
             />
             <TextArea
-              label="Additional Notes"
+              label="Additional notes"
               name="additionalNotes"
               placeholder=""
               value={formData.additionalNotes}
-              onchange={handelChange}
+              onchange={handleChange}
             />
           </View>
         </View>
       </ScrollView>
+      <Modal
+        isVisible={saved}
+        onBackdropPress={() => setSaved(false)}
+        onSwipeComplete={() => setSaved(false)}
+        swipeDirection="down"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0} // Adjust the opacity of the background
+        animationInTiming={1000}
+        animationOutTiming={3000}
+        style={styles.modal}>
+        <View style={styles.modalContent}>
+          <View style={{flexDirection: 'row', gap: 10}}>
+            <Image
+              source={staticIcons.checkcircle}
+              style={{
+                height: 20,
+                width: 20,
+                objectFit: 'contain',
+                tintColor: 'white',
+              }}
+            />
+            <Text style={styles.modalText}>The changes have been made.</Text>
+          </View>
+          <CloseIcon color="white" />
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -136,8 +151,29 @@ const AddHealthRecord = ({navigation, route}: any) => {
 export default AddHealthRecord;
 
 const styles = StyleSheet.create({
-  formContainer: {},
   inputBox: {
     marginBottom: 20,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: Colors.Green,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 20,
+    marginLeft: 60,
+  },
+  modalText: {
+    color: Colors.White,
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });

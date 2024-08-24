@@ -1,10 +1,12 @@
 // CustomCheckbox.tsx
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {Controller, Control, FieldValues, FieldError} from 'react-hook-form';
 import {Checkbox, CheckboxOutline} from '../../assets/icon/IconNames';
 import {Colors} from '../../constants/Colors';
 import {Pressable} from 'react-native';
+import {StaticImage} from '../../assets/images';
+import {staticIcons} from '../../assets/image';
 
 interface CustomCheckboxProps {
   name: string;
@@ -24,11 +26,28 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
       control={control}
       rules={rules}
       render={({field: {onChange, value}, fieldState: {error}}) => (
-        <View style={[styles.container, value && {borderColor: Colors.Green}]}>
+        <View
+          style={[
+            styles.container,
+            value && {borderColor: Colors.LightGreen, borderWidth: 2},
+          ]}>
           <Pressable
             style={styles.checkboxContainer}
             onPress={() => onChange(!value)}>
-            <>{value ? <Checkbox /> : <CheckboxOutline />}</>
+            <>
+              {value ? (
+                <Image
+                  source={staticIcons.CheckBoxIcon}
+                  style={{width: 20, height: 20, objectFit: 'contain'}}
+                />
+              ) : (
+                <Image
+                  source={staticIcons.BlankCheckBoxIcon}
+                  style={{width: 20, height: 20, objectFit: 'contain'}}
+                />
+              )}
+            </>
+
             <Text style={styles.label}>{label}</Text>
           </Pressable>
           {error && (
@@ -59,9 +78,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   label: {
-    marginLeft: 8,
-    fontSize: 18,
+    marginLeft: 15,
+    fontSize: 16,
     color: Colors.Blue,
+    fontWeight: 'bold',
   },
   errorText: {
     color: 'red',

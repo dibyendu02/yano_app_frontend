@@ -1,5 +1,5 @@
-import {SafeAreaView, StyleSheet, TouchableOpacity} from 'react-native';
-import React, {FC} from 'react';
+import {SafeAreaView, StyleSheet, TouchableOpacity, View} from 'react-native';
+import React, {FC, useState} from 'react';
 import {Colors} from '../../../constants/Colors';
 import FilledButton from '../../../components/buttons/FilledButton';
 import {EditIcon, PlusIcon} from '../../../assets/icon/IconNames';
@@ -7,6 +7,9 @@ import EmptyScreen from './EmptyScreen';
 import CommonHeader from './CommonHeader';
 import {Image} from 'react-native';
 import {staticIcons} from '../../../assets/image';
+import Card from '../../main/my-profile/UiUpdateComponents/Card';
+
+// this components is for just social history
 
 type CommonHomeScreenProps = {
   navigation: any;
@@ -16,6 +19,7 @@ type CommonHomeScreenProps = {
   component: React.ReactNode;
   emptyHomeTitle: string;
   emptyHomeMessage: string;
+  customHeaderStyle?: object;
 };
 
 const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
@@ -26,7 +30,9 @@ const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
   component,
   emptyHomeTitle,
   emptyHomeMessage,
+  customHeaderStyle,
 }) => {
+  const [isClicked, setIsClicked] = useState(false);
   return (
     <SafeAreaView
       style={{
@@ -45,6 +51,15 @@ const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
             />
           </TouchableOpacity>
         }
+        rightComp2={
+          <TouchableOpacity onPress={() => setIsClicked(true)}>
+            <Image
+              source={staticIcons.DeleteIcon}
+              style={{height: 22, width: 22}}
+            />
+          </TouchableOpacity>
+        }
+        customStyle={customHeaderStyle}
       />
       {data ? (
         <>{component}</>
@@ -60,6 +75,16 @@ const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
           style={styles.addBtn}
         />
       )}
+      {isClicked && (
+        <View style={styles.deletbuttonclick}>
+          <Card
+            title={'Delete social history'}
+            children={'Are you sure you want to delete your social history?'}
+            active={setIsClicked}
+            action={() => navigation.goBack()}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -72,5 +97,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 40,
     right: 20,
+  },
+  deletbuttonclick: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    zIndex: 1,
+    flex: 1,
+    alignItems: 'center',
+    paddingHorizontal: 12,
   },
 });
