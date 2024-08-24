@@ -32,7 +32,7 @@ const CommonHeader: FC<props> = ({
           {leftIcon ? (
             leftIcon
           ) : (
-            <Icons.AntDesign name="arrowleft" size={25} color={'black'} />
+            <Icons.AntDesign name="arrowleft" size={25} color={Colors.Blue} />
           )}
         </TouchableOpacity>
         <Text style={styles.navbarTitle}>

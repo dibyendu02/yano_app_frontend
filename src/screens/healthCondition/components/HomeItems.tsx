@@ -27,7 +27,13 @@ const HomeItems: FC<props> = ({data, path, navigation}) => {
                   key={i}
                   name={item.name}
                   element={<></>}
-                  details={item?.note ? item?.note : ''}
+                  details={
+                    item?.note
+                      ? item?.note
+                      : '' || item?.disease
+                      ? item?.disease
+                      : ''
+                  }
                   color="black"
                   customStyle={{
                     paddingVertical: 20,

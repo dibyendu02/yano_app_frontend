@@ -13,5 +13,8 @@ export const staticIcons = {
   MonitorHeart: require('./monitorHeart.png'),
   nextIcon: require('./nextIcon.png'),
   checkIcon: require('./check.png'),
+  checkcircle: require('./check_circle.png'),
   downIcon: require('./down-arrow.png'),
+  CheckBoxIcon: require('./check_box.png'),
+  BlankCheckBoxIcon: require('./blank_check_box.png'),
 };

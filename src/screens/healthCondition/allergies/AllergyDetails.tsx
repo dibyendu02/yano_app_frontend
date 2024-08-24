@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {Colors} from '../../../constants/Colors';
 import Header from '../../../components/header/Header';
 import {DeleteIcon, EditIcon} from '../../../assets/icon/IconNames';
@@ -14,8 +14,10 @@ import DetailItems from '../components/DetailItems';
 import CommonHeader from '../components/CommonHeader';
 import {Image} from 'react-native';
 import {staticIcons} from '../../../assets/image';
+import Card from '../../main/my-profile/UiUpdateComponents/Card';
 
 const AllergyDetails = ({navigation, route}: any) => {
+  const [isClicked, setIsClicked] = useState(false);
   if (!route || !route.params) {
     Alert.alert('Error', 'Data not passed or invalid data passed');
     return navigation.goBack();
@@ -41,9 +43,7 @@ const AllergyDetails = ({navigation, route}: any) => {
         title={name}
         rightComp1={
           <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('AddAndEditHospitalization', {data})
-            }>
+            onPress={() => navigation.navigate('AddAndEditAllergies', {data})}>
             <Image
               source={staticIcons.EditPencil}
               style={{height: 22, width: 22}}
@@ -51,13 +51,14 @@ const AllergyDetails = ({navigation, route}: any) => {
           </TouchableOpacity>
         }
         rightComp2={
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setIsClicked(true)}>
             <Image
               source={staticIcons.DeleteIcon}
               style={{height: 22, width: 22}}
             />
           </TouchableOpacity>
         }
+        customStyle={{paddingVertical: 12}}
       />
       <ScrollView>
         <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
@@ -72,6 +73,16 @@ const AllergyDetails = ({navigation, route}: any) => {
           </View>
         </View>
       </ScrollView>
+      {isClicked && (
+        <View style={styles.deletbuttonclick}>
+          <Card
+            title={'Delete allergy'}
+            children={'Are you sure you want to eliminate this allergy?'}
+            active={setIsClicked}
+            action={() => navigation.goBack()}
+          />
+        </View>
+      )}
     </SafeAreaView>
   );
 };
@@ -83,8 +94,18 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: Colors.White,
     paddingHorizontal: 20,
-    paddingVertical: 16,
+    paddingTop: 16,
     borderRadius: 10,
     marginBottom: 20,
+  },
+  deletbuttonclick: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    zIndex: 1,
+    flex: 1,
+    alignItems: 'center',
+    paddingHorizontal: 12,
   },
 });

@@ -107,7 +107,13 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
               placeholder="Occupation"
               rules={{required: 'required'}}
             />
-            <View style={{flexDirection: 'row', gap: 10, alignItems: 'center'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                gap: 10,
+                alignItems: 'center',
+                justifyContent: 'space-between',
+              }}>
               <View style={{width: '50%'}}>
                 <CustomInputField
                   label="Education"
@@ -149,7 +155,7 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
                 label="No of children"
                 name="children"
                 control={control as unknown as Control<FieldValues, object>}
-                placeholder="Children"
+                placeholder="Ex. 2"
               />
               <CustomInputField
                 label="Religion"

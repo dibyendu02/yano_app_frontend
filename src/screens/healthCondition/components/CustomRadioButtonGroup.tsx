@@ -18,6 +18,7 @@ interface CustomRadioSelectProps {
   value: string;
   options: {label: string; value: string}[];
   onChange: (value: string) => void;
+  placeholder: string;
 }
 
 const CustomRadioSelect: React.FC<CustomRadioSelectProps> = ({
@@ -25,6 +26,7 @@ const CustomRadioSelect: React.FC<CustomRadioSelectProps> = ({
   value,
   options,
   onChange,
+  placeholder,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState(value);
@@ -41,13 +43,18 @@ const CustomRadioSelect: React.FC<CustomRadioSelectProps> = ({
       <TouchableOpacity
         style={styles.input}
         onPress={() => setModalVisible(true)}>
-        <Text style={styles.inputText}>
-          {options.find(option => option.value === selectedValue)?.label ||
-            'Select an option'}
-        </Text>
+        {options.find(option => option.value === selectedValue)?.label ? (
+          <Text style={[styles.inputText, {color: Colors.Blue}]}>
+            {options.find(option => option.value === selectedValue)?.label}
+          </Text>
+        ) : (
+          <Text style={styles.inputText}>
+            {placeholder || 'Select an option'}
+          </Text>
+        )}
         <Image
           source={staticIcons.downIcon}
-          style={{width: 12, height: 12, objectFit: 'contain', marginRight: 12}}
+          style={{width: 12, height: 12, objectFit: 'contain', marginRight: 8}}
         />
       </TouchableOpacity>
 
@@ -100,7 +107,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   label: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     color: Colors.Blue,
     marginBottom: 10,
@@ -117,7 +124,7 @@ const styles = StyleSheet.create({
   },
   inputText: {
     fontSize: 16,
-    color: Colors.Black,
+    color: Colors.SteelBlue,
   },
   modalOverlay: {
     flex: 1,

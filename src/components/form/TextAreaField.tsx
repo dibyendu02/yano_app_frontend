@@ -51,5 +51,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     fontSize: 16,
     textAlignVertical: 'top',
+    color: Colors.SteelBlue,
   },
 });

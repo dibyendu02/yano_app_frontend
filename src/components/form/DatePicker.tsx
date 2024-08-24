@@ -25,7 +25,7 @@ type inputProps = {
 
 export const DatePickerField: FC<inputProps> = ({label, name, onchange}) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState();
 
   return (
     <View style={styles.inputBox}>
@@ -35,9 +35,10 @@ export const DatePickerField: FC<inputProps> = ({label, name, onchange}) => {
         style={{position: 'relative'}}>
         <TextInput
           style={[styles.input, {color: Colors.Blue}]}
-          value={moment(selectedDate).format('DD-MM-YYYY')}
+          value={selectedDate && moment(selectedDate).format('DD-MM-YYYY')}
           // value={selectedDate.toDateString()} // Updated value to selectedDate
           placeholder={'Select a date'}
+          placeholderTextColor={Colors.SteelBlue}
           editable={false}
         />
         <View

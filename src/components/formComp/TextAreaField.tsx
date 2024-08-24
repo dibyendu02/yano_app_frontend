@@ -32,6 +32,7 @@ const CustomTextarea: React.FC<CustomTextareaProps> = ({
               value={value}
               multiline={true}
               numberOfLines={4}
+              placeholderTextColor={Colors.SteelBlue}
               {...inputProps}
             />
             {error && (

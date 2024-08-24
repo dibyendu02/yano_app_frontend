@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, SafeAreaView, ScrollView, Text} from 'react-native';
 import {Colors} from '../../../constants/Colors';
 import CommonHeader from '../components/CommonHeader';
@@ -9,6 +9,10 @@ import CustomTextarea from '../../../components/formComp/TextAreaField';
 import CustomCheckbox from '../../../components/formComp/CustomCheckbox';
 import {DatePickerField} from '../../../components/form/DatePicker';
 import FormSelectionInput from '../../../components/hook-form/FormSelectionInput';
+import Modal from 'react-native-modal';
+import {Image} from 'react-native';
+import {staticIcons} from '../../../assets/image';
+import {CloseIcon} from '../../../assets/icon/IconNames';
 
 interface FormValues {
   name: string;
@@ -33,6 +37,7 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
   if (route?.params) {
     data = route.params.data;
   }
+  const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [defaultValues, setDefaultValues] = useState<any>({
     name: data?.name || '',
@@ -60,9 +65,16 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
   } = useForm<FormValues>({defaultValues});
   const methods = useForm();
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
-    reset();
+  const onSubmit = (formdata: FormValues) => {
+    console.log(formdata);
+    if (data) {
+      setSaved(true);
+      setTimeout(() => {
+        setSaved(false);
+      }, 2000);
+    } else {
+      navigation.goBack();
+    }
   };
 
   const handleChange = (id: string, value: string) => {
@@ -70,6 +82,17 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
     if (defaultValues.name) setDisabled(false);
     else setDisabled(true);
   };
+
+  useEffect(() => {
+    // Check if both the "Medicine name" and "Medicine form" fields are filled out
+    if (defaultValues.name != '') {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+
+    console.log(defaultValues.name);
+  }, [defaultValues.name]);
 
   return (
     <SafeAreaView
@@ -98,17 +121,18 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
         <View style={{padding: 20}}>
           <View style={styles.inputBox}>
             <CustomInputField
-              label="Name of the medicine"
+              label="Medicine name"
               name="name"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. Diabetes tipo II, Hypertension, etc... "
+              placeholder="Enter the name of the medicine"
               rules={{required: 'name is required'}}
             />
-            <Text style={styles.heading}>Forma de la medicina</Text>
+            <Text style={styles.heading}>Medicine form</Text>
             <FormProvider {...methods}>
               <FormSelectionInput
                 name="medicine"
-                label="Forma de la medicina"
+                placeholder="Select a form"
+                label="Medicine form"
                 options={[
                   {label: 'Tablet', id: 'Tablet'},
                   {label: 'Capsule', id: 'Capsule'},
@@ -124,18 +148,19 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
             <View style={{flexDirection: 'row', gap: 10, alignItems: 'center'}}>
               <View style={{width: '60%'}}>
                 <CustomInputField
-                  label="Detalles de la medicina"
+                  label="Medicine strength"
                   name="volume"
                   control={control as unknown as Control<FieldValues, object>}
-                  placeholder="Ej. 2 times a day, after meal, etc..."
+                  placeholder="Ex. 100"
                   rules={{required: 'Details is required'}}
                 />
               </View>
-              <View style={{width: '38%'}}>
+              <View style={{width: '38%', marginTop: 22}}>
                 <FormProvider {...methods}>
                   <FormSelectionInput
                     name="unit"
-                    label="Unit of volume"
+                    // label="Unit of volume"
+                    placeholder="mg"
                     options={[
                       {label: 'mg', id: 'mg'},
                       {label: 'ml', id: 'ml'},
@@ -151,77 +176,104 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
               </View>
             </View>
             <CustomInputField
-              label="Método de ingesta"
+              label="Intake method"
               name="field4"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. oral, intravenoso, intramuscular, etc."
+              placeholder="Ex. oral, intravenous, intramuscular, etc."
               rules={{required: 'required'}}
             />
-            <Text style={styles.heading}>Deede</Text>
+            <Text style={styles.heading}>Dose</Text>
             <CustomInputField
-              label="Cantidad"
+              label="Quantity"
               name="field5"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. 2 times a day, after meal, etc..."
+              placeholder="#"
             />
             <CustomInputField
-              label="Frecuencia"
+              label="Frequency"
               name="field6"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. 2 days, 3 weeks, etc..."
+              placeholder="Select the frequency"
             />
             <CustomInputField
-              label="Cuando"
+              label="When"
               name="field7"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. 2 days, 3 weeks, etc..."
+              // placeholder="Ej. 2 days, 3 weeks, etc..."
             />
             <CustomTextarea
-              label="Otras instrucciones"
+              label="Other instructions"
               name="field8"
               control={control as unknown as Control<FieldValues, object>}
               placeholder="Text"
             />
-            <Text style={styles.heading}>Duración</Text>
+            <Text style={styles.heading}>Duration</Text>
             <DatePickerField
-              label="Fecha de inicio"
+              label="It begins at"
               name="field9"
               value={defaultValues.field9}
               onchange={handleChange}
             />
             <DatePickerField
-              label="Hasta"
+              label="Until"
               name="field10"
               value={defaultValues.field10}
               onchange={handleChange}
             />
             <CustomCheckbox
-              label="¿Es un medicamento permanente?"
+              label="Long duration"
               name="field11"
               control={control as unknown as Control<FieldValues, object>}
             />
-            <Text style={styles.heading}>Información adicional</Text>
+            <Text style={styles.heading}>Additional Information</Text>
             <CustomInputField
-              label="Tratado por"
+              label="Medicine taken for"
               name="field12"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. Dr. John Doe"
+              placeholder="Ex. diabetes, hypertension, etc..."
             />
             <CustomInputField
-              label="Notas adicionales"
+              label="Prescribed by"
               name="field13"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Notas adicionales"
+              placeholder="Ex. Dr. House"
             />
             <CustomInputField
-              label="Medicamento"
+              label="Side effects"
               name="field14"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. Paracetamol, Ibuprofen, etc..."
+              placeholder="Ex. redness, swelling, etc..."
             />
           </View>
         </View>
       </ScrollView>
+      <Modal
+        isVisible={saved}
+        onBackdropPress={() => setSaved(false)}
+        onSwipeComplete={() => setSaved(false)}
+        swipeDirection="down"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0} // Adjust the opacity of the background
+        animationInTiming={1000}
+        animationOutTiming={3000}
+        style={styles.modal}>
+        <View style={styles.modalContent}>
+          <View style={{flexDirection: 'row', gap: 10}}>
+            <Image
+              source={staticIcons.checkcircle}
+              style={{
+                height: 20,
+                width: 20,
+                objectFit: 'contain',
+                tintColor: 'white',
+              }}
+            />
+            <Text style={styles.modalText}>The changes have been made.</Text>
+          </View>
+          <CloseIcon color="white" />
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -231,11 +283,33 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   heading: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '600',
     color: Colors.Blue,
     marginBottom: 10,
     marginTop: 5,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: Colors.Green,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 20,
+    marginLeft: 60,
+  },
+  modalText: {
+    color: Colors.White,
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 

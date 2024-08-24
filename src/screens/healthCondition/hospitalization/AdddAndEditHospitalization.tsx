@@ -1,11 +1,21 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  Image,
+  Text,
+} from 'react-native';
 import {Colors} from '../../../constants/Colors';
 import FilledButton from '../../../components/buttons/FilledButton';
 import CustomInputField from '../../../components/formComp/CustomInputField';
 import {useForm, Control, FieldValues} from 'react-hook-form';
 import {DatePickerField} from '../../../components/form/DatePicker';
 import CommonHeader from '../components/CommonHeader';
+import Modal from 'react-native-modal';
+import {staticIcons} from '../../../assets/image';
+import {CloseIcon} from '../../../assets/icon/IconNames';
 
 interface FormValues {
   name: string;
@@ -20,6 +30,7 @@ const AddAndEditHospitalization = ({navigation, route}: any) => {
   if (route?.params) {
     data = route.params.data;
   }
+  const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [defaultValues, setDefaultValues] = useState<FormValues>({
     name: data?.name || '',
@@ -38,7 +49,14 @@ const AddAndEditHospitalization = ({navigation, route}: any) => {
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
-    reset();
+    if (data) {
+      setSaved(true);
+      setTimeout(() => {
+        setSaved(false);
+      }, 2000);
+    } else {
+      navigation.goBack();
+    }
   };
 
   const handleChange = (id: string, value: string) => {
@@ -74,17 +92,17 @@ const AddAndEditHospitalization = ({navigation, route}: any) => {
         <View style={{padding: 20}}>
           <View style={styles.inputBox}>
             <CustomInputField
-              label="Name of the hospital"
+              label="Hospital name"
               name="name"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Name of the hospital"
+              placeholder="Ex. St. John Medical College"
               rules={{required: 'required'}}
             />
             <CustomInputField
-              label="Reason for hospitalization"
+              label="Reason"
               name="reason"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Reason for hospitalization"
+              placeholder="Ex. chest pain, asthma, etc..."
             />
             <DatePickerField
               label="Admission date"
@@ -99,14 +117,41 @@ const AddAndEditHospitalization = ({navigation, route}: any) => {
               onchange={handleChange}
             />
             <CustomInputField
-              label="Physician in charge"
+              label="Name of the attending physician"
               name="doctorName"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Doctor's name"
+              placeholder="Ex. Dr. House"
             />
           </View>
         </View>
       </ScrollView>
+      <Modal
+        isVisible={saved}
+        onBackdropPress={() => setSaved(false)}
+        onSwipeComplete={() => setSaved(false)}
+        swipeDirection="down"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0} // Adjust the opacity of the background
+        animationInTiming={1000}
+        animationOutTiming={3000}
+        style={styles.modal}>
+        <View style={styles.modalContent}>
+          <View style={{flexDirection: 'row', gap: 10}}>
+            <Image
+              source={staticIcons.checkcircle}
+              style={{
+                height: 20,
+                width: 20,
+                objectFit: 'contain',
+                tintColor: 'white',
+              }}
+            />
+            <Text style={styles.modalText}>The changes have been made.</Text>
+          </View>
+          <CloseIcon color="white" />
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -114,6 +159,28 @@ const AddAndEditHospitalization = ({navigation, route}: any) => {
 const styles = StyleSheet.create({
   inputBox: {
     marginBottom: 20,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: Colors.Green,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 20,
+    marginLeft: 60,
+  },
+  modalText: {
+    color: Colors.White,
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 
