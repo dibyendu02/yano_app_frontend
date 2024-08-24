@@ -1,6 +1,6 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import {FormProvider, useForm} from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import CommonThresholdLayout from '../components/CommonThresholdLayout';
 import ThresholdPickerInput from './components/ThresholdPickerInput';
 
@@ -10,7 +10,7 @@ const BloodPressure = () => {
   return (
     <FormProvider {...methods}>
       <CommonThresholdLayout
-        title="Blood Pressure"
+        title="Blood pressure"
         onPress={methods.handleSubmit(data => {
           console.log('Form Data:', data);
           // Handle form submission here

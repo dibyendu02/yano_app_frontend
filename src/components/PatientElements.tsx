@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Icons from '../assets/icon/Icon';
-import {Colors} from '../constants/Colors';
+import { Colors } from '../constants/Colors';
 
 type PatientElementsProps = {
   name: string;
@@ -33,7 +33,7 @@ const PatientElements: React.FC<PatientElementsProps> = ({
 
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={[styles.container, {...customStyle}]}>
+      <View style={[styles.container, { ...customStyle }]}>
         {IconComponent && (
           <IconComponent name={icon!} size={25} color={color} />
         )}
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   name: {
     color: '#00263E',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
     marginLeft: 15,
