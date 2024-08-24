@@ -15,7 +15,7 @@ const MedicalHistory = ({navigation}: any) => {
           backgroundColor: Colors.GhostWhite,
           position: 'relative',
         }}>
-        <Header title="Medical History" />
+        <Header title="Medical history" />
         <ScrollView>
           <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
             {MedicalHistoryItems.map((item, i) => (

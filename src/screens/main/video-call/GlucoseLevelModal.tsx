@@ -27,7 +27,7 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
   const [loading, setLoading] = useState(false);
   const [count, setCount] = useState(0);
   const [code, setCode] = useState('C20');
-  const [time, setTime] = useState('before-breakfast');
+  const [time, setTime] = useState('');
 
   const [step, setStep] = useState('start');
 
@@ -425,8 +425,7 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
           {step == 'measurement' && (
             <FilledButton
               label={'Stop measurement'}
-              // icon={
-              // }
+              onPress={() => setStep('start')}
               type={'red'}
               style={{width: '100%', alignSelf: 'center', marginVertical: 14}}
               activeOpacity={0.8}
@@ -438,7 +437,7 @@ const GlucoseLevelModal = ({setTypeofMeasurement}: any) => {
               icon={<UTurnIcon color="white" />}
               type={'blue'}
               style={{width: '100%', alignSelf: 'center', marginBottom: 12}}
-              // onPress={() => navigation.goBack()}
+              onPress={() => setStep('start')}
               activeOpacity={0.8}
             />
           )}

@@ -96,7 +96,7 @@ const CommonLayoutModalLocal: FC<Props> = ({
         {children}
         <View style={styles.addBtn}>
           {loading ? (
-            <FilledButton label="Stop measuring" type="red" />
+            <FilledButton label="Stop measurement" type="red" />
           ) : (
             <>
               <View

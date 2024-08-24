@@ -55,7 +55,7 @@ const MeasurementMonitoring = ({navigation}: any) => {
               ]}>
               <BluetoothConnected size={22} />
               {/* <Image source={} /> */}
-              <Text style={styles.textStyle}>Connect</Text>
+              <Text style={styles.textStyle}>Connected</Text>
             </TouchableOpacity>
             <View style={[styles.connectBtn]}>
               <BatteryCharge size={22} />
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
   boxStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 100,
+    height: 90,
     backgroundColor: Colors.White,
     marginBottom: 12,
     borderRadius: 10,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: 18,
-    fontWeight: '500',
+    // fontWeight: '500',
     color: Colors.SteelBlue,
   },
 });

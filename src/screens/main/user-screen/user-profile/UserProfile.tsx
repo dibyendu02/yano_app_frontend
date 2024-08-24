@@ -101,24 +101,44 @@ export default function () {
   const [showQR, setShowQR] = useState(false);
   const {userData} = useContext(UserContext);
 
-  const formatDateOfBirth = dateString => {
-    const options = {year: 'numeric', month: 'long', day: 'numeric'};
-    return new Date(dateString).toLocaleDateString(undefined, options);
+  const calculateAge = dateString => {
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    // If the birth month hasn't occurred yet this year, subtract one from the age.
+    // Or, if it is the birth month but the day hasn't occurred yet this year, subtract one from the age.
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
   };
 
   let data1 = [
     {
       label: userData?.gender,
-      icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
+      icon: (
+        <Foundation
+          name={userData?.gender == 'Male' ? `male-symbol` : `female-symbol`}
+          size={20}
+          color={'#76BC21'}
+        />
+      ),
     },
     {
-      label: formatDateOfBirth(userData?.dateOfBirth || '1985-05-15'),
+      label: calculateAge(userData?.dateOfBirth || '60'),
       icon: (
         <Image
           source={StaticImage.CalenderIcon}
           style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
         />
       ),
+      unit: 'years',
     },
     {
       label: userData?.bloodType,
@@ -132,10 +152,12 @@ export default function () {
     {
       label: userData?.height,
       icon: <MaterialIcons name="height" size={20} color={'#76BC21'} />,
+      unit: 'cm',
     },
     {
       label: userData?.weight,
       icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
+      unit: 'kg',
     },
   ];
   const navigation = useNavigation();
@@ -175,6 +197,9 @@ export default function () {
               <View style={styles.detailItem} key={e.label}>
                 {e.icon}
                 <Text style={styles.detailText}>{e.label}</Text>
+                <Text style={[styles.detailText, {marginLeft: 0}]}>
+                  {e?.unit}
+                </Text>
                 {i < a.length - 1 && <View style={styles.separator} />}
               </View>
             ))}
@@ -185,6 +210,9 @@ export default function () {
               <View style={styles.detailItem} key={e.label}>
                 {e.icon}
                 <Text style={styles.detailText}>{e.label}</Text>
+                <Text style={[styles.detailText, {marginLeft: 0}]}>
+                  {e.unit}
+                </Text>
                 {i < a.length - 1 && <View style={styles.separator} />}
               </View>
             ))}

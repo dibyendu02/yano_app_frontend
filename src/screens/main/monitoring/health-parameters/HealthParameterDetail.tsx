@@ -201,8 +201,8 @@ const HealthParameterDetail = ({route}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={styles.dataLabel}>Gain: 10mm/mv</Text>
-                <Text style={styles.dataLabel}>Paper speed: 10mm/mv</Text>
+                <Text style={styles.dataLabel}>Gain: 10mm/mV</Text>
+                <Text style={styles.dataLabel}>Paper speed: 10mm/mV</Text>
               </View>
             </View>
 

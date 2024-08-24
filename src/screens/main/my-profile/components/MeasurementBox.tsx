@@ -32,7 +32,18 @@ const MeasurementBox: FC<props> = ({
           )
         ) : (
           <Text style={styles.value}>
-            {value === 0 ? '_ _' : value} {unit == 'SpO2H' ? '%' : ''}
+            {value === 0 ? (
+              <Text style={{color: '#00263Ea3'}}>_ _</Text>
+            ) : (
+              value
+            )}{' '}
+            {unit == 'SpO2H' ? (
+              <Text style={{color: value == 0 ? '#00263Ea3' : Colors.Blue}}>
+                %
+              </Text>
+            ) : (
+              ''
+            )}
           </Text>
         )}
         <Text style={styles.unit}>{unit}</Text>

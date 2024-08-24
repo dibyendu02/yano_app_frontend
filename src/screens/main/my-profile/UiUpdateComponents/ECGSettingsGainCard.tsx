@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   radioText: {
-    marginLeft: 8,
+    marginLeft: 2,
     color: 'black',
     fontSize: 18,
   },

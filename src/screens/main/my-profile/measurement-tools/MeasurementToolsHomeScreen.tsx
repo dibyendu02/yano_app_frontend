@@ -30,7 +30,7 @@ const MeasurementToolsHomeScreen = () => {
             />
             <CommonItem
               name="Glucómetro Yano"
-              onPress={() => navigate('DeviceInfo')}
+              // onPress={() => navigate('DeviceInfo')}
               leftIcon={
                 <Image
                   source={DummyImage.glucometer}

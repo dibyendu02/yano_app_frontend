@@ -226,7 +226,7 @@ const MyHealthHomeScreen = ({navigation}) => {
               fontSize: 24,
               fontWeight: '500',
               color: Colors.Blue,
-              marginBottom: 10,
+              // marginBottom: 10,
             }}>
             Consultation 24/7
           </Text>
@@ -262,7 +262,10 @@ const MyHealthHomeScreen = ({navigation}) => {
                 },
               ]}
               onPress={() => handleDivPress('phone')}>
-              <Image source={StaticImage.CallIcon} />
+              <Image
+                source={StaticImage.CallIcon}
+                style={{width: 30, height: 30, objectFit: 'contain'}}
+              />
               <Text style={styles.divTitle}>Call from the phone</Text>
               <Text style={styles.divSubtitle}>
                 *May carry costs with your operator.
@@ -279,7 +282,10 @@ const MyHealthHomeScreen = ({navigation}) => {
                 },
               ]}
               onPress={() => handleDivPress('video')}>
-              <Image source={StaticImage.VideoCallIcon} />
+              <Image
+                source={StaticImage.VideoCallIcon}
+                style={{width: 30, height: 30, objectFit: 'contain'}}
+              />
               <Text style={styles.divTitle}>Receive a video consultation</Text>
             </TouchableOpacity>
           </View>

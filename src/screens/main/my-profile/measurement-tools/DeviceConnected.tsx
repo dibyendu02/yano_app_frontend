@@ -21,7 +21,24 @@ const DeviceConnected = ({navigation}: any) => {
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title="" />
+      <View
+        style={{
+          width: '100%',
+          height: 50,
+          backgroundColor: Colors.White,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Text
+          style={{
+            fontSize: 20,
+            fontWeight: 'bold',
+            color: Colors.Blue,
+          }}>
+          ¡Congrats!
+        </Text>
+      </View>
       <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
         <View>
           <View
@@ -52,7 +69,7 @@ const DeviceConnected = ({navigation}: any) => {
                 textAlign: 'center',
                 marginBottom: 10,
               }}>
-              Monitor Multiparámetros Yano has been added
+              Yano Multi-Parameter Monitor has been added
             </Text>
             <Text
               style={{
@@ -67,9 +84,9 @@ const DeviceConnected = ({navigation}: any) => {
       </ScrollView>
       <View style={styles.addBtn}>
         <FilledButton
-          label="Add a device"
+          label="Continue"
           type="blue"
-          onPress={() => navigation.navigate('MeasurementTools')}
+          onPress={() => navigation.navigate('MeasurementMonitoring')}
         />
       </View>
     </SafeAreaView>

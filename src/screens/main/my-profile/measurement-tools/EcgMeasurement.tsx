@@ -146,7 +146,7 @@ const EcgMeasurement = () => {
                         fontWeight: '500',
                         color: Colors.SteelBlue,
                       }}>
-                      Gain: 10mm/mv
+                      Gain: 10mm/mV
                     </Text>
                     <Text
                       style={{
@@ -154,7 +154,7 @@ const EcgMeasurement = () => {
                         fontWeight: '500',
                         color: Colors.SteelBlue,
                       }}>
-                      Paper speed: 10mm/mv
+                      Paper speed: 10mm/mV
                     </Text>
                   </View>
                 </View>
