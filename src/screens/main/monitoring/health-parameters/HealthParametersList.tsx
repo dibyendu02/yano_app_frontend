@@ -86,8 +86,10 @@ const HealthParametersList = () => {
                     </View>
                     <View
                       style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-end',
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        width: '30%',
+                        marginRight: 14,
                       }}>
                       {/* {e.measurements.map(itm => (
                         <Text

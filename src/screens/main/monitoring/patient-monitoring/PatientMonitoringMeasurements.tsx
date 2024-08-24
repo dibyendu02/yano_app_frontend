@@ -85,7 +85,13 @@ const PatientMonitoringMeasurements = () => {
                         {moment(e.timestamp).format('M/D/YYYY - h:mm A')}
                       </Text>
                     </View>
-                    <View>
+                    <View
+                      style={{
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        width: '30%',
+                        marginRight: 14,
+                      }}>
                       {e.measurements.map(itm => (
                         <Text
                           style={{
