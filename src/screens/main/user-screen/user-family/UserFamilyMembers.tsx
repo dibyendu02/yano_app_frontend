@@ -30,9 +30,14 @@ const UserFamilyMembers = () => {
   return (
     <>
       <CommonLayout>
-        <Header title={'Family Link'} />
+        <Header title={'Family link'} />
         <ScrollView>
-          <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+          <View
+            style={{
+              paddingVertical: 12,
+              width: '94%',
+              margin: 'auto',
+            }}>
             {data && data.length > 0 ? (
               <>
                 {data.map((item, i: number) => {

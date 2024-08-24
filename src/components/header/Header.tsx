@@ -41,6 +41,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     // paddingLeft: 14,
     paddingVertical: 12,
+    // height: 64,
+
     backgroundColor: Colors.White,
     justifyContent: 'space-between',
   },

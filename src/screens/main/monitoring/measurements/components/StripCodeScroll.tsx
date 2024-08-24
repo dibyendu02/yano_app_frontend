@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.BlueGrey,
     paddingHorizontal: 25,
-    borderRadius: 20,
+    borderRadius: 10,
   },
   itemContainer: {
     height: 40,

@@ -18,7 +18,7 @@ const NoDataScreen = () => {
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title={'Download Your Data'} />
+      <Header title={'Download your data'} />
       <View
         style={{
           flex: 1,

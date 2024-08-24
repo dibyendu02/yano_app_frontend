@@ -84,8 +84,6 @@ const BloodGlucoseTestTime = ({navigation}: any) => {
       <View style={styles.addBtn}>
         <FilledButton
           label={'Back'}
-          // icon={
-          // }
           type={'lightGrey'}
           style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.goBack()}
@@ -93,8 +91,6 @@ const BloodGlucoseTestTime = ({navigation}: any) => {
         />
         <FilledButton
           label={'Next'}
-          // icon={
-          // }
           type={'blue'}
           style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.navigate('BloodGlucoseSelectStrip')}

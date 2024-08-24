@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -10,17 +10,16 @@ import {
   Platform,
   ToastAndroid,
   Alert,
+  Image,
 } from 'react-native';
-// import Header from '../../../../../components/header/Header';
-import Header from '../../../../components/header/Header';
+import {FormProvider, useForm, Controller} from 'react-hook-form';
+import HeaderWithButton from '../../add-patient/component/HeaderWithButton';
 import {navigate} from '../../../../navigation/RootNavigation';
 import {Colors} from '../../../../constants/Colors';
 import {AuthScreen} from '../../../../navigation/auth/AuthScreens';
-import {FormProvider, useForm, Controller} from 'react-hook-form';
 import FormInput from '../../../../components/hook-form/FormInput';
 import {FormInputType} from '../../../../components/hook-form/types';
 import FormDateInput from '../../../../components/hook-form/FormDateInput';
-import FormSelectionInput from '../../../../components/hook-form/FormSelectionInput';
 import FormPhoneNumberInput from '../../../../components/hook-form/FormPhoneNumberInput';
 import FormImageInput from '../../../../components/hook-form/FormImageInput';
 import {AuthScreensProps} from '../../../../navigation/auth/types';
@@ -29,12 +28,14 @@ import moment from 'moment';
 import {registerDoctor, registerPatient} from '../../../../services/Endpoints';
 import Gender from './Gender';
 import UserContext from '../../../../contexts/UserContext';
-import HeaderWithButton from '../../add-patient/component/HeaderWithButton';
+import Modal from 'react-native-modal';
+import {staticIcons} from '../../../../assets/image';
+import {CloseIcon} from '../../../../assets/icon/IconNames';
 
 const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
-  const [isDisabled, setIsDisabled] = React.useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
+  const [saved, setSaved] = useState(false);
   const {userData} = useContext(UserContext);
-  //@ts-ignore
   const userType = route?.params?.userType;
 
   // Prefilled dummy data
@@ -47,6 +48,8 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
     dateOfBirth: userData?.dateOfBirth,
     gender: userData?.gender,
     specialty: 'General medicine',
+    contactname: userData?.contactname || '',
+    contactphoneNumber: userData?.contactphoneNumber || '',
   };
 
   const {...methods} = useForm({
@@ -56,7 +59,6 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
 
   useEffect(() => {
     const subscription = methods.watch(value => {
-      // Check if the form data has changed from the initial values
       const isFormChanged =
         JSON.stringify(value) !== JSON.stringify(initialData);
       setIsDisabled(!isFormChanged);
@@ -79,44 +81,51 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
   const onSubmit = async (data: any) => {
     let requestData = new FormData();
     if (data?.file) {
-      requestData.append('image', {
-        uri:
-          Platform.OS === 'ios'
-            ? `file:///${data?.file?.path}`
-            : data?.file.path,
-        type: data?.file?.mime,
-        name: `${moment()}.jpeg`,
-      });
+      setSaved(true);
+      setTimeout(() => {
+        setSaved(false);
+      }, 2000);
     }
+    // if (data?.file) {
+    //   requestData.append('image', {
+    //     uri:
+    //       Platform.OS === 'ios'
+    //         ? `file:///${data?.file?.path}`
+    //         : data?.file.path,
+    //     type: data?.file?.mime,
+    //     name: `${moment()}.jpeg`,
+    //   });
+    // }
 
-    const payload = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      phoneNumber: data.phoneNumber,
-      gender: data.gender,
-      dateOfBirth: data.dateOfBirth,
-      password: data.password,
-      specialty: data.specialty,
-    };
+    // const payload = {
+    //   firstName: data.firstName,
+    //   lastName: data.lastName,
+    //   email: data.email,
+    //   phoneNumber: data.phoneNumber,
+    //   gender: data.gender,
+    //   dateOfBirth: data.dateOfBirth,
+    //   specialty: data.specialty,
+    //   contactname: data.contactname,
+    //   contactphoneNumber: data.contactphoneNumber,
+    // };
 
-    for (let key in payload) {
-      requestData.append(key, payload[key]);
-    }
+    // for (let key in payload) {
+    //   requestData.append(key, payload[key]);
+    // }
 
-    try {
-      if (userType === UserType.Patient) {
-        await registerPatient(requestData);
-      } else {
-        await registerDoctor(requestData);
-      }
+    // try {
+    //   if (userType === UserType.Patient) {
+    //     await registerPatient(requestData);
+    //   } else {
+    //     await registerDoctor(requestData);
+    //   }
 
-      showToast('The changes have been saved.');
-      navigate(AuthScreen.AccountVerification);
-    } catch (e) {
-      console.log('Error!', e?.response?.data?.message);
-      showToast('An error occurred while saving.');
-    }
+    //   showToast('The changes have been saved.');
+    //   navigate(AuthScreen.AccountVerification);
+    // } catch (e) {
+    //   console.log('Error!', e?.response?.data?.message);
+    //   showToast('An error occurred while saving.');
+    // }
   };
 
   return (
@@ -224,25 +233,62 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
                     <Gender selectedRole={value} setSelectedRole={onChange} />
                   )}
                 />
-                {/* <FormSelectionInput
-                  name="specialty"
-                  placeholder="Select your specialty"
-                  label="Specialty"
-                  options={DoctorSpecialties}
-                  optionsListLabel="Select your specialty"
-                  optionsListHeight={400}
+                <FormInput
+                  name="contactname"
+                  label="Emergency contact name"
                   rules={{
                     required: {
                       value: true,
-                      message: 'Please select your specialty',
+                      message: 'Please enter the emergency contact name',
                     },
                   }}
-                /> */}
+                />
+                <FormPhoneNumberInput
+                  name="contactphoneNumber"
+                  label="Emergency contact phone number"
+                  rules={{
+                    required: {
+                      value: true,
+                      message: 'Please enter the emergency contact number',
+                    },
+                    pattern: {
+                      value: /^\+\d{10,14}$/,
+                      message: 'Enter valid mobile number!',
+                    },
+                  }}
+                />
               </FormProvider>
             </ScrollView>
           </View>
         </View>
       </KeyboardAvoidingView>
+      <Modal
+        isVisible={saved}
+        onBackdropPress={() => setSaved(false)}
+        onSwipeComplete={() => setSaved(false)}
+        swipeDirection="down"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0} // Adjust the opacity of the background
+        animationInTiming={1000}
+        animationOutTiming={3000}
+        style={styles.modal}>
+        <View style={styles.modalContent}>
+          <View style={{flexDirection: 'row', gap: 10}}>
+            <Image
+              source={staticIcons.checkcircle}
+              style={{
+                height: 20,
+                width: 20,
+                objectFit: 'contain',
+                tintColor: 'white',
+              }}
+            />
+            <Text style={styles.modalText}>The changes have been made.</Text>
+          </View>
+          <CloseIcon color="white" />
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -279,5 +325,27 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.GhostWhite,
     paddingHorizontal: 14,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: Colors.Green,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 20,
+    marginLeft: 60,
+  },
+  modalText: {
+    color: Colors.White,
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });

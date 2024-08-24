@@ -13,7 +13,7 @@ const DeviceInnerSettings = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [items, setItems] = useState({});
   const [selectedPaperSpeed, setSelectedPaperSpeed] = useState('25 mm/s');
-  const [selectedGain, setSelectedGain] = useState('10 mm/mv');
+  const [selectedGain, setSelectedGain] = useState('10 mm/mV');
   const [notificationEnabled, setNotificationEnabled] = useState(false);
   const toggleNotification = () =>
     setNotificationEnabled(previousState => !previousState);
@@ -31,9 +31,9 @@ const DeviceInnerSettings = () => {
   const handlePressGain = () => {
     const item = {
       title: 'Gain',
-      unit1: '5 mm/mv',
-      unit2: '10 mm/mv',
-      unit3: '20 mm/mv',
+      unit1: '5 mm/mV',
+      unit2: '10 mm/mV',
+      unit3: '20 mm/mV',
     };
     setItems(item);
     setIsClicked(true);

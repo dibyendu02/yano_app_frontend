@@ -14,7 +14,7 @@ const SupportHomeScreen = ({navigation}: any) => {
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title={"Yano's Support"} />
+      <Header title={"Yano's support"} />
       <ScrollView>
         <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
           {SupportItems.map((item, i) => (

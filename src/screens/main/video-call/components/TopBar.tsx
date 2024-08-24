@@ -7,9 +7,14 @@ import {useNavigation} from '@react-navigation/native';
 interface props {
   doctorName: string;
   duration: string;
+  setIsClicked: any;
 }
 
-export const TopBar: React.FC<props> = ({doctorName, duration}) => {
+export const TopBar: React.FC<props> = ({
+  doctorName,
+  duration,
+  setIsClicked,
+}) => {
   const navigation = useNavigation();
   return (
     <View style={style.mainContainer}>
@@ -33,9 +38,7 @@ export const TopBar: React.FC<props> = ({doctorName, duration}) => {
           <Text style={style.textColor}>{duration}</Text>
         </View>
       </View>
-      <TouchableOpacity
-        style={style.button}
-        onPress={() => navigation.goBack()}>
+      <TouchableOpacity style={style.button} onPress={() => setIsClicked(true)}>
         <Text style={style.textColor}>End Call</Text>
       </TouchableOpacity>
     </View>

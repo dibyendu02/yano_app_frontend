@@ -40,6 +40,7 @@ const BloodGlucoseStep2 = ({navigation}: any) => {
             fontSize: 18,
             marginBottom: 20,
             fontWeight: '400',
+            marginHorizontal: 10,
           }}>
           Take a drop of blood from one of your fingers using a lancing device.
         </Text>
