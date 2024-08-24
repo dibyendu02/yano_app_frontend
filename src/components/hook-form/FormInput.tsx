@@ -68,7 +68,8 @@ const FormInput: FC<FormInputProps> = ({
               secureTextEntry={showSecureValue}
               outlineStyle={styles.outline}
               cursorColor={Colors.Black}
-              selectionColor={Colors.Black}
+              selectionColor={Colors.Blue}
+              placeholderTextColor={Colors.SteelBlue}
               right={
                 type === FormInputType.Password ? (
                   <TextInput.Icon
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
     height: 56,
     color: Colors.Blue,
     borderRadius: 10,
+
   },
   outline: {
     borderRadius: 10,

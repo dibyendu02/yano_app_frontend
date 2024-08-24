@@ -35,7 +35,7 @@ const menuData = [
         style={{ height: 20, width: 20 }}
       />
     ),
-    text: 'Measurement tool',
+    text: 'Measurement tools',
     path: 'MeasurementTools',
   },
   {

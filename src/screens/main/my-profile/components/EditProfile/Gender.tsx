@@ -1,14 +1,14 @@
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import React from 'react';
-import {Colors} from '../../../../../constants/Colors';
-import {RadioButton} from 'react-native-paper';
+import { Colors } from '../../../../../constants/Colors';
+import { RadioButton } from 'react-native-paper';
 
 interface GenderProps {
   selectedRole: string;
   setSelectedRole: (role: string) => void;
 }
 
-const Gender: React.FC<GenderProps> = ({selectedRole, setSelectedRole}) => {
+const Gender: React.FC<GenderProps> = ({ selectedRole, setSelectedRole }) => {
   const Config = [
     {
       id: '1',
@@ -53,7 +53,7 @@ const Gender: React.FC<GenderProps> = ({selectedRole, setSelectedRole}) => {
             <Text
               style={[
                 styles.selectionCardContainerText,
-                {color: item.id === selectedRole ? Colors.Blue : Colors.Grey},
+                { color: item.id === selectedRole ? Colors.Blue : Colors.Grey },
               ]}>
               {item.label}
             </Text>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     color: Colors.Blue,
     fontWeight: 'bold',
     fontSize: 18,
-    marginBottom: 16,
+    marginBottom: 5,
   },
   buttonContainer: {
     flexDirection: 'row',

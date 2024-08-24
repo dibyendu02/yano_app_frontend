@@ -4,6 +4,7 @@
 import {
   FlatList,
   Image,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -18,36 +19,36 @@ import {
   HSDGN,
 } from '../../../../test/HealthStatsData';
 import Card from '../../../../components/cards/Card';
-import {IconName} from '../../../../assets/icon/IconNames';
-import {Colors} from '../../../../constants/Colors';
+import { IconName } from '../../../../assets/icon/IconNames';
+import { Colors } from '../../../../constants/Colors';
 import Icons from '../../../../assets/icon/Icon';
 import moment from 'moment';
-import {navigate} from '../../../../navigation/RootNavigation';
+import { navigate } from '../../../../navigation/RootNavigation';
 
 const PatientMonitoringMeasurements = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header
-        title="Health Parameters"
-        // headerRightComponent={
-        //   <Icons.MaterialIcons
-        //     name="checklist-rtl"
-        //     color={Colors.Blue}
-        //     size={25}
-        //   />
-        // }
+        title="Health parameters"
+      // headerRightComponent={
+      //   <Icons.MaterialIcons
+      //     name="checklist-rtl"
+      //     color={Colors.Blue}
+      //     size={25}
+      //   />
+      // }
       />
-      <View style={{backgroundColor: Colors.GhostWhite, flex: 1}}>
+      <View style={{ backgroundColor: Colors.GhostWhite, flex: 1 }}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={HSDGN}
-          style={{marginVertical: 6}}
-          renderItem={({item, index: _index}) => (
+          style={{ marginVertical: 6 }}
+          renderItem={({ item, index: _index }) => (
             <Card key={item.month} title={item.month}>
               <FlatList
                 scrollEnabled={false}
                 data={item.data}
-                renderItem={({item: e, index: _i}) => (
+                renderItem={({ item: e, index: _i }) => (
                   <TouchableOpacity
                     activeOpacity={0.5}
                     style={{
@@ -64,7 +65,7 @@ const PatientMonitoringMeasurements = () => {
                       })
                     }
                     key={e.field}>
-                    <View style={{width: '50%'}}>
+                    <View style={{ width: '50%' }}>
                       <Text
                         style={{
                           fontSize: 18,
@@ -91,8 +92,10 @@ const PatientMonitoringMeasurements = () => {
                             fontSize: 18,
                             fontFamily: 'Roboto',
                             marginBottom: 4,
-                            fontWeight: '500',
+                            fontWeight: Platform.OS === 'android' ? 'bold' : '600',
+                            color: Colors.Blue,
                           }}
+
                           key={itm.unit}>
                           {itm.value}{' '}
                           <Text
@@ -100,6 +103,7 @@ const PatientMonitoringMeasurements = () => {
                               fontSize: 16,
                               fontFamily: 'Roboto',
                               fontWeight: 'light',
+                              color: Colors.SteelBlue,
                             }}>
                             {itm.unit}
                           </Text>
