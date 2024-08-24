@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
-import {Colors} from '../../../../../constants/Colors';
-import {RadioButton} from 'react-native-paper';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
+import { Colors } from '../../../../../constants/Colors';
+import { RadioButton } from 'react-native-paper';
 
-const RepetitionModal = ({isVisible, onClose, onSelect}) => {
+const RepetitionModal = ({ isVisible, onClose, onSelect }) => {
   const [selectedValue, setSelectedValue] = useState('day');
 
   const handleSelect = value => {
@@ -16,7 +16,7 @@ const RepetitionModal = ({isVisible, onClose, onSelect}) => {
     <Modal transparent={true} visible={isVisible} animationType="fade">
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
-          <Text style={styles.modalTitle}>Select Repetition Interval</Text>
+          <Text style={styles.modalTitle}>Repeats every</Text>
           <RadioButton.Group
             onValueChange={newValue => setSelectedValue(newValue)}
             value={selectedValue}>
@@ -49,6 +49,16 @@ const RepetitionModal = ({isVisible, onClose, onSelect}) => {
                 uncheckedColor={Colors.Grey}
               />
               <Text style={styles.radioText}>Month</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.radioItem}
+              onPress={() => handleSelect('year')}>
+              <RadioButton
+                value="Year"
+                color={Colors.LightGreen}
+                uncheckedColor={Colors.Grey}
+              />
+              <Text style={styles.radioText}>Year</Text>
             </TouchableOpacity>
           </RadioButton.Group>
 

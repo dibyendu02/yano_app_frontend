@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -17,16 +17,18 @@ import {
   FormProvider,
 } from 'react-hook-form';
 import CustomSelect from '../../../../components/formComp/SelectFiled';
-import {Colors} from '../../../../constants/Colors';
+import { Colors } from '../../../../constants/Colors';
 import {
   CheckCircleIcon,
   CheckIcon,
   CloseIcon,
 } from '../../../../assets/icon/IconNames';
 import CommonHeader from '../../../healthCondition/components/CommonHeader';
-import {navigate} from '../../../../navigation/RootNavigation';
+import { navigate } from '../../../../navigation/RootNavigation';
 import FormDateInput from '../../../../components/hook-form/FormDateInput';
 import RepetitionModal from './component/RepetationChange';
+import CustomInputFieldLocal from './component/CustomInputFieldLocal';
+import FormInputLocal from './component/FormInputLocal';
 
 const SetRepetition = () => {
   const methods = useForm({
@@ -39,7 +41,7 @@ const SetRepetition = () => {
     },
   });
 
-  const {control, handleSubmit, watch, setValue} = methods;
+  const { control, handleSubmit, watch, setValue } = methods;
   const [modalVisible, setModalVisible] = useState(false);
 
   const onSubmit = (data: any) => {
@@ -72,37 +74,40 @@ const SetRepetition = () => {
           }
         />
         <ScrollView>
-          <View style={{padding: 20}}>
-            <Text style={[styles.label, {marginLeft: 0}]}>Repeats every</Text>
+          <View style={{ padding: 20 }}>
+            <Text style={[styles.label, { marginLeft: 0 }]}>Repeats every</Text>
             <View style={styles.row}>
               <View style={styles.frequencyInput}>
-                <CustomInputField
+                <CustomInputFieldLocal
                   name="frequency"
                   control={control as unknown as Control<FieldValues, object>}
-                  rules={{required: 'This field is required'}}
+                  rules={{ required: 'This field is required' }}
                 />
               </View>
+
+
               <TouchableOpacity
                 style={styles.frequencySelect}
                 onPress={() => setModalVisible(true)}>
                 <Controller
                   name="frequencyType"
                   control={control}
-                  render={({field: {value}}) => (
+                  render={({ field: { value } }) => (
                     <Text style={styles.frequencyTypeText}>
                       {value.charAt(0).toUpperCase() + value.slice(1)}
                     </Text>
                   )}
                 />
               </TouchableOpacity>
+
             </View>
             <View>
-              <Text style={[styles.label, {marginBottom: 0, marginLeft: 0}]}>
+              <Text style={[styles.label, { marginBottom: 0, marginLeft: 0 }]}>
                 Ends
               </Text>
               <Controller
                 control={control}
-                render={({field: {onChange, value}, fieldState: {error}}) => (
+                render={({ field: { onChange, value }, fieldState: { error } }) => (
                   <View style={styles.container}>
                     <TouchableOpacity
                       style={[styles.optionContainer]}
@@ -127,9 +132,9 @@ const SetRepetition = () => {
                         <CheckIcon color={Colors.LightGreen} size={25} />
                       )}
                       <Text style={styles.label}> On</Text>
-                      <View style={{width: '50%'}}>
+                      <View style={{ width: '50%' }}>
                         {value === 'date' && (
-                          <FormDateInput
+                          <FormInputLocal
                             name="date"
                             control={
                               control as unknown as Control<FieldValues, object>
@@ -161,9 +166,9 @@ const SetRepetition = () => {
                             control={
                               control as unknown as Control<FieldValues, object>
                             }
-                            rules={{required: 'This field is required'}}
+                            rules={{ required: 'This field is required' }}
                           />
-                          <Text style={styles.label}>repetition(s)</Text>
+                          <Text style={styles.label}>repetition</Text>
                         </>
                       )}
                     </TouchableOpacity>
