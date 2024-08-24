@@ -116,6 +116,8 @@ import PatientQRCode from '../../screens/main/add-patient/PatientQRCode';
 import EditDoctorProfile from '../../screens/main/my-profile/components/EditProfile/EditDoctorProfile';
 import EditPatientProfile from '../../screens/main/user-screen/user-profile/EditPatientProfile';
 import AuthDeviceConnected from '../../screens/auth/AuthDeviceConnected';
+import AfterQR from '../../screens/main/add-patient/AfterQR';
+import PatientMonitoringProfileLocal from '../../screens/main/add-patient/PatientMonitoringProfileLocal';
 
 const Tab = createBottomTabNavigator();
 
@@ -860,6 +862,16 @@ const MainStack = () => {
       <Stack.Screen
         name="PatientQRCode"
         component={PatientQRCode}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="AfterQR"
+        component={AfterQR}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PatientMonitoringProfileLocal"
+        component={PatientMonitoringProfileLocal}
         options={{headerShown: false}}
       />
     </Stack.Navigator>
