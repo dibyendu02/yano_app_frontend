@@ -136,11 +136,14 @@ export default function ViewFamilyMemberDetails() {
           </View>
           <Badge
             icon={
-              <Icons.MaterialIcons
-                name="diversity-3"
-                size={18}
-                color={Colors.Blue}
-                style={{marginRight: 3}}
+              <Image
+                source={StaticImage.FamilyIcon}
+                style={{
+                  height: 15,
+                  width: 15,
+                  objectFit: 'contain',
+                  tintColor: Colors.Blue,
+                }}
               />
             }
             text="Mother"

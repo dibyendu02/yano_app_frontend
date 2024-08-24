@@ -19,36 +19,36 @@ import {
   HSDGN,
 } from '../../../../test/HealthStatsData';
 import Card from '../../../../components/cards/Card';
-import { IconName } from '../../../../assets/icon/IconNames';
-import { Colors } from '../../../../constants/Colors';
+import {IconName} from '../../../../assets/icon/IconNames';
+import {Colors} from '../../../../constants/Colors';
 import Icons from '../../../../assets/icon/Icon';
 import moment from 'moment';
-import { navigate } from '../../../../navigation/RootNavigation';
+import {navigate} from '../../../../navigation/RootNavigation';
 
 const PatientMonitoringMeasurements = () => {
   return (
     <SafeAreaView style={styles.container}>
       <Header
         title="Health parameters"
-      // headerRightComponent={
-      //   <Icons.MaterialIcons
-      //     name="checklist-rtl"
-      //     color={Colors.Blue}
-      //     size={25}
-      //   />
-      // }
+        // headerRightComponent={
+        //   <Icons.MaterialIcons
+        //     name="checklist-rtl"
+        //     color={Colors.Blue}
+        //     size={25}
+        //   />
+        // }
       />
-      <View style={{ backgroundColor: Colors.GhostWhite, flex: 1 }}>
+      <View style={{backgroundColor: Colors.GhostWhite, flex: 1}}>
         <FlatList
           showsVerticalScrollIndicator={false}
           data={HSDGN}
-          style={{ marginVertical: 6 }}
-          renderItem={({ item, index: _index }) => (
+          style={{marginVertical: 6}}
+          renderItem={({item, index: _index}) => (
             <Card key={item.month} title={item.month}>
               <FlatList
                 scrollEnabled={false}
                 data={item.data}
-                renderItem={({ item: e, index: _i }) => (
+                renderItem={({item: e, index: _i}) => (
                   <TouchableOpacity
                     activeOpacity={0.5}
                     style={{
@@ -65,7 +65,7 @@ const PatientMonitoringMeasurements = () => {
                       })
                     }
                     key={e.field}>
-                    <View style={{ width: '50%' }}>
+                    <View style={{width: '50%'}}>
                       <Text
                         style={{
                           fontSize: 18,
@@ -85,17 +85,23 @@ const PatientMonitoringMeasurements = () => {
                         {moment(e.timestamp).format('M/D/YYYY - h:mm A')}
                       </Text>
                     </View>
-                    <View>
+                    <View
+                      style={{
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        width: '30%',
+                        marginRight: 14,
+                      }}>
                       {e.measurements.map(itm => (
                         <Text
                           style={{
                             fontSize: 18,
                             fontFamily: 'Roboto',
                             marginBottom: 4,
-                            fontWeight: Platform.OS === 'android' ? 'bold' : '600',
+                            fontWeight:
+                              Platform.OS === 'android' ? 'bold' : '600',
                             color: Colors.Blue,
                           }}
-
                           key={itm.unit}>
                           {itm.value}{' '}
                           <Text
