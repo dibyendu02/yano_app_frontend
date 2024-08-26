@@ -5,19 +5,46 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
-import {Colors} from '../../../constants/Colors';
-import {DeleteIcon, EditIcon} from '../../../assets/icon/IconNames';
+import React, { useEffect } from 'react';
+import { Colors } from '../../../constants/Colors';
+import { DeleteIcon, EditIcon } from '../../../assets/icon/IconNames';
 import DetailItems from '../components/DetailItems';
 import CommonHeader from '../components/CommonHeader';
-import {Image} from 'react-native';
+import { Image } from 'react-native';
+import { basicInfoData } from '../../../api/GET/medicalHistoryData';
 
-const BasicInfo = ({navigation}: any) => {
-  const data = {
-    height: '164 cm',
-    weight: '56 kg',
-    bloodGroup: 'O+',
-  };
+const dummyData = {
+  height: '164 cm',
+  weight: '56 kg',
+  bloodGroup: 'O+',
+};
+const BasicInfo = ({ navigation }: any) => {
+  const [data, setData] = React.useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await basicInfoData();
+        // console.log(res.userData);
+
+        if (res?.userData) {
+          setData([]);
+          return;
+        }
+
+        const transformedData = {
+          height: res.userData?.height,
+          weight: res.userData?.weight,
+          bloodGroup: res.userData?.bloodGroup,
+        };
+
+        setData(transformedData);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchData();
+  }, []);
 
   return (
     <SafeAreaView
@@ -30,22 +57,22 @@ const BasicInfo = ({navigation}: any) => {
         title={'Basic information'}
         rightComp1={
           <TouchableOpacity
-            onPress={() => navigation.navigate('AddAndEditBasicInfo', {data})}>
+            onPress={() => navigation.navigate('AddAndEditBasicInfo', { data })}>
             <Image
               source={require('../../../assets/image/EditPencil.png')}
-              style={{height: 26, width: 24}}
+              style={{ height: 26, width: 24 }}
             />
           </TouchableOpacity>
         }
-        customStyle={{paddingVertical: 12}}
-        // rightComp2={
-        //     <TouchableOpacity>
-        //         <DeleteIcon />
-        //     </TouchableOpacity>
-        // }
+        customStyle={{ paddingVertical: 12 }}
+      // rightComp2={
+      //     <TouchableOpacity>
+      //         <DeleteIcon />
+      //     </TouchableOpacity>
+      // }
       />
       <ScrollView>
-        <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View style={{ paddingVertical: 12, width: '94%', margin: 'auto' }}>
           <View style={styles.boxStyle}>
             <DetailItems name="Height" value={data.height} />
             <DetailItems name="Weight" value={data.weight} />

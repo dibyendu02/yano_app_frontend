@@ -31,6 +31,7 @@ import CustomInputFieldLocal from './component/CustomInputFieldLocal';
 import FormInputLocal from './component/FormInputLocal';
 import { Image } from 'react-native';
 import { staticIcons } from '../../../../assets/image';
+import MonthChange from './component/MonthChange';
 
 
 const weekDay: { [key: string]: string } = {
@@ -185,6 +186,40 @@ const SetRepetition = () => {
 
             </View>}
 
+            <View style={{
+              marginBottom: 16,
+              borderBottomColor: '#E9E9E9',
+              borderBottomWidth: 2,
+              paddingBottom: 16,
+            }}>
+              <TouchableOpacity
+                style={[styles.frequencySelect,
+                ]}
+                onPress={() => setModalVisible(true)}>
+                <Controller
+                  name="frequencyType"
+                  control={control}
+                  render={({ field: { value } }) => (
+                    <Text style={styles.frequencyTypeText}>
+                      {values.charAt(0).toUpperCase() + values.slice(1)}
+                    </Text>
+                  )}
+                />
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: 20,
+                    height: 20,
+                  }}>
+                  <Image
+                    source={staticIcons.downIcon}
+                    style={{ width: 10, height: 10, objectFit: 'contain' }}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+
 
             <View>
               <Text style={[styles.label, { marginBottom: 0, marginLeft: 0 }]}>
@@ -267,7 +302,7 @@ const SetRepetition = () => {
         </ScrollView>
 
         {/* Modal for selecting repetition interval */}
-        <RepetitionModal
+        <MonthChange
           isVisible={modalVisible}
           onClose={() => setModalVisible(false)}
           onSelect={value => {
