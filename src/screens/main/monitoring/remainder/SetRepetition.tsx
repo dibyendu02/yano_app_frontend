@@ -33,15 +33,16 @@ import { Image } from 'react-native';
 import { staticIcons } from '../../../../assets/image';
 
 
-const weekDay = {
-  'sunday': 'S',
-  'monday': 'M',
-  'tuesday': 'T',
-  'wednesday': 'W',
-  'thursday': 'T',
-  'friday': 'F',
-  'saturday': 'S',
-}
+const weekDay: { [key: string]: string } = {
+  sunday: 'S',
+  monday: 'M',
+  tuesday: 'T',
+  wednesday: 'W',
+  thursday: 'T',
+  friday: 'F',
+  saturday: 'S',
+};
+
 const SetRepetition = () => {
   const methods = useForm({
     defaultValues: {
@@ -57,7 +58,8 @@ const SetRepetition = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [changeValue, setChangeValue] = useState('1');
   const [values, setValues] = useState('day');
-  const [day, setDay] = useState(['wednesday']);
+  const [day, setDay] = useState<string[]>(['wednesday']);
+
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -73,10 +75,10 @@ const SetRepetition = () => {
     }
   }
 
-  useEffect(() => {
-    console.log(values);
-    console.log(day);
-  }, [modalVisible, day]);
+  // useEffect(() => {
+  //   console.log(values);
+  //   console.log(day);
+  // }, [modalVisible, day]);
   return (
     <FormProvider {...methods}>
       <CommonLayout>
