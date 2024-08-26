@@ -10,22 +10,23 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PatientElements from '../../../../components/PatientElements';
 import Header from '../../../../components/header/Header';
-import { Colors } from '../../../../constants/Colors';
+import {Colors} from '../../../../constants/Colors';
 import Card from '../../../../components/cards/Card';
-import { DummyImage } from '../../../../assets/dummy/images';
-import { measurements, userData } from '../../../../test/Data';
+import {DummyImage} from '../../../../assets/dummy/images';
+import {measurements, userData} from '../../../../test/Data';
 import Icons from '../../../../assets/icon/Icon';
-import { navigate } from '../../../../navigation/RootNavigation';
-import { StaticImage } from '../../../../assets/images';
-import { staticIcons } from '../../../../assets/image';
+import {navigate} from '../../../../navigation/RootNavigation';
+import {StaticImage} from '../../../../assets/images';
+import {staticIcons} from '../../../../assets/image';
 import CardLocal from './CardLocal';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import moment from 'moment';
 
 let data1 = [
   {
@@ -39,14 +40,14 @@ let data1 = [
     icon: (
       <Image
         source={StaticImage.CalenderIcon}
-        style={{ height: 20, width: 20, tintColor: Colors.LightGreen }}
+        style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
       />
     ),
   },
   {
     label: userData.blood,
     icon: (
-      <Image source={StaticImage.BloodIcon} style={{ height: 20, width: 20 }} />
+      <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
     ),
   },
 ];
@@ -64,7 +65,7 @@ let data2 = [
   },
 ];
 
-export default function PatientMonitoringProfile({ }) {
+export default function PatientMonitoringProfile({}) {
   const [isClicked, setIsClicked] = useState(false);
   const navigation = useNavigation();
   return (
@@ -158,8 +159,8 @@ export default function PatientMonitoringProfile({ }) {
                 : []
             }
             scrollEnabled={false}
-            style={{ width: '100%' }}
-            renderItem={({ item, index }) => (
+            style={{width: '100%'}}
+            renderItem={({item, index}) => (
               <View
                 style={{
                   width: '100%',
@@ -168,61 +169,61 @@ export default function PatientMonitoringProfile({ }) {
                   alignItems: 'center',
                   justifyContent: 'space-between',
                 }}>
-                <View style={{ width: '50%' }}>
+                <View style={{width: '50%'}}>
                   <Text
                     style={{
-                      fontSize: 16,
-                      fontFamily: 'Roboto',
-                      marginBottom: 4,
-                      fontWeight: 'bold',
+                      fontSize: 18,
                       color: Colors.Blue,
+                      fontWeight: 'bold',
+                      marginBottom: 4,
                     }}>
-                    {item.mType}
+                    {item.field}
                   </Text>
                   <Text
                     style={{
                       fontSize: 13,
                       fontFamily: 'Roboto',
-                      color: Colors.Blue,
-                    }}>
-                    {item.dt}
-                  </Text>
-                </View>
-
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontFamily: 'Roboto',
-                    marginBottom: 4,
-                    fontWeight: Platform.OS === 'android' ? 'bold' : '600',
-                    color: Colors.Blue,
-                  }}
-                  key={item.amt}>
-                  {item.amt}{' '}
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      fontFamily: 'Roboto',
-                      fontWeight: 'light',
                       color: Colors.SteelBlue,
                     }}>
-                    mmol/L
+                    {moment(item.timestamp).format('M/D/YYYY - h:mm A')}
                   </Text>
-                </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
+                    width: '30%',
+                    marginRight: 14,
+                  }}>
+                  {item.measurements.map(itm => (
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontFamily: 'Roboto',
+                        marginBottom: 4,
+                        fontWeight: Platform.OS === 'android' ? 'bold' : '600',
+                        color: Colors.Blue,
+                      }}
+                      key={itm.unit}>
+                      {itm.value}{' '}
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: 'Roboto',
+                          fontWeight: 'light',
+                          color: Colors.SteelBlue,
+                        }}>
+                        {itm.unit}
+                      </Text>
+                    </Text>
+                  ))}
+                </View>
 
-                {index === 0 ? (
-                  <Icons.AntDesign
-                    name="checkcircleo"
-                    color={Colors.Green}
-                    size={22}
-                  />
-                ) : (
-                  <Icons.AntDesign
-                    name="checkcircle"
-                    color={Colors.Green}
-                    size={22}
-                  />
-                )}
+                <Icons.AntDesign
+                  name={index === 0 ? 'checkcircleo' : 'checkcircle'}
+                  color={Colors.Green}
+                  size={22}
+                />
               </View>
             )}
             ItemSeparatorComponent={() => (
@@ -238,18 +239,18 @@ export default function PatientMonitoringProfile({ }) {
           />
         </Card>
 
-        <Card contentContainerStyle={{ marginBottom: 50 }}>
-          <View style={{ width: '100%' }}>
+        <Card contentContainerStyle={{marginBottom: 50}}>
+          <View style={{width: '100%'}}>
             <TouchableOpacity onPress={() => navigate('MedicalHistory')}>
               <View style={styles.container1}>
                 <Image
                   source={require('../../../../assets/image/receipt_long.png')}
-                  style={{ height: 22, width: 22 }}
+                  style={{height: 22, width: 22}}
                 />
                 <Text style={styles.name}>Medical history</Text>
                 <Image
                   source={staticIcons.nextIcon}
-                  style={{ height: 12, width: 10, objectFit: 'contain' }}
+                  style={{height: 12, width: 10, objectFit: 'contain'}}
                 />
               </View>
             </TouchableOpacity>
@@ -266,12 +267,12 @@ export default function PatientMonitoringProfile({ }) {
               <View style={styles.container1}>
                 <Image
                   source={require('../../../../assets/image/data_thresholding.png')}
-                  style={{ height: 22, width: 22 }}
+                  style={{height: 22, width: 22}}
                 />
                 <Text style={styles.name}>Health thresholds</Text>
                 <Image
                   source={staticIcons.nextIcon}
-                  style={{ height: 12, width: 10, objectFit: 'contain' }}
+                  style={{height: 12, width: 10, objectFit: 'contain'}}
                 />
               </View>
             </TouchableOpacity>
@@ -287,12 +288,12 @@ export default function PatientMonitoringProfile({ }) {
               <View style={styles.container1}>
                 <Image
                   source={require('../../../../assets/image/notification_add.png')}
-                  style={{ height: 22, width: 22 }}
+                  style={{height: 22, width: 22}}
                 />
                 <Text style={styles.name}>Reminders</Text>
                 <Image
                   source={staticIcons.nextIcon}
-                  style={{ height: 12, width: 10, objectFit: 'contain' }}
+                  style={{height: 12, width: 10, objectFit: 'contain'}}
                 />
               </View>
             </TouchableOpacity>

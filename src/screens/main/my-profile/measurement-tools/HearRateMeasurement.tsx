@@ -86,6 +86,7 @@ const HeartRateMeasurement = () => {
     <>
       <CommonMeasurementScreen
         loading={loading}
+        count={count}
         onPress={() => handleStartMeasurements()}
         element={
           <>

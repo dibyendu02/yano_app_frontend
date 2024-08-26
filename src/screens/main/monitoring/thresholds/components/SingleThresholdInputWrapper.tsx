@@ -1,9 +1,9 @@
-import { StyleSheet, View } from 'react-native';
-import React, { useState } from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import {StyleSheet, View} from 'react-native';
+import React, {useState} from 'react';
+import {FormProvider, useForm} from 'react-hook-form';
 import CommonThresholdLayout from '../../components/CommonThresholdLayout';
 import ThresholdPickerInput from './ThresholdPickerInput';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import SaveConfirmationModal from '../../../../../components/SaveConfirmationModal';
 
 interface SingleThresholdInputWrapperProps {
@@ -22,7 +22,7 @@ interface SingleThresholdInputWrapperProps {
 
 const SingleThresholdInputWrapper: React.FC<
   SingleThresholdInputWrapperProps
-> = ({ title, inputs }) => {
+> = ({title, inputs}) => {
   const methods = useForm();
   const [isSwitchOn, setIsSwitchOn] = useState(false);
   const navigation = useNavigation();
@@ -74,5 +74,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     marginBottom: 15, // Added margin between inputs
+    // backgroundColor: 'red',
   },
 });

@@ -69,7 +69,7 @@ export default Gender;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 0,
-    paddingVertical: 16,
+    paddingBottom: 12,
   },
   headerText: {
     color: Colors.Blue,

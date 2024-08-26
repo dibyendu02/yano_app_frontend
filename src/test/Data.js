@@ -1,3 +1,5 @@
+import {DummyImage} from '../assets/dummy/images';
+
 export const patientList = [
   {name: 'María Clemente'},
   {name: 'Juan Torres'},
@@ -20,34 +22,67 @@ export const patientList = [
 
 export const measurements = [
   {
-    mType: 'Glucose Level',
-    dt: 'June 7, 2022 at 5:13 PM ',
-    amt: '5,6',
-    state: false,
+    field: 'Blood glucose',
+    measurements: [
+      {
+        value: '5.6',
+        unit: 'mmol/L',
+      },
+    ],
+    measurement_time: {
+      value: 'After Lunch',
+      unit: '',
+    },
+    timestamp: '2024-07-28T00:00:00Z',
+    isReviewed: false,
   },
   {
-    mType: 'Glucose Level',
-    dt: 'June 7, 2022 at 5:13 PM ',
-    amt: '5,6',
-    state: true,
+    field: 'Blood pressure',
+    measurements: [
+      {
+        value: '121',
+        unit: 'SIS',
+      },
+      {
+        value: '78',
+        unit: 'DIA',
+      },
+    ],
+    timestamp: '2024-07-28T00:00:00Z',
+    isReviewed: true,
   },
   {
-    mType: 'Glucose Level',
-    dt: 'June 7, 2022 at 5:13 PM ',
-    amt: '5,6',
-    state: true,
+    field: 'Blood Oxygen',
+    measurements: [
+      {
+        value: '98',
+        unit: '%Sp02',
+      },
+    ],
+    timestamp: '2024-07-28T00:00:00Z',
+    isReviewed: true,
   },
   {
-    mType: 'Glucose Level',
-    dt: 'June 7, 2022 at 5:13 PM ',
-    amt: '5,6',
-    state: true,
+    field: 'Heart rhythm',
+    measurements: [
+      {
+        value: '84',
+        unit: 'LPM',
+      },
+    ],
+    timestamp: '2024-07-28T00:00:00Z',
+    isReviewed: true,
   },
   {
-    mType: 'Glucose Level',
-    dt: 'June 7, 2022 at 5:13 PM ',
-    amt: '5,6',
-    state: true,
+    field: 'Body temperature',
+    measurements: [
+      {
+        value: '36.7',
+        unit: '°C',
+      },
+    ],
+    timestamp: '2024-07-28T00:00:00Z',
+    isReviewed: true,
   },
 ];
 

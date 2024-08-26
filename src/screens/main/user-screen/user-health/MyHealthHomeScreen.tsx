@@ -26,6 +26,7 @@ import {StaticImage} from '../../../../assets/images';
 import MeasuringYourVitalComp from './MeasuringYourVitalComp';
 import OutlineButton from '../../../../components/buttons/OutlineButton';
 import UserContext from '../../../../contexts/UserContext';
+import moment from 'moment';
 
 const MyHealthHomeScreen = ({navigation}) => {
   const [show, setShow] = useState(false);
@@ -158,7 +159,7 @@ const MyHealthHomeScreen = ({navigation}) => {
                       fontWeight: 'bold',
                       marginBottom: 4,
                     }}>
-                    {item.mType}
+                    {item.field}
                   </Text>
                   <Text
                     style={{
@@ -166,26 +167,40 @@ const MyHealthHomeScreen = ({navigation}) => {
                       fontFamily: 'Roboto',
                       color: Colors.SteelBlue,
                     }}>
-                    {item.dt}
+                    {moment(item.timestamp).format('M/D/YYYY - h:mm A')}
                   </Text>
                 </View>
-                <Text
+                <View
                   style={{
-                    fontSize: 18,
-                    marginBottom: 4,
-                    color: Colors.Blue,
-                    fontWeight: 'bold',
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
+                    width: '30%',
+                    marginRight: 14,
                   }}>
-                  {item.amt}{' '}
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      fontFamily: 'Roboto',
-                      fontWeight: 'light',
-                    }}>
-                    mmol/L
-                  </Text>
-                </Text>
+                  {item.measurements.map(itm => (
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontFamily: 'Roboto',
+                        marginBottom: 4,
+                        fontWeight: Platform.OS === 'android' ? 'bold' : '600',
+                        color: Colors.Blue,
+                      }}
+                      key={itm.unit}>
+                      {itm.value}{' '}
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: 'Roboto',
+                          fontWeight: 'light',
+                          color: Colors.SteelBlue,
+                        }}>
+                        {itm.unit}
+                      </Text>
+                    </Text>
+                  ))}
+                </View>
+
                 <Icons.AntDesign
                   name={index === 0 ? 'checkcircleo' : 'checkcircle'}
                   color={Colors.Green}
@@ -296,7 +311,7 @@ const MyHealthHomeScreen = ({navigation}) => {
               style={{width: '100%', alignSelf: 'center', marginVertical: 14}}
               onPress={() => {
                 setShow(false);
-                navigation.navigate('PatientVideoCall');
+                navigation.navigate('VideoCallStart');
               }}
               activeOpacity={0.8}
               disabled={!selectedDiv} // Disable if no option is selected

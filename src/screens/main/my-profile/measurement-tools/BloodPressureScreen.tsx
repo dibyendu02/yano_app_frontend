@@ -94,6 +94,7 @@ const BloodPressureScreen = () => {
     <CommonMeasurementScreen
       loading={loading}
       onPress={handleStartMeasurements}
+      count={count}
       element={
         <>
           <Header
