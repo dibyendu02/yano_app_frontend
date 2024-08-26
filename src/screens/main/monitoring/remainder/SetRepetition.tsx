@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -32,6 +32,16 @@ import FormInputLocal from './component/FormInputLocal';
 import { Image } from 'react-native';
 import { staticIcons } from '../../../../assets/image';
 
+
+const weekDay = {
+  'sunday': 'S',
+  'monday': 'M',
+  'tuesday': 'T',
+  'wednesday': 'W',
+  'thursday': 'T',
+  'friday': 'F',
+  'saturday': 'S',
+}
 const SetRepetition = () => {
   const methods = useForm({
     defaultValues: {
@@ -46,6 +56,8 @@ const SetRepetition = () => {
   const { control, handleSubmit, watch, setValue } = methods;
   const [modalVisible, setModalVisible] = useState(false);
   const [changeValue, setChangeValue] = useState('1');
+  const [values, setValues] = useState('day');
+  const [day, setDay] = useState('wednesday');
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -53,6 +65,10 @@ const SetRepetition = () => {
 
   const selectedEnds = watch('ends'); // Watch for changes in the 'ends' field
 
+  useEffect(() => {
+    console.log(values);
+    console.log(day);
+  }, [modalVisible, day]);
   return (
     <FormProvider {...methods}>
       <CommonLayout>
@@ -62,7 +78,7 @@ const SetRepetition = () => {
               <CloseIcon size={30} />
             </TouchableOpacity>
           }
-          title="Set Repetition"
+          title="Set repetition"
           rightComp2={
             <FilledButton
               type="blue"
@@ -97,7 +113,7 @@ const SetRepetition = () => {
                   control={control}
                   render={({ field: { value } }) => (
                     <Text style={styles.frequencyTypeText}>
-                      {value.charAt(0).toUpperCase() + value.slice(1)}
+                      {values.charAt(0).toUpperCase() + values.slice(1)}
                     </Text>
                   )}
                 />
@@ -114,8 +130,53 @@ const SetRepetition = () => {
                 </View>
 
               </TouchableOpacity>
-
             </View>
+
+            {values == 'week' && <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                width: '100%',
+                gap: 8,
+                paddingBottom: 16,
+                borderBottomColor: '#E9E9E9',
+                borderBottomWidth: 2,
+                marginBottom: 16,
+              }}
+            >
+              {Object.keys(weekDay).map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderWidth: 2,
+                    borderColor: Colors.Blue,
+                    borderRadius: 25,
+                    width: 30,
+                    height: 30,
+                    backgroundColor: day === item ? Colors.Blue : Colors.White,
+                  }}
+                  onPress={() => setDay(item)}
+                >
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: '600',
+                      color: day === item ? Colors.White : Colors.Blue,
+                      textAlign: 'center',
+                    }}
+                  >
+                    {weekDay[item]}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+
+            </View>}
+
+
             <View>
               <Text style={[styles.label, { marginBottom: 0, marginLeft: 0 }]}>
                 Ends
@@ -200,7 +261,10 @@ const SetRepetition = () => {
         <RepetitionModal
           isVisible={modalVisible}
           onClose={() => setModalVisible(false)}
-          onSelect={value => setValue('frequencyType', value)}
+          onSelect={value => {
+            setValues(value)
+
+          }}
         />
       </CommonLayout>
     </FormProvider>
