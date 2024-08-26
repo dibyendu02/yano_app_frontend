@@ -108,10 +108,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     modalContainer: {
-        width: '80%',
+        width: '90%',
         backgroundColor: Colors.White,
         borderRadius: 10,
-        padding: 20,
+        paddingHorizontal: 10,
+        paddingVertical: 20,
     },
     modalTitle: {
         fontSize: 18,

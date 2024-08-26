@@ -57,9 +57,11 @@ const SetRepetition = () => {
 
   const { control, handleSubmit, watch, setValue } = methods;
   const [modalVisible, setModalVisible] = useState(false);
+  const [mothCardVisiable, setMothCardVisiable] = useState(false);
   const [changeValue, setChangeValue] = useState('1');
   const [values, setValues] = useState('day');
   const [day, setDay] = useState<string[]>(['wednesday']);
+  const [monthChanges, setMonthChanges] = useState('Monthly on the 28th');
 
 
   const onSubmit = (data: any) => {
@@ -186,22 +188,22 @@ const SetRepetition = () => {
 
             </View>}
 
-            <View style={{
+            {values == 'month' && <View style={{
               marginBottom: 16,
               borderBottomColor: '#E9E9E9',
               borderBottomWidth: 2,
               paddingBottom: 16,
             }}>
               <TouchableOpacity
-                style={[styles.frequencySelect,
+                style={[styles.frequencySelectM,
                 ]}
-                onPress={() => setModalVisible(true)}>
+                onPress={() => setMothCardVisiable(true)}>
                 <Controller
                   name="frequencyType"
                   control={control}
                   render={({ field: { value } }) => (
                     <Text style={styles.frequencyTypeText}>
-                      {values.charAt(0).toUpperCase() + values.slice(1)}
+                      {monthChanges}
                     </Text>
                   )}
                 />
@@ -219,7 +221,7 @@ const SetRepetition = () => {
                 </View>
               </TouchableOpacity>
             </View>
-
+            }
 
             <View>
               <Text style={[styles.label, { marginBottom: 0, marginLeft: 0 }]}>
@@ -302,12 +304,19 @@ const SetRepetition = () => {
         </ScrollView>
 
         {/* Modal for selecting repetition interval */}
-        <MonthChange
+
+        <RepetitionModal
           isVisible={modalVisible}
           onClose={() => setModalVisible(false)}
           onSelect={value => {
-            setValues(value)
-
+            setValues(value);
+          }}
+        />
+        <MonthChange
+          isVisible={mothCardVisiable}
+          onClose={() => setMothCardVisiable(false)}
+          onSelect={value => {
+            setMonthChanges(value)
           }}
         />
       </CommonLayout>
@@ -360,6 +369,16 @@ const styles = StyleSheet.create({
   frequencySelect: {
     flexDirection: 'row',
     width: '35%',
+    borderWidth: 1,
+    borderColor: Colors.LightGray,
+    borderRadius: 8,
+    padding: 15,
+    justifyContent: 'space-between',
+    backgroundColor: Colors.White,
+  },
+  frequencySelectM: {
+    flexDirection: 'row',
+    width: '65%',
     borderWidth: 1,
     borderColor: Colors.LightGray,
     borderRadius: 8,
