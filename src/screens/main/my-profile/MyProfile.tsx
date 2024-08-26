@@ -10,20 +10,20 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Header from '../../../components/header/Header';
-import { Colors } from '../../../constants/Colors';
-import { CardStyles } from '../../../components/cards/CardStyle';
+import {Colors} from '../../../constants/Colors';
+import {CardStyles} from '../../../components/cards/CardStyle';
 import FilledButton from '../../../components/buttons/FilledButton';
 import BottomSheet from '../../../components/bottom-sheet/BottomSheet';
 import ShareButton from '../profile/ShareProfileButton';
-import { StaticImage } from '../../../assets/images';
-import { staticIcons } from '../../../assets/image';
-import { retrieveData } from '../../../utils/Storage';
+import {StaticImage} from '../../../assets/images';
+import {staticIcons} from '../../../assets/image';
+import {retrieveData} from '../../../utils/Storage';
 import axios from 'axios';
-import { BASE_URL } from '../../../../App';
+import {BASE_URL} from '../../../../App';
 import Icons from '../../../assets/icon/Icon';
-import { DummyImage } from '../../../assets/dummy/images';
+import {DummyImage} from '../../../assets/dummy/images';
 import UserContext from '../../../contexts/UserContext';
 
 const menuData = [
@@ -32,7 +32,7 @@ const menuData = [
     icon: (
       <Image
         source={staticIcons.MeasurementTool}
-        style={{ height: 20, width: 20 }}
+        style={{height: 20, width: 20}}
       />
     ),
     text: 'Measurement tools',
@@ -58,10 +58,10 @@ const menuData = [
   },
 ];
 
-const MyProfile = ({ navigation }: any) => {
+const MyProfile = ({navigation}: any) => {
   const [showQR, setShowQR] = useState(false);
 
-  const { userData } = useContext(UserContext);
+  const {userData} = useContext(UserContext);
   console.log(userData);
 
   // const [userId, setUserId] = useState('');
@@ -105,9 +105,9 @@ const MyProfile = ({ navigation }: any) => {
   // }, [userId]);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <BottomSheet isVisible={showQR} onBackdropPress={() => setShowQR(false)}>
-        <View style={{ padding: 20, alignItems: 'center' }}>
+        <View style={{padding: 20, alignItems: 'center'}}>
           <Text
             style={{
               fontSize: 20,
@@ -117,7 +117,7 @@ const MyProfile = ({ navigation }: any) => {
             }}>
             Share QR Code
           </Text>
-          <Image source={DummyImage.QR} style={{ width: 150, height: 150 }} />
+          <Image source={DummyImage.QR} style={{width: 150, height: 150}} />
           <Text
             style={{
               marginVertical: 20,
@@ -142,13 +142,13 @@ const MyProfile = ({ navigation }: any) => {
             onPress={() => navigation.navigate('EditDoctorProfile')}>
             <Image
               source={staticIcons.EditPencil}
-              style={{ height: 24, width: 24 }}
+              style={{height: 24, width: 24}}
             />
           </TouchableOpacity>
         }
       />
-      <View style={{ flex: 1, backgroundColor: Colors.GhostWhite }}>
-        <View style={[CardStyles.container, { marginTop: 12 }]}>
+      <View style={{flex: 1, backgroundColor: Colors.GhostWhite}}>
+        <View style={[CardStyles.container, {marginTop: 12}]}>
           <View
             style={{
               paddingBottom: 24,
@@ -157,15 +157,17 @@ const MyProfile = ({ navigation }: any) => {
               alignItems: 'center',
             }}>
             <Image
-              source={DummyImage.DoctorImg}
+              source={
+                {uri: userData?.userImg?.secure_url} || DummyImage.DoctorImg
+              }
               height={80}
               width={80}
-              style={{ borderRadius: 40 }}
+              style={{borderRadius: 40}}
             />
-            <Text style={{ color: Colors.Blue, fontSize: 18, fontWeight: '600' }}>
+            <Text style={{color: Colors.Blue, fontSize: 18, fontWeight: '600'}}>
               Dr. {userData?.firstName} {userData?.lastName}
             </Text>
-            <Text style={{ color: Colors.SteelBlue }}>
+            <Text style={{color: Colors.SteelBlue}}>
               {userData?.speciality}
             </Text>
           </View>
@@ -187,7 +189,7 @@ const MyProfile = ({ navigation }: any) => {
             <ShareButton
               label="Share profile"
               type="blue"
-              style={{ width: '75%' }}
+              style={{width: '75%'}}
               onPress={() => {
                 Share.share({
                   message: ` Dr. ${userData?.firstName} ${userData?.lastName}`,
@@ -244,11 +246,11 @@ const MyProfile = ({ navigation }: any) => {
           </View>
         </View>
 
-        <View style={[CardStyles.container, { marginVertical: 6 }]}>
+        <View style={[CardStyles.container, {marginVertical: 6}]}>
           <FlatList
             data={menuData}
-            style={{ paddingHorizontal: 20, paddingVertical: 10 }}
-            renderItem={({ item, index: _i }) => (
+            style={{paddingHorizontal: 20, paddingVertical: 10}}
+            renderItem={({item, index: _i}) => (
               <TouchableOpacity
                 onPress={() => navigation.navigate(item.path)}
                 style={{
@@ -258,7 +260,7 @@ const MyProfile = ({ navigation }: any) => {
                   paddingVertical: 14,
                   alignItems: 'center',
                 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
                   {item.icon}
                   <Text
                     style={{
@@ -277,7 +279,7 @@ const MyProfile = ({ navigation }: any) => {
                 /> */}
                 <Image
                   source={staticIcons.nextIcon}
-                  style={{ height: 12, width: 10, objectFit: 'contain' }}
+                  style={{height: 12, width: 10, objectFit: 'contain'}}
                 />
               </TouchableOpacity>
             )}

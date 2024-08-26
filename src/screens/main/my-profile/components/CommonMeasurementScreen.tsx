@@ -10,7 +10,7 @@ import React, {FC} from 'react';
 import CommonLayout from '../../../../components/CommonLayout';
 import {Colors} from '../../../../constants/Colors';
 import FilledButton from '../../../../components/buttons/FilledButton';
-import {HelpIcon} from '../../../../assets/icon/IconNames';
+import {HelpIcon, UTurnIcon} from '../../../../assets/icon/IconNames';
 import BottomSheet from './BottomSheetLocal/BottomSheet';
 
 type props = {
@@ -18,6 +18,7 @@ type props = {
   element: React.ReactNode;
   loading: boolean;
   onPress?: () => void;
+  count?: any;
 };
 
 const CommonMeasurementScreen: FC<props> = ({
@@ -25,6 +26,7 @@ const CommonMeasurementScreen: FC<props> = ({
   element,
   loading,
   onPress,
+  count,
 }) => {
   const [open, setOpen] = React.useState(false);
   const [index, setIndex] = React.useState(0);
@@ -78,7 +80,8 @@ const CommonMeasurementScreen: FC<props> = ({
             </TouchableOpacity>
             <View style={styles.startButtonContainer}>
               <FilledButton
-                label="Start measuring"
+                icon={count ? <UTurnIcon color="white" /> : null}
+                label={count ? `Start again` : `Start measuring`}
                 type="blue"
                 onPress={onPress}
               />

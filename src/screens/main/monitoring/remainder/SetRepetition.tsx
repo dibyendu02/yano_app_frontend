@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -17,20 +17,20 @@ import {
   FormProvider,
 } from 'react-hook-form';
 import CustomSelect from '../../../../components/formComp/SelectFiled';
-import { Colors } from '../../../../constants/Colors';
+import {Colors} from '../../../../constants/Colors';
 import {
   CheckCircleIcon,
   CheckIcon,
   CloseIcon,
 } from '../../../../assets/icon/IconNames';
 import CommonHeader from '../../../healthCondition/components/CommonHeader';
-import { navigate } from '../../../../navigation/RootNavigation';
+import {navigate} from '../../../../navigation/RootNavigation';
 import FormDateInput from '../../../../components/hook-form/FormDateInput';
 import RepetitionModal from './component/RepetationChange';
 import CustomInputFieldLocal from './component/CustomInputFieldLocal';
 import FormInputLocal from './component/FormInputLocal';
-import { Image } from 'react-native';
-import { staticIcons } from '../../../../assets/image';
+import {Image} from 'react-native';
+import {staticIcons} from '../../../../assets/image';
 
 const SetRepetition = () => {
   const methods = useForm({
@@ -43,7 +43,7 @@ const SetRepetition = () => {
     },
   });
 
-  const { control, handleSubmit, watch, setValue } = methods;
+  const {control, handleSubmit, watch, setValue} = methods;
   const [modalVisible, setModalVisible] = useState(false);
   const [changeValue, setChangeValue] = useState('1');
 
@@ -62,7 +62,7 @@ const SetRepetition = () => {
               <CloseIcon size={30} />
             </TouchableOpacity>
           }
-          title="Set Repetition"
+          title="Set repetition"
           rightComp2={
             <FilledButton
               type="blue"
@@ -77,17 +77,16 @@ const SetRepetition = () => {
           }
         />
         <ScrollView>
-          <View style={{ padding: 20 }}>
-            <Text style={[styles.label, { marginLeft: 0 }]}>Repeats every</Text>
+          <View style={{padding: 20}}>
+            <Text style={[styles.label, {marginLeft: 0}]}>Repeats every</Text>
             <View style={styles.row}>
               <View style={styles.frequencyInput}>
                 <CustomInputFieldLocal
                   name="frequency"
                   control={control as unknown as Control<FieldValues, object>}
-                  rules={{ required: 'This field is required' }}
+                  rules={{required: 'This field is required'}}
                 />
               </View>
-
 
               <TouchableOpacity
                 style={styles.frequencySelect}
@@ -95,34 +94,33 @@ const SetRepetition = () => {
                 <Controller
                   name="frequencyType"
                   control={control}
-                  render={({ field: { value } }) => (
+                  render={({field: {value}}) => (
                     <Text style={styles.frequencyTypeText}>
                       {value.charAt(0).toUpperCase() + value.slice(1)}
                     </Text>
                   )}
                 />
-                <View style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: 20,
-                  height: 20,
-
-                }}>
-                  <Image source={staticIcons.downIcon}
-                    style={{ width: 10, height: 10, objectFit: 'contain' }}
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: 20,
+                    height: 20,
+                  }}>
+                  <Image
+                    source={staticIcons.downIcon}
+                    style={{width: 10, height: 10, objectFit: 'contain'}}
                   />
                 </View>
-
               </TouchableOpacity>
-
             </View>
             <View>
-              <Text style={[styles.label, { marginBottom: 0, marginLeft: 0 }]}>
+              <Text style={[styles.label, {marginBottom: 0, marginLeft: 0}]}>
                 Ends
               </Text>
               <Controller
                 control={control}
-                render={({ field: { onChange, value }, fieldState: { error } }) => (
+                render={({field: {onChange, value}, fieldState: {error}}) => (
                   <View style={styles.container}>
                     <TouchableOpacity
                       style={[styles.optionContainer]}
@@ -147,7 +145,7 @@ const SetRepetition = () => {
                         <CheckIcon color={Colors.LightGreen} size={25} />
                       )}
                       <Text style={styles.label}> On</Text>
-                      <View style={{ width: '50%' }}>
+                      <View style={{width: '35%'}}>
                         {/* {value === 'date' && ( */}
                         <FormInputLocal
                           name="date"
@@ -182,7 +180,7 @@ const SetRepetition = () => {
                           //   control as unknown as Control<FieldValues, object>
                           // }
                           // onChange={setChangeValue}
-                          rules={{ required: 'This field is required' }}
+                          rules={{required: 'This field is required'}}
                         />
                         <Text style={styles.label}>repetition</Text>
                       </>
@@ -247,11 +245,11 @@ const styles = StyleSheet.create({
     // backgroundColor: Colors.Red,
   },
   frequencyInput: {
-    width: 100,
+    width: 55,
   },
   frequencySelect: {
     flexDirection: 'row',
-    width: '70%',
+    width: '35%',
     borderWidth: 1,
     borderColor: Colors.LightGray,
     borderRadius: 8,

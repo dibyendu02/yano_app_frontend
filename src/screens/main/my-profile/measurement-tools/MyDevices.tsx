@@ -30,6 +30,7 @@ const MyDevices = () => {
                   style={{width: 65, height: 65}}
                 />
               }
+              customTextWidth={'65%'}
             />
             <CommonItem
               name="Glucómetro Yano"
@@ -55,7 +56,7 @@ const MyDevices = () => {
         <FilledButton
           label="Add a device"
           type="blue"
-          // onPress={() => navigate('ChooseDevice')}
+          onPress={() => navigate('ChooseDevice')}
         />
       </View>
     </SafeAreaView>

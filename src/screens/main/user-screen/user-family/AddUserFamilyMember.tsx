@@ -104,7 +104,7 @@ const AddUserFamilyMember = () => {
           <CustomInputField
             name="email"
             label="Email of Family Member"
-            placeholder="Enter Email"
+            placeholder="Ej. paciente@email.com"
             control={control}
             rules={{required: 'Email is required'}}
           />

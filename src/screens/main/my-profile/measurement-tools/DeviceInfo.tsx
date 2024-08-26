@@ -80,7 +80,9 @@ const DeviceInfo = ({navigation}: any) => {
         <FilledButton
           label="Add a device"
           type="blue"
-          onPress={() => navigation.navigate('TurnOnDevice')}
+          onPress={() =>
+            navigation.navigate('TurnOnDevice', {devicename: devicename})
+          }
         />
       </View>
     </SafeAreaView>

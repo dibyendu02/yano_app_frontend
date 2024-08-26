@@ -73,6 +73,7 @@ const BloodOxygenModal = ({
       onBackPress={() => {
         setTypeofMeasurement('start');
       }}
+      count={count}
       help={help}>
       <>
         <View

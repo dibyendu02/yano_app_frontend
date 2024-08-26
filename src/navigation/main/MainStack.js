@@ -118,6 +118,7 @@ import EditPatientProfile from '../../screens/main/user-screen/user-profile/Edit
 import AuthDeviceConnected from '../../screens/auth/AuthDeviceConnected';
 import AfterQR from '../../screens/main/add-patient/AfterQR';
 import PatientMonitoringProfileLocal from '../../screens/main/add-patient/PatientMonitoringProfileLocal';
+import VideoCallStart from '../../screens/VideoCallStartingScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -221,6 +222,11 @@ const MainStack = () => {
         name="tabs"
         // component={ProviderTabs}
         component={isPatient ? PatientTabs : ProviderTabs}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="VideoCallStart"
+        component={VideoCallStart}
         options={{headerShown: false}}
       />
       <Stack.Screen

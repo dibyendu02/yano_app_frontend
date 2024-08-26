@@ -102,6 +102,7 @@ const EcgMeasurement = () => {
       <CommonMeasurementScreen
         loading={loading}
         onPress={() => handleStartMeasurements()}
+        count={count}
         element={
           <>
             <Header
@@ -247,6 +248,7 @@ const EcgMeasurement = () => {
                             style={{
                               flexDirection: 'row',
                               alignItems: 'center',
+                              gap: 6,
                             }}>
                             <Text style={styles.text}>RR Max:</Text>
                             <Text
@@ -261,6 +263,7 @@ const EcgMeasurement = () => {
                             style={{
                               flexDirection: 'row',
                               alignItems: 'center',
+                              gap: 6,
                             }}>
                             <Text style={styles.text}>RR Min:</Text>
                             <Text
@@ -275,6 +278,7 @@ const EcgMeasurement = () => {
                             style={{
                               flexDirection: 'row',
                               alignItems: 'center',
+                              gap: 6,
                             }}>
                             <Text style={styles.text}>HRV:</Text>
                             <Text
@@ -391,5 +395,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     color: Colors.SteelBlue,
+    // marginRight: 5,
   },
 });

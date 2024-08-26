@@ -12,8 +12,12 @@ import Header from '../../../../components/header/Header';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import {OkIcon} from '../../../../assets/icon/IconNames';
 import {staticIcons} from '../../../../assets/image';
+import {useRoute} from '@react-navigation/native';
 
 const DeviceConnected = ({navigation}: any) => {
+  const route = useRoute();
+  const devicename = route?.params?.devicename;
+
   return (
     <SafeAreaView
       style={{
@@ -69,7 +73,11 @@ const DeviceConnected = ({navigation}: any) => {
                 textAlign: 'center',
                 marginBottom: 10,
               }}>
-              Yano Multi-Parameter Monitor has been added
+              {(devicename == 'multimeter' && `Yano Multi-Parameter Monitor`) ||
+                (devicename == 'medidor' && `Medidor continuo de glucosa`) ||
+                (devicename == 'glucometer' && `Glucómetro`) ||
+                `Yano Multi-Parameter Monitor`}{' '}
+              has been added
             </Text>
             <Text
               style={{

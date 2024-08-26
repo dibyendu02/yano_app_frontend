@@ -75,6 +75,7 @@ const BloodPressureModal = ({
     //   onBackdropPress={() => setTypeofMeasurement('')}>
     <CommonLayoutModalLocal
       heading="Blood pressure"
+      count={count}
       loading={loading}
       onPress={handleStartMeasurements}
       onBackPress={() => {

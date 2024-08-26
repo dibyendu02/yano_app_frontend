@@ -66,5 +66,6 @@ const styles = StyleSheet.create({
     width: '45%',
     borderRadius: 10,
     overflow: 'hidden',
+    // backgroundColor: 'red'
   },
 });

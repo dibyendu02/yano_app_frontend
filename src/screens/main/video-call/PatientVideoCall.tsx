@@ -38,7 +38,7 @@ export default function PatientVideoCall() {
               'You will stop having contact with the health provider who treated you.'
             }
             active={setIsClicked}
-            action={() => navigation.goBack()}
+            action={() => navigation.navigate('tabs')}
           />
         </View>
       )}
