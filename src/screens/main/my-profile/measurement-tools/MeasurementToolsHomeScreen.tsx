@@ -27,6 +27,7 @@ const MeasurementToolsHomeScreen = () => {
               leftIcon={
                 <Image source={DummyImage.device} width={30} height={30} />
               }
+              customTextWidth={'75%'}
             />
             <CommonItem
               name="Glucómetro Yano"

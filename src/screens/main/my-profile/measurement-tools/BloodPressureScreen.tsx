@@ -184,7 +184,7 @@ const BloodPressureScreen = () => {
                         fontWeight: '600',
                         color: Colors.Blue,
                       }}>
-                      Normal level
+                      Normal blood pressure
                     </Text>
                   </View>
                   <View style={{position: 'relative', height: 120}}>

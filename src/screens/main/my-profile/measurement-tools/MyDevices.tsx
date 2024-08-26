@@ -30,6 +30,7 @@ const MyDevices = () => {
                   style={{width: 65, height: 65}}
                 />
               }
+              customTextWidth={'65%'}
             />
             <CommonItem
               name="Glucómetro Yano"

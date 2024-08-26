@@ -14,6 +14,7 @@ type props = {
   leftIcon: React.ReactNode;
   isConnected?: boolean;
   onPress: () => void;
+  customTextWidth?: string;
 };
 
 const CommonItem: FC<props> = ({
@@ -21,6 +22,7 @@ const CommonItem: FC<props> = ({
   name,
   leftIcon,
   isConnected = false,
+  customTextWidth,
 }) => {
   return (
     <>
@@ -53,7 +55,7 @@ const CommonItem: FC<props> = ({
                 fontSize: 18,
                 fontWeight: '600',
                 color: Colors.Blue,
-                width: '75%',
+                width: customTextWidth ? customTextWidth : '65%',
               }}>
               {name}
             </Text>

@@ -69,7 +69,9 @@ const HealthParameterDetail = ({route}) => {
                     color: Colors.Blue,
                   }}>
                   {/* {'Normal' + ' ' + healthParameterDetail?.field_full} */}
-                  Normal
+                  {healthParameterDetail?.field == 'BP'
+                    ? `Normal blood pressure`
+                    : `Normal`}
                 </Text>
               </View>
               <Text style={{fontSize: 12, color: Colors.SteelBlue}}>
