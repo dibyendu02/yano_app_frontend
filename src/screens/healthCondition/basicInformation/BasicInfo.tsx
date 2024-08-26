@@ -24,20 +24,13 @@ const BasicInfo = ({ navigation }: any) => {
     const fetchData = async () => {
       try {
         const res = await basicInfoData();
-        // console.log(res.userData);
-
-        if (res?.userData) {
-          setData([]);
-          return;
-        }
-
         const transformedData = {
-          height: res.userData?.height,
-          weight: res.userData?.weight,
-          bloodGroup: res.userData?.bloodGroup,
+          height: res.userData?.height ? `${res.userData?.height} cm` : '-',
+          weight: res.userData?.weight ? `${res.userData?.weight} kg` : '-',
+          bloodGroup: res.userData?.weight ? res.userData?.bloodType : '-',
         };
-
         setData(transformedData);
+
       } catch (error) {
         console.error(error);
       }
