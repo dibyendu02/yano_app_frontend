@@ -78,14 +78,14 @@ const AddAndEditFamilyHistory = ({navigation, route}: any) => {
               label="Relationship to family member"
               name="name"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Relationship to family member"
+              placeholder="Ej. Madre, padre, hermano, etc..."
               rules={{required: 'required*'}}
             />
             <CustomInputField
               label="Family member's health condition"
               name="disease"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Family member's health condition"
+              placeholder="Ej. Hypertension, diabetes, etc..."
             />
           </View>
         </View>

@@ -10,7 +10,7 @@ import React, {FC} from 'react';
 import Header from '../../../components/header/Header';
 import FilledButton from '../../../components/buttons/FilledButton';
 import {Colors} from '../../../constants/Colors';
-import {HelpIcon} from '../../../assets/icon/IconNames'; // Ensure this is the correct path
+import {HelpIcon, UTurnIcon} from '../../../assets/icon/IconNames'; // Ensure this is the correct path
 import BottomSheet from '../my-profile/components/BottomSheetLocal/BottomSheet';
 import CommonHeaderLocal from './components/CompoundHeaderLocal';
 import Icons from '../../../assets/icon/Icon';
@@ -30,6 +30,7 @@ type Props = {
   onBackPress: () => void;
   onPressHelp?: () => void;
   help?: HelpItem[]; // Optional array of HelpItem objects
+  count?: any;
 };
 
 const CommonLayoutModalLocal: FC<Props> = ({
@@ -39,6 +40,7 @@ const CommonLayoutModalLocal: FC<Props> = ({
   onPress,
   onBackPress,
   help = [], // Default to an empty array
+  count,
 }) => {
   const [open, setOpen] = React.useState(false);
   const [underStand, setUnderStand] = React.useState(false);
@@ -121,7 +123,8 @@ const CommonLayoutModalLocal: FC<Props> = ({
                   // backgroundColor: 'red',
                 }}>
                 <FilledButton
-                  label="Start measuring"
+                  icon={count ? <UTurnIcon color="white" /> : null}
+                  label={count ? `Start again` : `Start measuring`}
                   type="blue"
                   onPress={onPress}
                 />

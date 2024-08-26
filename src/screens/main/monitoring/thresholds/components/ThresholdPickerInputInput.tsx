@@ -367,6 +367,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     height: 56,
     color: Colors.Blue,
+    borderRadius: 10,
   },
   outline: {
     borderRadius: 10,

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -104,7 +104,6 @@ const SetRepetition = () => {
                 />
               </View>
 
-
               <TouchableOpacity
                 style={styles.frequencySelect}
                 onPress={() => setModalVisible(true)}>
@@ -117,18 +116,18 @@ const SetRepetition = () => {
                     </Text>
                   )}
                 />
-                <View style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  width: 20,
-                  height: 20,
-
-                }}>
-                  <Image source={staticIcons.downIcon}
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: 20,
+                    height: 20,
+                  }}>
+                  <Image
+                    source={staticIcons.downIcon}
                     style={{ width: 10, height: 10, objectFit: 'contain' }}
                   />
                 </View>
-
               </TouchableOpacity>
             </View>
 
@@ -208,7 +207,7 @@ const SetRepetition = () => {
                         <CheckIcon color={Colors.LightGreen} size={25} />
                       )}
                       <Text style={styles.label}> On</Text>
-                      <View style={{ width: '50%' }}>
+                      <View style={{ width: '35%' }}>
                         {/* {value === 'date' && ( */}
                         <FormInputLocal
                           name="date"
@@ -311,11 +310,11 @@ const styles = StyleSheet.create({
     // backgroundColor: Colors.Red,
   },
   frequencyInput: {
-    width: 100,
+    width: 55,
   },
   frequencySelect: {
     flexDirection: 'row',
-    width: '70%',
+    width: '35%',
     borderWidth: 1,
     borderColor: Colors.LightGray,
     borderRadius: 8,

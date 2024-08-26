@@ -11,11 +11,15 @@ import {Colors} from '../../../../constants/Colors';
 import Header from '../../../../components/header/Header';
 import {DummyImage} from '../../../../assets/dummy/images';
 import FilledButton from '../../../../components/buttons/FilledButton';
+import {useRoute} from '@react-navigation/native';
 
 const TurnOnDevice = ({navigation}: any) => {
+  const route = useRoute();
+  const devicename = route?.params?.devicename;
+
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('DeviceConnected');
+      navigation.navigate('DeviceConnected', {devicename: devicename});
     }, 1000);
   }, []);
   return (

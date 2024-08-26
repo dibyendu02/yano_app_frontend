@@ -52,6 +52,7 @@ const BodyTemperatureModal = ({
     //   onBackdropPress={() => setTypeofMeasurement('')}>
     <CommonLayoutModalLocal
       heading="Body temperature"
+      count={count}
       loading={loading}
       onPress={handleStartMeasurements}
       onBackPress={() => {

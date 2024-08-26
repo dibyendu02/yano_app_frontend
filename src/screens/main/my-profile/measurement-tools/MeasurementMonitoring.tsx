@@ -63,7 +63,7 @@ const MeasurementMonitoring = ({navigation}: any) => {
             </View>
           </View>
           <View style={styles.container}>
-            <Text style={styles.heading}>measure</Text>
+            <Text style={styles.heading}>start measuring</Text>
             <MeasurementItems data={measurementList} />
           </View>
         </View>

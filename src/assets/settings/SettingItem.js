@@ -46,7 +46,7 @@ export const MeasurementSettingItems = [
     img: require('./image/temperature.png'),
     path: '',
     unit1: 'Celsius',
-    unit2: 'Fahrenheit',
+    unit2: 'Farenheit',
   },
   {
     title: 'Weight',
@@ -65,7 +65,7 @@ export const MeasurementSettingItems = [
     unit2: 'Feets, inches',
   },
   {
-    title: 'Glucose level',
+    title: 'Blood glucose',
     subtitle: 'mmol/L',
     img: require('./image/glucoseLavel.png'),
     path: '',

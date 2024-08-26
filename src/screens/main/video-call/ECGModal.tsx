@@ -64,6 +64,7 @@ const ECGModal = ({setTypeofMeasurement}: {setTypeofMeasurement: any}) => {
     //   onBackdropPress={() => setTypeofMeasurement('')}>
     <CommonLayoutModalLocal
       heading="ECG"
+      count={count}
       loading={loading}
       help={help}
       onPress={handleStartMeasurements}
@@ -200,6 +201,7 @@ const ECGModal = ({setTypeofMeasurement}: {setTypeofMeasurement: any}) => {
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
+                    gap: 6,
                   }}>
                   <Text style={styles.text}>RR Max:</Text>
                   <Text
@@ -214,6 +216,7 @@ const ECGModal = ({setTypeofMeasurement}: {setTypeofMeasurement: any}) => {
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
+                    gap: 6,
                   }}>
                   <Text style={styles.text}>RR Min:</Text>
                   <Text
@@ -228,6 +231,7 @@ const ECGModal = ({setTypeofMeasurement}: {setTypeofMeasurement: any}) => {
                   style={{
                     flexDirection: 'row',
                     alignItems: 'center',
+                    gap: 6,
                   }}>
                   <Text style={styles.text}>HRV:</Text>
                   <Text

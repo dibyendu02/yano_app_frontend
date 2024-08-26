@@ -74,7 +74,14 @@ const DeleteAccount = () => {
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{paddingStart: 20, fontSize: 16}}>•</Text>
+                <Text
+                  style={{
+                    paddingStart: 20,
+                    fontSize: 16,
+                    color: Colors.SteelBlue,
+                  }}>
+                  •
+                </Text>
                 <Text style={styles.list}>
                   Your health history will be erased.
                 </Text>

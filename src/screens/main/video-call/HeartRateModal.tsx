@@ -68,6 +68,7 @@ const HeartRateModal = ({
     <CommonLayoutModalLocal
       heading="Heart rate"
       loading={loading}
+      count={count}
       onPress={handleStartMeasurements}
       onBackPress={() => {
         setTypeofMeasurement('start');
