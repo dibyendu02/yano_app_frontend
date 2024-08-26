@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -57,13 +57,21 @@ const SetRepetition = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [changeValue, setChangeValue] = useState('1');
   const [values, setValues] = useState('day');
-  const [day, setDay] = useState('wednesday');
+  const [day, setDay] = useState(['wednesday']);
 
   const onSubmit = (data: any) => {
     console.log(data);
   };
 
   const selectedEnds = watch('ends'); // Watch for changes in the 'ends' field
+
+  const setDayHandle = (item: string) => {
+    if (day.includes(item)) {
+      setDay(day.filter((i) => i !== item));
+    } else {
+      setDay([...day, item]);
+    }
+  }
 
   useEffect(() => {
     console.log(values);
@@ -151,20 +159,20 @@ const SetRepetition = () => {
                     flexDirection: 'row',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    borderWidth: 2,
+                    borderWidth: 1,
                     borderColor: Colors.Blue,
                     borderRadius: 25,
                     width: 30,
                     height: 30,
-                    backgroundColor: day === item ? Colors.Blue : Colors.White,
+                    backgroundColor: day.includes(item) ? Colors.Blue : Colors.White,
                   }}
-                  onPress={() => setDay(item)}
+                  onPress={() => setDayHandle(item)}
                 >
                   <Text
                     style={{
                       fontSize: 16,
                       fontWeight: '600',
-                      color: day === item ? Colors.White : Colors.Blue,
+                      color: day.includes(item) ? Colors.White : Colors.Blue,
                       textAlign: 'center',
                     }}
                   >
