@@ -1,23 +1,24 @@
 // AddAndEditFamilyHistory.tsx
-import React, {useState} from 'react';
-import {View, StyleSheet, SafeAreaView, ScrollView, Text} from 'react-native';
-import {Colors} from '../../../constants/Colors';
+import React, { useState } from 'react';
+import { View, StyleSheet, SafeAreaView, ScrollView, Text } from 'react-native';
+import { Colors } from '../../../constants/Colors';
 import Header from '../../../components/header/Header';
 import FilledButton from '../../../components/buttons/FilledButton';
 import CustomInputField from '../../../components/formComp/CustomInputField';
-import {useForm, Control, FieldValues} from 'react-hook-form';
+import { useForm, Control, FieldValues } from 'react-hook-form';
 import CommonHeader from '../components/CommonHeader';
-import {CloseIcon} from '../../../assets/icon/IconNames';
-import {Image} from 'react-native';
-import {staticIcons} from '../../../assets/image';
+import { CloseIcon } from '../../../assets/icon/IconNames';
+import { Image } from 'react-native';
+import { staticIcons } from '../../../assets/image';
 import Modal from 'react-native-modal';
+import { healthConditionsData } from '../../../api/POST/medicalHistory';
 
 interface FormValues {
   name: string;
   disease: string;
 }
 
-const AddAndEditFamilyHistory = ({navigation, route}: any) => {
+const AddAndEditFamilyHistory = ({ navigation, route }: any) => {
   let data = null;
   if (route?.params) {
     data = route.params.data;
@@ -33,11 +34,13 @@ const AddAndEditFamilyHistory = ({navigation, route}: any) => {
     control,
     handleSubmit,
     reset,
-    formState: {errors},
-  } = useForm<FormValues>({defaultValues});
+    formState: { errors },
+  } = useForm<FormValues>({ defaultValues });
 
-  const onSubmit = (formdata: FormValues) => {
+  const onSubmit = async (formdata: FormValues) => {
     console.log(formdata);
+    const res = await healthConditionsData({ data: formdata });
+    console.log(res);
     if (data) {
       setSaved(true);
       setTimeout(() => {
@@ -72,14 +75,14 @@ const AddAndEditFamilyHistory = ({navigation, route}: any) => {
         }
       />
       <ScrollView>
-        <View style={{padding: 20}}>
+        <View style={{ padding: 20 }}>
           <View style={styles.inputBox}>
             <CustomInputField
               label="Relationship to family member"
               name="name"
               control={control as unknown as Control<FieldValues, object>}
               placeholder="Ej. Madre, padre, hermano, etc..."
-              rules={{required: 'required*'}}
+              rules={{ required: 'required*' }}
             />
             <CustomInputField
               label="Family member's health condition"
@@ -102,7 +105,7 @@ const AddAndEditFamilyHistory = ({navigation, route}: any) => {
         animationOutTiming={3000}
         style={styles.modal}>
         <View style={styles.modalContent}>
-          <View style={{flexDirection: 'row', gap: 10}}>
+          <View style={{ flexDirection: 'row', gap: 10 }}>
             <Image
               source={staticIcons.checkcircle}
               style={{
