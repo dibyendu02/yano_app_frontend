@@ -82,6 +82,7 @@ export const putData = async (
     console.log(error);
   }
 };
+
 export const deleteData = async (url: string, token: string | null) => {
   let headerObj = {};
   if (token) {
