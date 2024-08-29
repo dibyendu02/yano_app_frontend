@@ -60,6 +60,7 @@ const NotificationAlerts = ({navigation}) => {
             <CheckListIcon size={24} />
           </TouchableOpacity>
         }
+        customStyle={{paddingVertical: 12}}
       />
       <ScrollView>
         <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>

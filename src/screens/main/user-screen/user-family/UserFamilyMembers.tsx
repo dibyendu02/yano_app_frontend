@@ -14,6 +14,7 @@ import {
   View,
 } from 'react-native';
 import {DummyImage} from '../../../../assets/dummy/images';
+import {Colors} from '../../../../constants/Colors';
 
 const UserFamilyMembers = () => {
   const data = [
@@ -65,14 +66,19 @@ const UserFamilyMembers = () => {
                               <Image
                                 source={DummyImage.user}
                                 style={{
-                                  width: 50,
-                                  height: 50,
+                                  width: 42,
+                                  height: 42,
                                   borderRadius: 50,
                                 }}
                               />
                               <View>
                                 <Text style={styles.name}>{item.name}</Text>
-                                <Text style={{marginTop: 2, fontSize: 14}}>
+                                <Text
+                                  style={{
+                                    marginTop: 2,
+                                    fontSize: 14,
+                                    color: Colors.SteelBlue,
+                                  }}>
                                   {item.relation}
                                 </Text>
                               </View>
@@ -111,7 +117,7 @@ const styles = StyleSheet.create({
   addBtn: {
     width: 200,
     position: 'absolute',
-    bottom: 40,
+    bottom: 25,
     right: 20,
   },
   container: {

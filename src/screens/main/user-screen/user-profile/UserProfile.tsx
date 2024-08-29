@@ -244,7 +244,8 @@ export default function () {
             <TouchableOpacity
               onPress={() => setShowQR(true)}
               style={{
-                width: '18%',
+                width: 60,
+                height: 60,
                 backgroundColor: Colors.LightGray,
                 flexDirection: 'row',
                 justifyContent: 'center',
@@ -270,7 +271,7 @@ export default function () {
             style={{
               paddingLeft: 20,
               paddingRight: 13,
-              paddingVertical: 10,
+              // paddingVertical: 10,
             }}
             renderItem={({item, index: _i}) => (
               <TouchableOpacity

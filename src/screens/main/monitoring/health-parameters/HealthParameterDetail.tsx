@@ -48,7 +48,11 @@ const HealthParameterDetail = ({route}) => {
         }
       />
       <View
-        style={{flex: 1, backgroundColor: Colors.GhostWhite, paddingTop: 10}}>
+        style={{
+          flex: 1,
+          backgroundColor: Colors.GhostWhite,
+          paddingTop: healthParameterDetail?.field !== 'ECG' ? 8 : 0,
+        }}>
         {healthParameterDetail?.field !== 'ECG' ? (
           <View style={[CardStyles.container]}>
             <View style={{width: '100%', padding: 20}}>

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
-import { Colors } from '../../../../../constants/Colors';
-import { RadioButton } from 'react-native-paper';
+import React, {useState} from 'react';
+import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
+import {Colors} from '../../../../../constants/Colors';
+import {RadioButton} from 'react-native-paper';
 
-const RepetitionModal = ({ isVisible, onClose, onSelect }) => {
+const RepetitionModal = ({isVisible, onClose, onSelect}) => {
   const [selectedValue, setSelectedValue] = useState('day');
 
   const handleSelect = value => {
@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.White,
     borderRadius: 10,
     padding: 20,
+    paddingBottom: 10,
   },
   modalTitle: {
     fontSize: 18,

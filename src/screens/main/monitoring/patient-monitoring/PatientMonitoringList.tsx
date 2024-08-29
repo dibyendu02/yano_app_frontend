@@ -1,12 +1,12 @@
-/* eslint-disable react/no-unstable-nested-components */
+import React, {useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   View,
+  Animated,
 } from 'react-native';
-import React from 'react';
 import Header from '../../../../components/header/Header';
 import {Colors} from '../../../../constants/Colors';
 import {patientList} from '../../../../test/Data';
@@ -17,6 +17,8 @@ import Icons from '../../../../assets/icon/Icon';
 import {navigate} from '../../../../navigation/RootNavigation';
 
 const PatientMonitoringList = () => {
+  const [isScrolling, setIsScrolling] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
       <Header
@@ -28,7 +30,6 @@ const PatientMonitoringList = () => {
               name="notifications"
               size={25}
               color={Colors.Blue}
-              // style={{ width: 40 }}
             />
           </TouchableOpacity>
         }
@@ -39,21 +40,32 @@ const PatientMonitoringList = () => {
             data={patientList}
             showsVerticalScrollIndicator={false}
             renderItem={({item, index: _index}) => (
-              <PatientListItem name={item.name} />
+              <PatientListItem
+                customStyle={{
+                  paddingTop: _index === 0 ? 0 : 16,
+                  paddingBottom: _index === patientList.length - 1 ? 0 : 16,
+                }}
+                name={item.name}
+              />
             )}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
+            onScrollBeginDrag={() => setIsScrolling(true)}
+            onScrollEndDrag={() => setIsScrolling(false)}
+            onMomentumScrollEnd={() => setIsScrolling(false)}
           />
         </Card>
-        <FilledButton
-          type="blue"
-          label="Add patient"
-          activeOpacity={1}
-          onPress={() => navigate('AddPatient')}
-          icon={
-            <Icons.MaterialIcons name="add" color={Colors.White} size={25} />
-          }
-          style={styles.floatingBtn}
-        />
+        {!isScrolling && (
+          <FilledButton
+            type="blue"
+            label="Add patient"
+            activeOpacity={1}
+            onPress={() => navigate('AddPatient')}
+            icon={
+              <Icons.MaterialIcons name="add" color={Colors.White} size={25} />
+            }
+            style={styles.floatingBtn}
+          />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -70,7 +82,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.GhostWhite,
     width: '100%',
     position: 'relative',
-    paddingVertical: 10,
+    paddingVertical: 6,
   },
   separator: {
     backgroundColor: Colors.LightGray,

@@ -27,10 +27,12 @@ import MeasuringYourVitalComp from './MeasuringYourVitalComp';
 import OutlineButton from '../../../../components/buttons/OutlineButton';
 import UserContext from '../../../../contexts/UserContext';
 import moment from 'moment';
+import {healthParameterDetailsN, HSDGN} from '../../../../test/HealthStatsData';
 
 const MyHealthHomeScreen = ({navigation}) => {
   const [show, setShow] = useState(false);
   const [selectedDiv, setSelectedDiv] = useState(null);
+  const [isButtonVisible, setIsButtonVisible] = useState(true);
   const {userData} = useContext(UserContext);
   console.log(userData);
 
@@ -61,7 +63,10 @@ const MyHealthHomeScreen = ({navigation}) => {
           </TouchableOpacity>
         }
       />
-      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+      <ScrollView
+        onScrollBeginDrag={() => setIsButtonVisible(false)}
+        onScrollEndDrag={() => setIsButtonVisible(true)}
+        style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
         <View>
           <View style={styles.container}>
             <Text style={styles.title}>Do you have one of our devices?</Text>
@@ -136,21 +141,27 @@ const MyHealthHomeScreen = ({navigation}) => {
           }}>
           <FlatList
             data={
-              measurements.length >= 2
-                ? measurements.filter((e, i) => i < 2)
+              HSDGN[0].data.length >= 2
+                ? HSDGN[0].data.filter((e, i) => i < 2)
                 : []
             }
             scrollEnabled={false}
             style={{width: '100%'}}
             renderItem={({item, index}) => (
-              <View
+              <TouchableOpacity
                 style={{
                   width: '100%',
                   paddingVertical: 10,
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                }}>
+                }}
+                onPress={() =>
+                  navigate('HealthParameterDetail', {
+                    //@ts-ignore
+                    healthParameterDetail: healthParameterDetailsN[item.field],
+                  })
+                }>
                 <View style={{width: '50%'}}>
                   <Text
                     style={{
@@ -159,7 +170,7 @@ const MyHealthHomeScreen = ({navigation}) => {
                       fontWeight: 'bold',
                       marginBottom: 4,
                     }}>
-                    {item.field}
+                    {item.field_full}
                   </Text>
                   <Text
                     style={{
@@ -206,7 +217,7 @@ const MyHealthHomeScreen = ({navigation}) => {
                   color={Colors.Green}
                   size={22}
                 />
-              </View>
+              </TouchableOpacity>
             )}
             ItemSeparatorComponent={() => (
               <View
@@ -221,27 +232,29 @@ const MyHealthHomeScreen = ({navigation}) => {
           />
         </Card>
       </ScrollView>
-      <FilledButton
-        type="blue"
-        label="Consultation 24/7"
-        icon={
-          <Icons.MaterialIcons
-            name="health-and-safety"
-            size={16}
-            color={Colors.White}
-          />
-        }
-        onPress={() => setShow(true)}
-        style={styles.addBtn}
-      />
+      {isButtonVisible && (
+        <FilledButton
+          type="blue"
+          label="Consultation 24/7"
+          icon={
+            <Icons.MaterialIcons
+              name="health-and-safety"
+              size={16}
+              color={Colors.White}
+            />
+          }
+          onPress={() => setShow(true)}
+          style={styles.addBtn}
+        />
+      )}
       <BottomSheet isVisible={show} onBackdropPress={() => setShow(false)}>
-        <View style={{padding: 20}}>
+        <View style={{paddingHorizontal: '6%', paddingTop: 12}}>
           <Text
             style={{
               fontSize: 24,
               fontWeight: '500',
               color: Colors.Blue,
-              // marginBottom: 10,
+              marginBottom: 12,
             }}>
             Consultation 24/7
           </Text>
@@ -263,7 +276,7 @@ const MyHealthHomeScreen = ({navigation}) => {
           <View
             style={{
               flexDirection: 'row',
-              marginTop: 15,
+              marginTop: 20,
               justifyContent: 'space-between',
             }}>
             <TouchableOpacity
@@ -308,7 +321,7 @@ const MyHealthHomeScreen = ({navigation}) => {
             <FilledButton
               label={'Continue'}
               type={'blue'}
-              style={{width: '100%', alignSelf: 'center', marginVertical: 14}}
+              style={{width: '100%', alignSelf: 'center', marginTop: 20}}
               onPress={() => {
                 setShow(false);
                 navigation.navigate('VideoCallStart');

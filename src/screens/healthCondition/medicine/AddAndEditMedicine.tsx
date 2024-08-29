@@ -117,8 +117,8 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
           />
         }
       />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View style={styles.inputBox}>
             <CustomInputField
               label="Medicine name"
@@ -155,7 +155,14 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
                   rules={{required: 'Details is required'}}
                 />
               </View>
-              <View style={{width: '38%', marginTop: 22}}>
+              <View
+                style={{
+                  width: '38%',
+                  marginTop: 26,
+                  // backgroundColor: 'red',
+                  flexDirection: 'column',
+                  justifyContent: 'flex-end',
+                }}>
                 <FormProvider {...methods}>
                   <FormSelectionInput
                     name="unit"
@@ -280,7 +287,7 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
 
 const styles = StyleSheet.create({
   inputBox: {
-    marginBottom: 20,
+    marginBottom: 12,
   },
   heading: {
     fontSize: 20,

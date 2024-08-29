@@ -76,8 +76,8 @@ const SetRepetition = () => {
             />
           }
         />
-        <ScrollView>
-          <View style={{padding: 20}}>
+        <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+          <View>
             <Text style={[styles.label, {marginLeft: 0}]}>Repeats every</Text>
             <View style={styles.row}>
               <View style={styles.frequencyInput}>

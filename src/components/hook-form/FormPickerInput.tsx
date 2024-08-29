@@ -344,7 +344,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   inputBox: {
-    marginBottom: 15,
+    marginBottom: 12,
   },
   label: {
     fontSize: 16,

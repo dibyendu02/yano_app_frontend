@@ -39,7 +39,7 @@ const EditUserFamilyMember = () => {
   return (
     <CommonLayout>
       <CommonHeader
-        title={'Add Family Member'}
+        title={'Add family member'}
         rightComp1={
           <FilledButton
             type="blue"

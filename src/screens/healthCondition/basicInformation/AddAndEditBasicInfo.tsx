@@ -62,8 +62,8 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
           />
         }
       />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View style={styles.inputBox}>
             <FormProvider {...methods}>
               <FormPickerInputInput
@@ -108,7 +108,7 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
 
 const styles = StyleSheet.create({
   inputBox: {
-    marginBottom: 20,
+    // marginBottom: 20,
   },
 });
 

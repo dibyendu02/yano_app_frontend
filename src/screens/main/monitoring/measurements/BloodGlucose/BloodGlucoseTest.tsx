@@ -1,4 +1,12 @@
-import {ActivityIndicator, Image, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Image,
+  Share,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../../../components/header/Header';
@@ -15,6 +23,26 @@ const BloodGlucoseTest = ({navigation}: any) => {
   const [time, setTime] = useState('');
   const [code, setCode] = useState('C20');
   const [stopClicked, setStopClicked] = useState(false);
+  const [value, setValue] = useState('0');
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Blood glucose: ${value} mmol/L`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   useEffect(() => {
     if (step == 'step3')
@@ -26,6 +54,7 @@ const BloodGlucoseTest = ({navigation}: any) => {
     if (step == 'measurement')
       setTimeout(() => {
         setStep('result');
+        setValue('5.0');
       }, 3000);
 
     if (stopClicked) setStep('start');
@@ -37,7 +66,17 @@ const BloodGlucoseTest = ({navigation}: any) => {
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title={'Blood glucose'} />
+      <Header
+        title={'Blood glucose'}
+        headerRightComponent={
+          <TouchableOpacity onPress={onShare}>
+            <Image
+              source={StaticImage.SharerIcon}
+              style={{width: 24, height: 24}}
+            />
+          </TouchableOpacity>
+        }
+      />
       {step == 'landing' && (
         <View
           style={{
@@ -299,7 +338,7 @@ const BloodGlucoseTest = ({navigation}: any) => {
               justifyContent: 'center',
             }}>
             <Text style={{fontSize: 40, fontWeight: '600', color: Colors.Blue}}>
-              5.0
+              {value}
             </Text>
             <Text style={{color: Colors.SteelBlue}}>mmol/L</Text>
           </View>
@@ -357,7 +396,7 @@ const BloodGlucoseTest = ({navigation}: any) => {
           <FilledButton
             label={'Start measuring'}
             type={'blue'}
-            style={{width: '92%', alignSelf: 'center', marginVertical: 14}}
+            // style={{width: '92%', alignSelf: 'center', marginVertical: 14}}
             onPress={() =>
               // navigation.navigate('BloodGlucoseTestTime')
               setStep('start')
@@ -372,17 +411,22 @@ const BloodGlucoseTest = ({navigation}: any) => {
           step == 'step3') && (
           <View
             style={[
-              styles.addBtn,
+              // styles.addBtn,
               {
-                paddingLeft: 25,
+                // paddingLeft: 25,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
+                // gap: 10,
               },
             ]}>
             <FilledButton
               label={'Back'}
               type={'lightGrey'}
-              style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
+              style={{
+                width: '48%',
+                // alignSelf: 'center',
+                // , marginVertical: 14
+              }}
               onPress={() => {
                 if (step == 'start') setStep('landing');
                 if (step == 'strips') setStep('start');
@@ -396,7 +440,7 @@ const BloodGlucoseTest = ({navigation}: any) => {
               <FilledButton
                 label={'Next'}
                 type={'blue'}
-                style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
+                style={{width: '48%'}}
                 onPress={() => {
                   if (step == 'start') {
                     setStep('strips');
@@ -417,7 +461,7 @@ const BloodGlucoseTest = ({navigation}: any) => {
             // icon={
             // }
             type={'red'}
-            style={{width: '100%', alignSelf: 'center', marginVertical: 14}}
+            style={{width: '100%', alignSelf: 'center'}}
             activeOpacity={0.8}
             onPress={() => {
               setStopClicked(true);
@@ -430,7 +474,7 @@ const BloodGlucoseTest = ({navigation}: any) => {
             label={'Start again'}
             icon={<UTurnIcon color="white" />}
             type={'blue'}
-            style={{width: '100%', alignSelf: 'center', marginBottom: 12}}
+            style={{width: '100%', alignSelf: 'center'}}
             onPress={() => setStep('start')}
             activeOpacity={0.8}
           />

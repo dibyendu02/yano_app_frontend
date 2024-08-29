@@ -32,7 +32,7 @@ const MeasuringYourVitalComp: React.FC<ItemWithTileSubtileProps> = ({
           <View
             style={{
               marginStart: 15,
-              width: '68%',
+              width: '65%',
             }}>
             <Text style={styles.title}>{title}</Text>
             <Text style={{marginTop: 4, color: Colors.SteelBlue}}>
@@ -41,7 +41,13 @@ const MeasuringYourVitalComp: React.FC<ItemWithTileSubtileProps> = ({
           </View>
         </View>
         {isVisibleIcon && (
-          <View style={{paddingRight: 6}}>
+          <View
+            style={{
+              // backgroundColor: 'red',
+              width: '14%',
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
             <MaterialIcons name="navigate-next" size={30} color={'black'} />
           </View>
         )}
@@ -70,7 +76,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: '#00263E',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600',
     // fontFamily: 'Roboto',
     flex: 1,

@@ -71,8 +71,8 @@ const AddAndEditFamilyHistory = ({navigation, route}: any) => {
           />
         }
       />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View style={styles.inputBox}>
             <CustomInputField
               label="Relationship to family member"
@@ -123,7 +123,7 @@ const AddAndEditFamilyHistory = ({navigation, route}: any) => {
 
 const styles = StyleSheet.create({
   inputBox: {
-    marginBottom: 20,
+    marginBottom: 12,
   },
   modal: {
     justifyContent: 'flex-end',

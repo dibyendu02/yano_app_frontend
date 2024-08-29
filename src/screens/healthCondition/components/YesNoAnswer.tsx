@@ -75,13 +75,13 @@ export default YesNoAnswer;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 0,
-    paddingVertical: 16,
+    paddingBottom: 12,
   },
   headerText: {
     color: Colors.Blue,
     fontWeight: 'bold',
     fontSize: 16,
-    marginBottom: 16,
+    marginBottom: 5,
   },
   buttonContainer: {
     flexDirection: 'row',

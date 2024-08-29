@@ -199,7 +199,9 @@ const styles = StyleSheet.create({
   optionContainer: {
     width: '100%',
     backgroundColor: Colors.White,
-    padding: 16,
+    paddingTop: 10,
+    paddingBottom: 14,
+    paddingLeft: 8,
     paddingRight: 30,
     marginVertical: 6,
     borderRadius: 8,
@@ -226,7 +228,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.GhostWhite,
   },
   resendContent: {
-    width: '80%',
+    width: '100%',
     alignSelf: 'center',
     backgroundColor: Colors.White,
     padding: 16,
@@ -246,8 +248,8 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   sendButton: {
-    width: '92%',
+    width: '94%',
     alignSelf: 'center',
-    marginTop: 20,
+    marginVertical: 12,
   },
 });

@@ -32,7 +32,12 @@ const DeviceItems: React.FC<DeviceItemsProps> = ({
             </View>
           </View>
           {isVisibleIcon && (
-            <MaterialIcons name="navigate-next" size={25} color={'black'} />
+            <MaterialIcons
+              name="navigate-next"
+              size={25}
+              color={'black'}
+              // style={{backgroundColor: 'red'}}
+            />
           )}
         </View>
       </TouchableOpacity>

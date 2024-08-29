@@ -27,8 +27,9 @@ const Landing: React.FC<LandingScreenProps> = () => {
         StatusBar.setBarStyle('dark-content');
         StatusBar.setBackgroundColor('#a4d6eb');
       } else {
+        // StatusBar.setTranslucent(true);
         StatusBar.setBarStyle('dark-content');
-        StatusBar.setBackgroundColor(Colors.White);
+        StatusBar.setBackgroundColor('white');
       }
     }
   }, [isFocused]);

@@ -8,11 +8,12 @@ import {staticIcons} from '../../../../assets/image';
 
 interface PatientListItem {
   name: string;
+  customStyle?: object;
 }
 const PatientListItem: React.FC<PatientListItem> = props => {
   return (
     <TouchableOpacity onPress={() => navigate('PatientMonitoringProfile')}>
-      <View style={styles.container}>
+      <View style={[styles.container, props.customStyle]}>
         <Image source={DummyImage.user} style={styles.avatar} />
         <Text style={styles.name}>{props.name}</Text>
         {/* <Icons.MaterialIcons
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
   name: {
     color: '#00263E',
     fontSize: 18,
-    fontWeight: 'semibold',
+    fontWeight: 'bold',
     fontFamily: 'Roboto',
     marginLeft: 15,
     flex: 1,

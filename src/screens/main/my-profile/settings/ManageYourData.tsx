@@ -1,18 +1,40 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
+import {
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import Header from '../../../../components/header/Header';
 import {Colors} from '../../../../constants/Colors';
 import MeasurementItems from '../components/MeasurementItems';
 import {mangeDataList} from '../../../../assets/settings/SettingItem';
 import {Card} from 'react-native-paper';
 import DeleteAllDataCard from '../UiUpdateComponents/DeleteAllDataCard';
+import {useIsFocused} from '@react-navigation/native';
 
 const ManageYourData = () => {
   const [isCardActive, setIsCardActive] = useState(false);
-
+  const isFocused = useIsFocused();
   const toggleCard = () => {
     setIsCardActive(!isCardActive);
   };
+  // useEffect(() => {
+  //   if (Platform.OS === 'android') {
+  //     if (isFocused) {
+  //       StatusBar.setTranslucent(true);
+  //       StatusBar.setBarStyle('dark-content');
+  //       StatusBar.setBackgroundColor('rgba(0, 0, 0, 0)');
+  //     } else {
+  //       StatusBar.setTranslucent(false);
+  //       StatusBar.setBarStyle('dark-content');
+  //       StatusBar.setBackgroundColor('rgba(0, 0, 0, 0)');
+  //     }
+  //   }
+  // }, [isFocused]);
   return (
     <SafeAreaView
       style={{

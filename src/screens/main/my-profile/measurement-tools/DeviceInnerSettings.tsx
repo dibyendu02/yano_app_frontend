@@ -65,12 +65,14 @@ const DeviceInnerSettings = () => {
               customStyle={{
                 borderBottomWidth: 1,
                 borderBottomColor: Colors.LightGray,
+                paddingLeft: 4,
               }}
               onPress={() => handlePressPaperSpeed()}
             />
             <DeviceItems
               name="Gain"
               subtitle={selectedGain}
+              customStyle={{paddingLeft: 4}}
               onPress={() => handlePressGain()}
             />
           </View>
@@ -78,6 +80,7 @@ const DeviceInnerSettings = () => {
             style={{
               backgroundColor: Colors.White,
               paddingHorizontal: 20,
+              paddingRight: 8,
               paddingVertical: 20,
               flexDirection: 'row',
               justifyContent: 'space-between',

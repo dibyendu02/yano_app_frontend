@@ -29,7 +29,7 @@ const DownloadData = () => {
           {downloadData ? (
             <>
               {downloaded ? (
-                <View style={[styles.versionBox, {paddingHorizontal: 30}]}>
+                <View style={[styles.versionBox, {paddingHorizontal: 15}]}>
                   <Text
                     style={{
                       textAlign: 'left',
@@ -83,7 +83,8 @@ export default DownloadData;
 const styles = StyleSheet.create({
   versionBox: {
     width: '100%',
-    padding: 20,
+    padding: 15,
+    paddingBottom: 5,
     borderRadius: 10,
     backgroundColor: Colors.White,
     marginVertical: 20,

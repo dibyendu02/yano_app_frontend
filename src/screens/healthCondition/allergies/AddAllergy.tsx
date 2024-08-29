@@ -72,8 +72,8 @@ const AddAndEditAllergy = ({navigation, route}: any) => {
           />
         }
       />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View style={styles.inputBox}>
             <InputField
               label="Allergy name"
@@ -160,7 +160,7 @@ export default AddAndEditAllergy;
 
 const styles = StyleSheet.create({
   inputBox: {
-    marginBottom: 20,
+    marginBottom: 12,
   },
   modal: {
     justifyContent: 'flex-end',

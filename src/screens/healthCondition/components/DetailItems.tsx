@@ -10,7 +10,7 @@ type itemProps = {
 
 const DetailItems: FC<itemProps> = ({name, value, customtitleStyle}) => {
   return (
-    <View style={{marginBottom: 20}}>
+    <View style={{marginBottom: 15}}>
       <Text style={styles.para}>{name}</Text>
       <Text style={[styles.title, customtitleStyle]}>{value}</Text>
     </View>

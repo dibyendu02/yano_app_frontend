@@ -1,8 +1,8 @@
-import React, { FC } from 'react';
-import { View, Text, TextInput, StyleSheet, TextInputProps } from 'react-native';
-import { Controller, Control, FieldValues, FieldError } from 'react-hook-form';
-import { Colors } from '../../constants/Colors';
-import { DateIcon } from '../../assets/icon/IconNames';
+import React, {FC} from 'react';
+import {View, Text, TextInput, StyleSheet, TextInputProps} from 'react-native';
+import {Controller, Control, FieldValues, FieldError} from 'react-hook-form';
+import {Colors} from '../../constants/Colors';
+import {DateIcon} from '../../assets/icon/IconNames';
 
 interface CustomInputProps extends TextInputProps {
   name: string;
@@ -26,8 +26,8 @@ const CustomInputField: FC<CustomInputProps> = ({
       <Controller
         control={control}
         rules={rules}
-        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-          <View style={{ position: 'relative' }}>
+        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+          <View style={{position: 'relative'}}>
             <TextInput
               style={[styles.input, error && styles.errorInput]}
               onBlur={onBlur}
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   inputBox: {
-    marginBottom: 15,
+    marginBottom: 12,
   },
   label: {
     fontSize: 16,

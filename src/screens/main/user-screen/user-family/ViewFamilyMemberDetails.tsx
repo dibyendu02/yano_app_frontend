@@ -160,7 +160,7 @@ export default function ViewFamilyMemberDetails() {
             data={menuData}
             style={{
               paddingHorizontal: 20,
-              paddingVertical: 10,
+              // paddingVertical: 10,
             }}
             renderItem={({item, index: _i}) => (
               <TouchableOpacity
@@ -220,15 +220,22 @@ export default function ViewFamilyMemberDetails() {
         style={{
           paddingHorizontal: 20,
           paddingVertical: 10,
+          backgroundColor: Colors.GhostWhite,
         }}>
         <OutlineButton
           type="red"
           label="Stop monitoring"
+          style={{backgroundColor: Colors.GhostWhite}}
           icon={
             // <FontAwesome5 name="stop" size={15} color={Colors.Red} />
             <Image
               source={require('../../../../assets/image/exit_to_app.png')}
-              style={{height: 20, width: 20, tintColor: Colors.Red}}
+              style={{
+                height: 20,
+                width: 20,
+                tintColor: Colors.Red,
+                objectFit: 'contain',
+              }}
             />
           }
           onPress={() => setIsClicked(true)}
@@ -364,8 +371,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     position: 'absolute',
     height: '100%',
-    width: '95%',
-    marginHorizontal: '2%',
+    width: '100%',
+    // marginHorizontal: '2%',
     zIndex: 1,
     flex: 1,
     alignItems: 'center',
