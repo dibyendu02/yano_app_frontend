@@ -2,8 +2,6 @@ import axios from 'axios';
 import {retrieveData} from '../../utils/Storage';
 import {getData} from '../../global/server';
 
-const BASE_URL = 'https://yano-backend-rrej.onrender.com/api';
-
 export const allergiesData = async () => {
   try {
     const token = await retrieveData('token');
@@ -70,6 +68,24 @@ export const basicInfoData = async () => {
     const token = await retrieveData('token');
     const userId = await retrieveData('userId');
     const response = await getData(`/userpatient/${userId}`, token);
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const socialHistoryData = async ({
+  userId,
+  token,
+}: {
+  userId: string;
+  token: string;
+}) => {
+  try {
+    console.log(token, userId);
+    const response = await getData(`/socialHistory/${userId}`, token);
+    console.log('response ', response);
     return response;
   } catch (error) {
     console.error(error);
