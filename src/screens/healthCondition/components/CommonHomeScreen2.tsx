@@ -20,6 +20,7 @@ type CommonHomeScreenProps = {
   emptyHomeTitle: string;
   emptyHomeMessage: string;
   customHeaderStyle?: object;
+  onDelete?: any;
 };
 
 const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
@@ -31,6 +32,7 @@ const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
   emptyHomeTitle,
   emptyHomeMessage,
   customHeaderStyle,
+  onDelete,
 }) => {
   const [isClicked, setIsClicked] = useState(false);
   return (
@@ -81,7 +83,7 @@ const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
             title={'Delete social history'}
             children={'Are you sure you want to delete your social history?'}
             active={setIsClicked}
-            action={() => navigation.goBack()}
+            action={onDelete}
           />
         </View>
       )}

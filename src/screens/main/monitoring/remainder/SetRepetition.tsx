@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -17,20 +17,32 @@ import {
   FormProvider,
 } from 'react-hook-form';
 import CustomSelect from '../../../../components/formComp/SelectFiled';
-import {Colors} from '../../../../constants/Colors';
+import { Colors } from '../../../../constants/Colors';
 import {
   CheckCircleIcon,
   CheckIcon,
   CloseIcon,
 } from '../../../../assets/icon/IconNames';
 import CommonHeader from '../../../healthCondition/components/CommonHeader';
-import {navigate} from '../../../../navigation/RootNavigation';
+import { navigate } from '../../../../navigation/RootNavigation';
 import FormDateInput from '../../../../components/hook-form/FormDateInput';
 import RepetitionModal from './component/RepetationChange';
 import CustomInputFieldLocal from './component/CustomInputFieldLocal';
 import FormInputLocal from './component/FormInputLocal';
-import {Image} from 'react-native';
-import {staticIcons} from '../../../../assets/image';
+import { Image } from 'react-native';
+import { staticIcons } from '../../../../assets/image';
+import MonthChange from './component/MonthChange';
+
+
+const weekDay: { [key: string]: string } = {
+  sunday: 'S',
+  monday: 'M',
+  tuesday: 'T',
+  wednesday: 'W',
+  thursday: 'T',
+  friday: 'F',
+  saturday: 'S',
+};
 
 const SetRepetition = () => {
   const methods = useForm({
@@ -43,9 +55,14 @@ const SetRepetition = () => {
     },
   });
 
-  const {control, handleSubmit, watch, setValue} = methods;
+  const { control, handleSubmit, watch, setValue } = methods;
   const [modalVisible, setModalVisible] = useState(false);
+  const [mothCardVisiable, setMothCardVisiable] = useState(false);
   const [changeValue, setChangeValue] = useState('1');
+  const [values, setValues] = useState('day');
+  const [day, setDay] = useState<string[]>(['wednesday']);
+  const [monthChanges, setMonthChanges] = useState('Monthly on the 28th');
+
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -53,6 +70,18 @@ const SetRepetition = () => {
 
   const selectedEnds = watch('ends'); // Watch for changes in the 'ends' field
 
+  const setDayHandle = (item: string) => {
+    if (day.includes(item)) {
+      setDay(day.filter((i) => i !== item));
+    } else {
+      setDay([...day, item]);
+    }
+  }
+
+  // useEffect(() => {
+  //   console.log(values);
+  //   console.log(day);
+  // }, [modalVisible, day]);
   return (
     <FormProvider {...methods}>
       <CommonLayout>
@@ -85,7 +114,7 @@ const SetRepetition = () => {
                 <CustomInputFieldLocal
                   name="frequency"
                   control={control as unknown as Control<FieldValues, object>}
-                  rules={{required: 'This field is required'}}
+                  rules={{ required: 'This field is required' }}
                 />
               </View>
 
@@ -95,9 +124,9 @@ const SetRepetition = () => {
                 <Controller
                   name="frequencyType"
                   control={control}
-                  render={({field: {value}}) => (
+                  render={({ field: { value } }) => (
                     <Text style={styles.frequencyTypeText}>
-                      {value.charAt(0).toUpperCase() + value.slice(1)}
+                      {values.charAt(0).toUpperCase() + values.slice(1)}
                     </Text>
                   )}
                 />
@@ -110,18 +139,98 @@ const SetRepetition = () => {
                   }}>
                   <Image
                     source={staticIcons.downIcon}
-                    style={{width: 10, height: 10, objectFit: 'contain'}}
+                    style={{ width: 10, height: 10, objectFit: 'contain' }}
                   />
                 </View>
               </TouchableOpacity>
             </View>
+
+            {values == 'week' && <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-start',
+                alignItems: 'flex-start',
+                width: '100%',
+                gap: 8,
+                paddingBottom: 16,
+                borderBottomColor: '#E9E9E9',
+                borderBottomWidth: 2,
+                marginBottom: 16,
+              }}
+            >
+              {Object.keys(weekDay).map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderWidth: 1,
+                    borderColor: Colors.Blue,
+                    borderRadius: 25,
+                    width: 30,
+                    height: 30,
+                    backgroundColor: day.includes(item) ? Colors.Blue : Colors.White,
+                  }}
+                  onPress={() => setDayHandle(item)}
+                >
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: '600',
+                      color: day.includes(item) ? Colors.White : Colors.Blue,
+                      textAlign: 'center',
+                    }}
+                  >
+                    {weekDay[item]}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+
+            </View>}
+
+            {values == 'month' && <View style={{
+              marginBottom: 16,
+              borderBottomColor: '#E9E9E9',
+              borderBottomWidth: 2,
+              paddingBottom: 16,
+            }}>
+              <TouchableOpacity
+                style={[styles.frequencySelectM,
+                ]}
+                onPress={() => setMothCardVisiable(true)}>
+                <Controller
+                  name="frequencyType"
+                  control={control}
+                  render={({ field: { value } }) => (
+                    <Text style={styles.frequencyTypeText}>
+                      {monthChanges}
+                    </Text>
+                  )}
+                />
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    width: 20,
+                    height: 20,
+                  }}>
+                  <Image
+                    source={staticIcons.downIcon}
+                    style={{ width: 10, height: 10, objectFit: 'contain' }}
+                  />
+                </View>
+              </TouchableOpacity>
+            </View>
+            }
+
             <View>
-              <Text style={[styles.label, {marginBottom: 0, marginLeft: 0}]}>
+              <Text style={[styles.label, { marginBottom: 0, marginLeft: 0 }]}>
                 Ends
               </Text>
               <Controller
                 control={control}
-                render={({field: {onChange, value}, fieldState: {error}}) => (
+                render={({ field: { onChange, value }, fieldState: { error } }) => (
                   <View style={styles.container}>
                     <TouchableOpacity
                       style={[styles.optionContainer]}
@@ -146,7 +255,7 @@ const SetRepetition = () => {
                         <CheckIcon color={Colors.LightGreen} size={25} />
                       )}
                       <Text style={styles.label}> On</Text>
-                      <View style={{width: '35%'}}>
+                      <View style={{ width: '35%' }}>
                         {/* {value === 'date' && ( */}
                         <FormInputLocal
                           name="date"
@@ -181,7 +290,7 @@ const SetRepetition = () => {
                           //   control as unknown as Control<FieldValues, object>
                           // }
                           // onChange={setChangeValue}
-                          rules={{required: 'This field is required'}}
+                          rules={{ required: 'This field is required' }}
                         />
                         <Text style={styles.label}>repetition</Text>
                       </>
@@ -196,10 +305,20 @@ const SetRepetition = () => {
         </ScrollView>
 
         {/* Modal for selecting repetition interval */}
+
         <RepetitionModal
           isVisible={modalVisible}
           onClose={() => setModalVisible(false)}
-          onSelect={value => setValue('frequencyType', value)}
+          onSelect={value => {
+            setValues(value);
+          }}
+        />
+        <MonthChange
+          isVisible={mothCardVisiable}
+          onClose={() => setMothCardVisiable(false)}
+          onSelect={value => {
+            setMonthChanges(value)
+          }}
         />
       </CommonLayout>
     </FormProvider>
@@ -251,6 +370,16 @@ const styles = StyleSheet.create({
   frequencySelect: {
     flexDirection: 'row',
     width: '35%',
+    borderWidth: 1,
+    borderColor: Colors.LightGray,
+    borderRadius: 8,
+    padding: 15,
+    justifyContent: 'space-between',
+    backgroundColor: Colors.White,
+  },
+  frequencySelectM: {
+    flexDirection: 'row',
+    width: '65%',
     borderWidth: 1,
     borderColor: Colors.LightGray,
     borderRadius: 8,

@@ -1,12 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/no-unstable-nested-components */
-import React, {FC, useState} from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {Controller, FieldError, useFormContext} from 'react-hook-form';
-import {Colors} from '../../../../../constants/Colors';
-import {TextInput, TextInputProps} from 'react-native-paper';
+import React, { FC, useState } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Controller, FieldError, useFormContext } from 'react-hook-form';
+import { Colors } from '../../../../../constants/Colors';
+import { TextInput, TextInputProps } from 'react-native-paper';
 import moment from 'moment';
-import {StaticImage} from '../../../../../assets/images';
+import { StaticImage } from '../../../../../assets/images';
 import DateTimePicker from 'react-native-ui-datepicker';
 import DialogBase from '../../../../../components/dialog/DialogBase';
 import dayjs from 'dayjs';
@@ -15,6 +15,7 @@ interface FormDateInputProps extends TextInputProps {
   name: string;
   rules?: object;
   label?: string;
+  control?: any;
   placeholder?: string;
   buttonColor?: string;
 }
@@ -22,12 +23,13 @@ interface FormDateInputProps extends TextInputProps {
 const FormInputLocal: FC<FormDateInputProps> = ({
   name,
   label,
+  control,
   rules = {},
   placeholder,
   buttonColor,
   ...inputProps
 }) => {
-  const {control} = useFormContext();
+  // const { control } = useFormContext();
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
 
@@ -36,8 +38,8 @@ const FormInputLocal: FC<FormDateInputProps> = ({
       {label && <Text style={styles.label}>{label}</Text>}
       <Controller
         control={control}
-        rules={{...rules}}
-        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+        rules={{ ...rules }}
+        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <View>
             <TouchableOpacity onPress={() => setShowDatePicker(true)}>
               <TextInput
@@ -98,28 +100,28 @@ const FormInputLocal: FC<FormDateInputProps> = ({
                     height: 100,
                     padding: 20,
                   }}>
-                  <Text style={{color: Colors.GreyText}}>
+                  <Text style={{ color: Colors.GreyText }}>
                     {moment(selectedDate).format('YYYY')}
                   </Text>
-                  <Text style={{color: Colors.White, fontSize: 36}}>
+                  <Text style={{ color: Colors.White, fontSize: 36 }}>
                     {moment(selectedDate).format('ddd, MMMM D')}
                   </Text>
                 </View>
-                <View style={{paddingHorizontal: 10}}>
+                <View style={{ paddingHorizontal: 10 }}>
                   <DateTimePicker
                     mode="single"
                     initialView={'day'}
                     date={selectedDate}
-                    onChange={({date}) => {
+                    onChange={({ date }) => {
                       //@ts-ignore
                       let _date = new Date(date);
                       setSelectedDate(_date);
                     }}
-                    headerTextStyle={{color: Colors.Blue}}
+                    headerTextStyle={{ color: Colors.Blue }}
                     headerButtonColor={Colors.Blue}
-                    headerContainerStyle={{paddingVertical: 10}}
-                    weekDaysContainerStyle={{borderBottomWidth: 0}}
-                    weekDaysTextStyle={{color: Colors.GreyText}}
+                    headerContainerStyle={{ paddingVertical: 10 }}
+                    weekDaysContainerStyle={{ borderBottomWidth: 0 }}
+                    weekDaysTextStyle={{ color: Colors.GreyText }}
                     locale={{
                       ...dayjs.Ls.en,
                       weekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
@@ -128,7 +130,7 @@ const FormInputLocal: FC<FormDateInputProps> = ({
                       backgroundColor: Colors.Transparent,
                       borderWidth: 0,
                     }}
-                    calendarTextStyle={{color: Colors.Blue, fontWeight: '400'}}
+                    calendarTextStyle={{ color: Colors.Blue, fontWeight: '400' }}
                     selectedItemColor={Colors.Blue}
                     todayContainerStyle={{
                       borderRadius: 20,
