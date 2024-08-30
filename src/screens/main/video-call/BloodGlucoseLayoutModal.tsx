@@ -83,6 +83,7 @@ const BloodGlucoseLayoutModalLocal: FC<Props> = ({
               />
             </TouchableOpacity>
           }
+          customStyles={{paddingTop: 0}}
         />
       </View>
       <View style={{paddingHorizontal: 20}}>{children}</View>

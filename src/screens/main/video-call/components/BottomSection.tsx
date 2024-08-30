@@ -253,6 +253,7 @@ const BottomSection: React.FC<BottomSectionProps> = () => {
                   />
                 </TouchableOpacity>
               }
+              customStyles={{paddingTop: 0}}
             />
             <View
               style={
@@ -316,7 +317,7 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    padding: 20,
+    marginVertical: 16,
   },
   textColor: {
     color: 'white',

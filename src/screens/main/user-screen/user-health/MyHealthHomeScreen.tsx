@@ -1,8 +1,11 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   FlatList,
   Image,
+  Platform,
+  SafeAreaView,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -28,6 +31,7 @@ import OutlineButton from '../../../../components/buttons/OutlineButton';
 import UserContext from '../../../../contexts/UserContext';
 import moment from 'moment';
 import {healthParameterDetailsN, HSDGN} from '../../../../test/HealthStatsData';
+import {useIsFocused} from '@react-navigation/native';
 
 const MyHealthHomeScreen = ({navigation}) => {
   const [show, setShow] = useState(false);
@@ -40,8 +44,37 @@ const MyHealthHomeScreen = ({navigation}) => {
     setSelectedDiv(div);
   };
 
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    console.log('it runs');
+    if (Platform.OS === 'android') {
+      if (isFocused) {
+        StatusBar.setBarStyle('dark-content');
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setTranslucent(true);
+      }
+    }
+  }, [isFocused]);
+  useEffect(() => {
+    console.log('it runs');
+    if (Platform.OS === 'android') {
+      if (show) {
+        StatusBar.setBackgroundColor('rgba(0,0,0,0.3)');
+        StatusBar.setTranslucent(true);
+      } else {
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setTranslucent(true);
+      }
+    }
+  }, [show]);
   return (
-    <CommonLayout>
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: Colors.GhostWhite,
+        position: 'relative',
+      }}>
       <Header
         showBackIcon={false}
         title={`Hi, ${userData?.firstName}`}
@@ -332,7 +365,7 @@ const MyHealthHomeScreen = ({navigation}) => {
           </View>
         </View>
       </BottomSheet>
-    </CommonLayout>
+    </SafeAreaView>
   );
 };
 
@@ -376,12 +409,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   divTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '700',
     color: Colors.Blue,
   },
   divSubtitle: {
     color: Colors.SteelBlue,
-    fontSize: 16,
+    fontSize: 12,
   },
 });

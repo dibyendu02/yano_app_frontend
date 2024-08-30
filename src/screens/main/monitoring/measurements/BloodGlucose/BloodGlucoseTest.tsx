@@ -60,7 +60,7 @@ const BloodGlucoseTest = ({navigation}: any) => {
     if (stopClicked) setStep('start');
   }, [step, stopClicked]);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -480,7 +480,7 @@ const BloodGlucoseTest = ({navigation}: any) => {
           />
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

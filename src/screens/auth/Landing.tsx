@@ -21,18 +21,17 @@ import {navigate} from '../../navigation/RootNavigation';
 const Landing: React.FC<LandingScreenProps> = () => {
   const isFocused = useIsFocused();
 
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      if (isFocused) {
-        StatusBar.setBarStyle('dark-content');
-        StatusBar.setBackgroundColor('#a4d6eb');
-      } else {
-        // StatusBar.setTranslucent(true);
-        StatusBar.setBarStyle('dark-content');
-        StatusBar.setBackgroundColor('white');
-      }
-    }
-  }, [isFocused]);
+  // useEffect(() => {
+  //   if (Platform.OS === 'android') {
+  //     if (isFocused) {
+  //       StatusBar.setBarStyle('dark-content');
+  //       StatusBar.setBackgroundColor('#a4d6eb');
+  //     } else {
+  //       StatusBar.setBarStyle('dark-content');
+  //       StatusBar.setBackgroundColor('white');
+  //     }
+  //   }
+  // }, [isFocused]);
 
   return (
     <ImageBackground source={StaticImage.Start} style={styles.container}>

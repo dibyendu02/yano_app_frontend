@@ -1,17 +1,35 @@
-import React, {useState} from 'react';
-import {Dimensions, Image, StyleSheet, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Dimensions,
+  Image,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+} from 'react-native';
 import videoImage from '../../../assets/image/video_frame.png';
 import {TopBar} from './components/TopBar';
 import BottomSection from './components/BottomSection';
 import Card from '../my-profile/UiUpdateComponents/Card';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 
 export default function PatientVideoCall() {
-  const {height} = Dimensions.get('window');
+  // const {height} = Dimensions.get('window');
   const [isClicked, setIsClicked] = useState(false);
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      if (isFocused) {
+        StatusBar.setBarStyle('light-content');
+      } else {
+        StatusBar.setBarStyle('dark-content');
+      }
+    }
+  }, [isFocused]);
   return (
-    <View style={[style.mainContainer, {height}]}>
+    <View style={[style.mainContainer]}>
       <TopBar
         doctorName="Dr. Eduardo Anzola"
         duration="0:24"
@@ -39,6 +57,7 @@ export default function PatientVideoCall() {
             }
             active={setIsClicked}
             action={() => navigation.navigate('tabs')}
+            contentContainerStyle={{paddingBottom: 10}}
           />
         </View>
       )}
@@ -51,6 +70,7 @@ const style = StyleSheet.create({
     backgroundColor: '#000',
     display: 'flex',
     justifyContent: 'space-between',
+    flex: 1,
   },
   deletbuttonclick: {
     backgroundColor: 'rgba(0, 0, 0, 0.3)',

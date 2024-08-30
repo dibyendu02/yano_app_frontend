@@ -75,6 +75,7 @@ const SetRepetition = () => {
               }}
             />
           }
+          customStyle={{paddingBottom: 2, paddingTop: 32}}
         />
         <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
           <View>

@@ -10,8 +10,9 @@ import {
   FlatList,
   ScrollView,
   Share,
+  Platform,
 } from 'react-native';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -34,6 +35,7 @@ import {StaticImage} from '../../../../assets/images';
 import UserContext from '../../../../contexts/UserContext';
 import {useNavigation} from '@react-navigation/native';
 import {staticIcons} from '../../../../assets/image';
+import {StatusBar} from 'react-native';
 
 const menuData = [
   {
@@ -161,14 +163,25 @@ export default function () {
     },
   ];
   const navigation = useNavigation();
+  useEffect(() => {
+    console.log('it runs');
+    if (Platform.OS === 'android') {
+      if (showQR) {
+        StatusBar.setBackgroundColor('rgba(0,0,0,0.3)');
+        StatusBar.setTranslucent(true);
+      } else {
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setTranslucent(true);
+      }
+    }
+  }, [showQR]);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header
         title="My profile"
         headerRightComponent={
           <TouchableOpacity
             onPress={() => navigation.navigate('EditPatientProfile')}>
-            {/* <EditIcon /> */}
             <Image
               source={staticIcons.EditPencil}
               style={{height: 26, width: 24}}
@@ -190,7 +203,7 @@ export default function () {
             }}
           />
           <Text style={styles.patientName}>
-            {userData.firstName} {userData.lastName}
+            {userData?.firstName} {userData?.lastName}
           </Text>
           <View style={styles.detailRow}>
             {data1.map((e, i, a) => (
@@ -346,7 +359,7 @@ export default function () {
           />
         </View>
       </BottomSheet>
-    </SafeAreaView>
+    </View>
   );
 }
 

@@ -9,6 +9,7 @@ type props = {
   leftIcon?: React.ReactNode;
   rightComp1?: React.ReactNode;
   rightComp2?: React.ReactNode;
+  customStyles?: object;
 };
 
 const CommonHeaderLocal: FC<props> = ({
@@ -16,10 +17,11 @@ const CommonHeaderLocal: FC<props> = ({
   leftIcon,
   rightComp1,
   rightComp2,
+  customStyles,
 }) => {
   const navigation = useNavigation();
   return (
-    <View style={[styles.navbar, styles.flexBox]}>
+    <View style={[styles.navbar, styles.flexBox, customStyles]}>
       <View style={[styles.flexBox, {justifyContent: 'center'}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           {leftIcon ? (
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 0,
     paddingEnd: 20,
     backgroundColor: Colors.White,
-    // paddingTop: 45,
+    paddingTop: 45,
   },
   navbarTitle: {
     color: Colors.Blue,

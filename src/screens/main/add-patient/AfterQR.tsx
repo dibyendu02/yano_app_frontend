@@ -30,7 +30,7 @@ const AfterQR = () => {
             }}
           />
         }
-        customStyle={{paddingVertical: 2}}
+        customStyle={{paddingBottom: 2, paddingTop: 32}}
       />
       <View style={styles.body}>
         <Card

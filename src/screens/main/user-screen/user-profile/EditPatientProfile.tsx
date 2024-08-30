@@ -157,6 +157,7 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
                 </TouchableOpacity>
               </View>
             }
+            customStyle={{paddingTop: 45}}
           />
           <View style={styles.body}>
             <ScrollView bounces={false} showsVerticalScrollIndicator={false}>

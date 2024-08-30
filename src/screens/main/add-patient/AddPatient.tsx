@@ -109,7 +109,10 @@ const AddPatient = () => {
               data={OPTIONS}
               renderItem={({item, index: _index}) => (
                 <TouchableOpacity
-                  style={styles.optionItemContainer}
+                  style={[
+                    styles.optionItemContainer,
+                    {paddingBottom: _index == OPTIONS.length - 1 ? 0 : 16},
+                  ]}
                   onPress={() => {
                     if (item.label === 'Scan QR Code') {
                       navigate('PatientQRCode');
