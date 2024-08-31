@@ -90,7 +90,7 @@ const AccountVerification = () => {
   console.log('userType ', userType);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header title="Account Verification" />
       <View style={styles.body}>
         <Text style={styles.instructionText}>
@@ -170,7 +170,7 @@ const AccountVerification = () => {
           }
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

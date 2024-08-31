@@ -18,7 +18,7 @@ import {staticIcons} from '../../assets/image';
 const AuthDeviceConnected = ({navigation}: any) => {
   const {login} = useContext(UserContext);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -96,7 +96,7 @@ const AuthDeviceConnected = ({navigation}: any) => {
           }}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

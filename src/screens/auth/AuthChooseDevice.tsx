@@ -21,7 +21,7 @@ import {AuthScreen} from '../../navigation/auth/AuthScreens';
 const AuthChooseDevice = () => {
   const {login, isPatient} = useContext(UserContext);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -100,7 +100,7 @@ const AuthChooseDevice = () => {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

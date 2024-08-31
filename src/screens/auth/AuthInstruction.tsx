@@ -26,7 +26,7 @@ const AuthInstruction = ({navigation}: any) => {
   }, []);
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -93,7 +93,7 @@ const AuthInstruction = ({navigation}: any) => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

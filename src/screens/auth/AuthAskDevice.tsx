@@ -26,7 +26,7 @@ const AuthAskDevice = ({navigation}: any) => {
     navigation.navigate(AuthScreen.LoadingScreen);
   };
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -108,7 +108,7 @@ const AuthAskDevice = ({navigation}: any) => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

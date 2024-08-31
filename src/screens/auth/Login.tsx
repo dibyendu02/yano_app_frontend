@@ -75,7 +75,7 @@ const Login = ({navigation}: any) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header
         title=""
         headerRightComponent={
@@ -179,7 +179,7 @@ const Login = ({navigation}: any) => {
           label="Log in with Facebook"
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

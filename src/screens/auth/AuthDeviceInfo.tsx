@@ -19,7 +19,7 @@ import {AuthScreen} from '../../navigation/auth/AuthScreens';
 const AuthDeviceInfo = ({navigation}: any) => {
   const {login, isPatient} = useContext(UserContext);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -101,7 +101,7 @@ const AuthDeviceInfo = ({navigation}: any) => {
           onPress={() => navigation.navigate(AuthScreen.DeviceInstruction)}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

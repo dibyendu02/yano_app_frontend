@@ -2,6 +2,7 @@
 import React, {useContext, useState} from 'react';
 import {
   Image,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -54,7 +55,7 @@ const SelectUserType = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <Header
         title=""
         headerRightComponent={
@@ -65,6 +66,7 @@ const SelectUserType = () => {
             </TouchableOpacity>
           </View>
         }
+        
       />
       <View
         style={{
@@ -108,7 +110,7 @@ const SelectUserType = () => {
         style={{width: '92%', marginVertical: 10, alignSelf: 'center'}}
         onPress={handleContinue}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

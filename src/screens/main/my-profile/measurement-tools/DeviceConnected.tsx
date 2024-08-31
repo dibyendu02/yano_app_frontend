@@ -28,12 +28,12 @@ const DeviceConnected = ({navigation}: any) => {
       <View
         style={{
           width: '100%',
-          // height: 50,
+          // height: 50,ƒ
           backgroundColor: Colors.White,
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          paddingTop: 45,
+          paddingTop: 60,
           paddingBottom: 10,
         }}>
         <Text

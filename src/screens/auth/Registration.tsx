@@ -220,7 +220,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{flex: 1}}>
@@ -235,6 +235,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
                 </TouchableOpacity>
               </View>
             }
+            // customStyle={{paddingTop: Platform.OS === 'ios' ? 0 : 45}}
           />
           <View style={styles.body}>
             <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -401,7 +402,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
           // }
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

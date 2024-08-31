@@ -69,7 +69,7 @@ const MyHealthHomeScreen = ({navigation}) => {
     }
   }, [show]);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -365,7 +365,7 @@ const MyHealthHomeScreen = ({navigation}) => {
           </View>
         </View>
       </BottomSheet>
-    </SafeAreaView>
+    </View>
   );
 };
 
