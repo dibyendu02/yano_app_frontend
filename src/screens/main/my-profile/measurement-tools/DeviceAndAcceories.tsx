@@ -223,6 +223,7 @@ const DeviceAndAccessories = ({navigation}: any) => {
         flex: 1,
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
+        marginBottom: 20,
       }}>
       <Header title="Device and accessories" />
       <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
