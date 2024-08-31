@@ -144,6 +144,8 @@ const PatientTabs = () => {
         component={MyHealthHomeScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
           tabBarIcon: ({color, size}) => (
             <Icons.MaterialIcons
               name="monitor-heart"
@@ -159,6 +161,8 @@ const PatientTabs = () => {
         component={UserProfile}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
           tabBarIcon: ({color, size}) => (
             <Icons.FontAwesome5 name="user-circle" size={size} color={color} />
           ),
@@ -189,6 +193,8 @@ const ProviderTabs = () => {
         component={PatientMonitoringList}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
           tabBarIcon: ({color, size}) => (
             <Icons.MaterialIcons
               name="health-and-safety"
@@ -204,6 +210,8 @@ const ProviderTabs = () => {
         component={MyProfile}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
 
           tabBarIcon: ({color, size}) => (
             <Icons.FontAwesome5 name="user-circle" size={size} color={color} />
@@ -222,99 +230,175 @@ const MainStack = () => {
         name="tabs"
         // component={ProviderTabs}
         component={isPatient ? PatientTabs : ProviderTabs}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="VideoCallStart"
         component={VideoCallStart}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="PatientVideoCall"
         component={PatientVideoCall}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="HeartRateModal"
         component={HeartRateModal}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BloodPressureModal"
         component={BloodPressureModal}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BloodOxygenModal"
         component={BloodOxygenModal}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BodyTemperatureModal"
         component={BodyTemperatureModal}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="GlucoseLevelModal"
         component={GlucoseLevelModal}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="ECGModal"
         component={ECGModal}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="AddPatient"
         component={AddPatient}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="EmailNotFoundPatient"
         component={EmailNotFoundPatient}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="PatientMonitoringProfile"
         component={PatientMonitoringProfile}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       {/* Medical History screen Navigation start */}
       <Stack.Screen
         name="MedicalHistory"
         component={MedicalHistory}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="HealthCondition"
         component={HealthConditionHomeScreen}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="HealthConditionDetails"
         component={HealthConditionDetails}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="AddHealthCondition"
         component={AddHealthRecord}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       {/* allergies screen start */}
       <Stack.Screen
         name="Allergies"
         component={AllergiesHomeScreen}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="AddAndEditAllergies"
         component={AddAndEditAllergy}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="AllergyDetails"
         component={AllergyDetails}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       {/* allergies screen end */}
 
@@ -324,17 +408,27 @@ const MainStack = () => {
         component={MedicineHomeScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
         name="MedicineDetails"
         component={MedicineDetails}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="AddAndEditMedicine"
         component={AddAndEditMedicine}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       {/* Medical History screen Navigation end */}
 
@@ -344,17 +438,27 @@ const MainStack = () => {
         component={VaccinesHomeScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
         name="VaccineDetails"
         component={VaccineDetails}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="AddAndEditVaccine"
         component={AddAndEditVaccine}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       {/* Vaccines screen Navigation end */}
 
@@ -364,6 +468,8 @@ const MainStack = () => {
         component={SurgeriesHomeScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -371,6 +477,8 @@ const MainStack = () => {
         component={SurgeriesDetails}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -378,6 +486,8 @@ const MainStack = () => {
         component={AddAndEditSurgeries}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       {/* Surgeries screen Navigation end */}
@@ -387,6 +497,8 @@ const MainStack = () => {
         component={FamilyHistoryHomeScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -394,6 +506,8 @@ const MainStack = () => {
         component={FamilyHistoryDetails}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -401,6 +515,8 @@ const MainStack = () => {
         component={AddAndEditFamilyHistory}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       {/* Family History screen Navigation end */}
@@ -410,6 +526,8 @@ const MainStack = () => {
         component={BasicInfo}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -417,6 +535,8 @@ const MainStack = () => {
         component={AddAndEditBasicInfo}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       {/* Basic Info screen Navigation end */}
@@ -426,6 +546,8 @@ const MainStack = () => {
         component={HospitalizationHomeScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -433,6 +555,8 @@ const MainStack = () => {
         component={HospitalizationDetails}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -440,6 +564,8 @@ const MainStack = () => {
         component={AddAndEditHospitalization}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       {/* Hospitalization screen Navigation end */}
@@ -449,6 +575,8 @@ const MainStack = () => {
         component={SocialHistoryHomeScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -456,6 +584,8 @@ const MainStack = () => {
         component={AddAndEditSocialHistory}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       {/* Social History screen Navigation end */}
@@ -465,6 +595,8 @@ const MainStack = () => {
         component={ConsultancyNotes}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -472,6 +604,8 @@ const MainStack = () => {
         component={ConsultancyNotesDetails}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       {/* Consultation Notes screen Navigation end */}
@@ -482,6 +616,8 @@ const MainStack = () => {
         component={MeasurementToolsHomeScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -489,6 +625,8 @@ const MainStack = () => {
         component={BloodPressureScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -496,6 +634,8 @@ const MainStack = () => {
         component={BloodOxygenScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -503,6 +643,8 @@ const MainStack = () => {
         component={HeartRateMeasurement}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -510,6 +652,8 @@ const MainStack = () => {
         component={BodyTemperatureMeasurement}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -517,6 +661,8 @@ const MainStack = () => {
         component={EcgMeasurement}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -524,6 +670,8 @@ const MainStack = () => {
         component={ChooseDevice}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -531,6 +679,8 @@ const MainStack = () => {
         component={DeviceInfo}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -538,6 +688,8 @@ const MainStack = () => {
         component={WhatToMeasure}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -545,6 +697,8 @@ const MainStack = () => {
         component={DeviceConnected}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -552,6 +706,8 @@ const MainStack = () => {
         component={TurnOnDevice}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -559,6 +715,8 @@ const MainStack = () => {
         component={MeasurementMonitoring}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -566,6 +724,8 @@ const MainStack = () => {
         component={DeviceSettingsScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -573,6 +733,8 @@ const MainStack = () => {
         component={DeviceInnerSettings}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -580,6 +742,8 @@ const MainStack = () => {
         component={DeviceAndAccessories}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
 
@@ -591,6 +755,8 @@ const MainStack = () => {
         component={SettingHomeScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -598,6 +764,8 @@ const MainStack = () => {
         component={ManageYourData}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -605,6 +773,8 @@ const MainStack = () => {
         component={DownloadData}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
 
@@ -613,6 +783,8 @@ const MainStack = () => {
         component={DeleteAllData}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -620,6 +792,8 @@ const MainStack = () => {
         component={DeleteAccount}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -627,6 +801,8 @@ const MainStack = () => {
         component={ChangePassword}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -634,6 +810,8 @@ const MainStack = () => {
         component={Notification}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       <Stack.Screen
@@ -641,6 +819,8 @@ const MainStack = () => {
         component={MeasurementUnitSettings}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
 
@@ -652,6 +832,8 @@ const MainStack = () => {
         component={SupportHomeScreen}
         options={{
           headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
         }}
       />
       {/* Support section end */}
@@ -660,70 +842,122 @@ const MainStack = () => {
       <Stack.Screen
         name="HealthParametersList"
         component={HealthParametersList}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       {/* HealthParameterDetail */}
       <Stack.Screen
         name="HealthParameterDetail"
         component={HealthParameterDetail}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="HealthStats"
         component={HealthStats}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="HealthThresholdHomeScreen"
         component={HealthThresholdHomeScreen}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="HeartRate"
         component={EditHeartRate}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BloodOxygen"
         component={BloodOxygen}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BloodPressure"
         component={BloodPressure}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BodyTemperature"
         component={BodyTemperature}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="GlucoseLevel"
         component={GlucoseLevel}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
 
       <Stack.Screen
         name="NotificationAlerts"
         component={NotificationAlerts}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       {/* Remainders screen start*/}
       <Stack.Screen
         name="RemainderScreen"
         component={RemainderScreen}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="AddRemainder"
         component={AddRemainder}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="SetRepetition"
         component={SetRepetition}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       {/* Remainders screen end*/}
 
@@ -732,7 +966,11 @@ const MainStack = () => {
       <Stack.Screen
         name="Subscription"
         component={Subscription}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       {/* user Profile end */}
       {/* user section end */}
@@ -741,144 +979,256 @@ const MainStack = () => {
       <Stack.Screen
         name="BloodGlucoseTest"
         component={BloodGlucoseTest}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BloodGlucoseTestTime"
         component={BloodGlucoseTestTime}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BloodGlucoseSelectStrip"
         component={BloodGlucoseSelectStrip}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BloodGlucoseStep1"
         component={BloodGlucoseStep1}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BloodGlucoseStep2"
         component={BloodGlucoseStep2}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BloodGlucoseStep3"
         component={BloodGlucoseStep3}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BloodGlucoseReading"
         component={BloodGlucoseReading}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="BloodGlucoseResult"
         component={BloodGlucoseResult}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       {/* user family */}
       <Stack.Screen
         name="UserFamilyMembers"
         component={UserFamilyMembers}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="UserFamilyMemberDetails"
         component={ViewFamilyMemberDetails}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="AddUserFamilyMember"
         component={AddUserFamilyMember}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="EditFamilyMembers"
         component={EditUserFamilyMember}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="FamilyMemberSaved"
         component={LoadingAfterSave}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="NoDataScreen"
         component={NoDataScreen}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="MyDevices"
         component={MyDevices}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
 
       <Stack.Screen
         name="FaqScreen"
         component={FaqScreen}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="SupportChat"
         component={SupportChat}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="EditDoctorProfile"
         component={EditDoctorProfile}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="EditPatientProfile"
         component={EditPatientProfile}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="CreatePatientAccount"
         component={CreatePatientAccount}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="PatientHealthParameters"
         component={PatientMonitoringMeasurements}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="TransitionScreen"
         component={TransitionScreen}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="MonitoredProfile"
         component={MonitoredProfile}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="CreateFamilyMember"
         component={Create}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="AddFamilyQr"
         component={AddFamilyQr}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="PatientQRCode"
         component={PatientQRCode}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="AfterQR"
         component={AfterQR}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
       <Stack.Screen
         name="PatientMonitoringProfileLocal"
         component={PatientMonitoringProfileLocal}
-        options={{headerShown: false}}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
       />
     </Stack.Navigator>
   );
