@@ -3,8 +3,10 @@
 import {
   FlatList,
   Image,
+  Platform,
   SafeAreaView,
   Share,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -25,6 +27,7 @@ import {BASE_URL} from '../../../../App';
 import Icons from '../../../assets/icon/Icon';
 import {DummyImage} from '../../../assets/dummy/images';
 import UserContext from '../../../contexts/UserContext';
+import {useNavigation} from '@react-navigation/native';
 
 const menuData = [
   {
@@ -103,6 +106,19 @@ const MyProfile = ({navigation}: any) => {
   //     fetchDoctorData();
   //   }
   // }, [userId]);
+
+  useEffect(() => {
+    console.log('it runs');
+    if (Platform.OS === 'android') {
+      if (showQR) {
+        StatusBar.setBackgroundColor('rgba(0,0,0,0.3)');
+        StatusBar.setTranslucent(true);
+      } else {
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setTranslucent(true);
+      }
+    }
+  }, [showQR]);
 
   return (
     <SafeAreaView style={{flex: 1}}>

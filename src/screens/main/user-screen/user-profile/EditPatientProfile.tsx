@@ -36,7 +36,7 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [saved, setSaved] = useState(false);
   const {userData} = useContext(UserContext);
-  const userType = route?.params?.userType;
+  // const userType = route?.params?.userType;
 
   // Prefilled dummy data
   const initialData = {
@@ -157,6 +157,7 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
                 </TouchableOpacity>
               </View>
             }
+            customStyle={{paddingTop: 45}}
           />
           <View style={styles.body}>
             <ScrollView bounces={false} showsVerticalScrollIndicator={false}>

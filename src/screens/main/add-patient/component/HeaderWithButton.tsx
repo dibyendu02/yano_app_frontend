@@ -9,16 +9,18 @@ interface HeaderProps {
   title?: string;
   showBackIcon?: boolean;
   headerRightComponent?: React.ReactNode;
+  customStyle?: object;
 }
 
 const HeaderWithButton: React.FC<HeaderProps> = ({
   title,
   showBackIcon = true,
   headerRightComponent,
+  customStyle,
 }) => {
   const navigation = useNavigation();
   return (
-    <View style={styles.navbar}>
+    <View style={[styles.navbar, customStyle]}>
       <View style={styles.navBarLeftContainer}>
         {showBackIcon && (
           <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -44,6 +46,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     backgroundColor: Colors.White,
     justifyContent: 'space-between',
+    paddingTop: 32,
   },
   navbarTitle: {
     color: Colors.Blue,

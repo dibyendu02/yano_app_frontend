@@ -1,8 +1,15 @@
-import React from 'react';
-import {StyleSheet, View, Image, TouchableOpacity, Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+  Platform,
+  StatusBar,
+} from 'react-native';
 import chatIcon from '../../../../assets/image/chatIcon.png';
 import verticalLine from '../../../../assets/image/Line.png';
-import {useNavigation} from '@react-navigation/native';
 
 interface props {
   doctorName: string;
@@ -15,7 +22,6 @@ export const TopBar: React.FC<props> = ({
   duration,
   setIsClicked,
 }) => {
-  const navigation = useNavigation();
   return (
     <View style={style.mainContainer}>
       <View
@@ -55,6 +61,7 @@ const style = StyleSheet.create({
     width: '88%',
     margin: 'auto',
     marginVertical: 12,
+    marginTop: 45,
   },
   textColor: {
     color: 'white',

@@ -8,7 +8,7 @@ import {SupportItems} from '../../../../assets/support/SupportItems';
 
 const SupportHomeScreen = ({navigation}: any) => {
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -43,7 +43,7 @@ const SupportHomeScreen = ({navigation}: any) => {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

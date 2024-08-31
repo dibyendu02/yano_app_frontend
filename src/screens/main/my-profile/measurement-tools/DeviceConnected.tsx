@@ -19,7 +19,7 @@ const DeviceConnected = ({navigation}: any) => {
   const devicename = route?.params?.devicename;
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -28,11 +28,13 @@ const DeviceConnected = ({navigation}: any) => {
       <View
         style={{
           width: '100%',
-          height: 50,
+          // height: 50,
           backgroundColor: Colors.White,
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
+          paddingTop: 45,
+          paddingBottom: 10,
         }}>
         <Text
           style={{
@@ -97,7 +99,7 @@ const DeviceConnected = ({navigation}: any) => {
           onPress={() => navigation.navigate('MeasurementMonitoring')}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

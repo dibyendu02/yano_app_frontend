@@ -1,14 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CommonHomeScreen from '../components/CommonHomeScreen';
+import { familyHistoryData } from '../../../api/GET/medicalHistoryData';
 
-const FamilyHistoryHomeScreen = ({navigation}: any) => {
-  const data = [
-    {
-      id: 1,
-      name: 'Mother',
-      disease: 'Hypertension',
-    },
-  ];
+const dummyData = [
+  {
+    id: 1,
+    name: 'Mother',
+    disease: 'Hypertension',
+  },
+];
+const FamilyHistoryHomeScreen = ({ navigation }: any) => {
+  const [data, setData] = React.useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await familyHistoryData();
+        console.log(res);
+
+        if (res.length === 0) {
+          setData([]);
+          return;
+        }
+
+        const transformedData = res?.familyHistory.map((item, index) => ({
+          id: index + 1, // Assign a unique ID based on the index
+          name: item.relationShip, // Use the relationShip field for the name
+          disease: item.healthCondition, // Use the healthCondition field for the disease
+        }));
+
+        setData(transformedData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
 
   return (
     <>

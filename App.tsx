@@ -101,7 +101,11 @@ export default function App() {
 
   return (
     <NavigationContainer ref={navigationRef} theme={theme}>
-      <StatusBar barStyle="dark-content" backgroundColor="white" />
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="transparent"
+        translucent
+      />
       <UserContext.Provider
         value={{
           login,

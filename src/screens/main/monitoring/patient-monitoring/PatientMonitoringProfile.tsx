@@ -10,7 +10,7 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -27,6 +27,7 @@ import {staticIcons} from '../../../../assets/image';
 import CardLocal from './CardLocal';
 import {useNavigation} from '@react-navigation/native';
 import moment from 'moment';
+import {healthParameterDetailsN, HSDGN} from '../../../../test/HealthStatsData';
 
 let data1 = [
   {
@@ -68,6 +69,11 @@ let data2 = [
 export default function PatientMonitoringProfile({}) {
   const [isClicked, setIsClicked] = useState(false);
   const navigation = useNavigation();
+
+  // useEffect(() => {
+  //   console.log('data ');
+  //   console.log(HSDGN[0]);
+  // }, []);
   return (
     <SafeAreaView style={styles.container}>
       <Header title="Monitored patient" />
@@ -154,21 +160,27 @@ export default function PatientMonitoringProfile({}) {
           }>
           <FlatList
             data={
-              measurements.length >= 2
-                ? measurements.filter((e, i) => i < 2)
+              HSDGN[0].data.length >= 2
+                ? HSDGN[0].data.filter((e, i) => i < 2)
                 : []
             }
             scrollEnabled={false}
             style={{width: '100%'}}
             renderItem={({item, index}) => (
-              <View
+              <TouchableOpacity
                 style={{
                   width: '100%',
                   paddingVertical: 10,
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                }}>
+                }}
+                onPress={() =>
+                  navigate('HealthParameterDetail', {
+                    //@ts-ignore
+                    healthParameterDetail: healthParameterDetailsN[item.field],
+                  })
+                }>
                 <View style={{width: '50%'}}>
                   <Text
                     style={{
@@ -177,7 +189,7 @@ export default function PatientMonitoringProfile({}) {
                       fontWeight: 'bold',
                       marginBottom: 4,
                     }}>
-                    {item.field}
+                    {item.field_full}
                   </Text>
                   <Text
                     style={{
@@ -224,7 +236,7 @@ export default function PatientMonitoringProfile({}) {
                   color={Colors.Green}
                   size={22}
                 />
-              </View>
+              </TouchableOpacity>
             )}
             ItemSeparatorComponent={() => (
               <View
@@ -242,7 +254,7 @@ export default function PatientMonitoringProfile({}) {
         <Card contentContainerStyle={{marginBottom: 50}}>
           <View style={{width: '100%'}}>
             <TouchableOpacity onPress={() => navigate('MedicalHistory')}>
-              <View style={styles.container1}>
+              <View style={[styles.container1, {paddingTop: 8}]}>
                 <Image
                   source={require('../../../../assets/image/receipt_long.png')}
                   style={{height: 22, width: 22}}
@@ -285,7 +297,7 @@ export default function PatientMonitoringProfile({}) {
               }}
             />
             <TouchableOpacity onPress={() => navigate('RemainderScreen')}>
-              <View style={styles.container1}>
+              <View style={[styles.container1, {paddingBottom: 8}]}>
                 <Image
                   source={require('../../../../assets/image/notification_add.png')}
                   style={{height: 22, width: 22}}
@@ -297,27 +309,6 @@ export default function PatientMonitoringProfile({}) {
                 />
               </View>
             </TouchableOpacity>
-            {/* <PatientElements
-              name="Medical history"
-              icon="file-medical"
-              iconsname="FontAwesome5"
-              color="#76BC21"
-              onPress={() => navigate('MedicalHistory')}
-            /> */}
-            {/* <PatientElements
-              name="Health thresholds"
-              icon="history-edu"
-              iconsname="MaterialIcons"
-              color="#76BC21"
-              onPress={() => navigate('HealthThresholdHomeScreen')}
-            /> */}
-            {/* <PatientElements
-              name="Reminders"
-              icon="bell-plus"
-              iconsname="MaterialCommunityIcons"
-              color="#76BC21"
-              onPress={() => navigate('RemainderScreen')}
-            /> */}
           </View>
         </Card>
         <TouchableOpacity
@@ -413,7 +404,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor: Colors.GhostWhite,
     height: 60,
   },
   monintoring: {
@@ -454,8 +445,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     position: 'absolute',
     height: '100%',
-    width: '95%',
-    marginHorizontal: '2%',
+    width: '100%',
     zIndex: 1,
     flex: 1,
     alignItems: 'center',

@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { FormProvider, useForm } from 'react-hook-form';
+import {StyleSheet, View} from 'react-native';
+import {FormProvider, useForm} from 'react-hook-form';
 import CommonThresholdLayout from '../components/CommonThresholdLayout';
 import ThresholdPickerInput from './components/ThresholdPickerInput';
 
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   inputWrapper: {
     width: '100%',

@@ -67,13 +67,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   inputWrapper: {
-    width: '45%', // Adjusted width for single column layout
+    width: '49%', // Adjusted width for single column layout
     borderRadius: 10,
     overflow: 'hidden',
-    marginBottom: 15, // Added margin between inputs
+    // marginBottom: 15, // Added margin between inputs
     // backgroundColor: 'red',
   },
 });

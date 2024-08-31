@@ -104,7 +104,7 @@ const CustomRadioSelect: React.FC<CustomRadioSelectProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,
+    marginBottom: 12,
   },
   label: {
     fontSize: 16,

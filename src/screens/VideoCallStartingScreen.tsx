@@ -12,9 +12,11 @@ import UserContext from '../contexts/UserContext';
 import {navigate} from '../navigation/RootNavigation';
 
 import {Colors} from '../constants/Colors';
+import {useNavigation} from '@react-navigation/native';
 
 const VideoCallStart = () => {
   const spinValue = useRef(new Animated.Value(0)).current;
+  const navigation = useNavigation();
 
   useEffect(() => {
     // Start the spin animation
@@ -30,9 +32,9 @@ const VideoCallStart = () => {
     // Uncomment this when you want to trigger login and navigation
 
     setTimeout(() => {
-      navigate('PatientVideoCall');
+      navigation.replace('PatientVideoCall');
     }, 2000);
-  }, [spinValue]);
+  }, [spinValue, navigation]);
 
   const spin = spinValue.interpolate({
     inputRange: [0, 1],

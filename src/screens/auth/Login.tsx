@@ -87,6 +87,7 @@ const Login = ({navigation}: any) => {
             </TouchableOpacity>
           </View>
         }
+        customStyle={{paddingVertical: 2}}
       />
       <View style={styles.body}>
         <Text

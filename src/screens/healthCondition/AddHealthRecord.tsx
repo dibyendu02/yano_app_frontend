@@ -1,18 +1,19 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {Colors} from '../../constants/Colors';
+import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Colors } from '../../constants/Colors';
 import FilledButton from '../../components/buttons/FilledButton';
-import {InputField} from '../../components/form/InputField';
-import {DatePickerField} from '../../components/form/DatePicker';
-import {TextArea} from '../../components/form/TextAreaField';
+import { InputField } from '../../components/form/InputField';
+import { DatePickerField } from '../../components/form/DatePicker';
+import { TextArea } from '../../components/form/TextAreaField';
 import CommonHeader from './components/CommonHeader';
 import CustomRadioSelect from './components/CustomRadioButtonGroup';
 import Modal from 'react-native-modal';
-import {staticIcons} from '../../assets/image';
-import {CloseIcon} from '../../assets/icon/IconNames';
+import { staticIcons } from '../../assets/image';
+import { CloseIcon } from '../../assets/icon/IconNames';
+import { healthConditionsData } from '../../api/POST/medicalHistory';
 
-const AddHealthRecord = ({navigation, route}: any) => {
+const AddHealthRecord = ({ navigation, route }: any) => {
   let data = null;
   if (route?.params) {
     data = route.params.data;
@@ -29,25 +30,32 @@ const AddHealthRecord = ({navigation, route}: any) => {
   });
 
   const handleChange = (id: string, e: string) => {
-    setFormData({...formData, [id]: e});
+    setFormData({ ...formData, [id]: e });
     if (formData.name) setDisabled(false);
     else setDisabled(true);
   };
 
-  const handleSubmit = () => {
-    console.log(formData);
+  const handleSubmit = async () => {
     if (data) {
       setSaved(true);
-      setTimeout(() => {
-        setSaved(false);
-      }, 2000);
+      try {
+        const res = await healthConditionsData({ data: formData });
+        console.log(res);
+        if (res) {
+          setTimeout(() => {
+            setSaved(false);
+          }, 2000);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       navigation.goBack();
     }
   };
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -69,8 +77,8 @@ const AddHealthRecord = ({navigation, route}: any) => {
           />
         }
       />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View style={styles.inputBox}>
             <InputField
               label="Name of the health condition"
@@ -88,8 +96,8 @@ const AddHealthRecord = ({navigation, route}: any) => {
               label="Status"
               value={formData.status}
               options={[
-                {label: 'Chronic', value: 'Chronic'},
-                {label: 'Overcome', value: 'Overcome'},
+                { label: 'Chronic', value: 'Chronic' },
+                { label: 'Overcome', value: 'Overcome' },
               ]}
               onChange={newValue => handleChange('status', newValue)}
             />
@@ -129,7 +137,7 @@ const AddHealthRecord = ({navigation, route}: any) => {
         animationOutTiming={3000}
         style={styles.modal}>
         <View style={styles.modalContent}>
-          <View style={{flexDirection: 'row', gap: 10}}>
+          <View style={{ flexDirection: 'row', gap: 10 }}>
             <Image
               source={staticIcons.checkcircle}
               style={{
@@ -144,7 +152,7 @@ const AddHealthRecord = ({navigation, route}: any) => {
           <CloseIcon color="white" />
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 

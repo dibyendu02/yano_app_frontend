@@ -94,12 +94,13 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   content: {
-    width: '100%',
+    width: '98%',
+    paddingLeft: 8,
     alignItems: 'flex-start',
   },
   title: {
     fontWeight: 'bold',
-    marginTop: 10,
+    // marginTop: 10,
     marginBottom: 10,
     fontSize: 20,
     color: Colors.Blue,
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginTop: 20,
+    marginTop: 8,
     width: '100%',
   },
   button: {

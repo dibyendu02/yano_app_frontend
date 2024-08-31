@@ -1,6 +1,6 @@
-import { StyleSheet, View } from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import { FormProvider, useForm } from 'react-hook-form';
+import {FormProvider, useForm} from 'react-hook-form';
 import CommonThresholdLayout from '../components/CommonThresholdLayout';
 import ThresholdPickerInput from './components/ThresholdPickerInput';
 
@@ -22,7 +22,7 @@ const BloodPressure = () => {
               unit="mmHg"
               minValue={100}
               maxValue={130}
-              label="Systolic Minimum"
+              label="Systolic minimum"
               //   placeholder="Select systolic minimum"
               optionsListLabel="Select systolic minimum"
               optionsListHeight={300}
@@ -34,7 +34,7 @@ const BloodPressure = () => {
               unit="mmHg"
               minValue={140}
               maxValue={170}
-              label="Systolic Maximum"
+              label="Systolic maximum"
               //   placeholder="Select systolic maximum"
               optionsListLabel="Select systolic maximum"
               optionsListHeight={300}
@@ -48,7 +48,7 @@ const BloodPressure = () => {
               unit="mmHg"
               minValue={60}
               maxValue={90}
-              label="Diastolic Minimum"
+              label="Diastolic minimum"
               //   placeholder="Select diastolic minimum"
               optionsListLabel="Select diastolic minimum"
               optionsListHeight={300}
@@ -60,7 +60,7 @@ const BloodPressure = () => {
               unit="mmHg"
               minValue={90}
               maxValue={120}
-              label="Diastolic Maximum"
+              label="Diastolic maximum"
               //   placeholder="Select diastolic maximum"
               optionsListLabel="Select diastolic maximum"
               optionsListHeight={300}
@@ -79,10 +79,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   inputWrapper: {
-    width: '45%',
+    width: '49%',
     borderRadius: 10,
     overflow: 'hidden',
   },

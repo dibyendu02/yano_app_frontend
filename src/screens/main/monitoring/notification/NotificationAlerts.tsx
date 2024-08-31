@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import CommonLayout from '../../../../components/CommonLayout';
 import {Image} from 'react-native';
 import {DummyImage} from '../../../../assets/dummy/images';
@@ -18,7 +18,7 @@ import {Colors} from '../../../../constants/Colors';
 import CommonHeader from '../../../healthCondition/components/CommonHeader';
 import EmptyScreen from '../../../healthCondition/components/EmptyScreen';
 
-const Notifications = [
+const initialNotifications = [
   {
     id: 1,
     name: 'Juan Torres',
@@ -26,7 +26,7 @@ const Notifications = [
     message:
       'The patient entered a heart rate reading above the set threshold. Touch to review it.',
     image: DummyImage.user,
-    isView: true,
+    isView: false,
   },
   {
     id: 2,
@@ -35,55 +35,59 @@ const Notifications = [
     message:
       'The patient entered a heart rate reading above the set threshold. Touch to review it.',
     image: DummyImage.user,
-    isView: false,
+    isView: true,
   },
 ];
 
 const NotificationAlerts = ({navigation}) => {
+  const [notifications, setNotifications] = useState(initialNotifications);
+  const [showButton, setShowButton] = useState(
+    notifications.some(notification => !notification.isView),
+  );
+
+  const handleMarkAllAsViewed = () => {
+    const updatedNotifications = notifications.map(notification => ({
+      ...notification,
+      isView: true,
+    }));
+    setNotifications(updatedNotifications);
+    setShowButton(false);
+  };
+
   return (
     <CommonLayout>
       <CommonHeader
         leftIcon={
-          <TouchableOpacity
-            onPress={() => navigation.goBack()}
-            style={
-              {
-                // marginLeft: 10
-              }
-            }>
+          <TouchableOpacity onPress={() => navigation.goBack()}>
             <CloseIcon size={30} />
           </TouchableOpacity>
         }
         title="Notifications"
         rightComp2={
-          <TouchableOpacity>
-            <CheckListIcon size={24} />
-          </TouchableOpacity>
+          showButton && (
+            <TouchableOpacity onPress={handleMarkAllAsViewed}>
+              <CheckListIcon size={24} />
+            </TouchableOpacity>
+          )
         }
+        customStyle={{paddingVertical: 12}}
       />
       <ScrollView>
         <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
           <View>
-            {Notifications.length === 0 && (
+            {notifications.length === 0 && (
               <EmptyScreen
                 title="No notifications"
                 message="You have no notifications yet."
               />
             )}
           </View>
-          <ScrollView
-            style={
-              {
-                // padding: 10,
-                // borderRadius: 8,
-                // backgroundColor: Colors.White,
-              }
-            }>
-            {Notifications.map((item, index) => (
+          <ScrollView>
+            {notifications.map((item, index) => (
               <View
                 style={[
                   styles.container,
-                  item.isView && {backgroundColor: '#ecf9fd'},
+                  !item.isView && {backgroundColor: '#ecf9fd'},
                   index == 0 && {
                     borderTopRightRadius: 8,
                     borderTopLeftRadius: 8,
@@ -92,8 +96,7 @@ const NotificationAlerts = ({navigation}) => {
                     borderBottomWidth: 1,
                     borderBlockColor: Colors.LightGray,
                   },
-
-                  index == Notifications.length - 1 && {
+                  index == notifications.length - 1 && {
                     borderBottomRightRadius: 8,
                     borderBottomLeftRadius: 8,
                   },
@@ -155,10 +158,8 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     gap: 15,
-    // marginBottom: 20,
     backgroundColor: Colors.White,
     padding: 20,
-    // borderRadius: 10,
   },
   titleBox: {
     flexDirection: 'row',

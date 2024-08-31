@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-export const BASE_URL = 'https://yano-backend.onrender.com';
+export const BASE_URL = 'https://yano-backend.onrender.com/api';
+// export const BASE_URL = 'https://yano-backend-rrej.onrender.com/api';
 
 export const getData = async (url: string, token: string | null) => {
   let headerObj = {};
@@ -23,7 +24,7 @@ export const postData = async (
   url: string,
   data: any,
   token: string | null,
-  type: string | null,
+  type?: string | null,
 ) => {
   let headerObj = {};
   if (token) {
@@ -81,6 +82,7 @@ export const putData = async (
     console.log(error);
   }
 };
+
 export const deleteData = async (url: string, token: string | null) => {
   let headerObj = {};
   if (token) {

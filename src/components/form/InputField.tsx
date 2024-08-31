@@ -41,7 +41,7 @@ export const InputField: FC<inputProps> = ({
 
 const styles = StyleSheet.create({
   inputBox: {
-    marginBottom: 20,
+    marginBottom: 12,
   },
   label: {
     fontSize: 16,

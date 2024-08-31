@@ -14,14 +14,15 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from '../../../../components/header/Header';
-import { Colors } from '../../../../constants/Colors';
-import { CardStyles } from '../../../../components/cards/CardStyle';
-import { LineChart } from 'react-native-gifted-charts';
+import {Colors} from '../../../../constants/Colors';
+import {CardStyles} from '../../../../components/cards/CardStyle';
+import {LineChart} from 'react-native-gifted-charts';
 import Icons from '../../../../assets/icon/Icon';
 import moment from 'moment';
-import { StaticImage } from '../../../../assets/images';
+import {StaticImage} from '../../../../assets/images';
+import {retrieveData} from '../../../../utils/Storage';
 
 enum TimePeriod {
   Day = 'Day',
@@ -49,45 +50,45 @@ interface DataItem {
 }
 
 const dayData: DataItem[] = [
-  { label: '12 AM', value: 70 },
-  { label: '6 AM', value: 85 },
-  { label: '12 PM', value: 60 },
-  { label: '6 PM', value: 80 },
+  {label: '12 AM', value: 70},
+  {label: '6 AM', value: 85},
+  {label: '12 PM', value: 60},
+  {label: '6 PM', value: 80},
 ];
 
 const weeklyData: DataItem[] = [
-  { label: 'S', value: 70 },
-  { label: 'M', value: 85 },
-  { label: 'T', value: 60 },
-  { label: 'W', value: 80 },
-  { label: 'T', value: 75 },
-  { label: 'F', value: 90 },
-  { label: 'S', value: 65 },
+  {label: 'S', value: 70},
+  {label: 'M', value: 85},
+  {label: 'T', value: 60},
+  {label: 'W', value: 80},
+  {label: 'T', value: 75},
+  {label: 'F', value: 90},
+  {label: 'S', value: 65},
 ];
 
 const monthlyData: DataItem[] = [
-  { label: '1', value: 70 },
-  { label: '5', value: 85 },
-  { label: '10', value: 60 },
-  { label: '15', value: 80 },
-  { label: '20', value: 75 },
-  { label: '25', value: 90 },
-  { label: '30', value: 65 },
+  {label: '1', value: 70},
+  {label: '5', value: 85},
+  {label: '10', value: 60},
+  {label: '15', value: 80},
+  {label: '20', value: 75},
+  {label: '25', value: 90},
+  {label: '30', value: 65},
 ];
 
 const yearlyData: DataItem[] = [
-  { label: 'J', value: 70 },
-  { label: 'F', value: 85 },
-  { label: 'M', value: 60 },
-  { label: 'A', value: 80 },
-  { label: 'M', value: 75 },
-  { label: 'J', value: 90 },
-  { label: 'J', value: 65 },
-  { label: 'A', value: 70 },
-  { label: 'S', value: 85 },
-  { label: 'O', value: 60 },
-  { label: 'N', value: 80 },
-  { label: 'D', value: 75 },
+  {label: 'J', value: 70},
+  {label: 'F', value: 85},
+  {label: 'M', value: 60},
+  {label: 'A', value: 80},
+  {label: 'M', value: 75},
+  {label: 'J', value: 90},
+  {label: 'J', value: 65},
+  {label: 'A', value: 70},
+  {label: 'S', value: 85},
+  {label: 'O', value: 60},
+  {label: 'N', value: 80},
+  {label: 'D', value: 75},
 ];
 
 const HealthStats = () => {
@@ -100,6 +101,8 @@ const HealthStats = () => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [formattedText, setFormattedText] = useState('Today');
   const [chartSpacing, setChartSpacing] = useState(90);
+
+  const [userType, setUserType] = useState('patient');
 
   const [standardDeviation, setStandardDeviation] = useState(0);
 
@@ -128,8 +131,8 @@ const HealthStats = () => {
           value === -1
             ? dayDate.subtract(1, 'day')
             : value === 1
-              ? dayDate.add(1, 'day')
-              : dayDate;
+            ? dayDate.add(1, 'day')
+            : dayDate;
         setDayDate(newDate);
 
         if (newDate.isSame(moment(), 'day')) {
@@ -148,8 +151,8 @@ const HealthStats = () => {
           value === -1
             ? weekDate.subtract(1, 'week')
             : value === 1
-              ? weekDate.add(1, 'week')
-              : weekDate;
+            ? weekDate.add(1, 'week')
+            : weekDate;
         setWeekDate(newDate);
 
         const startOfWeek = newDate.startOf('week').format('D MMM');
@@ -162,8 +165,8 @@ const HealthStats = () => {
           value === -1
             ? monthDate.subtract(1, 'month')
             : value === 1
-              ? monthDate.add(1, 'month')
-              : monthDate;
+            ? monthDate.add(1, 'month')
+            : monthDate;
         setMonthDate(newDate);
 
         _formattedText = newDate.format('MMMM YYYY');
@@ -174,8 +177,8 @@ const HealthStats = () => {
           value === -1
             ? yearDate.subtract(1, 'year')
             : value === 1
-              ? yearDate.add(1, 'year')
-              : yearDate;
+            ? yearDate.add(1, 'year')
+            : yearDate;
         setYearDate(newDate);
 
         _formattedText = newDate.format('YYYY');
@@ -229,28 +232,38 @@ const HealthStats = () => {
     getFormattedText();
   };
 
+  useEffect(() => {
+    const getUserType = async () => {
+      const typeData = await retrieveData('userType');
+      setUserType(typeData);
+    };
+    getUserType();
+    console.log(userType);
+  }, []);
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{flex: 1}}>
       <Header
         title="Heart rate"
         headerRightComponent={
-          <View style={{ flexDirection: 'row', gap: 16 }}>
-            <TouchableOpacity>
-              <Image
-                source={StaticImage.FilterIcon}
-                style={{ height: 28, width: 28, objectFit: 'contain' }}
-              />
-            </TouchableOpacity>
+          <View style={{flexDirection: 'row', gap: 16}}>
+            {/* {userType != 'patient' && (
+              <TouchableOpacity>
+                <Image
+                  source={StaticImage.FilterIcon}
+                  style={{height: 28, width: 28, objectFit: 'contain'}}
+                />
+              </TouchableOpacity>
+            )} */}
             <TouchableOpacity
               onPress={() => {
                 Share.share({
                   message: 'Heart rate stats',
                 });
-              }}
-            >
+              }}>
               <Image
                 source={StaticImage.SharerIcon}
-                style={{ height: 25, width: 25 }}
+                style={{height: 25, width: 25}}
               />
             </TouchableOpacity>
           </View>
@@ -262,7 +275,7 @@ const HealthStats = () => {
           backgroundColor: Colors.GhostWhite,
           alignItems: 'center',
         }}>
-        <View style={{ flex: 1, width: '100%' }}>
+        <View style={{flex: 1, width: '100%'}}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View
               style={[
@@ -318,7 +331,7 @@ const HealthStats = () => {
                   suppressHighlighting
                 />
                 <Text
-                  style={{ color: Colors.Blue, fontSize: 16, fontWeight: '600' }}>
+                  style={{color: Colors.Blue, fontSize: 16, fontWeight: '600'}}>
                   {formattedText}
                 </Text>
                 <Icons.MaterialIcons
@@ -349,14 +362,14 @@ const HealthStats = () => {
                   spacing={chartSpacing}
                   xAxisColor={Colors.White}
                   yAxisColor={Colors.White}
-                  yAxisTextStyle={{ color: Colors.Grey }}
-                  xAxisLabelTextStyle={{ color: Colors.Grey }}
-                  yAxisLabelContainerStyle={{ width: 24 }}
+                  yAxisTextStyle={{color: Colors.Grey}}
+                  xAxisLabelTextStyle={{color: Colors.Grey}}
+                  yAxisLabelContainerStyle={{width: 24}}
                   yAxisOffset={40}
                   stepValue={10}
                   maxValue={80}
                   height={200}
-                  customDataPoint={(item: { value: number }, _index: number) => (
+                  customDataPoint={(item: {value: number}, _index: number) => (
                     <View
                       style={{
                         height: 10,
@@ -366,8 +379,8 @@ const HealthStats = () => {
                           item?.value <= 20
                             ? Colors.Green
                             : item?.value > 20 && item?.value < 50
-                              ? Colors.Orange
-                              : Colors.Red,
+                            ? Colors.Orange
+                            : Colors.Red,
                         backgroundColor: Colors.White,
                         borderWidth: 2,
                         alignSelf: 'center',
@@ -410,7 +423,7 @@ const HealthStats = () => {
                 </Text>
               </View>
             </View>
-            <View style={{ width: '100%' }}>
+            <View style={{width: '100%'}}>
               <Text
                 style={{
                   fontSize: 14,
@@ -432,7 +445,7 @@ const HealthStats = () => {
                     paddingHorizontal: 16,
                   },
                 ]}>
-                <Text style={{ color: Colors.Blue }}>Heart Rate</Text>
+                <Text style={{color: Colors.Blue}}>Heart Rate</Text>
                 <Text
                   style={{
                     color: Colors.Blue,
@@ -454,7 +467,7 @@ const HealthStats = () => {
               </View>
             </View>
 
-            <View style={{ width: '100%' }}>
+            <View style={{width: '100%'}}>
               <Text
                 style={{
                   fontSize: 14,
@@ -476,7 +489,7 @@ const HealthStats = () => {
                     paddingHorizontal: 16,
                   },
                 ]}>
-                <Text style={{ color: Colors.Blue }}>Heart Rate</Text>
+                <Text style={{color: Colors.Blue}}>Heart Rate</Text>
                 <Text
                   style={{
                     color: Colors.Blue,
@@ -494,7 +507,7 @@ const HealthStats = () => {
               </View>
             </View>
 
-            <View style={{ width: '100%' }}>
+            <View style={{width: '100%'}}>
               <Text
                 style={{
                   fontSize: 14,
@@ -516,7 +529,7 @@ const HealthStats = () => {
                     paddingHorizontal: 16,
                   },
                 ]}>
-                <Text style={{ color: Colors.Blue }}>Heart Rate</Text>
+                <Text style={{color: Colors.Blue}}>Heart Rate</Text>
                 <Text
                   style={{
                     color: Colors.Blue,
@@ -534,7 +547,7 @@ const HealthStats = () => {
               </View>
             </View>
 
-            <View style={{ width: '100%' }}>
+            <View style={{width: '100%'}}>
               <Text
                 style={{
                   fontSize: 14,
@@ -557,7 +570,7 @@ const HealthStats = () => {
                     marginBottom: 30,
                   },
                 ]}>
-                <Text style={{ color: Colors.Blue }}>Heart Rate</Text>
+                <Text style={{color: Colors.Blue}}>Heart Rate</Text>
                 <Text
                   style={{
                     color: Colors.Blue,

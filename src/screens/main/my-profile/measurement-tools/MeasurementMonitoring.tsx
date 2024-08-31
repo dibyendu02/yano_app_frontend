@@ -22,7 +22,7 @@ import {StaticImage} from '../../../../assets/images';
 
 const MeasurementMonitoring = ({navigation}: any) => {
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -68,7 +68,7 @@ const MeasurementMonitoring = ({navigation}: any) => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
     // <>
     //     <DeviceConnectedScreen/>
     // </>

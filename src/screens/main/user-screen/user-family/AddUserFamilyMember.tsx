@@ -61,7 +61,7 @@ const AddUserFamilyMember = () => {
     <CommonLayout>
       {!isComplete ? (
         <CommonHeader
-          title={'Add Family Member'}
+          title={'Add family member'}
           rightComp1={
             <FilledButton
               type="blue"
@@ -99,11 +99,12 @@ const AddUserFamilyMember = () => {
           }
         />
       )}
-      <View style={{padding: 20}}>
+      <View
+        style={{paddingVertical: 12, width: '94%', marginHorizontal: 'auto'}}>
         {!isComplete ? (
           <CustomInputField
             name="email"
-            label="Email of Family Member"
+            label="Email of family member"
             placeholder="Ej. paciente@email.com"
             control={control}
             rules={{required: 'Email is required'}}
@@ -132,7 +133,7 @@ const AddUserFamilyMember = () => {
           <Text
             style={{
               color: Colors.SteelBlue,
-              fontSize: 16,
+              fontSize: 12,
               fontWeight: '600',
               paddingHorizontal: 20,
               paddingTop: 10,
@@ -159,6 +160,7 @@ const AddUserFamilyMember = () => {
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     paddingVertical: 14,
+                    paddingBottom: _i == menuData.length - 1 ? 6 : 14,
                     alignItems: 'center',
                   }}>
                   <View
@@ -166,7 +168,8 @@ const AddUserFamilyMember = () => {
                       flexDirection: 'row',
                       alignItems: 'center',
                     }}>
-                    {item.icon}
+                    <View style={{width: 25, marginRight: 5}}>{item.icon}</View>
+
                     <Text
                       style={{
                         color: Colors.Blue,

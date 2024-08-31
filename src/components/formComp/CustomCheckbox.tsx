@@ -64,7 +64,7 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 10,
+    marginBottom: 10,
     backgroundColor: Colors.White,
     height: 56,
     borderRadius: 8,

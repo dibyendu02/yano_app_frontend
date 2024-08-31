@@ -27,6 +27,7 @@ const Notification = () => {
               backgroundColor: Colors.White,
               borderRadius: 10,
               padding: 20,
+              paddingRight: 10,
             }}>
             <View
               style={{

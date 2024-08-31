@@ -23,7 +23,7 @@ const SettingHomeScreen = () => {
     setIsClicked(true);
   };
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -73,7 +73,7 @@ const SettingHomeScreen = () => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

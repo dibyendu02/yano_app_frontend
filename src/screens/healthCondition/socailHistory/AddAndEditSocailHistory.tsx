@@ -97,8 +97,8 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
           />
         }
       />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View style={styles.inputBox}>
             <CustomInputField
               label="Occupation"

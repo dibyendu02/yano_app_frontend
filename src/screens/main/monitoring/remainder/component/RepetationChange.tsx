@@ -1,16 +1,23 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal } from 'react-native';
-import { Colors } from '../../../../../constants/Colors';
-import { RadioButton } from 'react-native-paper';
+import React, {useState} from 'react';
+import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
+import {Colors} from '../../../../../constants/Colors';
+import {RadioButton} from 'react-native-paper';
 
-const RepetitionModal = ({ isVisible, onClose, onSelect }) => {
+
+type RepetitionModalProps = {
+  isVisible: boolean;
+  onClose: () => void;
+  onSelect: (value: string) => void;
+};
+const RepetitionModal = ({ isVisible, onClose, onSelect }: RepetitionModalProps) => {
   const [selectedValue, setSelectedValue] = useState('day');
 
-  const handleSelect = value => {
+  const handleSelect = (value: string): void => {
     setSelectedValue(value);
     onSelect(value);
     onClose();
   };
+
 
   return (
     <Modal transparent={true} visible={isVisible} animationType="fade">
@@ -85,6 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.White,
     borderRadius: 10,
     padding: 20,
+    paddingBottom: 10,
   },
   modalTitle: {
     fontSize: 18,
