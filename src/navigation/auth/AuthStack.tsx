@@ -22,70 +22,150 @@ import FirstScreen from '../../screens/auth/FirstPage';
 const Stack = createNativeStackNavigator<AuthStackParams>();
 
 const authStackConfig: AuthStackConfig[] = [
-  {name: 'FirstScreen', component: FirstScreen, options: {headerShown: false}},
-  {name: AuthScreen.Landing, component: Landing, options: {headerShown: false}},
+  {
+    name: 'FirstScreen',
+    component: FirstScreen,
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
+  },
+  {
+    name: AuthScreen.Landing,
+    component: Landing,
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
+  },
   {
     name: AuthScreen.SelectUserType,
     component: SelectUserType,
-    options: {headerShown: false},
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
   },
-  {name: AuthScreen.Login, component: Login, options: {headerShown: false}},
+  {
+    name: AuthScreen.Login,
+    component: Login,
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
+  },
   {
     name: AuthScreen.Registration,
     component: Registration,
-    options: {headerShown: false},
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
   },
   {
     name: AuthScreen.AccountVerification,
     component: AccountVerification,
-    options: {headerShown: false},
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
   },
   {
     name: AuthScreen.Welcome,
     component: Welcome,
-    options: {headerShown: false},
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
   },
   {
     name: AuthScreen.MoreDetails,
     component: MoreDetails,
-    options: {headerShown: false},
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
   },
   {
     name: AuthScreen.ChooseDevice,
     component: AuthChooseDevice,
-    options: {headerShown: false},
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
   },
 
   {
     name: AuthScreen.AskDevice,
     component: AuthAskDevice,
-    options: {headerShown: false},
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
   },
   {
     name: AuthScreen.DeviceInfo,
     component: AuthDeviceInfo,
-    options: {headerShown: false},
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
   },
   {
     name: AuthScreen.DeviceInstruction,
     component: AuthInstruction,
-    options: {headerShown: false},
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
   },
   {
     name: AuthScreen.DeviceConnected,
     component: AuthDeviceConnected,
-    options: {headerShown: false},
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
   },
   {
     name: 'LoadingScreen',
     component: LoadingScreen,
-    options: {headerShown: false},
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
   },
-  {name: 'ForgotPass', component: ForgotPass, options: {headerShown: false}},
+  {
+    name: 'ForgotPass',
+    component: ForgotPass,
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
+  },
   {
     name: 'SecondForgotPassword',
     component: SecondForgotPassword,
-    options: {headerShown: false},
+    options: {
+      headerShown: false,
+      animationTypeForReplace: 'push',
+      animation: 'slide_from_right',
+    },
   },
 ];
 

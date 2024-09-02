@@ -200,12 +200,12 @@ const MyProfile = ({navigation}: any) => {
               width: '100%',
               flexDirection: 'row',
               justifyContent: 'center',
-              padding: 14,
+              padding: 10,
             }}>
             <ShareButton
               label="Share profile"
               type="blue"
-              style={{width: '75%'}}
+              style={{width: '77%'}}
               onPress={() => {
                 Share.share({
                   message: ` Dr. ${userData?.firstName} ${userData?.lastName}`,
@@ -219,26 +219,6 @@ const MyProfile = ({navigation}: any) => {
                 />
               }
             />
-            {/* <FilledButton
-              type="lightGrey"
-              label=""
-              style={{
-                width: '18%',
-                marginLeft: 8,
-                flexDirection: 'row',
-                justifyContent: 'center',
-              }}
-              icon={
-                <Image
-                  source={StaticImage.QrCode}
-                  style={{
-                    width: 20,
-                    height: 20,
-                  }}
-                />
-              }
-              onPress={() => setShowQR(true)}
-            /> */}
             <TouchableOpacity
               onPress={() => setShowQR(true)}
               style={{
@@ -265,7 +245,7 @@ const MyProfile = ({navigation}: any) => {
         <View style={[CardStyles.container, {marginVertical: 6}]}>
           <FlatList
             data={menuData}
-            style={{paddingHorizontal: 20, paddingVertical: 10}}
+            style={{paddingHorizontal: 18, paddingVertical: 2}}
             renderItem={({item, index: _i}) => (
               <TouchableOpacity
                 onPress={() => navigation.navigate(item.path)}

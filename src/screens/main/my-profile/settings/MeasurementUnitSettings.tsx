@@ -45,31 +45,36 @@ const MeasurementUnitSettings = () => {
         position: 'relative',
       }}>
       <Header title={'Measurement units'} />
-      <ScrollView>
-        <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View
+          style={{
+            backgroundColor: 'white',
+            paddingHorizontal: 16,
+            borderRadius: 8,
+          }}>
           {MeasurementSettingItems.map((item, index) => (
             <DeviceItems
               key={item.title}
               element={
                 <Image
                   source={item.img}
-                  height={25}
-                  width={25}
-                  style={{objectFit: 'contain', height: 25, width: 25}}
+                  style={{objectFit: 'contain', height: 20, width: 20}}
                 />
               }
               name={item.title}
               subtitle={selectedUnits[item.title] || item.unit1}
               customStyle={{
-                borderTopRightRadius: index == 0 ? 8 : 0,
-                borderTopLeftRadius: index == 0 ? 8 : 0,
-                borderBottomRightRadius:
-                  index == MeasurementSettingItems.length - 1 ? 8 : 0,
-                borderBottomLeftRadius:
-                  index == MeasurementSettingItems.length - 1 ? 8 : 0,
-                borderBottomWidth: 1,
+                // borderTopRightRadius: index == 0 ? 8 : 0,
+                // borderTopLeftRadius: index == 0 ? 8 : 0,
+                // borderBottomRightRadius:
+                //   index == MeasurementSettingItems.length - 1 ? 8 : 0,
+                // borderBottomLeftRadius:
+                //   index == MeasurementSettingItems.length - 1 ? 8 : 0,
+                borderBottomWidth:
+                  index == MeasurementSettingItems.length - 1 ? 0 : 1,
                 borderBottomColor: Colors.LightGray,
                 borderRadius: 0,
+                paddingHorizontal: 0,
               }}
               onPress={() => handlePress(item)}
             />

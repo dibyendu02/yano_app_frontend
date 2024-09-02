@@ -19,7 +19,12 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const navigation = useNavigation();
   return (
-    <View style={[styles.navbar, customStyle]}>
+    <View
+      style={[
+        styles.navbar,
+        customStyle,
+        // {paddingTop: headerRightComponent ? 35 : 45},
+      ]}>
       <View style={styles.navBarLeftContainer}>
         {showBackIcon && (
           <TouchableOpacity onPress={() => navigation.goBack()}>
