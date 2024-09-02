@@ -17,7 +17,7 @@ const BloodGlucoseReading = ({navigation}: any) => {
     }, 3000);
   }, []);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -58,7 +58,7 @@ const BloodGlucoseReading = ({navigation}: any) => {
           activeOpacity={0.8}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

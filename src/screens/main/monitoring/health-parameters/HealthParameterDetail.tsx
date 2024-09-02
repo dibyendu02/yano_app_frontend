@@ -30,7 +30,7 @@ const HealthParameterDetail = ({route}) => {
   let healthParameterDetail = route?.params?.healthParameterDetail;
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <Header
         title={healthParameterDetail?.field_full}
         headerRightComponent={
@@ -323,7 +323,7 @@ const HealthParameterDetail = ({route}) => {
         onPress={() => setIsReviewed(!isReviewed)}
         activeOpacity={0.8}
       /> */}
-    </SafeAreaView>
+    </View>
   );
 };
 

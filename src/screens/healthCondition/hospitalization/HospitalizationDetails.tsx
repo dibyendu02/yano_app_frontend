@@ -26,7 +26,7 @@ const HospitalizationDetails = ({navigation, route}: any) => {
   const {name, reason, dischargeDate, admissionDate, doctorName} = data;
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -79,7 +79,7 @@ const HospitalizationDetails = ({navigation, route}: any) => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

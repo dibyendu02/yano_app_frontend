@@ -23,7 +23,7 @@ type RemainderLayoutProps = {
 
 const RemainderLayout: FC<RemainderLayoutProps> = ({data}) => {
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -63,7 +63,7 @@ const RemainderLayout: FC<RemainderLayoutProps> = ({data}) => {
         onPress={() => navigate('AddRemainder')}
         style={styles.addBtn}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

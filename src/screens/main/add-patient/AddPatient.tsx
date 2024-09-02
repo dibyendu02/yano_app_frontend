@@ -77,7 +77,7 @@ const AddPatient = () => {
   }, [email]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <HeaderWithButton
         title="Add patient"
         headerRightComponent={
@@ -162,7 +162,7 @@ const AddPatient = () => {
           </Card>
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 export default AddPatient;

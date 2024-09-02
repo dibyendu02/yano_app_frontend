@@ -5,9 +5,9 @@ import {Colors} from '../../../../constants/Colors';
 
 const FaqScreen = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header title="Frequently asked questions" />
-    </SafeAreaView>
+    </View>
   );
 };
 

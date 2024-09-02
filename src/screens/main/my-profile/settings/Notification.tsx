@@ -13,7 +13,7 @@ const Notification = () => {
   const toggleMessage = () =>
     setMessageEnabled(previousState => !previousState);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -88,7 +88,7 @@ const Notification = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

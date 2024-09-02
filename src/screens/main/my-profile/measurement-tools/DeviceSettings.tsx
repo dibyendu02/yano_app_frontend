@@ -8,7 +8,7 @@ import {DeviceSettings} from '../../../../assets/measurement-items/measurementLi
 
 const DeviceSettingsScreen = () => {
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -22,7 +22,7 @@ const DeviceSettingsScreen = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

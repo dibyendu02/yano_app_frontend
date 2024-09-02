@@ -27,7 +27,7 @@ import {navigate} from '../../../../navigation/RootNavigation';
 
 const PatientMonitoringMeasurements = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header
         title="Health parameters"
         // headerRightComponent={
@@ -157,7 +157,7 @@ const PatientMonitoringMeasurements = () => {
           )}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

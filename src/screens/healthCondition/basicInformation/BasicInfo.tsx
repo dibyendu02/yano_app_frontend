@@ -40,7 +40,7 @@ const BasicInfo = ({ navigation }: any) => {
   }, []);
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -73,7 +73,7 @@ const BasicInfo = ({ navigation }: any) => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

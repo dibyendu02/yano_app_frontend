@@ -10,7 +10,7 @@ const DownloadData = () => {
   const [downloaded, setDownloaded] = useState(false);
   const downloadData = true;
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -74,7 +74,7 @@ const DownloadData = () => {
           )}
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

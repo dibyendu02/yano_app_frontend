@@ -19,7 +19,7 @@ const DeviceInfo = ({navigation}: any) => {
 
   console.log(devicename);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -85,7 +85,7 @@ const DeviceInfo = ({navigation}: any) => {
           }
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

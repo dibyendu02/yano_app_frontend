@@ -54,6 +54,8 @@
 	<string>Access to pick a photo</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Access to pick a photo</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Your message to user when the microsphone is accessed for the first time</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

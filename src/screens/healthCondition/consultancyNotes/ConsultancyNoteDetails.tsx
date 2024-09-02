@@ -22,7 +22,7 @@ const ConsultancyNotesDetails = ({navigation, route}: any) => {
   const {name, date, time, note, recommendation, attendedBy} = data;
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -61,7 +61,7 @@ const ConsultancyNotesDetails = ({navigation, route}: any) => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

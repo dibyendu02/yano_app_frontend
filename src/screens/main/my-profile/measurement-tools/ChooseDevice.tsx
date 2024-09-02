@@ -38,7 +38,7 @@ const devices = [
 
 const ChooseDevice = () => {
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -129,7 +129,7 @@ const ChooseDevice = () => {
           onPress={() => navigate('DeviceAndAccessories')}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

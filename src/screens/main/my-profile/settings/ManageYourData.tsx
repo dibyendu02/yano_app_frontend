@@ -36,7 +36,7 @@ const ManageYourData = () => {
   //   }
   // }, [isFocused]);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -60,7 +60,7 @@ const ManageYourData = () => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

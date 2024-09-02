@@ -25,7 +25,7 @@ const VaccineDetails = ({navigation, route}: any) => {
   const {name, field1, field2, field3, field4, field5} = data;
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -74,7 +74,7 @@ const VaccineDetails = ({navigation, route}: any) => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

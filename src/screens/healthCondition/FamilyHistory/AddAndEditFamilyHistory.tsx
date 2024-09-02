@@ -52,7 +52,7 @@ const AddAndEditFamilyHistory = ({ navigation, route }: any) => {
   };
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -120,7 +120,7 @@ const AddAndEditFamilyHistory = ({ navigation, route }: any) => {
           <CloseIcon color="white" />
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 

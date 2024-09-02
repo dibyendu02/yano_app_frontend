@@ -95,7 +95,7 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
   }, [defaultValues.name]);
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -281,7 +281,7 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
           <CloseIcon color="white" />
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 

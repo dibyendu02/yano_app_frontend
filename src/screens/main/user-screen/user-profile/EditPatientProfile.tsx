@@ -129,7 +129,7 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={{flex: 1}}>
@@ -290,7 +290,7 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
           <CloseIcon color="white" />
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 

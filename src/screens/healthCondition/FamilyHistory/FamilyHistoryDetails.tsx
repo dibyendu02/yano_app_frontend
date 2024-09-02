@@ -26,7 +26,7 @@ const FamilyHistoryDetails = ({navigation, route}: any) => {
   const {name, disease} = data;
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -78,7 +78,7 @@ const FamilyHistoryDetails = ({navigation, route}: any) => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

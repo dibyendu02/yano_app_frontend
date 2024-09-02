@@ -15,7 +15,7 @@ import { StaticImage } from '../../../../assets/images';
 
 const SupportChat = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header title="Online support chat"
         headerRightComponent={
           <TouchableOpacity>
@@ -46,7 +46,7 @@ const SupportChat = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -26,7 +26,7 @@ const SurgeriesDetails = ({navigation, route}: any) => {
   const {name, devices, date, doctorName, additionalNotes} = data;
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -74,7 +74,7 @@ const SurgeriesDetails = ({navigation, route}: any) => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

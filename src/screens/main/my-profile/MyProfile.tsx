@@ -121,7 +121,7 @@ const MyProfile = ({navigation}: any) => {
   }, [showQR]);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <BottomSheet isVisible={showQR} onBackdropPress={() => setShowQR(false)}>
         <View style={{padding: 20, alignItems: 'center'}}>
           <Text
@@ -303,7 +303,7 @@ const MyProfile = ({navigation}: any) => {
           />
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

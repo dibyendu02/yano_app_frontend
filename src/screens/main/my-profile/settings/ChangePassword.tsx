@@ -41,7 +41,7 @@ const ChangePassword = () => {
   const [saved, setSaved] = useState(false);
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -119,7 +119,7 @@ const ChangePassword = () => {
           </TouchableOpacity>
         </View>
       </Modal>
-    </SafeAreaView>
+    </View>
   );
 };
 

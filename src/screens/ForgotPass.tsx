@@ -17,7 +17,7 @@ export default function ForgotPass({navigation}) {
   const [clicked, setClicked] = useState(false);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header title="Forgot your password?" />
 
       {!clicked ? (
@@ -66,7 +66,7 @@ export default function ForgotPass({navigation}) {
           </TouchableOpacity>
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 

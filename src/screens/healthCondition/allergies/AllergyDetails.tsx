@@ -33,7 +33,7 @@ const AllergyDetails = ({navigation, route}: any) => {
     additionalNotes,
   } = data;
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -83,7 +83,7 @@ const AllergyDetails = ({navigation, route}: any) => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

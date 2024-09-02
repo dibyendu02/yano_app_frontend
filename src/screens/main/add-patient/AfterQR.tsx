@@ -11,7 +11,7 @@ import {navigate} from '../../../navigation/RootNavigation';
 
 const AfterQR = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <HeaderLocal
         title="Add patient"
         headerRightComponent={
@@ -59,7 +59,7 @@ const AfterQR = () => {
           </Text>
         </Card>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

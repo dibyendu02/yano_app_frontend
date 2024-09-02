@@ -11,7 +11,7 @@ import arrow from '../assets/image/arrow_back.png';
 
 export default function SecondForgotPassword({navigation}) {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.Navbar}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Image
@@ -33,7 +33,7 @@ export default function SecondForgotPassword({navigation}) {
           <Text style={styles.submitButtonText}>Back to login</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

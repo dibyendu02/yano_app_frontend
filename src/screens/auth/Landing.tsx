@@ -35,7 +35,7 @@ const Landing: React.FC<LandingScreenProps> = () => {
 
   return (
     <ImageBackground source={StaticImage.Start} style={styles.container}>
-      <SafeAreaView style={styles.contentContainer}>
+      <View style={styles.contentContainer}>
         {/* <View
           style={{
             width: '100%',
@@ -66,7 +66,7 @@ const Landing: React.FC<LandingScreenProps> = () => {
             onPress={() => navigate(AuthScreen.Login)}
           />
         </View>
-      </SafeAreaView>
+      </View>
     </ImageBackground>
   );
 };

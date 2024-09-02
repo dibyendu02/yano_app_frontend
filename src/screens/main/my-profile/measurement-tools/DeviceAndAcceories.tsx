@@ -218,7 +218,7 @@ const DeviceAndAccessories = ({navigation}: any) => {
   };
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -236,7 +236,7 @@ const DeviceAndAccessories = ({navigation}: any) => {
           );
         })}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

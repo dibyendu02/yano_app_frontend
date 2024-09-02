@@ -242,7 +242,7 @@ const HealthStats = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <Header
         title="Heart rate"
         headerRightComponent={
@@ -590,7 +590,7 @@ const HealthStats = () => {
           </ScrollView>
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

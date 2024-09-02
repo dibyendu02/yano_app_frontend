@@ -49,7 +49,7 @@ const DeviceInnerSettings = () => {
   };
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -117,7 +117,7 @@ const DeviceInnerSettings = () => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

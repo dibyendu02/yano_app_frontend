@@ -11,7 +11,7 @@ import {navigate} from '../../../../navigation/RootNavigation';
 const MyDevices = () => {
   const [visible, isVisible] = useState(true);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -59,7 +59,7 @@ const MyDevices = () => {
           onPress={() => navigate('ChooseDevice')}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

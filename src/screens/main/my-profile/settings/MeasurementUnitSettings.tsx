@@ -38,7 +38,7 @@ const MeasurementUnitSettings = () => {
   };
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -86,7 +86,7 @@ const MeasurementUnitSettings = () => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

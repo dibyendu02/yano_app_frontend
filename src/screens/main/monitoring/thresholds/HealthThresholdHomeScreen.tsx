@@ -40,7 +40,7 @@ const HealthThresholdHomeScreen = () => {
   const [value, setValue] = useState(false);
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -82,7 +82,7 @@ const HealthThresholdHomeScreen = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

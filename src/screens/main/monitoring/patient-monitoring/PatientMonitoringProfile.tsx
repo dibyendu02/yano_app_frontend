@@ -75,7 +75,7 @@ export default function PatientMonitoringProfile({}) {
   //   console.log(HSDGN[0]);
   // }, []);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header title="Monitored patient" />
 
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
@@ -330,7 +330,7 @@ export default function PatientMonitoringProfile({}) {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 

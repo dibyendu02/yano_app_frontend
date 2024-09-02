@@ -28,7 +28,7 @@ const ConsultancyNotes = ({navigation}: any) => {
     },
   ];
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -47,7 +47,7 @@ const ConsultancyNotes = ({navigation}: any) => {
           message={'There are no consultation notes available'}
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

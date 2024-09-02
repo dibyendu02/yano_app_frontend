@@ -26,7 +26,7 @@ const DeleteAccount = () => {
   const {logout} = useContext(UserContext);
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -124,7 +124,7 @@ const DeleteAccount = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

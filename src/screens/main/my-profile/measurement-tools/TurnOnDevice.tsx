@@ -23,7 +23,7 @@ const TurnOnDevice = ({navigation}: any) => {
     }, 1000);
   }, []);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -80,7 +80,7 @@ const TurnOnDevice = ({navigation}: any) => {
           onPress={() => navigation.navigate('DeviceConnected')}
         />
       </View> */}
-    </SafeAreaView>
+    </View>
   );
 };
 

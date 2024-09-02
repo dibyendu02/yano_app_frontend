@@ -12,7 +12,7 @@ const BloodGlucoseResult = ({navigation}: any) => {
   const [code, setCode] = useState('C20');
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -95,7 +95,7 @@ const BloodGlucoseResult = ({navigation}: any) => {
           activeOpacity={0.8}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

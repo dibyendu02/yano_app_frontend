@@ -25,7 +25,7 @@ const HealthConditionDetails = ({navigation, route}: any) => {
   const data = route.params.data;
   const {name, date, status, treatedBy, medicine, additionalNotes} = data;
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -76,7 +76,7 @@ const HealthConditionDetails = ({navigation, route}: any) => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

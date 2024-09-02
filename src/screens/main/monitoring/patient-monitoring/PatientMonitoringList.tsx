@@ -20,7 +20,7 @@ const PatientMonitoringList = () => {
   const [isScrolling, setIsScrolling] = useState(false);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header
         title="Monitoring"
         showBackIcon={false}
@@ -67,7 +67,7 @@ const PatientMonitoringList = () => {
           />
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

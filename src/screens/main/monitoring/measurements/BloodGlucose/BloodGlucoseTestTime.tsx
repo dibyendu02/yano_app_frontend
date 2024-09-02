@@ -11,7 +11,7 @@ import RadioButton from '../components/RadioButton';
 const BloodGlucoseTestTime = ({navigation}: any) => {
   const [time, setTime] = useState('before-breakfast');
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -97,7 +97,7 @@ const BloodGlucoseTestTime = ({navigation}: any) => {
           activeOpacity={0.8}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

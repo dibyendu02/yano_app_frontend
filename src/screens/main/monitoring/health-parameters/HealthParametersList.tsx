@@ -26,7 +26,7 @@ import {navigate} from '../../../../navigation/RootNavigation';
 
 const HealthParametersList = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header
         title="Your measurements"
         // headerRightComponent={
@@ -178,7 +178,7 @@ const HealthParametersList = () => {
           )}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

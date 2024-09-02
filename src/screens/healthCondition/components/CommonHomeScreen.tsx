@@ -1,4 +1,4 @@
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet, View} from 'react-native';
 import React, {FC} from 'react';
 import {Colors} from '../../../constants/Colors';
 import FilledButton from '../../../components/buttons/FilledButton';
@@ -29,7 +29,7 @@ const CommonHomeScreen: FC<CommonHomeScreenProps> = ({
   customStyle,
 }) => {
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -52,7 +52,7 @@ const CommonHomeScreen: FC<CommonHomeScreenProps> = ({
         onPress={() => navigation.navigate(addItem_path)}
         style={styles.addBtn}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 

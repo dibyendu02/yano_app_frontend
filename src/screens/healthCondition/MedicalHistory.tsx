@@ -9,7 +9,7 @@ import {MedicalHistoryItems} from '../../assets/MedicalHistoryItems';
 const MedicalHistory = ({navigation}: any) => {
   return (
     <>
-      <SafeAreaView
+      <View
         style={{
           flex: 1,
           backgroundColor: Colors.GhostWhite,
@@ -50,7 +50,7 @@ const MedicalHistory = ({navigation}: any) => {
             ))}
           </View>
         </ScrollView>
-      </SafeAreaView>
+      </View>
     </>
   );
 };

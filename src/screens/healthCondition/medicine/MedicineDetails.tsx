@@ -43,7 +43,7 @@ const MedicineDetails = ({navigation, route}: any) => {
   } = data;
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -158,7 +158,7 @@ const MedicineDetails = ({navigation, route}: any) => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

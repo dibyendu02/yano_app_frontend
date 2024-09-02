@@ -106,7 +106,7 @@ export default function ViewFamilyMemberDetails() {
     setIsEnabled(previousState => !previousState);
   };
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header title="Perfil del familiar" />
       <View style={styles.body}>
         <Card>
@@ -253,7 +253,7 @@ export default function ViewFamilyMemberDetails() {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 

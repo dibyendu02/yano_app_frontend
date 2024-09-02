@@ -36,7 +36,7 @@ const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
 }) => {
   const [isClicked, setIsClicked] = useState(false);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -87,7 +87,7 @@ const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 

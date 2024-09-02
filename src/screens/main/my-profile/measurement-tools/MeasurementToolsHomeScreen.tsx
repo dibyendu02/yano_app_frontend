@@ -11,7 +11,7 @@ import {navigate} from '../../../../navigation/RootNavigation';
 const MeasurementToolsHomeScreen = () => {
   const [visible, isVisible] = useState(true);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -57,7 +57,7 @@ const MeasurementToolsHomeScreen = () => {
           onPress={() => navigate('ChooseDevice')}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -14,7 +14,7 @@ import {Image} from 'react-native';
 const BloodGlucoseStep2 = ({navigation}: any) => {
   const [code, setCode] = useState('C20');
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -75,7 +75,7 @@ const BloodGlucoseStep2 = ({navigation}: any) => {
           activeOpacity={0.8}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

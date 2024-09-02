@@ -78,7 +78,7 @@ const MyProfile = () => {
     fetchDoctorData();
   }, [userId]);
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <BottomSheet isVisible={showQR} onBackdropPress={() => setShowQR(false)}>
         <View style={{padding: 20, alignItems: 'center'}}>
           <Image source={DummyImage.QR} height={150} width={150} />
@@ -188,7 +188,7 @@ const MyProfile = () => {
           />
         </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

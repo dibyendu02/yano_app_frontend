@@ -40,7 +40,7 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
   };
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -102,7 +102,7 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

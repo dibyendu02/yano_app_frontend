@@ -68,7 +68,7 @@ export default function PatientMonitoringProfileLocal({}) {
   const [isClicked, setIsClicked] = useState(false);
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header title="Monitored patient" />
 
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
@@ -205,7 +205,7 @@ export default function PatientMonitoringProfileLocal({}) {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 
