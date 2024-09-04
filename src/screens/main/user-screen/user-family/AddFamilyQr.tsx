@@ -1,12 +1,12 @@
 'use strict';
 
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, TouchableOpacity, Linking, View } from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet, Text, TouchableOpacity, Linking, View} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
-import { RNCamera } from 'react-native-camera';
+import {RNCamera} from 'react-native-camera';
 import Icons from '../../../../assets/icon/Icon';
-import { Colors } from '../../../../constants/Colors';
-import { useNavigation } from '@react-navigation/native';
+import {Colors} from '../../../../constants/Colors';
+import {useNavigation} from '@react-navigation/native';
 
 const ScanScreen = () => {
   const navigation = useNavigation();

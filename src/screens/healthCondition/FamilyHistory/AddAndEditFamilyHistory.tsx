@@ -1,24 +1,27 @@
-// AddAndEditFamilyHistory.tsx
-import React, { useState } from 'react';
-import { View, StyleSheet, SafeAreaView, ScrollView, Text } from 'react-native';
-import { Colors } from '../../../constants/Colors';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, SafeAreaView, ScrollView, Text} from 'react-native';
+import {Colors} from '../../../constants/Colors';
 import Header from '../../../components/header/Header';
 import FilledButton from '../../../components/buttons/FilledButton';
 import CustomInputField from '../../../components/formComp/CustomInputField';
-import { useForm, Control, FieldValues } from 'react-hook-form';
+import {useForm, Control, FieldValues} from 'react-hook-form';
 import CommonHeader from '../components/CommonHeader';
-import { CloseIcon } from '../../../assets/icon/IconNames';
-import { Image } from 'react-native';
-import { staticIcons } from '../../../assets/image';
+import {CloseIcon} from '../../../assets/icon/IconNames';
+import {Image} from 'react-native';
+import {staticIcons} from '../../../assets/image';
 import Modal from 'react-native-modal';
-import { healthConditionsData } from '../../../api/POST/medicalHistory';
+import {
+  addFamilyMember,
+  healthConditionsData,
+} from '../../../api/POST/medicalHistory';
+import {editFamilyMember} from '../../../api/PUT/medicalHistory';
 
 interface FormValues {
-  name: string;
-  disease: string;
+  relationship: string;
+  healthCondition: string;
 }
 
-const AddAndEditFamilyHistory = ({ navigation, route }: any) => {
+const AddAndEditFamilyHistory = ({navigation, route}: any) => {
   let data = null;
   if (route?.params) {
     data = route.params.data;
@@ -26,28 +29,60 @@ const AddAndEditFamilyHistory = ({ navigation, route }: any) => {
   const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [defaultValues, setDefaultValues] = useState<FieldValues>({
-    name: data?.name || '',
-    disease: data?.disease || '',
+    relationship: data?.name || '',
+    healthCondition: data?.disease || '',
   });
 
   const {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
-  } = useForm<FormValues>({ defaultValues });
+    formState: {errors, isDirty},
+    watch,
+  } = useForm<FormValues>({defaultValues});
+
+  // Watch for changes in form fields
+  const watchedFields = watch();
+
+  // Enable the Save button if any field is dirty (changed)
+  useEffect(() => {
+    if (isDirty) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }, [isDirty, watchedFields]);
 
   const onSubmit = async (formdata: FormValues) => {
-    console.log(formdata);
-    const res = await healthConditionsData({ data: formdata });
-    console.log(res);
+    console.log('data', data);
     if (data) {
-      setSaved(true);
-      setTimeout(() => {
-        setSaved(false);
-      }, 2000);
+      try {
+        const respose = await editFamilyMember({data: formdata, id: data.id});
+        if (respose) {
+          setSaved(true);
+        }
+
+        setTimeout(() => {
+          setSaved(false);
+          navigation.goBack();
+        }, 2000);
+      } catch (error) {
+        console.error('Error in onSubmit Edit :', error);
+      }
     } else {
-      navigation.goBack();
+      try {
+        const res = await addFamilyMember({data: formdata});
+        console.log(res);
+        console.log('Data saved');
+        setSaved(true);
+        setTimeout(() => {
+          setSaved(false);
+          navigation.goBack();
+        }, 2000);
+      } catch (error) {
+        console.error('Error in onSubmit Add:', error);
+      }
+      // navigation.goBack();
     }
   };
 
@@ -79,14 +114,14 @@ const AddAndEditFamilyHistory = ({ navigation, route }: any) => {
           <View style={styles.inputBox}>
             <CustomInputField
               label="Relationship to family member"
-              name="name"
+              name="relationship"
               control={control as unknown as Control<FieldValues, object>}
               placeholder="Ej. Madre, padre, hermano, etc..."
-              rules={{ required: 'required*' }}
+              rules={{required: 'required*'}}
             />
             <CustomInputField
               label="Family member's health condition"
-              name="disease"
+              name="healthCondition"
               control={control as unknown as Control<FieldValues, object>}
               placeholder="Ej. Hypertension, diabetes, etc..."
             />
@@ -105,7 +140,7 @@ const AddAndEditFamilyHistory = ({ navigation, route }: any) => {
         animationOutTiming={3000}
         style={styles.modal}>
         <View style={styles.modalContent}>
-          <View style={{ flexDirection: 'row', gap: 10 }}>
+          <View style={{flexDirection: 'row', gap: 10}}>
             <Image
               source={staticIcons.checkcircle}
               style={{

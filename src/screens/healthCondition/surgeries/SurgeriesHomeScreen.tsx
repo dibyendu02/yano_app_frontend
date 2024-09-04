@@ -1,46 +1,39 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useCallback} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import CommonHomeScreen from '../components/CommonHomeScreen';
-import { surgeriesData } from '../../../api/GET/medicalHistoryData';
+import {getSurgeriesData} from '../../../api/GET/medicalHistoryData';
 
-const dummyData = [
-  {
-    id: 1,
-    name: 'Open heart surgery',
-    date: '12-02-2012',
-    doctorName: 'Dr. House',
-    additionalNotes: 'Additional note',
-    devices: 'Cardiac pacemaker',
-  },
-];
-const SurgeriesHomeScreen = ({ navigation }: any) => {
+const SurgeriesHomeScreen = ({navigation}: any) => {
   const [data, setData] = React.useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await surgeriesData();
-        if (res.surgeries.length === 0) {
-          setData([]);
-          return;
-        }
-
-        const transformedData = res.surgeries.map((item, index) => ({
-          id: index + 1, // Assign a unique ID based on the index
-          name: item.surgeryName, // Use surgeryName for the name
-          date: new Date(item.dateOfSurgery).toLocaleDateString('en-US'), // Format the date
-          doctorName: 'Dr. House', // Placeholder name; replace with actual if available
-          additionalNotes: 'Additional note', // Placeholder for additional notes
-          devices: 'Cardiac pacemaker', // Placeholder for devices; replace with actual if available
-        }));
-
-        setData(transformedData);
-      } catch (error) {
-        console.error(error);
+  const fetchData = async () => {
+    try {
+      const res = await getSurgeriesData();
+      if (res.surgeries.length === 0) {
+        setData([]);
+        return;
       }
-    };
 
-    fetchData();
-  }, []);
+      const transformedData = res?.surgeries?.map((item, index) => ({
+        id: item._id, // Assign a unique ID based on the index
+        name: item.surgeryName, // Use surgeryName for the name
+        date: item.dateOfSurgery, // Format the date
+        doctorName: item.physicianInCharge, // Placeholder name; replace with actual if available
+        additionalNotes: item?.additionalNotes, // Placeholder for additional notes
+        devices: item?.supportDevices, // Placeholder for devices; replace with actual if available
+      }));
+
+      setData(transformedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, []),
+  );
 
   return (
     <>
@@ -50,8 +43,8 @@ const SurgeriesHomeScreen = ({ navigation }: any) => {
         heading="Surgeries"
         addItem_path="AddAndEditSurgeries"
         viewItem_path="SurgeriesDetails"
-        emptyHomeTitle="No vaccines added yet"
-        emptyHomeMessage="Add your vaccine to keep track of them."
+        emptyHomeTitle="No surgeries added yet"
+        emptyHomeMessage="Add your surgeries to keep track of them."
       />
     </>
   );

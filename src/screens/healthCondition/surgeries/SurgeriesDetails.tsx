@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Colors} from '../../../constants/Colors';
 import Header from '../../../components/header/Header';
 import {DeleteIcon, EditIcon} from '../../../assets/icon/IconNames';
@@ -15,15 +15,40 @@ import CommonHeader from '../components/CommonHeader';
 import {Image} from 'react-native';
 import {staticIcons} from '../../../assets/image';
 import Card from '../../main/my-profile/UiUpdateComponents/Card';
+import {retrieveData} from '../../../utils/Storage';
+import {deleteSurgeryData} from '../../../api/DELETE/medicalHistoryDelete';
 
 const SurgeriesDetails = ({navigation, route}: any) => {
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
   const [isClicked, setIsClicked] = useState(false);
   if (!route || !route.params) {
     Alert.alert('Error', 'Data not passed or invalid data passed');
     return navigation.goBack();
   }
   const data = route.params.data;
-  const {name, devices, date, doctorName, additionalNotes} = data;
+  const {id, name, devices, date, doctorName, additionalNotes} = data;
+
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const deleteSurgery = async () => {
+    try {
+      await deleteSurgeryData({id, userId, token});
+      navigation.goBack();
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <View
@@ -36,7 +61,7 @@ const SurgeriesDetails = ({navigation, route}: any) => {
         title={name}
         rightComp1={
           <TouchableOpacity
-            onPress={() => navigation.navigate('AddAndEditSurgeries', {data})}>
+            onPress={() => navigation.replace('AddAndEditSurgeries', {data})}>
             <Image
               source={staticIcons.EditPencil}
               style={{height: 22, width: 22}}
@@ -58,7 +83,10 @@ const SurgeriesDetails = ({navigation, route}: any) => {
           <View style={styles.boxStyle}>
             <DetailItems name="Surgery name" value={name} />
             <DetailItems name="Implants / Support Devices" value={devices} />
-            <DetailItems name="Surgery date" value={data.date} />
+            <DetailItems
+              name="Surgery date"
+              value={new Date(date).toLocaleDateString('en-US')}
+            />
             <DetailItems name="Physician in charge" value={doctorName} />
             <DetailItems name="Additional notes" value={additionalNotes} />
           </View>
@@ -70,7 +98,7 @@ const SurgeriesDetails = ({navigation, route}: any) => {
             title={'Delete surgery'}
             children={'Are you sure you want to eliminate this surgery?'}
             active={setIsClicked}
-            action={() => navigation.goBack()}
+            action={deleteSurgery}
           />
         </View>
       )}

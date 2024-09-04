@@ -3,7 +3,7 @@ import {View, StyleSheet, SafeAreaView, ScrollView, Text} from 'react-native';
 import {Colors} from '../../../constants/Colors';
 import CommonHeader from '../components/CommonHeader';
 import FilledButton from '../../../components/buttons/FilledButton';
-import {useForm, Control, FieldValues, FormProvider} from 'react-hook-form';
+import {useForm, FormProvider} from 'react-hook-form';
 import CustomInputField from '../../../components/formComp/CustomInputField';
 import CustomTextarea from '../../../components/formComp/TextAreaField';
 import CustomCheckbox from '../../../components/formComp/CustomCheckbox';
@@ -13,23 +13,26 @@ import Modal from 'react-native-modal';
 import {Image} from 'react-native';
 import {staticIcons} from '../../../assets/image';
 import {CloseIcon} from '../../../assets/icon/IconNames';
+import {retrieveData} from '../../../utils/Storage';
+import {postMedicineData} from '../../../api/POST/medicalHistory';
+import {editMedicineData} from '../../../api/PUT/medicalHistory';
 
 interface FormValues {
   name: string;
   volume: string;
   unit: string;
-  medicine: string;
-  field4: string;
-  field5: string;
-  field6: string;
-  field7: string;
-  field8: string;
-  field9: string;
-  field10: string;
-  field11: boolean;
-  field12: string;
-  field13: string;
-  field14: string;
+  formOfMedicine: string;
+  ingestionMethod: string;
+  amount: number;
+  frequency: string;
+  when: string;
+  otherInstructions: string;
+  whenItBegins: Date;
+  whenItEnds: Date;
+  longDuration: boolean;
+  medicineTakenFor: string;
+  prescribedBy: string;
+  sideEffects: string;
 }
 
 const AddAndEditMedicine = ({navigation, route}: any) => {
@@ -37,62 +40,122 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
   if (route?.params) {
     data = route.params.data;
   }
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
   const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
-  const [defaultValues, setDefaultValues] = useState<any>({
-    name: data?.name || '',
-    volume: data?.volume || '',
-    unit: data?.unit || '',
-    medicine: data?.medicine || '',
-    field4: data?.field4 || '',
-    field5: data?.field5 || '',
-    field6: data?.field6 || '',
-    field7: data?.field7 || '',
-    field8: data?.field8 || '',
-    field9: data?.field9 || '',
-    field10: data?.field10 || '',
-    field11: data?.field11 || false,
-    field12: data?.field12 || '',
-    field13: data?.field13 || '',
-    field14: data?.field14 || '',
+  const [isUntilDisabled, setIsUntilDisabled] = useState(false);
+
+  // Initialize useForm with defaultValues
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      name: data?.name || '',
+      volume: data?.volume || '',
+      unit: data?.unit || '',
+      formOfMedicine: data?.formOfMedicine || '',
+      ingestionMethod: data?.ingestionMethod || '',
+      amount: data?.amount || 0,
+      frequency: data?.frequency || '',
+      when: data?.when || '',
+      otherInstructions: data?.otherInstructions || '',
+      whenItBegins: data?.whenItBegins || new Date(),
+      whenItEnds: data?.whenItEnds || new Date(),
+      longDuration: data?.longDuration || false,
+      medicineTakenFor: data?.medicineTakenFor || '',
+      prescribedBy: data?.prescribedBy || '',
+      sideEffects: data?.sideEffects || '',
+    },
   });
 
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: {errors},
-  } = useForm<FormValues>({defaultValues});
-  const methods = useForm();
+  const {control, handleSubmit, watch, setValue} = methods;
 
-  const onSubmit = (formdata: FormValues) => {
-    console.log(formdata);
+  const onSubmit = async (formdata: FormValues) => {
+    const structuredData = {
+      userId: userId,
+      medicineName: formdata.name,
+      formOfMedication: {
+        formOfMedicine: formdata.formOfMedicine,
+        medicineStrength: formdata.volume,
+        medicineStrengthUnit: formdata.unit,
+        ingestionMethod: formdata.ingestionMethod,
+      },
+      doses: {
+        amount: formdata.amount,
+        frequency: formdata.frequency,
+        when: formdata.when,
+        otherInstructions: formdata.otherInstructions,
+      },
+      duration: {
+        whenItBegins: formdata.whenItBegins,
+        whenItEnds: formdata.whenItEnds,
+        longDuration: formdata.longDuration,
+      },
+      additionalInformation: {
+        medicineTakenFor: formdata.medicineTakenFor,
+        prescribedBy: formdata.prescribedBy,
+        sideEffects: formdata.sideEffects,
+      },
+    };
+
     if (data) {
-      setSaved(true);
-      setTimeout(() => {
-        setSaved(false);
-      }, 2000);
+      try {
+        await editMedicineData({
+          data: structuredData,
+          token,
+          id: data.id,
+          userId,
+        });
+        setSaved(true);
+        setTimeout(() => {
+          setSaved(false);
+        }, 2000);
+        setTimeout(() => {
+          navigation.goBack();
+        }, 3000);
+      } catch (error) {
+        console.error(error);
+      }
     } else {
-      navigation.goBack();
+      try {
+        const res = await postMedicineData({data: structuredData, token});
+        console.log(res);
+
+        navigation.goBack();
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
-  const handleChange = (id: string, value: string) => {
-    setDefaultValues({...defaultValues, [id]: value});
-    if (defaultValues.name) setDisabled(false);
-    else setDisabled(true);
+  const handleChange = (id: keyof FormValues, value: any) => {
+    setValue(id, value);
+    if (id === 'longDuration') {
+      setIsUntilDisabled(value);
+    }
   };
 
   useEffect(() => {
-    // Check if both the "Medicine name" and "Medicine form" fields are filled out
-    if (defaultValues.name != '') {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
+    const subscription = watch(values => {
+      const isFormValid = values.name.trim() !== '';
+      setDisabled(!isFormValid);
+    });
+    return () => subscription.unsubscribe();
+  }, [watch]);
 
-    console.log(defaultValues.name);
-  }, [defaultValues.name]);
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <View
@@ -109,28 +172,24 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
             label="Save"
             onPress={handleSubmit(onSubmit)}
             disabled={disabled}
-            style={{
-              width: 70,
-              paddingVertical: 10,
-              borderRadius: 10,
-            }}
+            style={styles.saveButton}
           />
         }
       />
-      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
-        <View>
-          <View style={styles.inputBox}>
-            <CustomInputField
-              label="Medicine name"
-              name="name"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Enter the name of the medicine"
-              rules={{required: 'name is required'}}
-            />
-            <Text style={styles.heading}>Medicine form</Text>
-            <FormProvider {...methods}>
+      <ScrollView style={styles.scrollView}>
+        <FormProvider {...methods}>
+          <View>
+            <View style={styles.inputBox}>
+              <CustomInputField
+                label="Medicine name"
+                name="name"
+                control={control}
+                placeholder="Enter the name of the medicine"
+                rules={{required: 'Name is required'}}
+              />
+              <Text style={styles.heading}>Medicine form</Text>
               <FormSelectionInput
-                name="medicine"
+                name="formOfMedicine"
                 placeholder="Select a form"
                 label="Medicine form"
                 options={[
@@ -140,33 +199,23 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
                   {label: 'Injection', id: 'Injection'},
                   {label: 'Other', id: 'Other'},
                 ]}
-                selectedId={defaultValues.medicine}
+                selectedId={watch('formOfMedicine')}
                 showActionButtons={true}
                 optionsListHeight={320}
               />
-            </FormProvider>
-            <View style={{flexDirection: 'row', gap: 10, alignItems: 'center'}}>
-              <View style={{width: '60%'}}>
-                <CustomInputField
-                  label="Medicine strength"
-                  name="volume"
-                  control={control as unknown as Control<FieldValues, object>}
-                  placeholder="Ex. 100"
-                  rules={{required: 'Details is required'}}
-                />
-              </View>
-              <View
-                style={{
-                  width: '38%',
-                  marginTop: 26,
-                  // backgroundColor: 'red',
-                  flexDirection: 'column',
-                  justifyContent: 'flex-end',
-                }}>
-                <FormProvider {...methods}>
+              <View style={styles.row}>
+                <View style={styles.inputWrapper}>
+                  <CustomInputField
+                    label="Medicine strength"
+                    name="volume"
+                    control={control}
+                    placeholder="Ex. 100"
+                    rules={{required: 'Details are required'}}
+                  />
+                </View>
+                <View style={styles.unitWrapper}>
                   <FormSelectionInput
                     name="unit"
-                    // label="Unit of volume"
                     placeholder="mg"
                     options={[
                       {label: 'mg', id: 'mg'},
@@ -175,84 +224,99 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
                       {label: 'IU', id: 'IU'},
                       {label: 'Other', id: 'Other'},
                     ]}
-                    selectedId={defaultValues.unit}
+                    selectedId={watch('unit')}
                     showActionButtons={true}
                     optionsListHeight={320}
                   />
-                </FormProvider>
+                </View>
               </View>
+              <CustomInputField
+                label="Intake method"
+                name="ingestionMethod"
+                control={control}
+                placeholder="Ex. oral, intravenous, intramuscular, etc."
+                rules={{required: 'Ingestion method is required'}}
+              />
+              <Text style={styles.heading}>Dose</Text>
+              <CustomInputField
+                label="Quantity"
+                name="amount"
+                control={control}
+                placeholder="#"
+                keyboardType="numeric"
+                rules={{
+                  required: 'Quantity is required',
+                  valueAsNumber: true,
+                }}
+                value={watch('amount').toString()}
+                onChangeText={text =>
+                  handleChange('amount', text === '' ? 0 : parseInt(text))
+                }
+              />
+              <CustomInputField
+                label="Frequency"
+                name="frequency"
+                control={control}
+                placeholder="Select the frequency"
+                rules={{required: 'Frequency is required'}}
+              />
+              <CustomInputField
+                label="When"
+                name="when"
+                control={control}
+                placeholder="Ex. Morning, Afternoon, etc."
+                rules={{required: 'When is required'}}
+              />
+              <CustomTextarea
+                label="Other instructions"
+                name="otherInstructions"
+                control={control}
+                placeholder="Text"
+              />
+              <Text style={styles.heading}>Duration</Text>
+              <DatePickerField
+                label="It begins at"
+                name="whenItBegins"
+                value={watch('whenItBegins')}
+                onchange={date => handleChange('whenItBegins', date)}
+              />
+              <DatePickerField
+                label="Until"
+                name="whenItEnds"
+                value={watch('whenItEnds')}
+                onchange={date => handleChange('whenItEnds', date)}
+                disabled={isUntilDisabled}
+              />
+              <CustomCheckbox
+                label="Long duration"
+                name="longDuration"
+                control={control}
+                onChange={value => handleChange('longDuration', value)}
+              />
+              <Text style={styles.heading}>Additional Information</Text>
+              <CustomInputField
+                label="Medicine taken for"
+                name="medicineTakenFor"
+                control={control}
+                placeholder="Ex. diabetes, hypertension, etc."
+                rules={{required: 'This field is required'}}
+              />
+              <CustomInputField
+                label="Prescribed by"
+                name="prescribedBy"
+                control={control}
+                placeholder="Ex. Dr. House"
+                rules={{required: 'This field is required'}}
+              />
+              <CustomInputField
+                label="Side effects"
+                name="sideEffects"
+                control={control}
+                placeholder="Ex. redness, swelling, etc."
+              />
             </View>
-            <CustomInputField
-              label="Intake method"
-              name="field4"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ex. oral, intravenous, intramuscular, etc."
-              rules={{required: 'required'}}
-            />
-            <Text style={styles.heading}>Dose</Text>
-            <CustomInputField
-              label="Quantity"
-              name="field5"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="#"
-            />
-            <CustomInputField
-              label="Frequency"
-              name="field6"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Select the frequency"
-            />
-            <CustomInputField
-              label="When"
-              name="field7"
-              control={control as unknown as Control<FieldValues, object>}
-              // placeholder="Ej. 2 days, 3 weeks, etc..."
-            />
-            <CustomTextarea
-              label="Other instructions"
-              name="field8"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Text"
-            />
-            <Text style={styles.heading}>Duration</Text>
-            <DatePickerField
-              label="It begins at"
-              name="field9"
-              value={defaultValues.field9}
-              onchange={handleChange}
-            />
-            <DatePickerField
-              label="Until"
-              name="field10"
-              value={defaultValues.field10}
-              onchange={handleChange}
-            />
-            <CustomCheckbox
-              label="Long duration"
-              name="field11"
-              control={control as unknown as Control<FieldValues, object>}
-            />
-            <Text style={styles.heading}>Additional Information</Text>
-            <CustomInputField
-              label="Medicine taken for"
-              name="field12"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ex. diabetes, hypertension, etc..."
-            />
-            <CustomInputField
-              label="Prescribed by"
-              name="field13"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ex. Dr. House"
-            />
-            <CustomInputField
-              label="Side effects"
-              name="field14"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ex. redness, swelling, etc..."
-            />
           </View>
-        </View>
+        </FormProvider>
       </ScrollView>
       <Modal
         isVisible={saved}
@@ -261,21 +325,13 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
         swipeDirection="down"
         animationIn="slideInUp"
         animationOut="slideOutDown"
-        backdropOpacity={0} // Adjust the opacity of the background
+        backdropOpacity={0}
         animationInTiming={1000}
         animationOutTiming={3000}
         style={styles.modal}>
         <View style={styles.modalContent}>
           <View style={{flexDirection: 'row', gap: 10}}>
-            <Image
-              source={staticIcons.checkcircle}
-              style={{
-                height: 20,
-                width: 20,
-                objectFit: 'contain',
-                tintColor: 'white',
-              }}
-            />
+            <Image source={staticIcons.checkcircle} style={styles.modalIcon} />
             <Text style={styles.modalText}>The changes have been made.</Text>
           </View>
           <CloseIcon color="white" />
@@ -286,6 +342,16 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: Colors.GhostWhite,
+    position: 'relative',
+  },
+  scrollView: {
+    paddingVertical: 12,
+    width: '94%',
+    margin: 'auto',
+  },
   inputBox: {
     marginBottom: 12,
   },
@@ -295,6 +361,25 @@ const styles = StyleSheet.create({
     color: Colors.Blue,
     marginBottom: 10,
     marginTop: 5,
+  },
+  row: {
+    flexDirection: 'row',
+    gap: 10,
+    alignItems: 'center',
+  },
+  inputWrapper: {
+    width: '60%',
+  },
+  unitWrapper: {
+    width: '38%',
+    marginTop: 26,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+  },
+  saveButton: {
+    width: 70,
+    paddingVertical: 10,
+    borderRadius: 10,
   },
   modal: {
     justifyContent: 'flex-end',
@@ -317,6 +402,12 @@ const styles = StyleSheet.create({
     color: Colors.White,
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  modalIcon: {
+    height: 20,
+    width: 20,
+    objectFit: 'contain',
+    tintColor: 'white',
   },
 });
 

@@ -27,10 +27,14 @@ export const familyHistoryData = async () => {
   }
 };
 
-export const medicinesData = async () => {
+export const medicinesData = async ({
+  userId,
+  token,
+}: {
+  userId: string;
+  token: string;
+}) => {
   try {
-    const token = await retrieveData('token');
-    const userId = await retrieveData('userId');
     const response = await getData(`/medicines/${userId}`, token);
     return response;
   } catch (error) {
@@ -39,7 +43,7 @@ export const medicinesData = async () => {
   }
 };
 
-export const surgeriesData = async () => {
+export const getSurgeriesData = async () => {
   try {
     const token = await retrieveData('token');
     const userId = await retrieveData('userId');

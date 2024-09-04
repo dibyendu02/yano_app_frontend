@@ -1,70 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
+import {useFocusEffect} from '@react-navigation/native';
 import CommonHomeScreen from '../components/CommonHomeScreen';
-import { medicinesData } from '../../../api/GET/medicalHistoryData';
+import {medicinesData} from '../../../api/GET/medicalHistoryData';
+import {retrieveData} from '../../../utils/Storage';
 
-const dummyData = [
-  {
-    id: 1,
-    name: 'Losartan Potassium',
-    volume: '100',
-    unit: 'mg',
-    medicine: 'Pill',
-    field4: 'Orally',
-    field5: '1',
-    field6: 'Daily',
-    field7: 'At breakfast',
-    field8: '',
-    field9: '2024-07-27T11:38:00.000Z',
-    field10: '2024-07-10T11:38:00.000Z',
-    field11: true,
-    field12: 'Hypertension',
-    field13: 'Dr. Lee',
-    field14: 'Headache',
-  },
-  {
-    id: 2,
-    name: 'Aspirin',
-    volume: '500',
-    unit: 'mg',
-    medicine: 'Pill',
-    field4: 'Orally',
-    field5: '1',
-    field6: 'Daily',
-    field7: 'At breakfast',
-    field8: '',
-    field9: '2024-07-27T11:38:00.000Z',
-    field10: '2024-07-10T11:38:00.000Z',
-    field11: true,
-    field12: 'Hypertension',
-    field13: 'Dr. Lee',
-    field14: 'Headache',
-  },
-  {
-    id: 3,
-    name: 'Metformin',
-    volume: '850',
-    unit: 'mg',
-    medicine: 'Pill',
-    field4: 'Orally',
-    field5: '1',
-    field6: 'Daily',
-    field7: 'At breakfast',
-    field8: '',
-    field9: '2024-07-27T11:38:00.000Z',
-    field10: '2024-07-10T11:38:00.000Z',
-    field11: true,
-    field12: 'Hypertension',
-    field13: 'Dr. Lee',
-    field14: 'Headache',
-  },
-];
-const MedicineHomeScreen = ({ navigation }: any) => {
+const MedicineHomeScreen = ({navigation}: any) => {
   const [data, setData] = useState([]);
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await medicinesData();
+  // Function to fetch user data (token, userId, userType)
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  const fetchData = async () => {
+    try {
+      if (userType === 'patient' && token && userId) {
+        const res = await medicinesData({userId, token});
 
         if (res.length === 0) {
           setData([]);
@@ -72,33 +32,42 @@ const MedicineHomeScreen = ({ navigation }: any) => {
         }
 
         const transformedData = res?.medicines?.map((item, index) => ({
-          id: index + 1, // Unique ID based on the index
-          name: item.medicineName, // Medicine name from the data
-          volume: '500', // Assuming you need to manually specify or calculate this
-          unit: 'mg', // Assuming this is a fixed value or needs to be calculated
-          medicine: 'Pill', // Assuming a fixed value or based on item.formOfMedication
-          field4: 'Orally', // Assuming a fixed value
-          field5: '1', // Assuming a fixed value or needs to be derived from doses
-          field6: 'Daily', // Assuming a fixed value
-          field7: 'At breakfast', // Assuming a fixed value
-          field8: '', // Assuming this field is empty or needs to be derived
-          field9: item.duration.whenItBegins, // Start date
-          field10: item.duration.whenItEnds, // End date
-          field11: item.duration.longDuration, // Boolean value for longDuration
-          field12: 'Hypertension', // Assuming a fixed value or needs to be derived
-          field13: 'Dr. Lee', // Assuming a fixed value or needs to be mapped from item.additionalInformation.prescribedBy
-          field14: item.additionalInformation.medicineTakenFor, // Medicine taken for (e.g., Headache)
+          id: item._id,
+          name: item.medicineName,
+          volume: item.formOfMedication?.medicineStrength,
+          unit: item.formOfMedication?.medicineStrengthUnit,
+          formOfMedicine: item.formOfMedication?.formOfMedicine,
+          ingestionMethod: item.formOfMedication?.ingestionMethod,
+          amount: item.doses?.amount,
+          frequency: item.doses?.frequency,
+          when: item.doses?.when,
+          otherInstructions: item.doses?.otherInstructions,
+          whenItBegins: item.duration.whenItBegins,
+          whenItEnds: item.duration.whenItEnds,
+          longDuration: item.duration.longDuration,
+          medicineTakenFor: item.additionalInformation.medicineTakenFor,
+          prescribedBy: item.additionalInformation.prescribedBy,
+          sideEffects: item.additionalInformation.sideEffects,
         }));
 
         setData(transformedData);
-      } catch (error) {
-        console.error(error);
       }
-    };
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    fetchData();
+  // Initial effect to retrieve user data
+  useEffect(() => {
+    getUserData();
   }, []);
 
+  // Fetch data every time the screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [userType, token, userId]),
+  );
 
   return (
     <>

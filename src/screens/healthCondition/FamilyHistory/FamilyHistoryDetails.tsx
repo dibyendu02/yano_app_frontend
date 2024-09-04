@@ -15,6 +15,7 @@ import CommonHeader from '../components/CommonHeader';
 import {Image} from 'react-native';
 import {staticIcons} from '../../../assets/image';
 import Card from '../../main/my-profile/UiUpdateComponents/Card';
+import {deleteFamilyMemberHistoryFn} from '../../../api/DELETE/medicalHistoryDelete';
 
 const FamilyHistoryDetails = ({navigation, route}: any) => {
   const [isClicked, setIsClicked] = useState(false);
@@ -24,6 +25,18 @@ const FamilyHistoryDetails = ({navigation, route}: any) => {
   }
   const data = route.params.data;
   const {name, disease} = data;
+
+  const deleteFamilyMemberHistory = async () => {
+    try {
+      const respose = await deleteFamilyMemberHistoryFn({id: data.id});
+      if (respose) {
+        setIsClicked(false);
+        navigation.navigate('FamilyHistory');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <View
@@ -37,7 +50,7 @@ const FamilyHistoryDetails = ({navigation, route}: any) => {
         rightComp1={
           <TouchableOpacity
             onPress={() =>
-              navigation.navigate('AddAndEditFamilyHistory', {data})
+              navigation.replace('AddAndEditFamilyHistory', {data})
             }>
             <Image
               source={staticIcons.EditPencil}
@@ -53,7 +66,9 @@ const FamilyHistoryDetails = ({navigation, route}: any) => {
             />
           </TouchableOpacity>
         }
-        customStyle={{paddingVertical: 12}}
+        customStyle={{
+          paddingVertical: 12,
+        }}
       />
       <ScrollView>
         <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
@@ -74,7 +89,7 @@ const FamilyHistoryDetails = ({navigation, route}: any) => {
               'Are you sure you want to delete this family medical record?'
             }
             active={setIsClicked}
-            action={() => navigation.goBack()}
+            action={deleteFamilyMemberHistory}
           />
         </View>
       )}

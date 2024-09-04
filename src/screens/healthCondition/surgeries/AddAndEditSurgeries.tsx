@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 import {Colors} from '../../../constants/Colors';
 import FilledButton from '../../../components/buttons/FilledButton';
@@ -12,6 +12,9 @@ import {staticIcons} from '../../../assets/image';
 import Modal from 'react-native-modal';
 import {Text} from 'react-native';
 import {CloseIcon} from '../../../assets/icon/IconNames';
+import {retrieveData} from '../../../utils/Storage';
+import {postSurgeryData} from '../../../api/POST/medicalHistory';
+import {editSurgeryData} from '../../../api/PUT/medicalHistory';
 
 interface FormValues {
   name: string;
@@ -26,12 +29,15 @@ const AddAndEditSurgeries = ({navigation, route}: any) => {
   if (route?.params) {
     data = route.params.data;
   }
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
   const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [defaultValues, setDefaultValues] = useState<FieldValues>({
     name: data?.name || '',
     devices: data?.devices || '',
-    date: data?.date || '',
+    date: data?.date || new Date(),
     doctorName: data?.doctorName || '',
     additionalNotes: data?.additionalNotes || '',
   });
@@ -43,17 +49,58 @@ const AddAndEditSurgeries = ({navigation, route}: any) => {
     formState: {errors},
   } = useForm<FormValues>({defaultValues});
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const onSubmit = async (formdata: FormValues) => {
+    const StructuredData = {
+      userId,
+      surgeryName: formdata.name,
+      dateOfSurgery: formdata?.date,
+      physicianInCharge: formdata?.doctorName,
+      additionalNotes: formdata?.additionalNotes,
+      supportDevices: formdata?.devices,
+    };
+
     if (data) {
-      setSaved(true);
-      setTimeout(() => {
-        setSaved(false);
-      }, 2000);
+      try {
+        console.log('edit surgery');
+        await editSurgeryData({
+          data: StructuredData,
+          token,
+          id: data.id,
+          userId,
+        });
+        setSaved(true);
+        setTimeout(() => {
+          setSaved(false);
+        }, 2000);
+        setTimeout(() => {
+          navigation.goBack();
+        }, 3000);
+      } catch (error) {
+        console.error(error);
+      }
     } else {
-      navigation.goBack();
+      try {
+        await postSurgeryData({data: StructuredData, token});
+        navigation.goBack();
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
+
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <View
@@ -85,14 +132,14 @@ const AddAndEditSurgeries = ({navigation, route}: any) => {
               label="Surgery name"
               name="name"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Surgery name"
+              placeholder="Ex. Open heart surgery, etc..."
               rules={{required: 'name is required'}}
             />
             <CustomInputField
               label="Implants / Support Devices"
               name="devices"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. 2 days, 3 weeks, etc..."
+              placeholder="Ex. Cardiac pacemaker, etc..."
             />
             <DatePickerField
               label="Surgery date"
@@ -106,13 +153,13 @@ const AddAndEditSurgeries = ({navigation, route}: any) => {
               label="Physician in charge"
               name="doctorName"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Ej. 2 times a day, after meal, etc..."
+              placeholder="Ex. Dr. House"
             />
             <CustomTextarea
               label="Additional notes"
               name="additionalNotes"
               control={control as unknown as Control<FieldValues, object>}
-              placeholder="Text"
+              // placeholder="Text"
             />
           </View>
         </View>

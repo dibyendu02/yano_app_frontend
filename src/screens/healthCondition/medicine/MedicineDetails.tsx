@@ -8,40 +8,64 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Colors} from '../../../constants/Colors';
-import Header from '../../../components/header/Header';
-import {DeleteIcon, EditIcon} from '../../../assets/icon/IconNames';
 import DetailItems from '../components/DetailItems';
 import CommonHeader from '../components/CommonHeader';
 import {staticIcons} from '../../../assets/image';
 import Card from '../../main/my-profile/UiUpdateComponents/Card';
+import {retrieveData} from '../../../utils/Storage';
+import {deleteMedicineData} from '../../../api/DELETE/medicalHistoryDelete';
 
 const MedicineDetails = ({navigation, route}: any) => {
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
   const [isClicked, setIsClicked] = useState(false);
+
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   if (!route || !route.params) {
     Alert.alert('Error', 'Data not passed or invalid data passed');
     return navigation.goBack();
   }
   const data = route.params.data;
   const {
+    id,
     name,
     volume,
     unit,
-    medicine,
-    field4, // Intake method
-    field5, // Dose Quantity
-    field6, // When
-    field7, // Other instructions
-    field8, // Duration begins at
-    field9, // Unchanged, potentially related to a date
-    field10, // Unchanged, potentially related to a date
-    field11, // Additional Information: Medicine taken for (boolean)
-    field12, // Prescribed by
-    field13, // Side effects
-    field14, // Medicamento (Additional field)
+    formOfMedicine,
+    ingestionMethod,
+    amount,
+    frequency,
+    when,
+    otherInstructions,
+    whenItBegins,
+    whenItEnds,
+    longDuration,
+    medicineTakenFor,
+    prescribedBy,
+    sideEffects,
   } = data;
 
+  const deleteMedicine = async () => {
+    try {
+      await deleteMedicineData({id, userId, token});
+      navigation.goBack();
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <View
       style={{
@@ -53,7 +77,7 @@ const MedicineDetails = ({navigation, route}: any) => {
         title={name}
         rightComp1={
           <TouchableOpacity
-            onPress={() => navigation.navigate('AddAndEditMedicine', {data})}>
+            onPress={() => navigation.replace('AddAndEditMedicine', {data})}>
             <Image
               source={staticIcons.EditPencil}
               style={{height: 22, width: 22}}
@@ -88,9 +112,9 @@ const MedicineDetails = ({navigation, route}: any) => {
                 Medicine form
               </Text>
             </View>
-            <DetailItems name="Medicine form" value={medicine} />
-            <DetailItems name="Medicine strength" value={volume + unit} />
-            <DetailItems name="Intake method" value={field4} />
+            <DetailItems name="Medicine form" value={formOfMedicine} />
+            <DetailItems name="Medicine strength" value={volume + ` ` + unit} />
+            <DetailItems name="Intake method" value={ingestionMethod} />
             <View
               style={{
                 paddingTop: 2,
@@ -105,9 +129,10 @@ const MedicineDetails = ({navigation, route}: any) => {
                 Dose
               </Text>
             </View>
-            <DetailItems name="Quantity" value={field5} />
-            <DetailItems name="When" value={field6} />
-            <DetailItems name="Other instructions" value={field7} />
+            <DetailItems name="Quantity" value={amount} />
+            <DetailItems name="Frequency" value={frequency} />
+            <DetailItems name="When" value={when} />
+            <DetailItems name="Other instructions" value={otherInstructions} />
             <View
               style={{
                 paddingTop: 2,
@@ -124,9 +149,12 @@ const MedicineDetails = ({navigation, route}: any) => {
             </View>
             <DetailItems
               name="It begins at"
-              value={new Date(field10).toDateString()}
+              value={new Date(whenItBegins).toDateString()}
             />
-            <DetailItems name="Until" value={new Date(field9).toDateString()} />
+            <DetailItems
+              name="Until"
+              value={new Date(whenItEnds).toDateString()}
+            />
             <View
               style={{
                 paddingTop: 2,
@@ -141,10 +169,9 @@ const MedicineDetails = ({navigation, route}: any) => {
                 Additional Information
               </Text>
             </View>
-            <DetailItems name="Medicine taken for" value={field12} />
-            <DetailItems name="Prescribed by" value={field13} />
-            <DetailItems name="Side effects" value={field14} />
-            {/* <DetailItems name="Additional Info" value={field14} /> */}
+            <DetailItems name="Medicine taken for" value={medicineTakenFor} />
+            <DetailItems name="Prescribed by" value={prescribedBy} />
+            <DetailItems name="Side effects" value={sideEffects} />
           </View>
         </View>
       </ScrollView>
@@ -154,7 +181,7 @@ const MedicineDetails = ({navigation, route}: any) => {
             title={'Delete medication'}
             children={'Are you sure you want to remove this medication?'}
             active={setIsClicked}
-            action={() => navigation.goBack()}
+            action={deleteMedicine}
           />
         </View>
       )}
