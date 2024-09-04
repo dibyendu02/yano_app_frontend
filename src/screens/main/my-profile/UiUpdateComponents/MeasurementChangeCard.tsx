@@ -8,7 +8,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {Colors} from '../../../../constants/Colors';
-import {RadioButton} from 'react-native-paper';
+import RadioButton from '../../../../components/buttons/RadioButton';
 
 interface MeasurementChangeCardProps {
   title?: string;
@@ -41,12 +41,6 @@ const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
     active(false); // Trigger the onPress action
   };
 
-  const handleSelect = (value: string) => {
-    setSelectedValue(value);
-    onUnitChange(value);
-    active(false); // Set selected value and close modal
-  };
-
   return (
     <View style={[styles.container, contentContainerStyle]}>
       <View style={styles.content}>
@@ -54,33 +48,19 @@ const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
       </View>
 
       <View>
-        <RadioButton.Group
+        <RadioButton
+          label={items?.unit1 || ''}
+          value={items?.unit1 || ''}
+          selectedValue={selectedValue}
           onValueChange={handleValueChange}
-          value={selectedValue || ''}>
-          <TouchableOpacity
-            style={styles.radioItem}
-            onPress={() => handleSelect(items?.unit1 || '')}>
-            <RadioButton
-              value={items?.unit1 || ''}
-              mode="android"
-              color={Colors.LightGreen}
-              uncheckedColor={Colors.Grey}
-            />
-            <Text style={styles.radioText}>{items?.unit1 || ''}</Text>
-          </TouchableOpacity>
+        />
 
-          <TouchableOpacity
-            style={styles.radioItem}
-            onPress={() => handleSelect(items?.unit1 || '')}>
-            <RadioButton
-              value={items?.unit2 || ''}
-              mode="android"
-              color={Colors.LightGreen}
-              uncheckedColor={Colors.Grey}
-            />
-            <Text style={styles.radioText}>{items?.unit2 || ''}</Text>
-          </TouchableOpacity>
-        </RadioButton.Group>
+        <RadioButton
+          label={items?.unit2 || ''}
+          value={items?.unit2 || ''}
+          selectedValue={selectedValue}
+          onValueChange={handleValueChange}
+        />
       </View>
 
       <View style={styles.footer}>
@@ -117,16 +97,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.Blue,
     alignSelf: 'flex-start',
-  },
-  radioItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  radioText: {
-    marginLeft: 8,
-    color: 'black',
-    fontSize: 18,
   },
   footer: {
     flexDirection: 'row',

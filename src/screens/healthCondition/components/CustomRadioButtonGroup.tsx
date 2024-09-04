@@ -5,12 +5,11 @@ import {
   TouchableOpacity,
   Modal,
   StyleSheet,
-  TextInput,
   Image,
 } from 'react-native';
-import {RadioButton} from 'react-native-paper';
 import {Colors} from '../../../constants/Colors';
 import {staticIcons} from '../../../assets/image';
+import RadioButton from '../../../components/buttons/RadioButton';
 
 interface CustomRadioSelectProps {
   label: string;
@@ -69,24 +68,17 @@ const CustomRadioSelect: React.FC<CustomRadioSelectProps> = ({
               <Text style={styles.title}>{label}</Text>
             </View>
 
-            <RadioButton.Group
-              onValueChange={handleSelect}
-              value={selectedValue}>
+            <View>
               {options.map((option, index) => (
-                <TouchableOpacity
+                <RadioButton
                   key={index}
-                  style={styles.radioItem}
-                  onPress={() => handleSelect(option.value)}>
-                  <RadioButton
-                    value={option.value}
-                    mode="android"
-                    color={Colors.LightGreen}
-                    uncheckedColor={Colors.Grey}
-                  />
-                  <Text style={styles.radioText}>{option.label}</Text>
-                </TouchableOpacity>
+                  label={option.label}
+                  value={option.value}
+                  selectedValue={selectedValue}
+                  onValueChange={handleSelect}
+                />
               ))}
-            </RadioButton.Group>
+            </View>
 
             <View style={styles.footer}>
               <TouchableOpacity
@@ -151,16 +143,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.Blue,
     alignSelf: 'flex-start',
-  },
-  radioItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  radioText: {
-    marginLeft: 8,
-    color: 'black',
-    fontSize: 18,
   },
   footer: {
     flexDirection: 'row',

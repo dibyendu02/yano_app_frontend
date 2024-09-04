@@ -18,9 +18,9 @@ import {Image} from 'react-native';
 import {staticIcons} from '../../../../assets/image';
 
 interface FormValues {
-  oldPassword: '';
-  newPassword: '';
-  repeatPassword: '';
+  oldPassword: string;
+  newPassword: string;
+  repeatPassword: string;
 }
 
 const ChangePassword = () => {
@@ -29,8 +29,13 @@ const ChangePassword = () => {
     control,
     handleSubmit,
     reset,
+    watch,
     formState: {errors, isValid},
   } = useForm<FormValues>();
+
+  // Watching the newPassword field to validate repeatPassword
+  const newPassword = watch('newPassword');
+
   const onSubmit = (value: FormValues) => {
     console.log(value);
     setSaved(true);
@@ -38,6 +43,7 @@ const ChangePassword = () => {
       setSaved(false);
     }, 3000);
   };
+
   const [saved, setSaved] = useState(false);
 
   return (
@@ -72,20 +78,40 @@ const ChangePassword = () => {
             label="Old password"
             rules={{required: 'Old password is required'}}
           />
+          {errors.oldPassword && (
+            <Text style={styles.errorText}>{errors.oldPassword.message}</Text>
+          )}
           <CustomPasswordField
             name="newPassword"
             control={control as unknown as Control<FieldValues, object>}
             label="New password"
             condition="At least 8 characters"
-            rules={{required: 'New password is required'}}
+            rules={{
+              required: 'New password is required',
+              minLength: {
+                value: 8,
+                message: 'New password must be at least 8 characters long',
+              },
+            }}
           />
+          {errors.newPassword && (
+            <Text style={styles.errorText}>{errors.newPassword.message}</Text>
+          )}
           <CustomPasswordField
             name="repeatPassword"
             control={control as unknown as Control<FieldValues, object>}
             label="Repeat new password"
-            //   condition="Must be the same as the new password"
-            rules={{required: 'Repeat password is required'}}
+            rules={{
+              required: 'Repeat password is required',
+              validate: value =>
+                value === newPassword || 'Passwords do not match',
+            }}
           />
+          {errors.repeatPassword && (
+            <Text style={styles.errorText}>
+              {errors.repeatPassword.message}
+            </Text>
+          )}
         </View>
       </ScrollView>
       <Modal
@@ -145,5 +171,10 @@ const styles = StyleSheet.create({
     color: Colors.White,
     fontSize: 14,
     fontWeight: 'bold',
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 12,
+    marginVertical: 5,
   },
 });

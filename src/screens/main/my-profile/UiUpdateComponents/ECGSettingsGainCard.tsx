@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React, {ReactNode, useEffect} from 'react';
 import {Colors} from '../../../../constants/Colors';
-import {RadioButton} from 'react-native-paper';
+import RadioButton from '../../../../components/buttons/RadioButton';
 
 interface MeasurementChangeCardProps {
   title?: string;
@@ -45,43 +45,30 @@ const ECGSettingsGainCard: React.FC<MeasurementChangeCardProps> = ({
       </View>
 
       <View>
-        <RadioButton.Group onValueChange={handleSelect} value={selectedValue}>
-          <TouchableOpacity
-            style={styles.radioItem}
-            onPress={() => handleSelect(items?.unit1 || '')}>
-            <RadioButton
-              value={items?.unit1 || ''}
-              mode="android"
-              color={Colors.LightGreen}
-              uncheckedColor={Colors.Grey}
-            />
-            <Text style={styles.radioText}>{items?.unit1 || ''}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.radioItem}
-            onPress={() => handleSelect(items?.unit2 || '')}>
-            <RadioButton
-              value={items?.unit2 || ''}
-              mode="android"
-              color={Colors.LightGreen}
-              uncheckedColor={Colors.Grey}
-            />
-            <Text style={styles.radioText}>{items?.unit2 || ''}</Text>
-          </TouchableOpacity>
-          {items?.unit3 && (
-            <TouchableOpacity
-              style={styles.radioItem}
-              onPress={() => handleSelect(items?.unit3 || '')}>
-              <RadioButton
-                value={items?.unit3 || ''}
-                mode="android"
-                color={Colors.LightGreen}
-                uncheckedColor={Colors.Grey}
-              />
-              <Text style={styles.radioText}>{items?.unit3 || ''}</Text>
-            </TouchableOpacity>
-          )}
-        </RadioButton.Group>
+        {items?.unit1 && (
+          <RadioButton
+            label={items.unit1}
+            value={items.unit1}
+            selectedValue={selectedValue}
+            onValueChange={handleSelect}
+          />
+        )}
+        {items?.unit2 && (
+          <RadioButton
+            label={items.unit2}
+            value={items.unit2}
+            selectedValue={selectedValue}
+            onValueChange={handleSelect}
+          />
+        )}
+        {items?.unit3 && (
+          <RadioButton
+            label={items.unit3}
+            value={items.unit3}
+            selectedValue={selectedValue}
+            onValueChange={handleSelect}
+          />
+        )}
       </View>
 
       <View style={styles.footer}>
@@ -120,16 +107,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: Colors.Blue,
     alignSelf: 'flex-start',
-  },
-  radioItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  radioText: {
-    marginLeft: 2,
-    color: 'black',
-    fontSize: 18,
   },
   footer: {
     flexDirection: 'row',

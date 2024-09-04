@@ -1,15 +1,19 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Modal} from 'react-native';
 import {Colors} from '../../../../../constants/Colors';
-import {RadioButton} from 'react-native-paper';
-
+import RadioButton from '../../../../../components/buttons/RadioButton';
 
 type RepetitionModalProps = {
   isVisible: boolean;
   onClose: () => void;
   onSelect: (value: string) => void;
 };
-const RepetitionModal = ({ isVisible, onClose, onSelect }: RepetitionModalProps) => {
+
+const RepetitionModal = ({
+  isVisible,
+  onClose,
+  onSelect,
+}: RepetitionModalProps) => {
   const [selectedValue, setSelectedValue] = useState('day');
 
   const handleSelect = (value: string): void => {
@@ -18,56 +22,38 @@ const RepetitionModal = ({ isVisible, onClose, onSelect }: RepetitionModalProps)
     onClose();
   };
 
-
   return (
     <Modal transparent={true} visible={isVisible} animationType="fade">
       <View style={styles.modalOverlay}>
         <View style={styles.modalContainer}>
           <Text style={styles.modalTitle}>Repeats every</Text>
-          <RadioButton.Group
-            onValueChange={newValue => setSelectedValue(newValue)}
-            value={selectedValue}>
-            <TouchableOpacity
-              style={styles.radioItem}
-              onPress={() => handleSelect('day')}>
-              <RadioButton
-                value="day"
-                color={Colors.LightGreen}
-                uncheckedColor={Colors.Grey}
-              />
-              <Text style={styles.radioText}>Day</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.radioItem}
-              onPress={() => handleSelect('week')}>
-              <RadioButton
-                value="week"
-                color={Colors.LightGreen}
-                uncheckedColor={Colors.Grey}
-              />
-              <Text style={styles.radioText}>Week</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.radioItem}
-              onPress={() => handleSelect('month')}>
-              <RadioButton
-                value="month"
-                color={Colors.LightGreen}
-                uncheckedColor={Colors.Grey}
-              />
-              <Text style={styles.radioText}>Month</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.radioItem}
-              onPress={() => handleSelect('year')}>
-              <RadioButton
-                value="Year"
-                color={Colors.LightGreen}
-                uncheckedColor={Colors.Grey}
-              />
-              <Text style={styles.radioText}>Year</Text>
-            </TouchableOpacity>
-          </RadioButton.Group>
+
+          <View>
+            <RadioButton
+              label="Day"
+              value="day"
+              selectedValue={selectedValue}
+              onValueChange={handleSelect}
+            />
+            <RadioButton
+              label="Week"
+              value="week"
+              selectedValue={selectedValue}
+              onValueChange={handleSelect}
+            />
+            <RadioButton
+              label="Month"
+              value="month"
+              selectedValue={selectedValue}
+              onValueChange={handleSelect}
+            />
+            <RadioButton
+              label="Year"
+              value="year"
+              selectedValue={selectedValue}
+              onValueChange={handleSelect}
+            />
+          </View>
 
           <View style={styles.footer}>
             <TouchableOpacity style={styles.button} onPress={onClose}>
