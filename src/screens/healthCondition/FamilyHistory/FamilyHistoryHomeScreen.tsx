@@ -46,6 +46,7 @@ const FamilyHistoryHomeScreen = ({navigation}: any) => {
         viewItem_path="FamilyHistoryDetails"
         emptyHomeTitle="No family history added yet"
         emptyHomeMessage="Add your family history to keep track of them."
+        customStyle={{paddingTop: 55}}
       />
     </>
   );

@@ -81,6 +81,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
+    bottom: Platform.OS === 'ios' ? 10 : 0,
+
   },
   welcomeText: {
     color: Colors.White,

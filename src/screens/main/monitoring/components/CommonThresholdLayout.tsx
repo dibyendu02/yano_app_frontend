@@ -52,7 +52,7 @@ const CommonThresholdLayout: FC<props> = ({
             }}
           />
         }
-        customStyle={{paddingTop: 32, paddingBottom: 2}}
+        customStyle={{paddingTop: 45, paddingBottom: 2}}
       />
       <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
         <View>

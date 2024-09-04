@@ -327,6 +327,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.Blue,
     backgroundColor: Colors.Blue,
     borderRadius: 8,
+    overflow: 'hidden',
     color: Colors.White,
     fontWeight: 'bold',
     padding: 10,
@@ -337,10 +338,11 @@ const styles = StyleSheet.create({
     borderColor: Colors.Grey,
     backgroundColor: Colors.Grey,
     borderRadius: 8,
+    overflow: 'hidden',
     color: Colors.White,
     fontWeight: 'bold',
     padding: 10,
-    paddingHorizontal: 15,
+    paddingHorizontal: 15
   },
   body: {
     flex: 1,

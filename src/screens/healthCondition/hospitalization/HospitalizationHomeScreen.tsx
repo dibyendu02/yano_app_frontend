@@ -23,6 +23,7 @@ const HospitalizationHomeScreen = ({navigation}: any) => {
         viewItem_path="HospitalizationDetails"
         emptyHomeTitle="No Hospital added yet"
         emptyHomeMessage="Add hospitals to keep track of them."
+        customStyle={{paddingTop: 55}}
       />
     </>
   );

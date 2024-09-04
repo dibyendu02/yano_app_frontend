@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     backgroundColor: Colors.White,
     justifyContent: 'space-between',
-    paddingTop: 32,
+    paddingTop: 45,
   },
   navbarTitle: {
     color: Colors.Blue,

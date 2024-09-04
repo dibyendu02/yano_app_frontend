@@ -79,6 +79,7 @@ const MedicineHomeScreen = ({navigation}: any) => {
         viewItem_path="MedicineDetails"
         emptyHomeTitle="No medicine added yet"
         emptyHomeMessage="Add your medicine to keep track of them."
+        customStyle={{paddingTop: 55}}
       />
     </>
   );

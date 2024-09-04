@@ -1,5 +1,6 @@
 import {
   Image,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -89,7 +90,7 @@ export default TurnOnDevice;
 const styles = StyleSheet.create({
   addBtn: {
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 10 : 0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

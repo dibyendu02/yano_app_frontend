@@ -67,7 +67,7 @@ const FamilyHistoryDetails = ({navigation, route}: any) => {
           </TouchableOpacity>
         }
         customStyle={{
-          paddingVertical: 12,
+          paddingVertical: 12,paddingTop: 55
         }}
       />
       <ScrollView>

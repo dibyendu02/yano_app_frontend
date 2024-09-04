@@ -1,4 +1,4 @@
-import {Image, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {Image, Platform, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../../../components/header/Header';
 import {DummyImage} from '../../../../assets/dummy/images';
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   addBtn: {
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 10 : 0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

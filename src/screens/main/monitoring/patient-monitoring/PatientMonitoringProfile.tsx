@@ -9,6 +9,7 @@ import {
   Image,
   FlatList,
   ScrollView,
+  Platform,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -74,6 +75,7 @@ export default function PatientMonitoringProfile({}) {
   //   console.log('data ');
   //   console.log(HSDGN[0]);
   // }, []);
+  // console.log('data ');
   return (
     <View style={styles.container}>
       <Header title="Monitored patient" />
@@ -400,6 +402,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     padding: 10,
     width: '94%',
+    // marginBottom: Platform.OS === 'ios' ? 50 : 20,
     marginBottom: 20,
     justifyContent: 'center',
     alignItems: 'center',

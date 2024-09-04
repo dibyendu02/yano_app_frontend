@@ -15,6 +15,7 @@ import Icons from '../../assets/icon/Icon';
 import ImagePicker from 'react-native-image-crop-picker';
 import BottomSheet from '../bottom-sheet/BottomSheet';
 import {staticIcons} from '../../assets/image';
+import FilledButton from '../buttons/FilledButton';
 
 interface FormImageProps {
   name: string;
@@ -150,6 +151,7 @@ const FormImageInput: React.FC<FormImageProps> = ({name, imageUri}) => {
                 <Text style={{color: Colors.Blue, fontSize: 16}}>Gallery</Text>
               </TouchableOpacity>
             </View>
+            <FilledButton type='lightGrey' label='Cancel' style={{width: '90%', margin: 'auto', marginTop: 12}} onPress={() => setShowOptionsModal(false)}  />
           </BottomSheet>
         </TouchableOpacity>
       )}

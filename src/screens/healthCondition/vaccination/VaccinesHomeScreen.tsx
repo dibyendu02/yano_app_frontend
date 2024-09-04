@@ -33,7 +33,7 @@ const VaccinesHomeScreen = ({navigation}: any) => {
         viewItem_path="VaccineDetails"
         emptyHomeTitle="No vaccines added yet"
         emptyHomeMessage="Add your vaccine to keep track of them."
-        customStyle={{paddingVertical: 12}}
+        customStyle={{paddingVertical: 12, paddingTop: 55}}
       />
     </>
   );

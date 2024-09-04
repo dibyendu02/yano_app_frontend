@@ -34,7 +34,7 @@ const ConsultancyNotes = ({navigation}: any) => {
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <CommonHeader title={'Consultation notes'} />
+      <CommonHeader title={'Consultation notes'} customStyle={{ paddingTop: 55}} />
       {data && data.length > 0 ? (
         <HomeItems
           data={data}

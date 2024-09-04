@@ -228,14 +228,14 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
           <Header
             title=""
             headerRightComponent={
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
                 <Text style={styles.text}>Already registered?</Text>
                 <TouchableOpacity onPress={() => navigate(AuthScreen.Login)}>
                   <Text style={styles.loginButton}>Log in</Text>
                 </TouchableOpacity>
               </View>
             }
-            // customStyle={{paddingTop: Platform.OS === 'ios' ? 0 : 45}}
+            customStyle={{ paddingTop: 50}}
           />
           <View style={styles.body}>
             <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -376,6 +376,8 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
           marginHorizontal: 'auto',
           textAlign: 'center',
           paddingTop: 10,
+          bottom: Platform.OS === 'ios' ? 10 : 0,
+
           color: '#3D5A6C',
         }}>
         When registering you are accepting our{' '}
@@ -394,7 +396,8 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
         <FilledButton
           label="Continue"
           type="blue"
-          style={{width: '92%', alignSelf: 'center', marginVertical: 10}}
+          style={{width: '92%', alignSelf: 'center', marginVertical: 10,    bottom: Platform.OS === 'ios' ? 10 : 0,
+        }}
           // disabled={!methods.formState.isDirty}
           onPress={methods.handleSubmit(onSubmit)}
           // onPress={() =>
@@ -427,5 +430,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.GhostWhite,
     paddingHorizontal: 14,
+    bottom: Platform.OS === 'ios' ? 10 : 0,
+
   },
 });

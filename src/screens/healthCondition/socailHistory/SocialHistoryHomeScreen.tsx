@@ -98,7 +98,7 @@ const SocialHistoryHomeScreen = ({navigation}: any) => {
         navigation={navigation}
         onDelete={handleDelete}
         heading="Social history"
-        customHeaderStyle={{paddingVertical: 12}}
+        customHeaderStyle={{paddingVertical: 12, paddingTop: 55}}
         component={
           <ScrollView>
             <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>

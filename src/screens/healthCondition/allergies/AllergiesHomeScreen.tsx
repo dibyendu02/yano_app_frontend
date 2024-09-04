@@ -69,6 +69,7 @@ const AllergiesHomeScreen = ({ navigation }: any) => {
         viewItem_path="AllergyDetails"
         emptyHomeTitle="No allergies added yet"
         emptyHomeMessage="Add your allergies to keep track of them."
+        customStyle={{paddingTop: 55}}
       />
     </>
   );

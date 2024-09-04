@@ -58,6 +58,7 @@ const HealthConditionHomeScreen = ({ navigation }: any) => {
       viewItem_path="HealthConditionDetails"
       emptyHomeTitle="No health condition added yet"
       emptyHomeMessage="Add your health conditions to keep track of them."
+      customStyle={{paddingTop: 55}}
     />
   );
 };

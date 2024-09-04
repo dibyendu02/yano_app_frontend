@@ -54,7 +54,7 @@ const AddReminder = ({route}: any) => {
               }}
             />
           }
-          customStyle={{paddingBottom: 2, paddingTop: 32}}
+          customStyle={{paddingBottom: 2, paddingTop: 45}}
         />
         <ScrollView>
           <View style={{padding: 20}}>

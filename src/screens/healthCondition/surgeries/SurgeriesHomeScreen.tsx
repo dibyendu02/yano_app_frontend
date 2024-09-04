@@ -45,6 +45,7 @@ const SurgeriesHomeScreen = ({navigation}: any) => {
         viewItem_path="SurgeriesDetails"
         emptyHomeTitle="No surgeries added yet"
         emptyHomeMessage="Add your surgeries to keep track of them."
+        customStyle={{paddingTop: 55}}
       />
     </>
   );

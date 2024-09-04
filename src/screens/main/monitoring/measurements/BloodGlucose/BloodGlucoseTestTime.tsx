@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../../../components/header/Header';
@@ -106,7 +106,7 @@ export default BloodGlucoseTestTime;
 const styles = StyleSheet.create({
   addBtn: {
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 10 :  0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

@@ -68,7 +68,7 @@ const ChangePassword = () => {
             }}
           />
         }
-        customStyle={{paddingVertical: 2, paddingTop: 35}}
+        customStyle={{paddingVertical: 2, paddingTop: 45}}
       />
       <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
         <View>

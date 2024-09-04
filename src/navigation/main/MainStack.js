@@ -130,13 +130,14 @@ const PatientTabs = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors.LightGreen,
         tabBarInactiveTintColor: Colors.Grey,
-        tabBarStyle: {height: 60, paddingBottom: 8},
+        tabBarStyle: {height: 70, paddingBottom: 8},
         tabBarLabelStyle: {
-          marginTop: -5, // Move the label closer to the icon
+          // marginTop: 10, // Move the label closer to the icon
+          marginBottom: 10,
           fontSize: 12, // Adjust the font size as needed
         },
         tabBarIconStyle: {
-          marginBottom: -5, // Move the icon closer to the label
+          marginBottom: 0, // Move the icon closer to the label
         },
       }}>
       <Tab.Screen
@@ -179,13 +180,14 @@ const ProviderTabs = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors.LightGreen,
         tabBarInactiveTintColor: Colors.Grey,
-        tabBarStyle: {height: 60, paddingBottom: 8},
+        tabBarStyle: {height: 70, paddingBottom: 8},
         tabBarLabelStyle: {
-          marginTop: -5, // Move the label closer to the icon
+          // marginTop: 10, // Move the label closer to the icon
+          marginBottom: 10,
           fontSize: 12, // Adjust the font size as needed
         },
         tabBarIconStyle: {
-          marginBottom: -5, // Move the icon closer to the label
+          marginBottom: 0, // Move the icon closer to the label
         },
       }}>
       <Tab.Screen

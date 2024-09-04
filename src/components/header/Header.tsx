@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     // paddingLeft: 14,
     paddingVertical: 12,
     // height: 64,
-    paddingTop: 45,
+    paddingTop: 55,
 
     backgroundColor: Colors.White,
     justifyContent: 'space-between',

@@ -228,7 +228,7 @@ const Create: React.FC<AuthScreensProps> = ({route}) => {
       <FilledButton
         label="Create account"
         type="blue"
-        style={{width: '92%', alignSelf: 'center', marginVertical: 10}}
+        style={{width: '92%', alignSelf: 'center', marginVertical: 10, marginBottom: Platform.OS === 'ios' ? 20 : 0 }}
         // disabled={!methods.formState.isDirty}
         onPress={() => navigation.goBack()}
       />
