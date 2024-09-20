@@ -35,8 +35,7 @@ const FamilyHistoryDetails = ({navigation, route}: any) => {
   const deleteFamilyMemberHistory = async () => {
     try {
       const respose = await deleteFamilyMemberHistoryFn({
-        userId:
-          requiredUserId && userType == 'doctor' ? requiredUserId : userId,
+        userId: requiredUserId ? requiredUserId : userId,
         id: data.id,
       });
       if (respose) {

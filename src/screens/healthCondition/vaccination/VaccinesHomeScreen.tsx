@@ -30,6 +30,7 @@ const VaccinesHomeScreen = ({navigation}: any) => {
       }
 
       const transformedData = res?.vaccines?.map((item, index) => ({
+        requiredUserId: requiredUserId,
         id: item._id,
         shotDate: item.shotDate,
         name: item.vaccineName,
@@ -54,6 +55,7 @@ const VaccinesHomeScreen = ({navigation}: any) => {
   return (
     <>
       <CommonHomeScreen
+        requiredUserId={requiredUserId}
         navigation={navigation}
         data={data}
         heading="Vaccines"

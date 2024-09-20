@@ -46,6 +46,9 @@ const AddAndEditHospitalization = ({navigation, route}: any) => {
     admissionDate: data?.admissionDate || new Date().toISOString(),
     doctorName: data?.doctorName || '',
   });
+  const [requiredUserId, setRequiredUserId] = useState(
+    data?.requiredUserId || route?.params?.requiredUserId || '',
+  );
 
   const {
     control,
@@ -61,7 +64,7 @@ const AddAndEditHospitalization = ({navigation, route}: any) => {
     const formatAdmissionDate = moment(formdata?.admissionDate).toISOString();
 
     const StructuredData = {
-      userId,
+      userId: requiredUserId ? requiredUserId : userId,
       hospitalName: formdata?.name,
       reasonOfHospitalization: formdata?.reason,
       dischargeDate: formatDischargeDate,
@@ -76,7 +79,7 @@ const AddAndEditHospitalization = ({navigation, route}: any) => {
           data: StructuredData,
           token,
           id: data.id,
-          userId,
+          userId: requiredUserId ? requiredUserId : userId,
         });
         setSaved(true);
         setTimeout(() => {

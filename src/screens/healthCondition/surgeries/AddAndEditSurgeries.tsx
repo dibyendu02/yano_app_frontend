@@ -41,6 +41,9 @@ const AddAndEditSurgeries = ({navigation, route}: any) => {
     doctorName: data?.doctorName || '',
     additionalNotes: data?.additionalNotes || '',
   });
+  const [requiredUserId, setRequiredUserId] = useState(
+    data?.requiredUserId || route?.params?.requiredUserId || '',
+  );
 
   const {
     control,
@@ -51,7 +54,7 @@ const AddAndEditSurgeries = ({navigation, route}: any) => {
 
   const onSubmit = async (formdata: FormValues) => {
     const StructuredData = {
-      userId,
+      userId: requiredUserId ? requiredUserId : userId,
       surgeryName: formdata.name,
       dateOfSurgery: formdata?.date,
       physicianInCharge: formdata?.doctorName,
@@ -66,7 +69,7 @@ const AddAndEditSurgeries = ({navigation, route}: any) => {
           data: StructuredData,
           token,
           id: data.id,
-          userId,
+          userId: requiredUserId ? requiredUserId : userId,
         });
         setSaved(true);
         setTimeout(() => {

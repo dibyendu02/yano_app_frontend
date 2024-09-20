@@ -61,8 +61,7 @@ const AddAndEditFamilyHistory = ({navigation, route}: any) => {
     if (data) {
       try {
         const respose = await editFamilyMember({
-          userId:
-            requiredUserId && userType == 'doctor' ? requiredUserId : userId,
+          userId: requiredUserId ? requiredUserId : userId,
           data: formdata,
           id: data.id,
         });
@@ -80,8 +79,7 @@ const AddAndEditFamilyHistory = ({navigation, route}: any) => {
     } else {
       try {
         const res = await addFamilyMember({
-          userId:
-            requiredUserId && userType == 'doctor' ? requiredUserId : userId,
+          userId: requiredUserId ? requiredUserId : userId,
           data: formdata,
         });
         console.log(res);

@@ -32,6 +32,7 @@ const HospitalizationHomeScreen = ({navigation}: any) => {
       }
 
       const transformedData = res?.hospitalizations?.map((item, index) => ({
+        requiredUserId: requiredUserId,
         id: item._id,
         name: item.hospitalName,
         reason: item.reasonOfHospitalization,
@@ -55,6 +56,7 @@ const HospitalizationHomeScreen = ({navigation}: any) => {
   return (
     <>
       <CommonHomeScreen
+        requiredUserId={requiredUserId}
         navigation={navigation}
         data={data}
         heading="Hospitalizations"

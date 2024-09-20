@@ -22,18 +22,25 @@ const HospitalizationDetails = ({navigation, route}: any) => {
   const [isClicked, setIsClicked] = useState(false);
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
   if (!route || !route.params) {
     Alert.alert('Error', 'Data not passed or invalid data passed');
     return navigation.goBack();
   }
   const data = route.params.data;
   const {id, name, reason, dischargeDate, admissionDate, doctorName} = data;
+  const [requiredUserId, setRequiredUserId] = useState(
+    data?.requiredUserId || '',
+  );
+
   const getUserData = async () => {
     const retrievedToken = await retrieveData('token');
     const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
 
     setToken(retrievedToken);
     setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
   };
 
   useEffect(() => {
@@ -41,7 +48,11 @@ const HospitalizationDetails = ({navigation, route}: any) => {
   }, []);
   const deleteHospitalization = async () => {
     try {
-      await deleteHospitalizationData({id, userId, token});
+      await deleteHospitalizationData({
+        id,
+        userId: requiredUserId ? requiredUserId : userId,
+        token,
+      });
       navigation.goBack();
     } catch (err) {
       console.error(err);
@@ -57,23 +68,27 @@ const HospitalizationDetails = ({navigation, route}: any) => {
       <CommonHeader
         title={name}
         rightComp1={
-          <TouchableOpacity
-            onPress={() =>
-              navigation.replace('AddAndEditHospitalization', {data})
-            }>
-            <Image
-              source={staticIcons.EditPencil}
-              style={{height: 22, width: 22}}
-            />
-          </TouchableOpacity>
+          requiredUserId && userType === 'patient' ? null : (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.replace('AddAndEditHospitalization', {data})
+              }>
+              <Image
+                source={staticIcons.EditPencil}
+                style={{height: 22, width: 22}}
+              />
+            </TouchableOpacity>
+          )
         }
         rightComp2={
-          <TouchableOpacity onPress={() => setIsClicked(true)}>
-            <Image
-              source={staticIcons.DeleteIcon}
-              style={{height: 22, width: 22}}
-            />
-          </TouchableOpacity>
+          requiredUserId && userType === 'patient' ? null : (
+            <TouchableOpacity onPress={() => setIsClicked(true)}>
+              <Image
+                source={staticIcons.DeleteIcon}
+                style={{height: 22, width: 22}}
+              />
+            </TouchableOpacity>
+          )
         }
         customStyle={{paddingVertical: 12, paddingTop: 55}}
       />

@@ -22,6 +22,7 @@ const SurgeriesHomeScreen = ({navigation}: any) => {
       }
 
       const transformedData = res?.surgeries?.map((item, index) => ({
+        requiredUserId: requiredUserId,
         id: item._id, // Assign a unique ID based on the index
         name: item.surgeryName, // Use surgeryName for the name
         date: item.dateOfSurgery, // Format the date
@@ -56,6 +57,7 @@ const SurgeriesHomeScreen = ({navigation}: any) => {
   return (
     <>
       <CommonHomeScreen
+        requiredUserId={requiredUserId}
         navigation={navigation}
         data={data}
         heading="Surgeries"

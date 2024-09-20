@@ -27,6 +27,7 @@ const VaccineDetails = ({navigation, route}: any) => {
   }
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
   const [isClicked, setIsClicked] = useState(false);
   const data = route.params.data;
   const {
@@ -38,13 +39,18 @@ const VaccineDetails = ({navigation, route}: any) => {
     lotNumber,
     additionalNotes,
   } = data;
+  const [requiredUserId, setRequiredUserId] = useState(
+    data?.requiredUserId || '',
+  );
 
   const getUserData = async () => {
     const retrievedToken = await retrieveData('token');
     const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
 
     setToken(retrievedToken);
     setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
   };
 
   useEffect(() => {
@@ -53,7 +59,11 @@ const VaccineDetails = ({navigation, route}: any) => {
 
   const deleteVaccine = async () => {
     try {
-      await deleteVaccineData({id, userId, token});
+      await deleteVaccineData({
+        id,
+        userId: requiredUserId ? requiredUserId : userId,
+        token,
+      });
       navigation.goBack();
     } catch (err) {
       console.error(err);
@@ -70,21 +80,25 @@ const VaccineDetails = ({navigation, route}: any) => {
       <CommonHeader
         title={name}
         rightComp1={
-          <TouchableOpacity
-            onPress={() => navigation.replace('AddAndEditVaccine', {data})}>
-            <Image
-              source={staticIcons.EditPencil}
-              style={{height: 22, width: 22}}
-            />
-          </TouchableOpacity>
+          requiredUserId && userType === 'patient' ? null : (
+            <TouchableOpacity
+              onPress={() => navigation.replace('AddAndEditVaccine', {data})}>
+              <Image
+                source={staticIcons.EditPencil}
+                style={{height: 22, width: 22}}
+              />
+            </TouchableOpacity>
+          )
         }
         rightComp2={
-          <TouchableOpacity onPress={() => setIsClicked(true)}>
-            <Image
-              source={staticIcons.DeleteIcon}
-              style={{height: 22, width: 22}}
-            />
-          </TouchableOpacity>
+          requiredUserId && userType === 'patient' ? null : (
+            <TouchableOpacity onPress={() => setIsClicked(true)}>
+              <Image
+                source={staticIcons.DeleteIcon}
+                style={{height: 22, width: 22}}
+              />
+            </TouchableOpacity>
+          )
         }
         customStyle={{paddingVertical: 12, paddingTop: 55}}
       />

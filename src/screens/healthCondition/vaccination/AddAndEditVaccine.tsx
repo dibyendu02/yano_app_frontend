@@ -36,6 +36,9 @@ const AddAndEditVaccine = ({navigation, route}: any) => {
   const [userType, setUserType] = useState('');
   const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const [requiredUserId, setRequiredUserId] = useState(
+    data?.requiredUserId || route?.params?.requiredUserId || '',
+  );
 
   // Initialize useForm and set default values directly in reset
   const {
@@ -62,7 +65,7 @@ const AddAndEditVaccine = ({navigation, route}: any) => {
 
   const onSubmit = async (formdata: FormValues) => {
     const StructuredData = {
-      userId,
+      userId: requiredUserId ? requiredUserId : userId,
       vaccineName: formdata?.vaccineName,
       vaccineFor: formdata?.vaccineFor,
       shotDate: formdata?.shotDate,
@@ -77,7 +80,7 @@ const AddAndEditVaccine = ({navigation, route}: any) => {
           data: StructuredData,
           token,
           id: data.id,
-          userId,
+          userId: requiredUserId ? requiredUserId : userId,
         });
         setSaved(true);
         setTimeout(() => {
