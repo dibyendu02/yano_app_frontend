@@ -20,6 +20,9 @@ import FormSelectionInput from '../../components/hook-form/FormSelectionInput';
 import UserContext from '../../contexts/UserContext';
 import {AuthScreen} from '../../navigation/auth/AuthScreens';
 import FormPickerInputInput from '../../components/hook-form/FormPickerInput';
+import {retrieveData} from '../../utils/Storage';
+import {updatePatient} from '../../api/PUT/auth';
+import {useNavigation} from '@react-navigation/native';
 
 const HeightOptions = Array.from({length: 100}, (_, i) => ({
   id: (i + 100).toString(),
@@ -48,6 +51,21 @@ const MoreDetails = () => {
   const {...methods} = useForm({mode: 'onBlur'});
   const [isFormValid, setIsFormValid] = useState(false);
   const {login, isPatient} = useContext(UserContext);
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
+  const navigation = useNavigation();
+
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   useEffect(() => {
     const subscription = methods.watch((values, {name, type}) => {
@@ -56,10 +74,33 @@ const MoreDetails = () => {
     return () => subscription.unsubscribe();
   }, [methods]);
 
-  const onSubmit = (data: any) => {
-    // navigate("MyHealth")
-    navigate(AuthScreen.AskDevice);
-    console.log(data);
+  // const onSubmit = (data: any) => {
+  //   // navigate("MyHealth")
+  //   // navigate(AuthScreen.AskDevice);
+  //   console.log(data);
+  // };
+
+  const onSubmit = async (formData: any) => {
+    const structuredData = {
+      height: formData?.height,
+      weight: formData?.weight,
+      bloodType: formData?.bloodType,
+    };
+
+    try {
+      console.log('edit user');
+      await updatePatient({
+        data: structuredData,
+        token,
+        userId,
+        type: 'json',
+      });
+      setTimeout(() => {
+        navigate(AuthScreen.AskDevice);
+      }, 1000);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

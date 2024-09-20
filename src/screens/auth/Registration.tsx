@@ -164,7 +164,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
   console.log(userType);
 
   const onSubmit = async (data: any) => {
-    setIsContinue(true);
+    setIsContinue(true); // Start loading state
     try {
       // Prepare form data
       let requestData = new FormData();
@@ -197,17 +197,25 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
         res = await registerDoctor(requestData);
       }
 
-      console.log('Navigating with userType:', userType);
-      navigate(AuthScreen.AccountVerification, {userType: userType});
+      console.log(res);
 
-      // if (res.code === 200) {
-      //   console.log('Navigating with userType:', userType); // Log userType
-      //   navigate(AuthScreen.AccountVerification, {userType: userType});
-      // } else if (res.code === 400) {
-      //   Alert.alert('Error', res.error.message || 'Bad Request');
-      //   setIsContinue(false);
-      //   return;
-      // }
+      // Check for success response or errors
+      if (res.status === 201) {
+        // Success: Navigate to account verification page
+        console.log('Navigating with userType:', userType);
+        navigate(AuthScreen.AccountVerification, {userType: userType});
+      } else if (
+        res.status === 400 &&
+        res.error.message === 'User already exists'
+      ) {
+        // User already exists: Show alert
+        Alert.alert('Error', 'User with this email already exists.');
+        setIsContinue(false); // Stop loading state
+      } else {
+        // Handle other errors
+        Alert.alert('Error', res.error.message || 'An error occurred.');
+        setIsContinue(false); // Stop loading state
+      }
     } catch (e) {
       console.error('Error!', e);
       if (axios.isAxiosError(e) && e.response) {
@@ -215,7 +223,7 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
         Alert.alert('Error', e.response.data.message || 'An error occurred');
       }
     } finally {
-      setIsContinue(false);
+      setIsContinue(false); // Ensure loading stops in all cases
     }
   };
 
@@ -228,14 +236,19 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
           <Header
             title=""
             headerRightComponent={
-              <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 5}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginBottom: 5,
+                }}>
                 <Text style={styles.text}>Already registered?</Text>
                 <TouchableOpacity onPress={() => navigate(AuthScreen.Login)}>
                   <Text style={styles.loginButton}>Log in</Text>
                 </TouchableOpacity>
               </View>
             }
-            customStyle={{ paddingTop: 50}}
+            customStyle={{paddingTop: 50}}
           />
           <View style={styles.body}>
             <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -391,13 +404,19 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
         </Text>
       </Text>
       {isContinue ? (
-        <ActivityIndicator size={25} color={Colors.Blue} />
+        <View style={{marginVertical: 10, marginBottom: 20}}>
+          <ActivityIndicator size={30} color={Colors.Blue} />
+        </View>
       ) : (
         <FilledButton
           label="Continue"
           type="blue"
-          style={{width: '92%', alignSelf: 'center', marginVertical: 10,    bottom: Platform.OS === 'ios' ? 10 : 0,
-        }}
+          style={{
+            width: '92%',
+            alignSelf: 'center',
+            marginVertical: 10,
+            bottom: Platform.OS === 'ios' ? 10 : 0,
+          }}
           // disabled={!methods.formState.isDirty}
           onPress={methods.handleSubmit(onSubmit)}
           // onPress={() =>
@@ -431,6 +450,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.GhostWhite,
     paddingHorizontal: 14,
     bottom: Platform.OS === 'ios' ? 10 : 0,
-
   },
 });

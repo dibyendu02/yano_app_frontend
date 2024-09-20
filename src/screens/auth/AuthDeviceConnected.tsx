@@ -29,11 +29,13 @@ const AuthDeviceConnected = ({navigation}: any) => {
       <View
         style={{
           width: '100%',
-          height: 50,
+          // height: 50,
+          paddingBottom: 10,
           backgroundColor: Colors.White,
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
+          paddingTop: Platform.OS === 'ios' ? 0 : 45,
         }}>
         <Text
           style={{

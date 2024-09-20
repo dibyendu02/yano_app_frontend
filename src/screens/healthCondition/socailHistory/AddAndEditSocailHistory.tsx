@@ -1,18 +1,24 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, ScrollView, Image, Text} from 'react-native';
 import {Colors} from '../../../constants/Colors';
 import FilledButton from '../../../components/buttons/FilledButton';
 import CustomInputField from '../../../components/formComp/CustomInputField';
-import {useForm, Control, FieldValues, FormProvider} from 'react-hook-form';
+import {useForm, Control, FormProvider} from 'react-hook-form';
 import {DatePickerField} from '../../../components/form/DatePicker';
 import CommonHeader from '../components/CommonHeader';
 import FormSelectionInput from '../../../components/hook-form/FormSelectionInput';
 import YesNoAnswer from '../components/YesNoAnswer';
+import {retrieveData} from '../../../utils/Storage';
+import {staticIcons} from '../../../assets/image';
+import {CloseIcon} from '../../../assets/icon/IconNames';
+import Modal from 'react-native-modal';
+import {editSocialHistoryData} from '../../../api/PUT/medicalHistory';
+import {AddSocialHistoryData} from '../../../api/POST/medicalHistory';
 
 interface FormValues {
   occupation: string;
   education: string;
-  date: string;
+  date: Date;
   placeOfBirth: string;
   maritalStatus: string;
   children: string;
@@ -28,51 +34,120 @@ interface FormValues {
 }
 
 const AddAndEditSocialHistory = ({navigation, route}: any) => {
-  let data = null;
-  if (route?.params) {
-    data = route.params.data;
-  }
+  let data = route?.params?.data || null;
+
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
+  const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
-  const [defaultValues, setDefaultValues] = useState<FormValues>({
-    occupation: data?.occupation || '',
-    education: data?.education || '',
-    date: data?.date || '',
-    placeOfBirth: data?.placeOfBirth || '',
-    maritalStatus: data?.maritalStatus || '',
-    children: data?.children || '',
-    religion: data?.religion || '',
-    diet: data?.diet || '',
-    sex: data?.sex || '',
-    isSmoke: data?.isSmoke || '',
-    consumeAlcohol: data?.consumeAlcohol || '',
-    substance: data?.substance || '',
-    stressFactor: data?.stressFactor || '',
-    exercise: data?.exercise || '',
-    spokenLanguages: data?.spokenLanguages || '',
+
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      occupation: data?.occupation || '',
+      education: data?.education || '',
+      date: data?.date || new Date(),
+      placeOfBirth: data?.placeOfBirth || '',
+      maritalStatus: data?.maritalStatus || 'single',
+      children: data?.children?.toString() || '0',
+      religion: data?.religion || '',
+      diet: data?.diet || '',
+      sex: data?.sex || 'heterosexual',
+      isSmoke: data?.isSmoke || 'No',
+      consumeAlcohol: data?.consumeAlcohol || 'No',
+      substance: data?.substance || '',
+      stressFactor: data?.stressFactor || '',
+      exercise: data?.exercise || '',
+      spokenLanguages: data?.spokenLanguages || '',
+    },
   });
 
   const {
     control,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     formState: {errors},
-  } = useForm<FormValues>({defaultValues});
+  } = methods;
 
-  const methods = useForm();
-
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
-    reset();
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
   };
 
-  const handleChange = (id: string, value: string) => {
-    setDefaultValues({...defaultValues, [id]: value});
-    if (defaultValues.occupation) setDisabled(false);
-    else setDisabled(true);
-  };
+  useEffect(() => {
+    getUserData();
+    if (data) {
+      reset({
+        occupation: data?.occupation || '',
+        education: data?.education || '',
+        date: data?.date || '',
+        placeOfBirth: data?.placeOfBirth || '',
+        maritalStatus: data?.maritalStatus || '',
+        children: data?.children?.toString() || '',
+        religion: data?.religion || '',
+        diet: data?.diet || '',
+        sex: data?.sex || '',
+        isSmoke: data?.doYouSmoke || '',
+        consumeAlcohol: data?.doYouConsumeAlcohol || '',
+        substance: data?.substance || '',
+        stressFactor: data?.stressFactor || '',
+        exercise: data?.exercise || '',
+        spokenLanguages: data?.spokenLanguages || '',
+      });
+    }
+  }, [data]);
 
-  const [value, setvalue] = useState('No');
-  const [valuesecond, setvaluesecond] = useState('No');
+  // Watch for changes in the form fields
+  const currentFormValues = watch();
+
+  useEffect(() => {
+    const isFormValid = currentFormValues.occupation?.trim() !== '';
+    setDisabled(!isFormValid); // Enable Save button only if form is valid
+  }, [currentFormValues]);
+
+  const onSubmit = async (formdata: FormValues) => {
+    const StructuredData = {
+      userId,
+      occupation: formdata?.occupation,
+      education: {field: formdata?.education, date: formdata?.date},
+      placeOfBirth: formdata?.placeOfBirth,
+      maritalStatus: formdata?.maritalStatus,
+      numberOfChildren: formdata?.children,
+      religion: formdata?.religion,
+      diet: formdata?.diet,
+      sexualOrientation: formdata?.sex,
+      doYouSmoke: formdata?.isSmoke,
+      doYouConsumeAlcohol: formdata?.consumeAlcohol,
+      useOfOtherSubstances: formdata?.substance,
+      doYouExercise: formdata?.exercise,
+      stressFactor: formdata?.stressFactor,
+      spokenLanguage: formdata?.spokenLanguages,
+    };
+
+    try {
+      console.log(StructuredData);
+      if (data) {
+        await editSocialHistoryData({
+          data: StructuredData,
+          token,
+          id: data.id,
+          userId,
+        });
+      } else {
+        await AddSocialHistoryData({data: StructuredData, token});
+      }
+      setSaved(true);
+      setTimeout(() => {
+        setSaved(false);
+        navigation.goBack();
+      }, 2000);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <View
@@ -89,22 +164,18 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
             label="Save"
             onPress={handleSubmit(onSubmit)}
             disabled={disabled}
-            style={{
-              width: 70,
-              paddingVertical: 10,
-              borderRadius: 10,
-            }}
+            style={{width: 70, paddingVertical: 10, borderRadius: 10}}
           />
         }
       />
       <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
-        <View>
+        <FormProvider {...methods}>
           <View style={styles.inputBox}>
             <CustomInputField
               label="Occupation"
               name="occupation"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Occupation"
+              control={control}
+              placeholder="Ex. engineer, doctor, architect, etc."
               rules={{required: 'required'}}
             />
             <View
@@ -118,131 +189,135 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
                 <CustomInputField
                   label="Education"
                   name="education"
-                  control={control as unknown as Control<FieldValues, object>}
-                  placeholder="Education"
+                  control={control}
+                  placeholder="Ex. MSc, Ms, etc..."
                 />
               </View>
               <View style={{width: '45%', marginTop: 5}}>
                 <DatePickerField
                   label="Date"
                   name="date"
-                  value={defaultValues.date}
-                  onchange={handleChange}
+                  value={watch('date')}
+                  onchange={(name, value) => setValue('date', value)}
                 />
               </View>
             </View>
             <CustomInputField
               label="Place of birth"
               name="placeOfBirth"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Place of birth"
+              control={control}
+              placeholder="Ex. New York, Paris, etc..."
             />
-            <FormProvider {...methods}>
-              <FormSelectionInput
-                name="maritalStatus"
-                label="Marital Status"
-                options={[
-                  {label: 'Single', id: 'single'},
-                  {label: 'Married', id: 'married'},
-                  {label: 'Divorced', id: 'divorced'},
-                  {label: 'Widowed', id: 'widowed'},
-                ]}
-                selectedId={defaultValues.maritalStatus}
-                showActionButtons={true}
-                optionsListHeight={300}
-              />
-              <CustomInputField
-                label="No of children"
-                name="children"
-                control={control as unknown as Control<FieldValues, object>}
-                placeholder="Ex. 2"
-              />
-              <CustomInputField
-                label="Religion"
-                name="religion"
-                control={control as unknown as Control<FieldValues, object>}
-                placeholder="Religion"
-              />
-              <CustomInputField
-                label="Diet"
-                name="diet"
-                control={control as unknown as Control<FieldValues, object>}
-                placeholder="Diet"
-              />
-              <FormSelectionInput
-                name="sex"
-                label="Sexual Orientation"
-                options={[
-                  {label: 'Heterosexual', id: 'heterosexual'},
-                  {label: 'Homosexual', id: 'homosexual'},
-                  {label: 'Bisexual', id: 'bisexual'},
-                  {label: 'Asexual', id: 'asexual'},
-                ]}
-                selectedId={defaultValues.sex}
-                showActionButtons={true}
-                optionsListHeight={300}
-              />
-              {/* <FormSelectionInput
-                name="isSmoke"
-                label="Do you smoke?"
-                options={[
-                  {label: 'Yes', id: 'yes'},
-                  {label: 'No', id: 'no'},
-                ]}
-                selectedId={defaultValues.isSmoke}
-                showActionButtons={true}
-                optionsListHeight={150}
-              /> */}
-              <YesNoAnswer
-                selectedRole={value}
-                setSelectedRole={setvalue}
-                title="Do you smoke?"
-              />
-              {/* <FormSelectionInput
-                name="consumeAlcohol"
-                label="Do you consume alcohol?"
-                options={[
-                  {label: 'Yes', id: 'yes'},
-                  {label: 'No', id: 'no'},
-                ]}
-                selectedId={defaultValues.consumeAlcohol}
-                showActionButtons={true}
-                optionsListHeight={150}
-              /> */}
-              <YesNoAnswer
-                selectedRole={valuesecond}
-                setSelectedRole={setvaluesecond}
-                title="Do you consume alcohol?"
-              />
-            </FormProvider>
-
+            <FormSelectionInput
+              name="maritalStatus"
+              label="Marital Status"
+              options={[
+                {label: 'Single', id: 'single'},
+                {label: 'Married', id: 'married'},
+                {label: 'Divorced', id: 'divorced'},
+                {label: 'Widowed', id: 'widowed'},
+              ]}
+              selectedId={watch('maritalStatus')}
+              showActionButtons={true}
+              optionsListHeight={300}
+              onSelect={value => setValue('maritalStatus', value)}
+              placeholder="Select a marital status"
+            />
+            <CustomInputField
+              label="No of children"
+              name="children"
+              control={control}
+              placeholder="Ex. 2"
+            />
+            <CustomInputField
+              label="Religion"
+              name="religion"
+              control={control}
+              placeholder="Ex, Cathic, Muslim, etc.."
+            />
+            <CustomInputField
+              label="Diet"
+              name="diet"
+              control={control}
+              placeholder="Ex. Vegan, Vegetarian, etc.."
+            />
+            <FormSelectionInput
+              name="sex"
+              label="Sexual Orientation"
+              options={[
+                {label: 'Heterosexual', id: 'heterosexual'},
+                {label: 'Homosexual', id: 'homosexual'},
+                {label: 'Bisexual', id: 'bisexual'},
+                {label: 'Asexual', id: 'asexual'},
+              ]}
+              selectedId={watch('sex')}
+              showActionButtons={true}
+              optionsListHeight={300}
+            />
+            <YesNoAnswer
+              selectedRole={watch('isSmoke')}
+              setSelectedRole={(val: string) => setValue('isSmoke', val)}
+              title="Do you smoke?"
+            />
+            <YesNoAnswer
+              selectedRole={watch('consumeAlcohol')}
+              setSelectedRole={(val: string) => setValue('consumeAlcohol', val)}
+              title="Do you consume alcohol?"
+            />
             <CustomInputField
               label="Use of other substances"
               name="substance"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Use of other substances"
+              control={control}
+              placeholder="Ex. none, marijuana, cocaine, etc..."
             />
             <CustomInputField
               label="Exercise"
               name="exercise"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Do you exercise?"
+              control={control}
+              placeholder="Ex. sedentary, jogging, gym, etc..."
             />
             <CustomInputField
               label="Stress factor"
               name="stressFactor"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Stress factor"
+              control={control}
+              placeholder="Ex. relaxed, very stressed, etc..."
             />
             <CustomInputField
               label="Spoken languages"
               name="spokenLanguages"
-              control={control as unknown as Control<FieldValues, object>}
-              placeholder="Spoken languages"
+              control={control}
+              placeholder="Ex. English, French, Spanish, etc..."
             />
           </View>
-        </View>
+        </FormProvider>
       </ScrollView>
+      <Modal
+        isVisible={saved}
+        onBackdropPress={() => setSaved(false)}
+        onSwipeComplete={() => setSaved(false)}
+        swipeDirection="down"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0}
+        animationInTiming={1000}
+        animationOutTiming={3000}
+        style={styles.modal}>
+        <View style={styles.modalContent}>
+          <View style={{flexDirection: 'row', gap: 10}}>
+            <Image
+              source={staticIcons.checkcircle}
+              style={{
+                height: 20,
+                width: 20,
+                objectFit: 'contain',
+                tintColor: 'white',
+              }}
+            />
+            <Text style={styles.modalText}>The changes have been made.</Text>
+          </View>
+          <CloseIcon color="white" />
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -250,6 +325,28 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
 const styles = StyleSheet.create({
   inputBox: {
     marginBottom: 20,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: Colors.Green,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 20,
+    marginLeft: 60,
+  },
+  modalText: {
+    color: Colors.White,
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 

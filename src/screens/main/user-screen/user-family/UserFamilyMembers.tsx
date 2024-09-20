@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import CommonLayout from '../../../../components/CommonLayout';
 import Header from '../../../../components/header/Header';
 import EmptyScreen from '../../../../components/EmptyScreen';
@@ -15,18 +15,48 @@ import {
 } from 'react-native';
 import {DummyImage} from '../../../../assets/dummy/images';
 import {Colors} from '../../../../constants/Colors';
+import {retrieveData} from '../../../../utils/Storage';
+import {getFamilyLinkData} from '../../../../api/GET/familyLink';
+import {useFocusEffect} from '@react-navigation/native';
 
 const UserFamilyMembers = () => {
-  const data = [
-    {
-      id: 1,
-      name: 'María Clemente',
-      relation: 'Mother',
-      admissionDate: '2024-07-27T11:38:00.000Z',
-      dischargeDate: '2024-07-27T11:38:00.000Z',
-      doctorName: 'Value2',
-    },
-  ];
+  const [data, setData] = useState([]);
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
+
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getFamilyData = async () => {
+    try {
+      const res = await getFamilyLinkData({userId, token});
+      console.log(res);
+      setData(res.familyLink); // Assuming the response contains `familyLink`
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // Run `getFamilyData` whenever the screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      if (userId && token) {
+        getFamilyData();
+      }
+    }, [userId, token]),
+  );
 
   return (
     <>
@@ -43,51 +73,69 @@ const UserFamilyMembers = () => {
               <>
                 {data.map((item, i: number) => {
                   return (
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigate('UserFamilyMemberDetails', {data: item})
-                      }
-                      key={i}>
-                      <View style={[styles.container]}>
-                        <View style={{flexDirection: 'row'}}>
-                          <View
-                            style={{
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              alignItems: 'center',
-                              width: '100%',
-                            }}>
+                    <View key={i}>
+                      <TouchableOpacity
+                        onPress={() =>
+                          navigate('UserFamilyMemberDetails', {data: item})
+                        }>
+                        <View
+                          style={[
+                            styles.container,
+                            {
+                              borderTopLeftRadius: i == 0 ? 8 : 0,
+                              borderTopRightRadius: i == 0 ? 8 : 0,
+                              borderBottomLeftRadius:
+                                i == data.length - 1 ? 8 : 0,
+                              borderBottomRightRadius:
+                                i == data.length - 1 ? 8 : 0,
+                            },
+                          ]}>
+                          <View style={{flexDirection: 'row'}}>
                             <View
                               style={{
                                 flexDirection: 'row',
+                                justifyContent: 'space-between',
                                 alignItems: 'center',
-                                gap: 10,
+                                width: '100%',
                               }}>
-                              <Image
-                                source={DummyImage.user}
+                              <View
                                 style={{
-                                  width: 42,
-                                  height: 42,
-                                  borderRadius: 50,
-                                }}
-                              />
-                              <View>
-                                <Text style={styles.name}>{item.name}</Text>
-                                <Text
+                                  flexDirection: 'row',
+                                  alignItems: 'center',
+                                  gap: 10,
+                                }}>
+                                <Image
+                                  source={
+                                    item?.userImg?.secure_url
+                                      ? {uri: item?.userImg?.secure_url}
+                                      : DummyImage.user
+                                  }
                                   style={{
-                                    marginTop: 2,
-                                    fontSize: 14,
-                                    color: Colors.SteelBlue,
-                                  }}>
-                                  {item.relation}
-                                </Text>
+                                    width: 42,
+                                    height: 42,
+                                    borderRadius: 50,
+                                  }}
+                                />
+                                <View>
+                                  <Text style={styles.name}>{item.name}</Text>
+                                  <Text
+                                    style={{
+                                      marginTop: 2,
+                                      fontSize: 14,
+                                      color: Colors.SteelBlue,
+                                    }}>
+                                    {item.relation}
+                                  </Text>
+                                </View>
                               </View>
+                              <NextIcon size={32} />
                             </View>
-                            <NextIcon size={32} />
                           </View>
                         </View>
-                      </View>
-                    </TouchableOpacity>
+                      </TouchableOpacity>
+                      {/* Add the separator if this is not the last item */}
+                      {i < data.length - 1 && <View style={styles.separator} />}
+                    </View>
                   );
                 })}
               </>
@@ -127,11 +175,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 20,
     paddingRight: 10,
-    borderRadius: 8,
+    // borderRadius: 8,
   },
   name: {
     color: '#00263E',
     fontSize: 18,
     fontWeight: '600',
+  },
+  separator: {
+    backgroundColor: Colors.LightGray,
+    height: 1,
+    width: '80%', // Set the width to 90%
+    alignSelf: 'center', // Center the separator
   },
 });

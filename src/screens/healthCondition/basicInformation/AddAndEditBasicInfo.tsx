@@ -1,16 +1,25 @@
-/* eslint-disable react-native/no-inline-styles */
-// AddAndEditBasicInfo.tsx
-import React, {useState} from 'react';
-import {View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
+import React, {useState, useEffect, useContext} from 'react';
+import {
+  View,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  Image,
+  Text,
+} from 'react-native';
 import {Colors} from '../../../constants/Colors';
-import Header from '../../../components/header/Header';
 import FilledButton from '../../../components/buttons/FilledButton';
-import CustomInputField from '../../../components/formComp/CustomInputField';
-import {useForm, Control, FieldValues, FormProvider} from 'react-hook-form';
-import CustomSelect from '../../../components/formComp/SelectFiled';
+import {useForm, FormProvider} from 'react-hook-form';
 import CommonHeader from '../components/CommonHeader';
 import FormSelectionInput from '../../../components/hook-form/FormSelectionInput';
 import FormPickerInputInput from '../../../components/hook-form/FormPickerInput';
+import {retrieveData} from '../../../utils/Storage';
+import Modal from 'react-native-modal';
+import {updatePatient} from '../../../api/PUT/auth';
+import {staticIcons} from '../../../assets/image';
+import {CloseIcon} from '../../../assets/icon/IconNames';
+import {userData} from '../../../test/Data';
+import UserContext from '../../../contexts/UserContext';
 
 interface FormValues {
   height: string;
@@ -23,20 +32,116 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
   if (route?.params) {
     data = route.params.data;
   }
+
+  // State for form management
+  const [requiredUserId, setRequiredUserId] = useState('');
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
+  const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
-  const [defaultValues, setDefaultValues] = useState<FieldValues>({
-    height: data?.height || '',
-    weight: data?.weight || '',
-    bloodGroup: data?.bloodGroup || '',
+  const {login} = useContext(UserContext);
+
+  // Initialize form with useForm and set defaultValues correctly
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      height: data?.height || '',
+      weight: data?.weight || '',
+      bloodGroup: data?.bloodGroup || '',
+    },
   });
 
-  const {control, handleSubmit, reset} = useForm<FormValues>({defaultValues});
-  const {...methods} = useForm();
+  // Watch form values to detect changes
+  const watchedValues = methods.watch();
 
-  const onSubmit = (_data: FormValues) => {
-    console.log(_data);
-    reset();
-    navigation.goBack();
+  // Function to check if the form values have changed
+  const checkIfFormChanged = () => {
+    if (!data) return true; // If no initial data, consider form changed
+    return (
+      watchedValues.height !== data?.height ||
+      watchedValues.weight !== data?.weight ||
+      watchedValues.bloodGroup !== data?.bloodGroup
+    );
+  };
+
+  // Enable/Disable save button based on form changes
+  useEffect(() => {
+    const isFormChanged = checkIfFormChanged();
+    setDisabled(!isFormChanged);
+  }, [watchedValues, data]);
+
+  // Update requiredUserId only once when component mounts or params change
+  useEffect(() => {
+    if (route?.params?.requiredUserId) {
+      setRequiredUserId(route?.params?.requiredUserId);
+    }
+  }, [route?.params?.requiredUserId]);
+
+  // Reset form values whenever the `data` changes
+  useEffect(() => {
+    if (data) {
+      methods.reset({
+        height: data?.height || '',
+        weight: data?.weight || '',
+        bloodGroup: data?.bloodGroup || '',
+      });
+    }
+  }, [data, methods]);
+
+  // Fetch user data (token, userId, userType) when component mounts
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  // Function to retrieve user data from local storage
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  // Submit handler for the form
+  const onSubmit = async (formData: FormValues) => {
+    console.log(formData);
+    const structuredData = {
+      height: formData?.height,
+      weight: formData?.weight,
+      bloodType: formData.bloodGroup,
+    };
+    if (data) {
+      try {
+        console.log('edit user');
+        const res = await updatePatient({
+          data: structuredData,
+          token,
+          userId:
+            requiredUserId && userType == 'doctor' ? requiredUserId : userId,
+          type: 'json',
+        });
+        console.log('user dataaaaa ', res);
+        login(res?.userData);
+        setSaved(true);
+        setTimeout(() => {
+          setSaved(false);
+        }, 2000);
+        setTimeout(() => {
+          navigation.goBack();
+        }, 3000);
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      try {
+        // await AddHospitalizationData({data: StructuredData, token});
+        navigation.goBack();
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   return (
@@ -52,8 +157,8 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
           <FilledButton
             type="blue"
             label="Save"
-            onPress={handleSubmit(onSubmit)}
-            disabled={!disabled}
+            onPress={methods.handleSubmit(onSubmit)}
+            disabled={disabled}
             style={{
               width: 70,
               paddingVertical: 10,
@@ -94,7 +199,7 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
                   {label: 'O Positivo (O+)', id: 'O+'},
                   {label: 'O Negativo (O-)', id: 'O-'},
                 ]}
-                selectedId="O+"
+                selectedId={data?.bloodGroup || 'O+'}
                 showActionButtons={true}
                 optionsListHeight={500}
               />
@@ -102,6 +207,33 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
           </View>
         </View>
       </ScrollView>
+      <Modal
+        isVisible={saved}
+        onBackdropPress={() => setSaved(false)}
+        onSwipeComplete={() => setSaved(false)}
+        swipeDirection="down"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0} // Adjust the opacity of the background
+        animationInTiming={1000}
+        animationOutTiming={3000}
+        style={styles.modal}>
+        <View style={styles.modalContent}>
+          <View style={{flexDirection: 'row', gap: 10}}>
+            <Image
+              source={staticIcons.checkcircle}
+              style={{
+                height: 20,
+                width: 20,
+                objectFit: 'contain',
+                tintColor: 'white',
+              }}
+            />
+            <Text style={styles.modalText}>The changes have been made.</Text>
+          </View>
+          <CloseIcon color="white" />
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -109,6 +241,28 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
 const styles = StyleSheet.create({
   inputBox: {
     // marginBottom: 20,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: Colors.Green,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 20,
+    marginLeft: 60,
+  },
+  modalText: {
+    color: Colors.White,
+    fontSize: 14,
+    fontWeight: 'bold',
   },
 });
 

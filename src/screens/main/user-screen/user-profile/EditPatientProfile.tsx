@@ -25,20 +25,23 @@ import FormImageInput from '../../../../components/hook-form/FormImageInput';
 import {AuthScreensProps} from '../../../../navigation/auth/types';
 import {UserType} from '../../../../constants/enums';
 import moment from 'moment';
-import {registerDoctor, registerPatient} from '../../../../services/Endpoints';
 import Gender from './Gender';
 import UserContext from '../../../../contexts/UserContext';
 import Modal from 'react-native-modal';
 import {staticIcons} from '../../../../assets/image';
 import {CloseIcon} from '../../../../assets/icon/IconNames';
+import {updatePatient} from '../../../../api/PUT/auth';
+import {retrieveData} from '../../../../utils/Storage';
+import {useNavigation} from '@react-navigation/native';
 
 const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [saved, setSaved] = useState(false);
-  const {userData} = useContext(UserContext);
-  // const userType = route?.params?.userType;
-
-  // Prefilled dummy data
+  const {userData, login} = useContext(UserContext);
+  const [token, setToken] = useState(''); // Ensure token is available
+  const [userId, setUserId] = useState(''); // Ensure userId is available
+  const navigation = useNavigation();
+  // Prefilled initial data from user context
   const initialData = {
     userImg: userData?.userImg,
     firstName: userData?.firstName,
@@ -47,17 +50,18 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
     phoneNumber: userData?.phoneNumber,
     dateOfBirth: userData?.dateOfBirth,
     gender: userData?.gender,
-    specialty: 'General medicine',
-    contactname: userData?.contactname || '',
-    contactphoneNumber: userData?.contactphoneNumber || '',
+    specialty: 'General medicine', // Example specialty, replace as needed
+    contactname: userData?.emergencyContactName || '',
+    contactphoneNumber: userData?.emergencyContactPhone || '',
   };
 
-  const {...methods} = useForm({
+  const methods = useForm({
     mode: 'onChange',
     defaultValues: initialData,
   });
 
   useEffect(() => {
+    // Watch for form changes and enable/disable Save button
     const subscription = methods.watch(value => {
       const isFormChanged =
         JSON.stringify(value) !== JSON.stringify(initialData);
@@ -79,54 +83,74 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
   };
 
   const onSubmit = async (data: any) => {
-    let requestData = new FormData();
-    if (data?.file) {
+    try {
+      let requestData = new FormData();
+
+      // Append image if updated
+      if (data?.file) {
+        requestData.append('file', {
+          uri:
+            Platform.OS === 'ios'
+              ? `file:///${data?.file?.path}`
+              : data?.file.path,
+          type: data?.file?.mime,
+          name: `${moment().format('YYYYMMDD_HHmmss')}.jpeg`,
+        });
+      }
+
+      // Ensure the dateOfBirth is properly formatted
+      const formattedDOB = moment(data.dateOfBirth).toISOString(); // Convert to ISO string
+
+      const payload = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        gender: data.gender,
+        dateOfBirth: formattedDOB, // Ensure the correct date format
+        specialty: data.specialty,
+        emergencyContactName: data.contactname,
+        emergencyContactPhone: data.contactphoneNumber,
+      };
+
+      for (let key in payload) {
+        requestData.append(key, payload[key]);
+      }
+
+      const res = await updatePatient({
+        data: requestData,
+        token,
+        userId,
+        type: 'media',
+      });
+
+      login(res?.userData);
+
       setSaved(true);
       setTimeout(() => {
         setSaved(false);
       }, 2000);
+      setTimeout(() => {
+        navigation.goBack();
+      }, 3000);
+    } catch (error) {
+      console.error('Error updating patient:', error);
     }
-    // if (data?.file) {
-    //   requestData.append('image', {
-    //     uri:
-    //       Platform.OS === 'ios'
-    //         ? `file:///${data?.file?.path}`
-    //         : data?.file.path,
-    //     type: data?.file?.mime,
-    //     name: `${moment()}.jpeg`,
-    //   });
-    // }
-
-    // const payload = {
-    //   firstName: data.firstName,
-    //   lastName: data.lastName,
-    //   email: data.email,
-    //   phoneNumber: data.phoneNumber,
-    //   gender: data.gender,
-    //   dateOfBirth: data.dateOfBirth,
-    //   specialty: data.specialty,
-    //   contactname: data.contactname,
-    //   contactphoneNumber: data.contactphoneNumber,
-    // };
-
-    // for (let key in payload) {
-    //   requestData.append(key, payload[key]);
-    // }
-
-    // try {
-    //   if (userType === UserType.Patient) {
-    //     await registerPatient(requestData);
-    //   } else {
-    //     await registerDoctor(requestData);
-    //   }
-
-    //   showToast('The changes have been saved.');
-    //   navigate(AuthScreen.AccountVerification);
-    // } catch (e) {
-    //   console.log('Error!', e?.response?.data?.message);
-    //   showToast('An error occurred while saving.');
-    // }
   };
+
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  console.log(initialData.contactphoneNumber);
 
   return (
     <View style={{flex: 1}}>
@@ -247,6 +271,7 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
                 <FormPhoneNumberInput
                   name="contactphoneNumber"
                   label="Emergency contact phone number"
+                  defaultValue={initialData.contactphoneNumber}
                   rules={{
                     required: {
                       value: true,
@@ -270,7 +295,7 @@ const EditPatientProfile: React.FC<AuthScreensProps> = ({route}) => {
         swipeDirection="down"
         animationIn="slideInUp"
         animationOut="slideOutDown"
-        backdropOpacity={0} // Adjust the opacity of the background
+        backdropOpacity={0}
         animationInTiming={1000}
         animationOutTiming={3000}
         style={styles.modal}>

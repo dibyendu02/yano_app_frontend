@@ -10,11 +10,9 @@ import {CloseIcon} from '../../../assets/icon/IconNames';
 import {Image} from 'react-native';
 import {staticIcons} from '../../../assets/image';
 import Modal from 'react-native-modal';
-import {
-  addFamilyMember,
-  healthConditionsData,
-} from '../../../api/POST/medicalHistory';
+import {addFamilyMember} from '../../../api/POST/medicalHistory';
 import {editFamilyMember} from '../../../api/PUT/medicalHistory';
+import {retrieveData} from '../../../utils/Storage';
 
 interface FormValues {
   relationship: string;
@@ -26,12 +24,17 @@ const AddAndEditFamilyHistory = ({navigation, route}: any) => {
   if (route?.params) {
     data = route.params.data;
   }
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
   const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [defaultValues, setDefaultValues] = useState<FieldValues>({
     relationship: data?.name || '',
     healthCondition: data?.disease || '',
   });
+  const [requiredUserId, setRequiredUserId] = useState(
+    data?.requiredUserId || route?.params?.requiredUserId || '',
+  );
 
   const {
     control,
@@ -57,7 +60,12 @@ const AddAndEditFamilyHistory = ({navigation, route}: any) => {
     console.log('data', data);
     if (data) {
       try {
-        const respose = await editFamilyMember({data: formdata, id: data.id});
+        const respose = await editFamilyMember({
+          userId:
+            requiredUserId && userType == 'doctor' ? requiredUserId : userId,
+          data: formdata,
+          id: data.id,
+        });
         if (respose) {
           setSaved(true);
         }
@@ -71,7 +79,11 @@ const AddAndEditFamilyHistory = ({navigation, route}: any) => {
       }
     } else {
       try {
-        const res = await addFamilyMember({data: formdata});
+        const res = await addFamilyMember({
+          userId:
+            requiredUserId && userType == 'doctor' ? requiredUserId : userId,
+          data: formdata,
+        });
         console.log(res);
         console.log('Data saved');
         setSaved(true);
@@ -85,6 +97,20 @@ const AddAndEditFamilyHistory = ({navigation, route}: any) => {
       // navigation.goBack();
     }
   };
+
+  const getUserData = async () => {
+    // const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    // setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <View

@@ -1,68 +1,68 @@
 import axios, {AxiosError} from 'axios';
-import {postData} from '../../global/server';
+import {getData, postData} from '../../global/server';
 import {retrieveData} from '../../utils/Storage';
 
-interface HealthConditionData {
-  name: string;
-  date: string;
-  status: string;
-  treatedBy: string;
-  medicine: string;
-  additionalNotes: string;
-}
+// interface HealthConditionData {
+//   name: string;
+//   date: string;
+//   status: string;
+//   treatedBy: string;
+//   medicine: string;
+//   additionalNotes: string;
+// }
 
-export const healthConditionsData = async ({
-  data,
-}: {
-  data: HealthConditionData;
-}) => {
-  try {
-    const token = await retrieveData('token');
-    const userId = await retrieveData('userId');
-    console.log('data', data);
-    console.log('token', token);
-    console.log('userId', userId);
+// export const healthConditionsData = async ({
+//   data,
+// }: {
+//   data: HealthConditionData;
+// }) => {
+//   try {
+//     // const token = await retrieveData('token');
+//     // const userId = await retrieveData('userId');
+//     // console.log('data', data);
+//     // console.log('token', token);
+//     // console.log('userId', userId);
 
-    // Transform the data according to the expected structure
-    const transformedData = {
-      nameOfTheHealthCondition: data.name || '',
-      dateOfDiagnosis: data.date || '',
-      status: data.status || '',
-      TreatedBy: data.treatedBy || '',
-      medicine: data.medicine || '',
-      additionalNotes: data.additionalNotes || '',
-    };
+//     // Transform the data according to the expected structure
+//     const transformedData = {
+//       nameOfTheHealthCondition: data.name || '',
+//       dateOfDiagnosis: data.date || '',
+//       status: data.status || '',
+//       TreatedBy: data.treatedBy || '',
+//       medicine: data.medicine || '',
+//       additionalNotes: data.additionalNotes || '',
+//     };
 
-    const response = await postData(
-      `/healthConditions/`,
-      transformedData,
-      token,
-    );
-    return response;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error('Axios error:', {
-        message: error.message,
-        code: error.code,
-        config: error.config,
-        response: error.response
-          ? {
-              status: error.response.status,
-              data: error.response.data,
-              headers: error.response.headers,
-            }
-          : 'No response',
-        request: error.request ? error.request : 'No request',
-      });
-    } else {
-      console.error('General error:', {
-        message: (error as Error).message,
-        stack: (error as Error).stack,
-      });
-    }
-    throw error;
-  }
-};
+//     const response = await postData(
+//       `/healthConditions/`,
+//       transformedData,
+//       token,
+//     );
+//     return response;
+//   } catch (error) {
+//     if (axios.isAxiosError(error)) {
+//       console.error('Axios error:', {
+//         message: error.message,
+//         code: error.code,
+//         config: error.config,
+//         response: error.response
+//           ? {
+//               status: error.response.status,
+//               data: error.response.data,
+//               headers: error.response.headers,
+//             }
+//           : 'No response',
+//         request: error.request ? error.request : 'No request',
+//       });
+//     } else {
+//       console.error('General error:', {
+//         message: (error as Error).message,
+//         stack: (error as Error).stack,
+//       });
+//     }
+//     throw error;
+//   }
+// };
 
 export const familyHistoryData = async ({data}: any) => {
   try {
@@ -75,7 +75,18 @@ export const familyHistoryData = async ({data}: any) => {
     throw error;
   }
 };
+export const postHealthConditionData = async ({data, token}: any) => {
+  try {
+    const response = await postData(`/healthConditions/`, data, token);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 export const postMedicineData = async ({data, token}: any) => {
+  console.log(data);
   try {
     const response = await postData(`/medicines/`, data, token);
     return response;
@@ -95,36 +106,63 @@ export const postSurgeryData = async ({data, token}: any) => {
   }
 };
 
-export const AddAllergyData = async ({data}: any) => {
+export const AddAllergyData = async ({data, token}: any) => {
   console.log('data', data);
   try {
-    const token = await retrieveData('token');
-    const userId = await retrieveData('userId');
-
-    // Transform the incoming data to match the expected format
-    const transformedData = {
-      userId: userId,
-      nameOfTheAllergy: data.name || '',
-      details: data.details || '',
-      moreDetails: data.moreDetails || '',
-      treatedBy: data.treatedBy || '',
-      dateOfFirstDiagnosis: new Date(data.date).toISOString(), // Convert to ISO format
-      medicine: data.medicine || '',
-      notes: data.additionalNotes || '',
-    };
-
-    const response = await postData(`/allergies/`, transformedData, token);
+    const response = await postData(`/allergies/`, data, token);
     return response;
   } catch (error) {
     console.error('Error in AddAllergyData:', error);
     throw error;
   }
 };
+export const AddVaccineData = async ({data, token}: any) => {
+  console.log('data', data);
+  try {
+    const response = await postData(`/vaccines/`, data, token);
+    return response;
+  } catch (error) {
+    console.error('Error in AddVaccineData:', error);
+    throw error;
+  }
+};
 
-export const addFamilyMember = async ({data}: any) => {
+export const AddHospitalizationData = async ({data, token}: any) => {
+  console.log('data', data);
+  try {
+    const response = await postData(`/hospitalizations/`, data, token);
+    return response;
+  } catch (error) {
+    console.error('Error in AddHospitalizationData:', error);
+    throw error;
+  }
+};
+
+export const AddSocialHistoryData = async ({data, token}: any) => {
+  console.log('data', data);
+  try {
+    const response = await postData(`/socialHistory/`, data, token);
+    return response;
+  } catch (error) {
+    console.error('Error in AddSocialHistoryData:', error);
+    throw error;
+  }
+};
+
+export const AddHealthConditionData = async ({data, token}: any) => {
+  console.log('data', data);
+  try {
+    const response = await postData(`/healthConditions/`, data, token);
+    return response;
+  } catch (error) {
+    console.error('Error in AddHealthConditionData:', error);
+    throw error;
+  }
+};
+
+export const addFamilyMember = async ({userId, data}: any) => {
   try {
     const token = await retrieveData('token');
-    const userId = await retrieveData('userId');
     console.log('data', data);
     const transformedData = {
       userId: userId,

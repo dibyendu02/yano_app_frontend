@@ -45,10 +45,9 @@ export const basicInformationUpdate = async ({data}: any) => {
   }
 };
 
-export const editFamilyMember = async ({data, id}: any) => {
+export const editFamilyMember = async ({userId, data, id}: any) => {
   try {
     const token = await retrieveData('token');
-    const userId = await retrieveData('userId');
     console.log('data', data);
 
     const response = await putData(
@@ -74,10 +73,89 @@ export const editMedicineData = async ({data, id, userId, token}: any) => {
     throw error;
   }
 };
+
+export const editAllergyData = async ({data, id, userId, token}: any) => {
+  try {
+    console.log('data', data);
+
+    const response = await putData(`/allergies/${userId}/${id}`, data, token);
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
 export const editSurgeryData = async ({data, id, userId, token}: any) => {
   console.log(id);
   try {
     const response = await putData(`/surgeries/${userId}/${id}`, data, token);
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const editVaccineData = async ({data, id, userId, token}: any) => {
+  console.log(id);
+  try {
+    const response = await putData(`/vaccines/${userId}/${id}`, data, token);
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const editHospitalizationData = async ({
+  data,
+  id,
+  userId,
+  token,
+}: any) => {
+  console.log(id);
+  try {
+    const response = await putData(
+      `/hospitalizations/${userId}/${id}`,
+      data,
+      token,
+    );
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const editSocialHistoryData = async ({data, id, userId, token}: any) => {
+  console.log(id);
+  try {
+    const response = await putData(
+      `/socialHistory/${userId}/${id}`,
+      data,
+      token,
+    );
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const editHealthConditionData = async ({
+  data,
+  id,
+  userId,
+  token,
+}: any) => {
+  console.log(id);
+  console.log(token);
+  try {
+    const response = await putData(
+      `/healthConditions/${userId}/${id}`,
+      data,
+      token,
+    );
     return response;
   } catch (error) {
     console.error(error);

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -16,12 +16,16 @@ import CommonHeader from '../components/CommonHeader';
 import Modal from 'react-native-modal';
 import {staticIcons} from '../../../assets/image';
 import {CloseIcon} from '../../../assets/icon/IconNames';
+import {retrieveData} from '../../../utils/Storage';
+import {AddHospitalizationData} from '../../../api/POST/medicalHistory';
+import {editHospitalizationData} from '../../../api/PUT/medicalHistory';
+import moment from 'moment';
 
 interface FormValues {
   name: string;
   reason: string;
-  dischargeDate: string;
-  admissionDate: string;
+  dischargeDate: Date;
+  admissionDate: Date;
   doctorName: string;
 }
 
@@ -30,13 +34,16 @@ const AddAndEditHospitalization = ({navigation, route}: any) => {
   if (route?.params) {
     data = route.params.data;
   }
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
   const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [defaultValues, setDefaultValues] = useState<FormValues>({
     name: data?.name || '',
     reason: data?.reason || '',
-    dischargeDate: data?.dischargeDate || '',
-    admissionDate: data?.admissionDate || '',
+    dischargeDate: data?.dischargeDate || new Date().toISOString(),
+    admissionDate: data?.admissionDate || new Date().toISOString(),
     doctorName: data?.doctorName || '',
   });
 
@@ -47,15 +54,47 @@ const AddAndEditHospitalization = ({navigation, route}: any) => {
     formState: {errors},
   } = useForm<FormValues>({defaultValues});
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const onSubmit = async (formdata: FormValues) => {
+    console.log(formdata);
+
+    const formatDischargeDate = moment(formdata?.dischargeDate).toISOString();
+    const formatAdmissionDate = moment(formdata?.admissionDate).toISOString();
+
+    const StructuredData = {
+      userId,
+      hospitalName: formdata?.name,
+      reasonOfHospitalization: formdata?.reason,
+      dischargeDate: formatDischargeDate,
+      admissionDate: formatAdmissionDate,
+      nameOfAttendingPhysician: formdata?.doctorName,
+    };
+
     if (data) {
-      setSaved(true);
-      setTimeout(() => {
-        setSaved(false);
-      }, 2000);
+      try {
+        console.log('edit surgery');
+        await editHospitalizationData({
+          data: StructuredData,
+          token,
+          id: data.id,
+          userId,
+        });
+        setSaved(true);
+        setTimeout(() => {
+          setSaved(false);
+        }, 2000);
+        setTimeout(() => {
+          navigation.goBack();
+        }, 3000);
+      } catch (error) {
+        console.error(error);
+      }
     } else {
-      navigation.goBack();
+      try {
+        await AddHospitalizationData({data: StructuredData, token});
+        navigation.goBack();
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
@@ -64,6 +103,20 @@ const AddAndEditHospitalization = ({navigation, route}: any) => {
     if (defaultValues.name) setDisabled(false);
     else setDisabled(true);
   };
+
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <View
@@ -108,13 +161,17 @@ const AddAndEditHospitalization = ({navigation, route}: any) => {
               label="Admission date"
               name="admissionDate"
               value={defaultValues.admissionDate}
-              onchange={handleChange}
+              onchange={(name, value) =>
+                setDefaultValues({...defaultValues, [name]: value})
+              }
             />
             <DatePickerField
               label="Discharge date"
               name="dischargeDate"
               value={defaultValues.dischargeDate}
-              onchange={handleChange}
+              onchange={(name, value) =>
+                setDefaultValues({...defaultValues, [name]: value})
+              }
             />
             <CustomInputField
               label="Name of the attending physician"

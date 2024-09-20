@@ -1,5 +1,5 @@
 import DatePicker from 'react-native-date-picker';
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {
   Image,
   Pressable,
@@ -20,12 +20,27 @@ import 'dayjs/locale/en';
 type inputProps = {
   label: string;
   name: string;
+  value: Date;
   onchange: (name: string, e: string) => void;
 };
 
-export const DatePickerField: FC<inputProps> = ({label, name, onchange}) => {
+export const DatePickerField: FC<inputProps> = ({
+  label,
+  name,
+  onchange,
+  value,
+}) => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState();
+
+  // Update selectedDate when the value prop changes
+  useEffect(() => {
+    console.log('value ', value);
+    if (value) {
+      setSelectedDate(value);
+      console.log('selectedDate ', selectedDate);
+    }
+  }, [value]);
 
   return (
     <View style={styles.inputBox}>
@@ -35,7 +50,10 @@ export const DatePickerField: FC<inputProps> = ({label, name, onchange}) => {
         style={{position: 'relative'}}>
         <TextInput
           style={[styles.input, {color: Colors.Blue}]}
-          value={selectedDate && moment(selectedDate).format('DD-MM-YYYY')}
+          value={
+            (selectedDate && moment(selectedDate).format('DD-MM-YYYY')) ||
+            (value && moment(value).format('DD-MM-YYYY'))
+          }
           // value={selectedDate.toDateString()} // Updated value to selectedDate
           placeholder={'Select a date'}
           placeholderTextColor={Colors.SteelBlue}
@@ -133,7 +151,11 @@ export const DatePickerField: FC<inputProps> = ({label, name, onchange}) => {
             <Text
               style={styles.dialogBtn}
               onPress={() => {
-                onchange(name, selectedDate.toDateString());
+                console.log('selectedDate ', selectedDate);
+                onchange(
+                  name,
+                  selectedDate ? new Date(selectedDate).toDateString() : '',
+                );
                 setShowDatePicker(false);
               }}>
               Ok

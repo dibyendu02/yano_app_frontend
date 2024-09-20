@@ -1,17 +1,56 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import CommonHomeScreen from '../components/CommonHomeScreen';
+import {retrieveData} from '../../../utils/Storage';
+import {getHospitalizationData} from '../../../api/GET/medicalHistoryData';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 
 const HospitalizationHomeScreen = ({navigation}: any) => {
-  const data = [
-    {
-      id: 1,
-      name: 'St. John Medical College',
-      reason: 'Chest pain',
-      admissionDate: '10-12-2005',
-      dischargeDate: '12-12-2005',
-      doctorName: 'Dr. House',
-    },
-  ];
+  const route = useRoute();
+  const requiredUserId = route?.params?.requiredUserId;
+  const [userId, setUserId] = useState('');
+  const [data, setData] = React.useState([]);
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    setUserId(retrievedUserId);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      let res;
+      if (requiredUserId)
+        res = await getHospitalizationData({userId: requiredUserId});
+      else res = await getHospitalizationData({userId});
+      // const res = await getHospitalizationData({userId});
+      console.log(res);
+
+      if (res?.hospitalizations.length === 0) {
+        setData([]);
+        return;
+      }
+
+      const transformedData = res?.hospitalizations?.map((item, index) => ({
+        id: item._id,
+        name: item.hospitalName,
+        reason: item.reasonOfHospitalization,
+        admissionDate: item.admissionDate,
+        dischargeDate: item?.dischargeDate,
+        doctorName: item?.nameOfAttendingPhysician,
+      }));
+
+      setData(transformedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [userId]),
+  );
 
   return (
     <>

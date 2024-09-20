@@ -1,5 +1,5 @@
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Colors} from '../../../../constants/Colors';
 import {RadioButton} from 'react-native-paper';
 
@@ -20,8 +20,8 @@ const Gender: React.FC<GenderProps> = ({selectedRole, setSelectedRole}) => {
     },
   ];
 
-  const handlePress = (role: string) => {
-    setSelectedRole(role);
+  const handlePress = (label: string) => {
+    setSelectedRole(label);
   };
 
   return (
@@ -36,24 +36,27 @@ const Gender: React.FC<GenderProps> = ({selectedRole, setSelectedRole}) => {
               styles.selectionCardContainer,
               {
                 borderColor:
-                  item.id === selectedRole
+                  item.label === selectedRole
                     ? Colors.LightGreen
                     : Colors.LightGray,
                 borderWidth: 2,
               },
             ]}
-            onPress={() => handlePress(item.id)}>
+            onPress={() => handlePress(item.label)}>
             <RadioButton
-              value={item.id}
-              status={selectedRole === item.id ? 'checked' : 'unchecked'}
-              onPress={() => handlePress(item.id)}
+              value={item.label}
+              status={selectedRole === item.label ? 'checked' : 'unchecked'}
+              onPress={() => handlePress(item.label)}
               color={Colors.LightGreen}
               uncheckedColor={Colors.Grey}
             />
             <Text
               style={[
                 styles.selectionCardContainerText,
-                {color: item.id === selectedRole ? Colors.Blue : Colors.Grey},
+                {
+                  color:
+                    item.label === selectedRole ? Colors.Blue : Colors.Grey,
+                },
               ]}>
               {item.label}
             </Text>

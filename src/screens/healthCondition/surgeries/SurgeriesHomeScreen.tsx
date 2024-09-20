@@ -1,14 +1,21 @@
 import React, {useEffect, useCallback} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import CommonHomeScreen from '../components/CommonHomeScreen';
 import {getSurgeriesData} from '../../../api/GET/medicalHistoryData';
+import {retrieveData} from '../../../utils/Storage';
 
 const SurgeriesHomeScreen = ({navigation}: any) => {
+  const route = useRoute();
+  const requiredUserId = route?.params?.requiredUserId;
   const [data, setData] = React.useState([]);
+  const [userId, setUserId] = React.useState([]);
 
   const fetchData = async () => {
     try {
-      const res = await getSurgeriesData();
+      let res;
+      if (requiredUserId)
+        res = await getSurgeriesData({userId: requiredUserId});
+      else res = await getSurgeriesData({userId});
       if (res.surgeries.length === 0) {
         setData([]);
         return;
@@ -28,6 +35,17 @@ const SurgeriesHomeScreen = ({navigation}: any) => {
       console.error(error);
     }
   };
+
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    // const retrievedToken = await retrieveData('token');
+    setUserId(retrievedUserId);
+    // setToken(retrievedToken);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   useFocusEffect(
     useCallback(() => {

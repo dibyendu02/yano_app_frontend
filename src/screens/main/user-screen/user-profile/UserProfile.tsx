@@ -36,6 +36,7 @@ import UserContext from '../../../../contexts/UserContext';
 import {useNavigation} from '@react-navigation/native';
 import {staticIcons} from '../../../../assets/image';
 import {StatusBar} from 'react-native';
+import QRCodeSVG from 'react-native-qrcode-svg';
 
 const menuData = [
   {
@@ -126,7 +127,7 @@ export default function () {
       label: userData?.gender,
       icon: (
         <Foundation
-          name={userData?.gender == 'Male' ? `male-symbol` : `female-symbol`}
+          name={userData?.gender === 'Male' ? `female-symbol` : `male-symbol`}
           size={20}
           color={'#76BC21'}
         />
@@ -163,6 +164,7 @@ export default function () {
     },
   ];
   const navigation = useNavigation();
+
   useEffect(() => {
     console.log('it runs');
     if (Platform.OS === 'android') {
@@ -194,7 +196,11 @@ export default function () {
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
         <Card contentContainerStyle={{marginTop: 12, marginBottom: 8}}>
           <Image
-            source={{uri: userData?.userImg?.secure_url} || DummyImage.user}
+            source={
+              userData?.userImg
+                ? {uri: userData?.userImg?.secure_url}
+                : DummyImage.user
+            }
             style={{
               height: 80,
               width: 80,
@@ -305,7 +311,7 @@ export default function () {
                   <Text
                     style={{
                       color: Colors.Blue,
-                      fontSize: 18,
+                      fontSize: 16,
                       // fontWeight: '800',
                       fontWeight: '600',
                       marginLeft: 14,
@@ -315,7 +321,7 @@ export default function () {
                 </View>
                 <Icons.MaterialIcons
                   name="navigate-next"
-                  size={30}
+                  size={25}
                   color={Colors.Blue}
                 />
               </TouchableOpacity>
@@ -340,7 +346,24 @@ export default function () {
               Share QR code
             </Text>
           </View>
-          <Image source={DummyImage.QR} style={{width: 150, height: 150}} />
+          {/* <Image source={DummyImage.QR} style={{width: 150, height: 150}} /> */}
+          {/* Dynamically generated QR code based on user's email */}
+          <View
+            style={{
+              backgroundColor: Colors.GhostWhite,
+              padding: 16,
+              borderRadius: 8,
+              marginTop: 10,
+            }}>
+            {userData?.email && (
+              <QRCodeSVG
+                value={userData.email} // Pass the user's email here
+                size={120}
+                color={Colors.Black}
+              />
+            )}
+          </View>
+
           <Text
             style={{
               marginVertical: 20,

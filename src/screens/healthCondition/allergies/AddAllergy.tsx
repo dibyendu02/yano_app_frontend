@@ -1,5 +1,5 @@
 import {SafeAreaView, StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Colors} from '../../../constants/Colors';
 import Header from '../../../components/header/Header';
 import FilledButton from '../../../components/buttons/FilledButton';
@@ -13,41 +13,93 @@ import {Image} from 'react-native';
 import {CloseIcon} from '../../../assets/icon/IconNames';
 import {Text} from 'react-native';
 import {staticIcons} from '../../../assets/image';
+import {AddAllergyData} from '../../../api/POST/medicalHistory';
+import {retrieveData} from '../../../utils/Storage';
+import {editAllergyData} from '../../../api/PUT/medicalHistory';
 
 const AddAndEditAllergy = ({navigation, route}: any) => {
   let data = null;
   if (route?.params) {
     data = route.params.data;
   }
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
   const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const [requiredUserId, setRequiredUserId] = useState(
+    data?.requiredUserId || route?.params?.requiredUserId || '',
+  );
   const [formData, setFormData] = useState({
-    name: data?.name || '',
-    date: data?.date || '',
-    details: data?.details || '',
-    moreDetails: data?.moreDetails || '',
-    treatedBy: data?.treatedBy || '',
+    nameOfTheAllergy: data?.name || '',
+    triggeredBy: data?.triggeredBy || '',
+    reaction: data?.reaction || '',
+    howOften: data?.howOften || '',
+    dateOfFirstDiagnosis: data?.date || '',
     medicine: data?.medicine || '',
-    additionalNotes: data?.additionalNotes || '',
+    notes: data?.additionalNotes || '',
   });
+  console.log(formData.dateOfFirstDiagnosis);
 
-  const handelChange = (id: string, e: string) => {
+  const handleChange = (id: string, e: string) => {
     setFormData({...formData, [id]: e});
-    if (formData.name) setDisabled(false);
-    else setDisabled(true);
+    // Enable save button only when nameOfTheAllergy field is not empty
+    setDisabled(!formData.nameOfTheAllergy);
   };
 
-  const handelSubmit = () => {
-    console.log(formData);
+  const handleSubmit = async () => {
+    const structuredData = {
+      userId: requiredUserId && userType == 'doctor' ? requiredUserId : userId, // Add the userId to the data structure
+      nameOfTheAllergy: formData.nameOfTheAllergy,
+      triggeredBy: formData.triggeredBy,
+      reaction: formData.reaction,
+      howOftenDoesItOccur: formData.howOften,
+      dateOfFirstDiagnosis: formData.dateOfFirstDiagnosis,
+      medicine: formData.medicine,
+      additionalNotes: formData.notes,
+    };
+
     if (data) {
+      try {
+        await editAllergyData({
+          data: structuredData,
+          id: data.id,
+          userId:
+            requiredUserId && userType == 'doctor' ? requiredUserId : userId,
+          token,
+        });
+      } catch (error) {}
       setSaved(true);
       setTimeout(() => {
         setSaved(false);
       }, 2000);
+      setTimeout(() => {
+        navigation.goBack();
+      }, 4000);
     } else {
-      navigation.goBack();
+      try {
+        const response = await AddAllergyData({data: structuredData, token});
+        console.log('response', response);
+        navigation.goBack();
+      } catch (error) {
+        console.log('error', error);
+      }
     }
   };
+
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <View
@@ -62,7 +114,7 @@ const AddAndEditAllergy = ({navigation, route}: any) => {
           <FilledButton
             type="blue"
             label="Save"
-            onPress={handelSubmit}
+            onPress={handleSubmit}
             disabled={disabled}
             style={{
               width: 70,
@@ -76,51 +128,52 @@ const AddAndEditAllergy = ({navigation, route}: any) => {
         <View>
           <View style={styles.inputBox}>
             <InputField
-              label="Allergy name"
-              name="name"
-              placeholder="Ej. Diabetes tipo II, Hypertension, etc... "
-              value={formData.name}
-              onchange={handelChange}
+              label="Allergy Name"
+              name="nameOfTheAllergy"
+              placeholder="E.g. Peanuts, Gluten, etc."
+              value={formData.nameOfTheAllergy}
+              onchange={handleChange}
             />
             <InputField
-              label="Triggered by"
-              name="details"
-              placeholder="Ej. Diabetes tipo II, Hypertension, etc... "
-              value={formData.details}
-              onchange={handelChange}
+              label="Triggered By"
+              name="triggeredBy"
+              placeholder="E.g. Ingestion, Contact, etc."
+              value={formData.triggeredBy}
+              onchange={handleChange}
             />
             <InputField
               label="Reaction"
-              name="moreDetails"
-              placeholder="Ej. Diabetes tipo II, Hypertension, etc... "
-              value={formData.moreDetails}
-              onchange={handelChange}
+              name="reaction"
+              placeholder="E.g. Hives, Swelling, etc."
+              value={formData.reaction}
+              onchange={handleChange}
             />
             <InputField
-              label="How often does it occur"
-              name="treatedBy"
-              placeholder="Ej. Dr. House"
-              value={formData.treatedBy}
-              onchange={handelChange}
+              label="How Often"
+              name="howOften"
+              placeholder="E.g. Every time, Occasionally, etc."
+              value={formData.howOften}
+              onchange={handleChange}
             />
             <DatePickerField
-              label="Date of first diagnosis"
-              name="date"
-              onchange={handelChange}
+              label="Date of First Diagnosis"
+              name="dateOfFirstDiagnosis"
+              value={formData.dateOfFirstDiagnosis}
+              onchange={handleChange}
             />
             <InputField
               label="Medicine"
               name="medicine"
-              placeholder="Ej. Losartán Potásico,  metformina, etc."
+              placeholder="E.g. Epinephrine, Antihistamines, etc."
               value={formData.medicine}
-              onchange={handelChange}
+              onchange={handleChange}
             />
             <TextArea
-              label="Additional notes"
-              name="additionalNotes"
+              label="Additional Notes"
+              name="notes"
               placeholder="Additional notes"
-              value={formData.additionalNotes}
-              onchange={handelChange}
+              value={formData.notes}
+              onchange={handleChange}
             />
           </View>
         </View>

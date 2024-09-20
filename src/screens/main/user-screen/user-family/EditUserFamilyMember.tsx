@@ -1,16 +1,17 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import CommonLayout from '../../../../components/CommonLayout';
 import {DummyImage} from '../../../../assets/dummy/images';
-import CustomSelect from '../../../../components/formComp/SelectFiled';
+import CustomSelectLocal from './customSheetLocal';
 import {useForm} from 'react-hook-form';
 import {Colors} from '../../../../constants/Colors';
 import CommonHeader from '../../../healthCondition/components/CommonHeader';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import {navigate} from '../../../../navigation/RootNavigation';
-import MeasurementChangeCard from '../../my-profile/UiUpdateComponents/MeasurementChangeCard';
 import MeasurementChangeCardLocal from './MeasurementCardLocal';
-import CustomSelectLocal from './customSheetLocal';
+import {retrieveData} from '../../../../utils/Storage';
+import {linkFamilyMember} from '../../../../api/POST/familyLink';
+import {useNavigation} from '@react-navigation/native';
 
 const options = {
   unit1: 'Mother',
@@ -23,11 +24,18 @@ const options = {
   unit8: 'Other',
 };
 
-const EditUserFamilyMember = () => {
-  const [isClicked, setIsClicked] = React.useState(false);
+const EditUserFamilyMember = ({route}) => {
+  const [isClicked, setIsClicked] = useState(false);
+  const [relation, setRelation] = useState('');
+  const [userId, setUserId] = useState('');
+  const [token, setToken] = useState('');
+
+  const navigation = useNavigation();
+
   const {control} = useForm();
 
-  const [relation, setRelation] = React.useState('');
+  // Fetch userData from route.params
+  const {userData} = route.params || {};
 
   const handleClicked = () => {
     setIsClicked(!isClicked);
@@ -36,6 +44,42 @@ const EditUserFamilyMember = () => {
   const setRelationFn = (value: string) => {
     setRelation(value);
   };
+
+  const handleLinkFamilyMember = async () => {
+    // navigate('FamilyMemberSaved')
+    try {
+      const structuredData = {
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        relation,
+        familyMemberUserId: userData._id,
+        userImg: userData?.userImg,
+      };
+
+      const res = await linkFamilyMember({data: structuredData, userId, token});
+      console.log(res);
+      navigation.replace('FamilyMemberSaved');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedToken = await retrieveData('token');
+    // const retrievedUserType = await retrieveData('userType');
+
+    setUserId(retrievedUserId);
+    setToken(retrievedToken);
+    // setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  console.log(relation != '' ? true : false);
+
   return (
     <CommonLayout>
       <CommonHeader
@@ -44,13 +88,13 @@ const EditUserFamilyMember = () => {
           <FilledButton
             type="blue"
             label="Save"
-            onPress={() => navigate('FamilyMemberSaved')}
-            // disabled={!disabled}
+            onPress={handleLinkFamilyMember}
             style={{
               width: 70,
               paddingVertical: 10,
               borderRadius: 10,
             }}
+            disabled={relation === '' ? true : false}
           />
         }
       />
@@ -65,7 +109,11 @@ const EditUserFamilyMember = () => {
             marginBottom: 20,
           }}>
           <Image
-            source={DummyImage.user}
+            source={
+              userData?.userImg
+                ? {uri: userData?.userImg?.secure_url}
+                : DummyImage.user
+            }
             style={{
               width: 80,
               height: 80,
@@ -80,7 +128,7 @@ const EditUserFamilyMember = () => {
               fontWeight: '600',
               color: Colors.Blue,
             }}>
-            María Clemente
+            {userData?.firstName} {userData?.lastName}
           </Text>
           <Text
             style={{
@@ -88,7 +136,7 @@ const EditUserFamilyMember = () => {
               fontWeight: '500',
               color: Colors.SteelBlue,
             }}>
-            maria.clemente@gmail.com
+            {userData?.email}
           </Text>
         </View>
         <View>

@@ -174,7 +174,9 @@ const MyProfile = ({navigation}: any) => {
             }}>
             <Image
               source={
-                {uri: userData?.userImg?.secure_url} || DummyImage.DoctorImg
+                userData?.userImg
+                  ? {uri: userData?.userImg?.secure_url}
+                  : DummyImage.DoctorImg
               }
               height={80}
               width={80}

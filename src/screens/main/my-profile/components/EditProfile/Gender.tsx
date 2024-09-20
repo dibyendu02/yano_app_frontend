@@ -1,14 +1,14 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import React from 'react';
-import { Colors } from '../../../../../constants/Colors';
-import { RadioButton } from 'react-native-paper';
+import {Colors} from '../../../../../constants/Colors';
+import {RadioButton} from 'react-native-paper';
 
 interface GenderProps {
   selectedRole: string;
   setSelectedRole: (role: string) => void;
 }
 
-const Gender: React.FC<GenderProps> = ({ selectedRole, setSelectedRole }) => {
+const Gender: React.FC<GenderProps> = ({selectedRole, setSelectedRole}) => {
   const Config = [
     {
       id: '1',
@@ -22,6 +22,7 @@ const Gender: React.FC<GenderProps> = ({ selectedRole, setSelectedRole }) => {
 
   const handlePress = (role: string) => {
     setSelectedRole(role);
+    console.log(role);
   };
 
   return (
@@ -42,18 +43,23 @@ const Gender: React.FC<GenderProps> = ({ selectedRole, setSelectedRole }) => {
                 borderWidth: 2,
               },
             ]}
-            onPress={() => handlePress(item.id)}>
+            onPress={() => handlePress(item.label)}>
             <RadioButton
-              value={item.id}
-              status={selectedRole === item.id ? 'checked' : 'unchecked'}
-              onPress={() => handlePress(item.id)}
+              value={item.label}
+              status={selectedRole === item.label ? 'checked' : 'unchecked'}
+              onPress={() => {
+                handlePress(item.label);
+              }}
               color={Colors.LightGreen}
               uncheckedColor={Colors.Grey}
             />
             <Text
               style={[
                 styles.selectionCardContainerText,
-                { color: item.id === selectedRole ? Colors.Blue : Colors.Grey },
+                {
+                  color:
+                    item.label === selectedRole ? Colors.Blue : Colors.Grey,
+                },
               ]}>
               {item.label}
             </Text>
@@ -69,12 +75,13 @@ export default Gender;
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 0,
-    paddingVertical: 16,
+    // paddingVertical: 16,
+    paddingBottom: 16,
   },
   headerText: {
     color: Colors.Blue,
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 16,
     marginBottom: 5,
   },
   buttonContainer: {

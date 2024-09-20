@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
-  SafeAreaView,
   StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
@@ -12,53 +11,49 @@ import {
   Alert,
   Image,
 } from 'react-native';
+import {FormProvider, useForm, Controller} from 'react-hook-form';
 import Header from '../../../../../components/header/Header';
-import { navigate } from '../../../../../navigation/RootNavigation';
-import { Colors } from '../../../../../constants/Colors';
-import { AuthScreen } from '../../../../../navigation/auth/AuthScreens';
-import { FormProvider, useForm, Controller, set } from 'react-hook-form';
+import {Colors} from '../../../../../constants/Colors';
 import FormInput from '../../../../../components/hook-form/FormInput';
-import { FormInputType } from '../../../../../components/hook-form/types';
+import {FormInputType} from '../../../../../components/hook-form/types';
 import FormDateInput from '../../../../../components/hook-form/FormDateInput';
-import FormSelectionInput from '../../../../../components/hook-form/FormSelectionInput';
 import FormPhoneNumberInput from '../../../../../components/hook-form/FormPhoneNumberInput';
 import FormImageInput from '../../../../../components/hook-form/FormImageInput';
-import { AuthScreensProps } from '../../../../../navigation/auth/types';
-import { UserType } from '../../../../../constants/enums';
-import moment from 'moment';
-import {
-  registerDoctor,
-  registerPatient,
-} from '../../../../../services/Endpoints';
+import FormSelectionInput from '../../../../../components/hook-form/FormSelectionInput'; // Import FormSelectionInput for specialty
 import Gender from './Gender';
 import UserContext from '../../../../../contexts/UserContext';
 import Modal from 'react-native-modal';
-import { CloseIcon } from '../../../../../assets/icon/IconNames';
-import { staticIcons } from '../../../../../assets/image';
+import {staticIcons} from '../../../../../assets/image';
+import {CloseIcon} from '../../../../../assets/icon/IconNames';
+import {updateDoctor} from '../../../../../api/PUT/auth';
+import {useNavigation} from '@react-navigation/native';
+import {retrieveData} from '../../../../../utils/Storage';
+import moment from 'moment';
 
 const DoctorSpecialties = [
-  { id: 'Cardiologist', label: 'Cardiologist', enabled: true },
-  { id: 'Dermatologist', label: 'Dermatologist', enabled: true },
-  { id: 'Neurologist', label: 'Neurologist', enabled: true },
-  { id: 'Pediatrician', label: 'Pediatrician', enabled: true },
-  { id: 'GeneralSurgeon', label: 'General surgeon', enabled: true },
-  { id: 'OrthopedicSurgeon', label: 'Orthopedic surgeon', enabled: true },
-  { id: 'Gynecologist', label: 'Gynecologist', enabled: true },
-  { id: 'Ophthalmologist', label: 'Ophthalmologist', enabled: true },
-  { id: 'Psychiatrist', label: 'Psychiatrist', enabled: true },
-  { id: 'Radiologist', label: 'Radiologist', enabled: true },
-  { id: 'Urologist', label: 'Urologist', enabled: true },
-  { id: 'Endocrinologist', label: 'Endocrinologist', enabled: true },
+  {id: 'Cardiologist', label: 'Cardiologist', enabled: true},
+  {id: 'Dermatologist', label: 'Dermatologist', enabled: true},
+  {id: 'Neurologist', label: 'Neurologist', enabled: true},
+  {id: 'Pediatrician', label: 'Pediatrician', enabled: true},
+  {id: 'General Surgeon', label: 'General Surgeon', enabled: true},
+  {id: 'Orthopedic Surgeon', label: 'Orthopedic Surgeon', enabled: true},
+  {id: 'Gynecologist', label: 'Gynecologist', enabled: true},
+  {id: 'Ophthalmologist', label: 'Ophthalmologist', enabled: true},
+  {id: 'Psychiatrist', label: 'Psychiatrist', enabled: true},
+  {id: 'Radiologist', label: 'Radiologist', enabled: true},
+  {id: 'Urologist', label: 'Urologist', enabled: true},
+  {id: 'Endocrinologist', label: 'Endocrinologist', enabled: true},
 ];
 
-const EditDoctorProfile: React.FC<AuthScreensProps> = ({ route }) => {
-  const [isDisabled, setIsDisabled] = React.useState(true);
-  const { userData } = useContext(UserContext);
-  //@ts-ignore
-  const userType = route?.params?.userType;
+const EditDoctorProfile: React.FC = ({route}) => {
+  const [isDisabled, setIsDisabled] = useState(true);
   const [saved, setSaved] = useState(false);
+  const {userData, login} = useContext(UserContext);
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
+  const navigation = useNavigation();
 
-  // Prefilled dummy data
+  // Initial data including specialty
   const initialData = {
     userImg: userData?.userImg,
     firstName: userData?.firstName,
@@ -67,17 +62,16 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({ route }) => {
     phoneNumber: userData?.phoneNumber,
     dateOfBirth: userData?.dateOfBirth,
     gender: userData?.gender,
-    specialty: 'General medicine',
+    specialty: userData?.speciality, // Set the default specialty from userData
   };
 
-  const { ...methods } = useForm({
+  const methods = useForm({
     mode: 'onChange',
     defaultValues: initialData,
   });
 
   useEffect(() => {
     const subscription = methods.watch(value => {
-      // Check if the form data has changed from the initial values
       const isFormChanged =
         JSON.stringify(value) !== JSON.stringify(initialData);
       setIsDisabled(!isFormChanged);
@@ -97,79 +91,87 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({ route }) => {
     }
   };
 
-  const onSubmit = async (data: any) => {
-    setSaved(true);
-    let requestData = new FormData();
-    if (data?.file) {
-      requestData.append('image', {
-        uri:
-          Platform.OS === 'ios'
-            ? `file:///${data?.file?.path}`
-            : data?.file.path,
-        type: data?.file?.mime,
-        name: `${moment()}.jpeg`,
-      });
-    }
-
-    const payload = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      phoneNumber: data.phoneNumber,
-      gender: data.gender,
-      dateOfBirth: data.dateOfBirth,
-      password: data.password,
-      specialty: data.specialty,
-    };
-
-    for (let key in payload) {
-      requestData.append(key, payload[key]);
-    }
-
+  const onSubmit = async data => {
     try {
-      if (userType === UserType.Patient) {
-        await registerPatient(requestData);
-      } else {
-        await registerDoctor(requestData);
+      let requestData = new FormData();
+
+      // Append image if updated
+      if (data?.file) {
+        requestData.append('file', {
+          uri:
+            Platform.OS === 'ios'
+              ? `file:///${data?.file?.path}`
+              : data?.file.path,
+          type: data?.file?.mime,
+          name: `${moment().format('YYYYMMDD_HHmmss')}.jpeg`,
+        });
+      }
+      // Format the date to ISO string for MongoDB
+      const formattedDOB = moment(data.dateOfBirth).toISOString();
+
+      const payload = {
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        gender: data.gender,
+        dateOfBirth: formattedDOB, // Ensure the correct date format is passed
+        speciality: data.specialty,
+      };
+
+      for (let key in payload) {
+        requestData.append(key, payload[key]);
       }
 
+      console.log('Request data:', requestData);
 
+      const res = await updateDoctor({
+        data: requestData,
+        token,
+        userId,
+        type: 'media',
+      });
 
-      showToast('The changes have been saved.');
-      navigate(AuthScreen.AccountVerification);
-    } catch (e) {
-      console.log('Error!', e?.response?.data);
-      // showToast('An error occurred while saving.');
-    } finally {
-      setTimeout(() => {
-        setSaved(false);
-      }, 3000);
+      login(res?.userData);
+      setSaved(true);
+
+      setTimeout(() => setSaved(false), 2000);
+      setTimeout(() => navigation.goBack(), 3000);
+    } catch (error) {
+      console.error('Error updating doctor:', error);
     }
   };
 
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
+        style={{flex: 1}}>
+        <View style={{flex: 1}}>
           <Header
-            title="Edit profile"
+            title="Edit Profile"
             headerRightComponent={
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <TouchableOpacity
-                  disabled={isDisabled}
-                  onPress={isDisabled ? null : methods.handleSubmit(onSubmit)}>
-                  <Text
-                    style={
-                      isDisabled
-                        ? styles.loginButtonDisabled
-                        : styles.loginButton
-                    }>
-                    Save
-                  </Text>
-                </TouchableOpacity>
-              </View>
+              <TouchableOpacity
+                disabled={isDisabled}
+                onPress={methods.handleSubmit(onSubmit)}>
+                <Text
+                  style={
+                    isDisabled ? styles.loginButtonDisabled : styles.loginButton
+                  }>
+                  Save
+                </Text>
+              </TouchableOpacity>
             }
           />
           <View style={styles.body}>
@@ -181,7 +183,7 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({ route }) => {
                 />
                 <FormInput
                   name="firstName"
-                  label="Name"
+                  label="First Name"
                   rules={{
                     required: {
                       value: true,
@@ -191,7 +193,7 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({ route }) => {
                 />
                 <FormInput
                   name="lastName"
-                  label="Last name"
+                  label="Last Name"
                   rules={{
                     required: {
                       value: true,
@@ -206,36 +208,29 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({ route }) => {
                   autoCapitalize="none"
                   keyboardType="email-address"
                   rules={{
-                    required: {
-                      value: true,
-                      message: 'Please enter your email',
-                    },
+                    required: {value: true, message: 'Please enter your email'},
                   }}
                 />
                 <FormPhoneNumberInput
                   name="phoneNumber"
-                  label="Phone number"
+                  label="Phone Number"
                   defaultValue={initialData.phoneNumber}
                   rules={{
                     required: {
                       value: true,
                       message: 'Please enter your phone number',
                     },
-                    pattern: {
-                      value: /^\+\d{10,14}$/,
-                      message: 'Enter valid mobile number!',
-                    },
                   }}
                 />
                 <FormDateInput
                   name="dateOfBirth"
-                  label="Date of birth"
+                  label="Date of Birth"
                   placeholder="Select a date"
                   placeholderTextColor={Colors.Grey}
                   rules={{
                     required: {
                       value: true,
-                      message: 'Please select your DOB',
+                      message: 'Please select your date of birth',
                     },
                   }}
                 />
@@ -243,31 +238,19 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({ route }) => {
                   name="gender"
                   control={methods.control}
                   defaultValue="Male"
-                  render={({ field: { onChange, value } }) => (
+                  render={({field: {onChange, value}}) => (
                     <Gender selectedRole={value} setSelectedRole={onChange} />
                   )}
                 />
-                {/* <FormSelectionInput
+                {/* Specialty Selection */}
+                <FormSelectionInput
                   name="specialty"
                   placeholder="Select your specialty"
                   label="Specialty"
                   options={DoctorSpecialties}
                   optionsListLabel="Select your specialty"
                   optionsListHeight={400}
-                  rules={{
-                    required: {
-                      value: true,
-                      message: 'Please select your specialty',
-                    },
-                  }}
-                /> */}
-                <FormSelectionInput
-                  name="speciality"
-                  placeholder="Select your specialty"
-                  label="Specialty"
-                  options={DoctorSpecialties}
-                  optionsListLabel="Select your specialty"
-                  optionsListHeight={400}
+                  selectedId={initialData.specialty} // Set the selected specialty
                   rules={{
                     required: {
                       value: true,
@@ -283,51 +266,29 @@ const EditDoctorProfile: React.FC<AuthScreensProps> = ({ route }) => {
       <Modal
         isVisible={saved}
         onBackdropPress={() => setSaved(false)}
-        onSwipeComplete={() => setSaved(false)}
         swipeDirection="down"
         animationIn="slideInUp"
         animationOut="slideOutDown"
         backdropOpacity={0}
         animationInTiming={1000}
         animationOutTiming={3000}
-        style={styles.modal}
-      >
+        style={styles.modal}>
         <View style={styles.modalContent}>
-          <View style={{ flexDirection: 'row', gap: 10 }}>
-            <Image
-              source={staticIcons.checkcircle}
-              style={{
-                height: 20,
-                width: 20,
-                objectFit: 'contain',
-                tintColor: 'white',
-              }}
-            />
-            <Text style={styles.modalText}>The changes have been saved.</Text>
-          </View>
-          <TouchableOpacity onPress={() => setSaved(false)}>
-            <CloseIcon color="white" />
-          </TouchableOpacity>
+          <Image source={staticIcons.checkcircle} style={styles.icon} />
+          <Text style={styles.modalText}>The changes have been saved.</Text>
+          <CloseIcon color="white" />
         </View>
       </Modal>
     </View>
   );
 };
 
-export default EditDoctorProfile;
-
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 18,
-    color: Colors.Blue,
-    marginRight: 8,
-  },
   loginButton: {
     borderWidth: 1,
     borderColor: Colors.Blue,
     backgroundColor: Colors.Blue,
     borderRadius: 8,
-    overflow: 'hidden',
     color: Colors.White,
     fontWeight: 'bold',
     padding: 10,
@@ -338,11 +299,10 @@ const styles = StyleSheet.create({
     borderColor: Colors.Grey,
     backgroundColor: Colors.Grey,
     borderRadius: 8,
-    overflow: 'hidden',
     color: Colors.White,
     fontWeight: 'bold',
     padding: 10,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
   body: {
     flex: 1,
@@ -371,4 +331,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
   },
+  icon: {
+    height: 20,
+    width: 20,
+    tintColor: 'white',
+  },
 });
+
+export default EditDoctorProfile;

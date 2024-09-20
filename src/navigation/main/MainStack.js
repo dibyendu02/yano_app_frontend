@@ -119,6 +119,7 @@ import AuthDeviceConnected from '../../screens/auth/AuthDeviceConnected';
 import AfterQR from '../../screens/main/add-patient/AfterQR';
 import PatientMonitoringProfileLocal from '../../screens/main/add-patient/PatientMonitoringProfileLocal';
 import VideoCallStart from '../../screens/VideoCallStartingScreen';
+import {Platform} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -130,14 +131,17 @@ const PatientTabs = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors.LightGreen,
         tabBarInactiveTintColor: Colors.Grey,
-        tabBarStyle: {height: 70, paddingBottom: 8},
+        tabBarStyle: {
+          height: Platform.OS === 'ios' ? 70 : 55,
+          paddingBottom: 8,
+        },
         tabBarLabelStyle: {
-          // marginTop: 10, // Move the label closer to the icon
-          marginBottom: 10,
+          marginTop: Platform.OS === 'ios' ? 0 : 10, // Move the label closer to the icon
+          marginBottom: Platform.OS === 'ios' ? 10 : 0,
           fontSize: 12, // Adjust the font size as needed
         },
         tabBarIconStyle: {
-          marginBottom: 0, // Move the icon closer to the label
+          marginBottom: Platform.OS === 'ios' ? 0 : -20, // Move the icon closer to the label
         },
       }}>
       <Tab.Screen
@@ -180,14 +184,17 @@ const ProviderTabs = () => {
       screenOptions={{
         tabBarActiveTintColor: Colors.LightGreen,
         tabBarInactiveTintColor: Colors.Grey,
-        tabBarStyle: {height: 70, paddingBottom: 8},
+        tabBarStyle: {
+          height: Platform.OS === 'ios' ? 70 : 55,
+          paddingBottom: 8,
+        },
         tabBarLabelStyle: {
-          // marginTop: 10, // Move the label closer to the icon
-          marginBottom: 10,
+          marginTop: Platform.OS === 'ios' ? 0 : 10, // Move the label closer to the icon
+          marginBottom: Platform.OS === 'ios' ? 10 : 0,
           fontSize: 12, // Adjust the font size as needed
         },
         tabBarIconStyle: {
-          marginBottom: 0, // Move the icon closer to the label
+          marginBottom: Platform.OS === 'ios' ? 0 : -20, // Move the icon closer to the label
         },
       }}>
       <Tab.Screen

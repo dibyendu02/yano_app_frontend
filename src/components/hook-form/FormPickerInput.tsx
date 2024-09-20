@@ -25,10 +25,8 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
 }) => {
   const {control, setValue} = useFormContext();
   const [showOptionsModal, setShowOptionsModal] = useState(false);
-  const [middleItem, setMiddleItem] = useState<number | string>(0);
-  const [middleDecimalItem, setMiddleDecimalItem] = useState<number | string>(
-    0,
-  );
+  const [middleItem, setMiddleItem] = useState<number>(0);
+  const [middleDecimalItem, setMiddleDecimalItem] = useState<number>(0);
 
   const handleViewableItemsChanged = ({viewableItems}) => {
     if (viewableItems.length > 0) {
@@ -40,7 +38,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
   const handleDecimalViewableItemsChanged = ({viewableItems}) => {
     if (viewableItems.length > 0) {
       const middleIndex = Math.floor(viewableItems.length / 2);
-      setMiddleDecimalItem(viewableItems[middleIndex].item);
+      setMiddleDecimalItem(Number(viewableItems[middleIndex].item));
     }
   };
 
@@ -49,7 +47,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
   };
 
   const data = [];
-  const decimalData = [8, 9];
+  const decimalData = [];
   let unit = '';
 
   if (name === 'weight') {
@@ -59,18 +57,12 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
     for (let i = 0; i <= 9; i++) {
       decimalData.push(`${i}`);
     }
-    for (let i = 0; i <= 2; i++) {
-      decimalData.push(`${i}`);
-    }
     unit = 'kg';
   } else if (name === 'height') {
     for (let i = 80; i <= 200; i++) {
       data.push(`${i}`);
     }
     for (let i = 0; i <= 9; i++) {
-      decimalData.push(`${i}`);
-    }
-    for (let i = 0; i <= 2; i++) {
       decimalData.push(`${i}`);
     }
     unit = 'cm';
@@ -96,7 +88,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                 activeOutlineColor="transparent"
                 onBlur={onBlur}
                 onChangeText={onChange}
-                value={value}
+                value={value ? `${value} ${unit}` : ''}
                 outlineStyle={styles.outline}
                 cursorColor={Colors.Black}
                 selectionColor={Colors.Black}
@@ -187,9 +179,6 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                               alignItems: 'center',
                               backgroundColor: Colors.BlueGrey,
                               marginVertical: item - middleItem === 0 ? 1 : 0,
-                              // borderTopWidth: item - middleItem === 0 ? 1 : 0,
-                              // borderBottomWidth:
-                              //   item - middleItem === 0 ? 1 : 0,
                               borderColor: '#D8D7D9',
                             }}
                             key={item}>
@@ -205,7 +194,6 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                                 fontWeight: 'bold',
                                 fontFamily: 'Roboto',
                                 fontSize:
-                                  // item === middleItem
                                   item - middleItem === 0
                                     ? 22
                                     : item - middleItem === 1 ||
@@ -304,7 +292,9 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                       type="blue"
                       style={styles.bottomSheetBtn}
                       onPress={() => {
-                        const selectedValue = `${middleItem}.${middleDecimalItem} ${unit}`;
+                        const selectedValue = parseFloat(
+                          `${middleItem}.${middleDecimalItem}`,
+                        ); // Ensure this is a number
                         setValue(name, selectedValue);
                         setShowOptionsModal(false);
                       }}

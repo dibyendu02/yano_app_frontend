@@ -1,26 +1,51 @@
 'use strict';
 
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, Linking, View} from 'react-native';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
 import Icons from '../../../../assets/icon/Icon';
 import {Colors} from '../../../../constants/Colors';
 import {useNavigation} from '@react-navigation/native';
+import {findPatientByEmail} from '../../../../api/POST/addPatient';
+import {retrieveData} from '../../../../utils/Storage';
 
 const ScanScreen = () => {
   const navigation = useNavigation();
+  const [userId, setUserId] = useState('');
+  const [token, setToken] = useState('');
+
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedToken = await retrieveData('token');
+    // const retrievedUserType = await retrieveData('userType');
+
+    setUserId(retrievedUserId);
+    setToken(retrievedToken);
+    // setUserType(retrievedUserType);
+  };
 
   useEffect(() => {
-    setTimeout(() => {
-      navigation.navigate('EditFamilyMembers');
-    }, 3000);
+    getUserData();
   }, []);
 
-  const onSuccess = e => {
-    Linking.openURL(e.data).catch(err =>
-      console.error('An error occurred', err),
-    );
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     navigation.replace('EditFamilyMembers');
+  //   }, 3000);
+  // }, []);
+
+  const onSuccess = async e => {
+    console.log(e.data);
+    try {
+      const data = await findPatientByEmail({data: {email: e.data}, token});
+      console.log(data);
+      const userData = data?.userData;
+      // Pass the userData to the next screen
+      navigation.replace('EditFamilyMembers', {userData});
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
   };
 
   return (
@@ -61,7 +86,7 @@ const styles = StyleSheet.create({
   },
   backButton: {
     position: 'absolute',
-    top: 20,
+    top: 40,
     left: 20,
     zIndex: 1,
   },

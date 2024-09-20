@@ -1,27 +1,55 @@
-import React from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import CommonHomeScreen from '../components/CommonHomeScreen';
+import {retrieveData} from '../../../utils/Storage';
+import {getVaccinesData} from '../../../api/GET/medicalHistoryData';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 
 const VaccinesHomeScreen = ({navigation}: any) => {
-  const data = [
-    {
-      id: 1,
-      name: 'COVID 19',
-      field1: '04-05-2022',
-      field2: 'Verocell',
-      field3: 'First dose',
-      field4: '#12345',
-      field5: 'I had a little fever the first day.',
-    },
-    {
-      id: 2,
-      name: 'Influenza',
-      field1: '04-05-2022',
-      field2: 'Verocell',
-      field3: 'First dose',
-      field4: '#12345',
-      field5: 'I had a little fever the first day.',
-    },
-  ];
+  const route = useRoute();
+  const requiredUserId = route?.params?.requiredUserId;
+  const [userId, setUserId] = useState('');
+  const [data, setData] = React.useState([]);
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    setUserId(retrievedUserId);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+  const fetchData = async () => {
+    try {
+      let res;
+      if (requiredUserId) res = await getVaccinesData({userId: requiredUserId});
+      else res = await getVaccinesData({userId});
+      console.log(res);
+
+      if (res?.vaccines.length === 0) {
+        setData([]);
+        return;
+      }
+
+      const transformedData = res?.vaccines?.map((item, index) => ({
+        id: item._id,
+        shotDate: item.shotDate,
+        name: item.vaccineName,
+        vaccineFor: item.vaccineFor,
+        vaccineDetails: item.vaccineDetails,
+        lotNumber: item?.lotNumber,
+        additionalNotes: item?.additionalNotes,
+      }));
+
+      setData(transformedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [userId]),
+  );
 
   return (
     <>

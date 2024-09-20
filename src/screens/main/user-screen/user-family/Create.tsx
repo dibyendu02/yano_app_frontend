@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -20,41 +20,53 @@ import FormInput from '../../../../components/hook-form/FormInput';
 import {FormInputType} from '../../../../components/hook-form/types';
 import FormDateInput from '../../../../components/hook-form/FormDateInput';
 import FormSelectionInput from '../../../../components/hook-form/FormSelectionInput';
-import FormPhoneNumberInput from '../../../../components/hook-form/FormPhoneNumberInput';
 import FormImageInput from '../../../../components/hook-form/FormImageInput';
 import {AuthScreensProps} from '../../../../navigation/auth/types';
-import {UserType} from '../../../../constants/enums';
 import moment from 'moment';
-import {registerDoctor, registerPatient} from '../../../../services/Endpoints';
 import Gender from '../../my-profile/components/EditProfile/Gender';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import {useNavigation} from '@react-navigation/native';
+import {postFamilyLinkData} from '../../../../api/POST/familyLink';
+import {retrieveData} from '../../../../utils/Storage';
 
 const DoctorSpecialties = [
-  {id: 'Cardiologist', label: 'Mother', enabled: true},
-  {id: 'Dermatologist', label: 'Father', enabled: true},
-  {id: 'Neurologist', label: 'Husband/Wife', enabled: true},
-  {id: 'Pediatrician', label: 'Sibling', enabled: true},
-  {id: 'GeneralSurgeon', label: 'Grandparent', enabled: true},
-  {id: 'OrthopedicSurgeon', label: 'Hijo', enabled: true},
-  {id: 'Gynecologist', label: 'Other', enabled: true},
+  {id: 'mother', label: 'Mother', enabled: true},
+  {id: 'father', label: 'Father', enabled: true},
+  {id: 'husband/wife', label: 'Husband/Wife', enabled: true},
+  {id: 'sibling', label: 'Sibling', enabled: true},
+  {id: 'grandparent', label: 'Grandparent', enabled: true},
+  {id: 'child', label: 'Child', enabled: true},
+  {id: 'other', label: 'Other', enabled: true},
 ];
 
 const Create: React.FC<AuthScreensProps> = ({route}) => {
   const [isDisabled, setIsDisabled] = React.useState(true);
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
   const navigation = useNavigation();
-  //@ts-ignore
-  const userType = route?.params?.userType;
 
-  // Prefilled dummy data
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   const initialData = {
     firstName: '',
     lastName: '',
     email: '',
-    phoneNumber: '',
     dateOfBirth: '',
     gender: '',
-    specialty: ' ',
+    familyrelationship: '',
   };
 
   const {...methods} = useForm({
@@ -64,7 +76,6 @@ const Create: React.FC<AuthScreensProps> = ({route}) => {
 
   useEffect(() => {
     const subscription = methods.watch(value => {
-      // Check if the form data has changed from the initial values
       const isFormChanged =
         JSON.stringify(value) !== JSON.stringify(initialData);
       setIsDisabled(!isFormChanged);
@@ -72,58 +83,39 @@ const Create: React.FC<AuthScreensProps> = ({route}) => {
     return () => subscription.unsubscribe();
   }, [methods.watch]);
 
-  const showToast = message => {
-    if (Platform.OS === 'android') {
-      ToastAndroid.showWithGravity(
-        message,
-        ToastAndroid.SHORT,
-        ToastAndroid.BOTTOM,
-      );
-    } else {
-      Alert.alert('Notification', message);
-    }
-  };
-
   const onSubmit = async (data: any) => {
     let requestData = new FormData();
+
+    // Appending image file
     if (data?.file) {
-      requestData.append('image', {
-        uri:
-          Platform.OS === 'ios'
-            ? `file:///${data?.file?.path}`
-            : data?.file.path,
+      const uri =
+        Platform.OS === 'ios' ? data?.file?.path : `file://${data?.file?.path}`;
+      requestData.append('file', {
+        uri: uri,
         type: data?.file?.mime,
-        name: `${moment()}.jpeg`,
+        name: `${moment().format('YYYYMMDD_HHmmss')}.jpeg`, // Using a timestamp to make the name unique
       });
     }
 
-    const payload = {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      phoneNumber: data.phoneNumber,
-      gender: data.gender,
-      dateOfBirth: data.dateOfBirth,
-      password: data.password,
-      specialty: data.specialty,
-    };
+    const formattedDateOfBirth = moment(data.dateOfBirth).format('YYYY-MM-DD');
 
-    for (let key in payload) {
-      requestData.append(key, payload[key]);
-    }
+    // Append other form fields
+    requestData.append('firstName', data.firstName);
+    requestData.append('lastName', data.lastName);
+    requestData.append('email', data.email);
+    requestData.append('gender', data.gender);
+    requestData.append('dateOfBirth', formattedDateOfBirth); // Make sure dateOfBirth is a string
+    requestData.append('relation', data.familyrelationship);
+    requestData.append('patientId', userId);
 
     try {
-      if (userType === UserType.Patient) {
-        await registerPatient(requestData);
-      } else {
-        await registerDoctor(requestData);
-      }
-
-      showToast('The changes have been saved.');
-      navigate(AuthScreen.AccountVerification);
+      // Call the API to post family member data
+      const res = await postFamilyLinkData({data: requestData, token});
+      console.log(res);
+      navigation.goBack();
+      // navigate(AuthScreen.AccountVerification);
     } catch (e) {
       console.log('Error!', e?.response?.data?.message);
-      showToast('An error occurred while saving.');
     }
   };
 
@@ -140,11 +132,11 @@ const Create: React.FC<AuthScreensProps> = ({route}) => {
                 <FormImageInput name="file" />
                 <FormInput
                   name="firstName"
-                  label="Name"
+                  label="First Name"
                   rules={{
                     required: {
                       value: true,
-                      message: 'Please enter your first name',
+                      message: 'Please enter the first name',
                     },
                   }}
                 />
@@ -154,7 +146,7 @@ const Create: React.FC<AuthScreensProps> = ({route}) => {
                   rules={{
                     required: {
                       value: true,
-                      message: 'Please enter your last name',
+                      message: 'Please enter the last name',
                     },
                   }}
                 />
@@ -167,25 +159,10 @@ const Create: React.FC<AuthScreensProps> = ({route}) => {
                   rules={{
                     required: {
                       value: true,
-                      message: 'Please enter your email',
+                      message: 'Please enter the email',
                     },
                   }}
                 />
-                {/* <FormPhoneNumberInput
-                                    name="phoneNumber"
-                                    label="Phone number"
-                                    defaultValue={initialData.phoneNumber}
-                                    rules={{
-                                        required: {
-                                            value: true,
-                                            message: 'Please enter your phone number',
-                                        },
-                                        pattern: {
-                                            value: /^\+\d{10,14}$/,
-                                            message: 'Enter valid mobile number!',
-                                        },
-                                    }}
-                                /> */}
                 <FormDateInput
                   name="dateOfBirth"
                   label="Date of birth"
@@ -216,7 +193,7 @@ const Create: React.FC<AuthScreensProps> = ({route}) => {
                   rules={{
                     required: {
                       value: true,
-                      message: 'Please select your specialty',
+                      message: 'Please select the family relationship',
                     },
                   }}
                 />
@@ -228,9 +205,13 @@ const Create: React.FC<AuthScreensProps> = ({route}) => {
       <FilledButton
         label="Create account"
         type="blue"
-        style={{width: '92%', alignSelf: 'center', marginVertical: 10, marginBottom: Platform.OS === 'ios' ? 20 : 0 }}
-        // disabled={!methods.formState.isDirty}
-        onPress={() => navigation.goBack()}
+        style={{
+          width: '92%',
+          alignSelf: 'center',
+          marginVertical: 10,
+          marginBottom: Platform.OS === 'ios' ? 20 : 10,
+        }}
+        onPress={methods.handleSubmit(onSubmit)}
       />
     </View>
   );
@@ -239,31 +220,6 @@ const Create: React.FC<AuthScreensProps> = ({route}) => {
 export default Create;
 
 const styles = StyleSheet.create({
-  text: {
-    fontSize: 18,
-    color: Colors.Blue,
-    marginRight: 8,
-  },
-  loginButton: {
-    borderWidth: 1,
-    borderColor: Colors.Blue,
-    backgroundColor: Colors.Blue,
-    borderRadius: 8,
-    color: Colors.White,
-    fontWeight: 'bold',
-    padding: 10,
-    paddingHorizontal: 15,
-  },
-  loginButtonDisabled: {
-    borderWidth: 1,
-    borderColor: Colors.Grey,
-    backgroundColor: Colors.Grey,
-    borderRadius: 8,
-    color: Colors.White,
-    fontWeight: 'bold',
-    padding: 10,
-    paddingHorizontal: 15,
-  },
   body: {
     flex: 1,
     backgroundColor: Colors.GhostWhite,

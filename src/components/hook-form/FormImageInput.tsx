@@ -63,6 +63,7 @@ const FormImageInput: React.FC<FormImageProps> = ({name, imageUri}) => {
   const handleError = (e: any) => {
     console.log(e);
   };
+  console.log(imagePath);
   return (
     <Controller
       name={name}
@@ -151,7 +152,12 @@ const FormImageInput: React.FC<FormImageProps> = ({name, imageUri}) => {
                 <Text style={{color: Colors.Blue, fontSize: 16}}>Gallery</Text>
               </TouchableOpacity>
             </View>
-            <FilledButton type='lightGrey' label='Cancel' style={{width: '90%', margin: 'auto', marginTop: 12}} onPress={() => setShowOptionsModal(false)}  />
+            <FilledButton
+              type="lightGrey"
+              label="Cancel"
+              style={{width: '90%', margin: 'auto', marginTop: 12}}
+              onPress={() => setShowOptionsModal(false)}
+            />
           </BottomSheet>
         </TouchableOpacity>
       )}

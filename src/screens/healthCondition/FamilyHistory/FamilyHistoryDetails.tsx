@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Colors} from '../../../constants/Colors';
 import Header from '../../../components/header/Header';
 import {DeleteIcon, EditIcon} from '../../../assets/icon/IconNames';
@@ -16,19 +16,29 @@ import {Image} from 'react-native';
 import {staticIcons} from '../../../assets/image';
 import Card from '../../main/my-profile/UiUpdateComponents/Card';
 import {deleteFamilyMemberHistoryFn} from '../../../api/DELETE/medicalHistoryDelete';
+import {retrieveData} from '../../../utils/Storage';
 
 const FamilyHistoryDetails = ({navigation, route}: any) => {
-  const [isClicked, setIsClicked] = useState(false);
   if (!route || !route.params) {
     Alert.alert('Error', 'Data not passed or invalid data passed');
     return navigation.goBack();
   }
   const data = route.params.data;
   const {name, disease} = data;
+  const [isClicked, setIsClicked] = useState(false);
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
+  const [requiredUserId, setRequiredUserId] = useState(
+    data?.requiredUserId || '',
+  );
 
   const deleteFamilyMemberHistory = async () => {
     try {
-      const respose = await deleteFamilyMemberHistoryFn({id: data.id});
+      const respose = await deleteFamilyMemberHistoryFn({
+        userId:
+          requiredUserId && userType == 'doctor' ? requiredUserId : userId,
+        id: data.id,
+      });
       if (respose) {
         setIsClicked(false);
         navigation.navigate('FamilyHistory');
@@ -37,6 +47,20 @@ const FamilyHistoryDetails = ({navigation, route}: any) => {
       console.error(error);
     }
   };
+
+  const getUserData = async () => {
+    // const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    // setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <View
@@ -48,26 +72,31 @@ const FamilyHistoryDetails = ({navigation, route}: any) => {
       <CommonHeader
         title={`${name} - ${disease}`}
         rightComp1={
-          <TouchableOpacity
-            onPress={() =>
-              navigation.replace('AddAndEditFamilyHistory', {data})
-            }>
-            <Image
-              source={staticIcons.EditPencil}
-              style={{height: 22, width: 22}}
-            />
-          </TouchableOpacity>
+          requiredUserId && userType === 'patient' ? null : (
+            <TouchableOpacity
+              onPress={() =>
+                navigation.replace('AddAndEditFamilyHistory', {data})
+              }>
+              <Image
+                source={staticIcons.EditPencil}
+                style={{height: 22, width: 22}}
+              />
+            </TouchableOpacity>
+          )
         }
         rightComp2={
-          <TouchableOpacity onPress={() => setIsClicked(true)}>
-            <Image
-              source={staticIcons.DeleteIcon}
-              style={{height: 22, width: 22}}
-            />
-          </TouchableOpacity>
+          requiredUserId && userType === 'patient' ? null : (
+            <TouchableOpacity onPress={() => setIsClicked(true)}>
+              <Image
+                source={staticIcons.DeleteIcon}
+                style={{height: 22, width: 22}}
+              />
+            </TouchableOpacity>
+          )
         }
         customStyle={{
-          paddingVertical: 12,paddingTop: 55
+          paddingVertical: 12,
+          paddingTop: 55,
         }}
       />
       <ScrollView>

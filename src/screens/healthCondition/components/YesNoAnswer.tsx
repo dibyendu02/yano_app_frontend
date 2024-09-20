@@ -48,18 +48,21 @@ const YesNoAnswer: React.FC<YesNoAnswerProps> = ({
                 borderWidth: 2,
               },
             ]}
-            onPress={() => handlePress(item.id)}>
+            onPress={() => handlePress(item.label)}>
             <RadioButton
               value={item.id}
-              status={selectedRole === item.id ? 'checked' : 'unchecked'}
-              onPress={() => handlePress(item.id)}
+              status={selectedRole === item.label ? 'checked' : 'unchecked'}
+              onPress={() => handlePress(item.label)}
               color={Colors.LightGreen}
               uncheckedColor={Colors.Grey}
             />
             <Text
               style={[
                 styles.selectionCardContainerText,
-                {color: item.id === selectedRole ? Colors.Blue : Colors.Grey},
+                {
+                  color:
+                    item.label === selectedRole ? Colors.Blue : Colors.Grey,
+                },
               ]}>
               {item.label}
             </Text>

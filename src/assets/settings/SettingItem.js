@@ -46,7 +46,7 @@ export const MeasurementSettingItems = [
     img: require('./image/temperature.png'),
     path: '',
     unit1: 'Celsius',
-    unit2: 'Farenheit',
+    unit2: 'Fahrenheit',
   },
   {
     title: 'Weight',

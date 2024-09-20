@@ -26,56 +26,106 @@ import {navigate} from '../../../../navigation/RootNavigation';
 import {StaticImage} from '../../../../assets/images';
 import {staticIcons} from '../../../../assets/image';
 import CardLocal from './CardLocal';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import moment from 'moment';
 import {healthParameterDetailsN, HSDGN} from '../../../../test/HealthStatsData';
-
-let data1 = [
-  {
-    label: userData.gender,
-    icon: (
-      <Foundation name="female-symbol" size={20} color={Colors.LightGreen} />
-    ),
-  },
-  {
-    label: userData.age,
-    icon: (
-      <Image
-        source={StaticImage.CalenderIcon}
-        style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
-      />
-    ),
-  },
-  {
-    label: userData.blood,
-    icon: (
-      <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
-    ),
-  },
-];
-
-let data2 = [
-  {
-    label: userData.height,
-    icon: <MaterialIcons name="height" size={20} color={Colors.LightGreen} />,
-  },
-  {
-    label: userData.weight,
-    icon: (
-      <Foundation name="female-symbol" size={20} color={Colors.LightGreen} />
-    ),
-  },
-];
+import {deletePatientUnderDoctor} from '../../../../api/DELETE/patientUnderDoctor';
+import {retrieveData} from '../../../../utils/Storage';
 
 export default function PatientMonitoringProfile({}) {
   const [isClicked, setIsClicked] = useState(false);
   const navigation = useNavigation();
+  const route = useRoute();
+  const patientData = route?.params?.patientData; // Access patientData from route.params
+  const [userId, setUserId] = useState('');
+  const [token, setToken] = useState('');
+  console.log('Patient Data:', patientData);
 
-  // useEffect(() => {
-  //   console.log('data ');
-  //   console.log(HSDGN[0]);
-  // }, []);
-  // console.log('data ');
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedToken = await retrieveData('token');
+    // const retrievedUserType = await retrieveData('userType');
+
+    setUserId(retrievedUserId);
+    setToken(retrievedToken);
+    // setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const calculateAge = dateString => {
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    // If the birth month hasn't occurred yet this year, subtract one from the age.
+    // Or, if it is the birth month but the day hasn't occurred yet this year, subtract one from the age.
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
+  let data1 = [
+    {
+      label: patientData.gender,
+      icon: (
+        <Foundation name="female-symbol" size={20} color={Colors.LightGreen} />
+      ),
+    },
+    {
+      label: calculateAge(patientData?.dateOfBirth || '0'),
+      icon: (
+        <Image
+          source={StaticImage.CalenderIcon}
+          style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
+        />
+      ),
+      unit: 'years',
+    },
+    {
+      label: patientData.bloodType,
+      icon: (
+        <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
+      ),
+    },
+  ];
+
+  let data2 = [
+    {
+      label: patientData.height,
+      icon: <MaterialIcons name="height" size={20} color={Colors.LightGreen} />,
+      unit: 'cm',
+    },
+    {
+      label: patientData.weight,
+      icon: (
+        <Foundation name="female-symbol" size={20} color={Colors.LightGreen} />
+      ),
+      unit: 'kg',
+    },
+  ];
+
+  const removePatientUnderDoctor = async () => {
+    console.log('it works');
+    try {
+      await deletePatientUnderDoctor({
+        userId,
+        token,
+        patientId: patientData._id,
+      });
+      navigation.navigate('tabs');
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <View style={styles.container}>
       <Header title="Monitored patient" />
@@ -85,19 +135,28 @@ export default function PatientMonitoringProfile({}) {
         // contentContainerStyle={{backgroundColor: 'grey'}}
         >
           <Image
-            source={DummyImage.user}
+            source={
+              patientData?.userImg
+                ? {uri: patientData?.userImg?.secure_url}
+                : DummyImage.user
+            }
             style={{
               height: 80,
               width: 80,
               borderRadius: 40,
             }}
           />
-          <Text style={styles.patientName}>María Clemente</Text>
+          <Text style={styles.patientName}>
+            {patientData.firstName + ' ' + patientData.lastName}
+          </Text>
           <View style={styles.detailRow}>
             {data1.map((e, i, a) => (
               <View style={styles.detailItem} key={e.label}>
                 {e.icon}
                 <Text style={styles.detailText}>{e.label}</Text>
+                <Text style={[styles.detailText, {marginLeft: 0}]}>
+                  {e?.unit}
+                </Text>
                 {i < a.length - 1 && <View style={styles.separator} />}
               </View>
             ))}
@@ -108,6 +167,9 @@ export default function PatientMonitoringProfile({}) {
               <View style={styles.detailItem} key={e.label}>
                 {e.icon}
                 <Text style={styles.detailText}>{e.label}</Text>
+                <Text style={[styles.detailText, {marginLeft: 0}]}>
+                  {e?.unit}
+                </Text>
                 {i < a.length - 1 && <View style={styles.separator} />}
               </View>
             ))}
@@ -255,7 +317,10 @@ export default function PatientMonitoringProfile({}) {
 
         <Card contentContainerStyle={{marginBottom: 50}}>
           <View style={{width: '100%'}}>
-            <TouchableOpacity onPress={() => navigate('MedicalHistory')}>
+            <TouchableOpacity
+              onPress={() =>
+                navigate('MedicalHistory', {fetchedUserId: patientData?._id})
+              }>
               <View style={[styles.container1, {paddingTop: 8}]}>
                 <Image
                   source={require('../../../../assets/image/receipt_long.png')}
@@ -328,7 +393,7 @@ export default function PatientMonitoringProfile({}) {
               'After doing so, you will not be able to access your medical history, nor receive alerts about your health.'
             }
             active={setIsClicked}
-            action={() => navigation.goBack()}
+            action={removePatientUnderDoctor}
           />
         </View>
       )}

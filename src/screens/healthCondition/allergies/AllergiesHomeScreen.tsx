@@ -1,67 +1,69 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import CommonHomeScreen from '../components/CommonHomeScreen';
-import { allergiesData } from '../../../api/GET/medicalHistoryData';
+import {allergiesData} from '../../../api/GET/medicalHistoryData';
+import {retrieveData} from '../../../utils/Storage';
 
-const dummyData = [
-  {
-    id: 1,
-    name: 'Gluten allergy',
-    date: '12-12-2021',
-    details: 'Gluten',
-    moreDetails: 'Rashes',
-    treatedBy: 'Every time I eat bread',
-    medicine: 'Loratadine',
-    additionalNotes: `There aren't any.`,
-  },
-  {
-    id: 2,
-    name: 'Polen allergy',
-    date: '12-12-2021',
-    details: 'Polen',
-    moreDetails: 'Rashes',
-    treatedBy: 'Every time I eat bread',
-    medicine: 'Loratadine',
-    additionalNotes: `There aren't any.`,
-  },
-];
-
-const AllergiesHomeScreen = ({ navigation }: any) => {
+const AllergiesHomeScreen = ({navigation}: any) => {
+  const route = useRoute();
+  const requiredUserId = route?.params?.requiredUserId;
   const [data, setData] = React.useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await allergiesData();
-        console.log(res);
+  const [userId, setUserId] = React.useState([]);
 
-        if (res.length === 0) {
-          setData([]);
-          return;
-        }
+  const fetchData = async () => {
+    try {
+      let res;
+      if (requiredUserId) res = await allergiesData({userId: requiredUserId});
+      else res = await allergiesData({userId});
 
-        const transformedData = res?.allergies.map((item: any, index: any) => ({
-          id: index + 1,
+      console.log(res);
+
+      // Check if the response contains the allergies array
+      if (res && res.allergies && res.allergies.length > 0) {
+        const transformedData = res.allergies.map((item: any, index: any) => ({
+          requiredUserId: requiredUserId,
+          id: item._id,
           name: item.nameOfTheAllergy,
-          date: new Date(item.dateOfFirstDiagnosis).toLocaleDateString('en-US'),
-          details: item.details,
-          moreDetails: item.moreDetails,
-          treatedBy: item.treatedBy,
+          date: item.dateOfFirstDiagnosis,
+          triggeredBy: item.triggeredBy, // Based on your model, this should be triggeredBy
+          reaction: item.reaction,
           medicine: item.medicine,
-          additionalNotes: item.notes || `T`,
+          howOften: item.howOftenDoesItOccur,
+          additionalNotes: item.additionalNotes || `No additional notes`,
         }));
 
         setData(transformedData);
-      } catch (error) {
-        console.error(error);
+      } else {
+        // If no allergies are found, set an empty array
+        setData([]);
       }
-    };
+    } catch (error) {
+      console.error('Error fetching allergies:', error);
+    }
+  };
 
-    fetchData();
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    // const retrievedToken = await retrieveData('token');
+    setUserId(retrievedUserId);
+    // setToken(retrievedToken);
+  };
+
+  useEffect(() => {
+    getUserData();
   }, []);
 
+  // Fetch data every time the screen is in focus
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchData();
+    }, []),
+  );
 
   return (
     <>
       <CommonHomeScreen
+        requiredUserId={requiredUserId}
         navigation={navigation}
         data={data}
         heading="Allergies"
@@ -69,7 +71,6 @@ const AllergiesHomeScreen = ({ navigation }: any) => {
         viewItem_path="AllergyDetails"
         emptyHomeTitle="No allergies added yet"
         emptyHomeMessage="Add your allergies to keep track of them."
-        customStyle={{paddingTop: 55}}
       />
     </>
   );

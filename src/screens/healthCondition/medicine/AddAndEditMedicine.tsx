@@ -46,6 +46,10 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
   const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [isUntilDisabled, setIsUntilDisabled] = useState(false);
+  const [requiredUserId, setRequiredUserId] = useState(
+    data?.requiredUserId || route?.params?.requiredUserId || '',
+  );
+  console.log(requiredUserId);
 
   // Initialize useForm with defaultValues
   const methods = useForm<FormValues>({
@@ -72,7 +76,7 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
 
   const onSubmit = async (formdata: FormValues) => {
     const structuredData = {
-      userId: userId,
+      userId: requiredUserId && userType == 'doctor' ? requiredUserId : userId,
       medicineName: formdata.name,
       formOfMedication: {
         formOfMedicine: formdata.formOfMedicine,
@@ -104,7 +108,8 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
           data: structuredData,
           token,
           id: data.id,
-          userId,
+          userId:
+            requiredUserId && userType == 'doctor' ? requiredUserId : userId,
         });
         setSaved(true);
         setTimeout(() => {
@@ -120,8 +125,7 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
       try {
         const res = await postMedicineData({data: structuredData, token});
         console.log(res);
-
-        navigation.goBack();
+        // navigation.goBack();
       } catch (error) {
         console.error(error);
       }
@@ -278,13 +282,13 @@ const AddAndEditMedicine = ({navigation, route}: any) => {
                 label="It begins at"
                 name="whenItBegins"
                 value={watch('whenItBegins')}
-                onchange={date => handleChange('whenItBegins', date)}
+                onchange={(name, date) => handleChange('whenItBegins', date)}
               />
               <DatePickerField
                 label="Until"
                 name="whenItEnds"
                 value={watch('whenItEnds')}
-                onchange={date => handleChange('whenItEnds', date)}
+                onchange={(name, date) => handleChange('whenItEnds', date)}
                 disabled={isUntilDisabled}
               />
               <CustomCheckbox

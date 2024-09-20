@@ -6,7 +6,7 @@ import {navigate} from '../../../../navigation/RootNavigation';
 const LoadingAfterSave = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigate('UserFamilyMemberDetails');
+      navigation.goBack();
     }, 1000);
   }, [navigation]);
   return (

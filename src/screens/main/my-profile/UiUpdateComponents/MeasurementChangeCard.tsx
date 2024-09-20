@@ -18,6 +18,7 @@ interface MeasurementChangeCardProps {
   active: (value: boolean) => void;
   items?: {unit1: string; unit2: string};
   onUnitChange: any;
+  selectedUnit?: string; // New prop for the selected unit
 }
 
 const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
@@ -26,14 +27,18 @@ const MeasurementChangeCard: React.FC<MeasurementChangeCardProps> = ({
   active,
   items,
   onUnitChange,
+  selectedUnit, // Destructure the new prop
 }) => {
   const [selectedValue, setSelectedValue] = React.useState<string>('');
 
   useEffect(() => {
-    if (items) {
-      setSelectedValue(items.unit1); // Default to unit1, or you could add logic to check for previously selected unit
+    if (items && selectedUnit) {
+      // Set the selected value to the already selected unit passed from props
+      setSelectedValue(selectedUnit);
+    } else if (items) {
+      setSelectedValue(items.unit1); // Default to unit1 if no selected unit is passed
     }
-  }, [items]);
+  }, [items, selectedUnit]);
 
   const handleValueChange = (value: string) => {
     setSelectedValue(value);

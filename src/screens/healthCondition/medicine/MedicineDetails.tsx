@@ -20,20 +20,8 @@ import {deleteMedicineData} from '../../../api/DELETE/medicalHistoryDelete';
 const MedicineDetails = ({navigation, route}: any) => {
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
   const [isClicked, setIsClicked] = useState(false);
-
-  const getUserData = async () => {
-    const retrievedToken = await retrieveData('token');
-    const retrievedUserId = await retrieveData('userId');
-
-    setToken(retrievedToken);
-    setUserId(retrievedUserId);
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
-
   if (!route || !route.params) {
     Alert.alert('Error', 'Data not passed or invalid data passed');
     return navigation.goBack();
@@ -58,9 +46,32 @@ const MedicineDetails = ({navigation, route}: any) => {
     sideEffects,
   } = data;
 
+  const [requiredUserId, setRequiredUserId] = useState(
+    data?.requiredUserId || '',
+  );
+
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   const deleteMedicine = async () => {
     try {
-      await deleteMedicineData({id, userId, token});
+      await deleteMedicineData({
+        id,
+        userId:
+          requiredUserId && userType == 'doctor' ? requiredUserId : userId,
+        token,
+      });
       navigation.goBack();
     } catch (err) {
       console.error(err);
@@ -76,23 +87,27 @@ const MedicineDetails = ({navigation, route}: any) => {
       <CommonHeader
         title={name}
         rightComp1={
-          <TouchableOpacity
-            onPress={() => navigation.replace('AddAndEditMedicine', {data})}>
-            <Image
-              source={staticIcons.EditPencil}
-              style={{height: 22, width: 22}}
-            />
-          </TouchableOpacity>
+          requiredUserId && userType === 'patient' ? null : (
+            <TouchableOpacity
+              onPress={() => navigation.replace('AddAndEditMedicine', {data})}>
+              <Image
+                source={staticIcons.EditPencil}
+                style={{height: 22, width: 22}}
+              />
+            </TouchableOpacity>
+          )
         }
         rightComp2={
-          <TouchableOpacity onPress={() => setIsClicked(true)}>
-            <Image
-              source={staticIcons.DeleteIcon}
-              style={{height: 22, width: 22}}
-            />
-          </TouchableOpacity>
+          requiredUserId && userType === 'patient' ? null : (
+            <TouchableOpacity onPress={() => setIsClicked(true)}>
+              <Image
+                source={staticIcons.DeleteIcon}
+                style={{height: 22, width: 22}}
+              />
+            </TouchableOpacity>
+          )
         }
-        customStyle={{paddingVertical: 12,paddingTop: 55}}
+        customStyle={{paddingVertical: 12, paddingTop: 55}}
       />
       <ScrollView>
         <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
@@ -149,11 +164,15 @@ const MedicineDetails = ({navigation, route}: any) => {
             </View>
             <DetailItems
               name="It begins at"
-              value={new Date(whenItBegins).toDateString()}
+              value={new Date(whenItBegins)
+                .toLocaleDateString('en-GB')
+                .replace(/\//g, '-')}
             />
             <DetailItems
               name="Until"
-              value={new Date(whenItEnds).toDateString()}
+              value={new Date(whenItEnds)
+                .toLocaleDateString('en-GB')
+                .replace(/\//g, '-')}
             />
             <View
               style={{

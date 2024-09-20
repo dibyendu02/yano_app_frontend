@@ -9,13 +9,24 @@ import {staticIcons} from '../../../../assets/image';
 interface PatientListItem {
   name: string;
   customStyle?: object;
+  patientData?: object;
 }
 const PatientListItem: React.FC<PatientListItem> = props => {
+  const {patientData, name, customStyle} = props;
+  console.log(patientData);
   return (
-    <TouchableOpacity onPress={() => navigate('PatientMonitoringProfile')}>
-      <View style={[styles.container, props.customStyle]}>
-        <Image source={DummyImage.user} style={styles.avatar} />
-        <Text style={styles.name}>{props.name}</Text>
+    <TouchableOpacity
+      onPress={() => navigate('PatientMonitoringProfile', {patientData})}>
+      <View style={[styles.container, customStyle]}>
+        <Image
+          source={
+            patientData?.userImg
+              ? {uri: patientData?.userImg?.secure_url}
+              : DummyImage.user
+          }
+          style={styles.avatar}
+        />
+        <Text style={styles.name}>{name}</Text>
         {/* <Icons.MaterialIcons
           name="navigate-next"
           size={30}

@@ -76,7 +76,7 @@ const SurgeriesDetails = ({navigation, route}: any) => {
             />
           </TouchableOpacity>
         }
-        customStyle={{paddingVertical: 12,paddingTop: 55}}
+        customStyle={{paddingVertical: 12, paddingTop: 55}}
       />
       <ScrollView>
         <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
@@ -85,7 +85,9 @@ const SurgeriesDetails = ({navigation, route}: any) => {
             <DetailItems name="Implants / Support Devices" value={devices} />
             <DetailItems
               name="Surgery date"
-              value={new Date(date).toLocaleDateString('en-US')}
+              value={new Date(date)
+                .toLocaleDateString('en-GB')
+                .replace(/\//g, '-')}
             />
             <DetailItems name="Physician in charge" value={doctorName} />
             <DetailItems name="Additional notes" value={additionalNotes} />

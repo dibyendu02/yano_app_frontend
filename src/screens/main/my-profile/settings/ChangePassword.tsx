@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Colors} from '../../../../constants/Colors';
 import Header from '../../../../components/header/Header';
 import CustomPasswordField from '../../../../components/formComp/CustomPasswordField';
@@ -16,6 +16,9 @@ import Modal from 'react-native-modal';
 import {CloseIcon} from '../../../../assets/icon/IconNames';
 import {Image} from 'react-native';
 import {staticIcons} from '../../../../assets/image';
+import {retrieveData} from '../../../../utils/Storage';
+import {changePassword} from '../../../../api/POST/auth';
+import {useNavigation} from '@react-navigation/native';
 
 interface FormValues {
   oldPassword: string;
@@ -24,7 +27,12 @@ interface FormValues {
 }
 
 const ChangePassword = () => {
+  const [token, setToken] = useState('');
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
   const [disabled, setDisabled] = useState(true);
+  const [saved, setSaved] = useState(false);
+  const navigation = useNavigation();
   const {
     control,
     handleSubmit,
@@ -36,15 +44,41 @@ const ChangePassword = () => {
   // Watching the newPassword field to validate repeatPassword
   const newPassword = watch('newPassword');
 
-  const onSubmit = (value: FormValues) => {
+  const onSubmit = async (value: FormValues) => {
     console.log(value);
-    setSaved(true);
-    setTimeout(() => {
-      setSaved(false);
-    }, 3000);
+    const structuredData = {
+      oldPassword: value.oldPassword,
+      newPassword: value.newPassword,
+      id: userId,
+      userType: userType,
+    };
+    try {
+      await changePassword({data: structuredData, token});
+      setSaved(true);
+      setTimeout(() => {
+        setSaved(false);
+      }, 2000);
+      setTimeout(() => {
+        navigation.goBack();
+      }, 3000);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const [saved, setSaved] = useState(false);
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <View

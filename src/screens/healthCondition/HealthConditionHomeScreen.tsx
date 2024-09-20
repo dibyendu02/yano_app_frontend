@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import CommonHomeScreen from './components/CommonHomeScreen';
-import { healthConditionsData } from '../../api/GET/medicalHistoryData';
-
+import {healthConditionsData} from '../../api/GET/medicalHistoryData';
+import {retrieveData} from '../../utils/Storage';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
+import {useCallback} from 'react';
 
 const dummyData = [
   {
@@ -15,42 +17,66 @@ const dummyData = [
   },
 ];
 
-const HealthConditionHomeScreen = ({ navigation }: any) => {
+const HealthConditionHomeScreen = ({navigation}: any) => {
+  const route = useRoute();
+  const requiredUserId = route?.params?.requiredUserId;
   const [data, setData] = React.useState([]);
-  // make sure that data has mandatory filed name is present
+  const [userId, setUserId] = React.useState([]);
+  const [token, setToken] = React.useState([]);
+
+  const fetchData = async () => {
+    try {
+      let res;
+      if (requiredUserId) {
+        console.log(requiredUserId);
+        res = await healthConditionsData({userId: requiredUserId, token});
+      } else res = await healthConditionsData({userId, token});
+
+      if (res.length === 0) {
+        setData([]);
+        return;
+      }
+
+      console.log(res);
+
+      const transformedData = res?.healthConditions?.map((item, index) => ({
+        requiredUserId: requiredUserId,
+        id: item._id, // Unique ID based on the index
+        name: item.nameOfTheHealthCondition, // Use nameOfTheHealthCondition for the name
+        date: item.dateOfDiagnosis, //new Date(item.dateOfDiagnosis).toLocaleDateString('en-US'), // Format the date
+        status: item.status, // Use the status field directly
+        treatedBy: item.treatedBy, // Assuming a fixed value, or map from item.TreatedBy if available
+        medicine: item.medicine, // Use the medicine field directly
+        additionalNotes: item.additionalNotes, // Use additionalNotes field directly
+      }));
+
+      setData(transformedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedToken = await retrieveData('token');
+    setUserId(retrievedUserId);
+    setToken(retrievedToken);
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await healthConditionsData();
-
-        if (res.length === 0) {
-          setData([]);
-          return;
-        }
-
-        const transformedData = res?.healthConditions?.map((item, index) => ({
-          id: index + 1, // Unique ID based on the index
-          name: item.nameOfTheHealthCondition, // Use nameOfTheHealthCondition for the name
-          date: new Date(item.dateOfDiagnosis).toLocaleDateString('en-US'), // Format the date
-          status: item.status, // Use the status field directly
-          treatedBy: 'Dr. John Doe', // Assuming a fixed value, or map from item.TreatedBy if available
-          medicine: item.medicine, // Use the medicine field directly
-          additionalNotes: item.additionalNotes, // Use additionalNotes field directly
-        }));
-
-        setData(transformedData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
+    getUserData();
   }, []);
 
+  // Trigger fetchData whenever the screen is focused
+  useFocusEffect(
+    useCallback(() => {
+      fetchData();
+    }, [userId, token]),
+  );
 
   return (
     <CommonHomeScreen
+      requiredUserId={requiredUserId}
       navigation={navigation}
       data={data}
       heading="Health conditions"

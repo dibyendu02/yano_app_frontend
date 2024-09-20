@@ -1,20 +1,16 @@
-export const BASE_URL = 'https://yano-backend.onrender.com';
 import axios from 'axios';
 import {storeData} from '../../utils/Storage';
+import {BASE_URL} from '../../global/server';
 
 export const signUPPatient = async (data: any) => {
   try {
     console.log(data);
-    const response = await axios.post(
-      `${BASE_URL}/api/userpatient/signup`,
-      data,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Accept: 'application/json',
-        },
+    const response = await axios.post(`${BASE_URL}/userpatient/signup`, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
       },
-    );
+    });
 
     await storeData('token', response.data.token);
     await storeData('userId', response.data.userData._id);
@@ -54,23 +50,19 @@ export const signUPPatient = async (data: any) => {
 export const registerDoctor = async (data: any) => {
   console.log('FormData being sent:', data);
   try {
-    const response = await axios.post(
-      `${BASE_URL}/api/userdoctor/signup`,
-      data,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Accept: 'application/json',
-        },
+    const response = await axios.post(`${BASE_URL}/userdoctor/signup`, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
       },
-    );
+    });
 
     await storeData('token', response.data.token);
     await storeData('userId', response.data.userData._id);
     await storeData('isAuth', true);
     await storeData('userType', response.data.userData.userType);
 
-    return response.data;
+    return response;
   } catch (error) {
     console.log('Error details:', error);
 

@@ -41,10 +41,12 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
   const {control, setValue, getValues} = useFormContext();
   const [showOptionsModal, setShowOptionsModal] = useState(false);
   const handleOptionValueSelection = (value: string) => {
+    console.log(value);
     lastValue = getValues(name);
     setValue(name, value);
     !showActionButtons && setShowOptionsModal(false);
   };
+
   return (
     <View style={styles.inputBox}>
       <Controller

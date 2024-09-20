@@ -2,10 +2,24 @@ import axios from 'axios';
 import {retrieveData} from '../../utils/Storage';
 import {getData} from '../../global/server';
 
-export const allergiesData = async () => {
+export const initializeMedicalHistory = async ({
+  userId,
+  token,
+}: {
+  userId: string;
+  token: string;
+}) => {
+  try {
+    const response = await getData(`/medicalHistory/${userId}`, token);
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+export const allergiesData = async ({userId}: any) => {
   try {
     const token = await retrieveData('token');
-    const userId = await retrieveData('userId');
     const response = await getData(`/allergies/${userId}`, token);
     return response;
   } catch (error) {
@@ -14,11 +28,10 @@ export const allergiesData = async () => {
   }
 };
 
-export const familyHistoryData = async () => {
+export const familyHistoryData = async ({userId}: any) => {
   try {
     const token = await retrieveData('token');
-    console.log(token);
-    const userId = await retrieveData('userId');
+
     const response = await getData(`/familyHistory/${userId}`, token);
     return response;
   } catch (error) {
@@ -43,10 +56,9 @@ export const medicinesData = async ({
   }
 };
 
-export const getSurgeriesData = async () => {
+export const getSurgeriesData = async ({userId}: any) => {
   try {
     const token = await retrieveData('token');
-    const userId = await retrieveData('userId');
     const response = await getData(`/surgeries/${userId}`, token);
     return response;
   } catch (error) {
@@ -55,10 +67,31 @@ export const getSurgeriesData = async () => {
   }
 };
 
-export const healthConditionsData = async () => {
+export const getVaccinesData = async ({userId}: any) => {
   try {
     const token = await retrieveData('token');
-    const userId = await retrieveData('userId');
+    // const userId = await retrieveData('userId');
+    const response = await getData(`/vaccines/${userId}`, token);
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const getHospitalizationData = async ({userId}: any) => {
+  try {
+    const token = await retrieveData('token');
+    const response = await getData(`/hospitalizations/${userId}`, token);
+    return response;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const healthConditionsData = async ({userId, token}: any) => {
+  try {
     const response = await getData(`/healthConditions/${userId}`, token);
     return response;
   } catch (error) {
@@ -67,10 +100,11 @@ export const healthConditionsData = async () => {
   }
 };
 
-export const basicInfoData = async () => {
+export const basicInfoData = async ({userId}: any) => {
   try {
     const token = await retrieveData('token');
-    const userId = await retrieveData('userId');
+    // const userId = await retrieveData('userId');
+    console.log('userId on api ', userId);
     const response = await getData(`/userpatient/${userId}`, token);
     return response;
   } catch (error) {

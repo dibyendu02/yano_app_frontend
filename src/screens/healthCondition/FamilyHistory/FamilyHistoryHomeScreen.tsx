@@ -1,16 +1,23 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import CommonHomeScreen from '../components/CommonHomeScreen';
 import {familyHistoryData} from '../../../api/GET/medicalHistoryData';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
+import {retrieveData} from '../../../utils/Storage';
 
 const FamilyHistoryHomeScreen = ({navigation}: any) => {
+  const route = useRoute();
+  const requiredUserId = route?.params?.requiredUserId;
   const [data, setData] = React.useState([]);
+  const [userId, setUserId] = React.useState([]);
 
   // Fetch family history data
   const fetchData = async () => {
     try {
-      const res = await familyHistoryData();
-      console.log(res);
+      let res;
+      if (requiredUserId)
+        res = await familyHistoryData({userId: requiredUserId});
+      else res = await familyHistoryData({userId});
+      console.log('res is ', res);
 
       if (res.length === 0) {
         setData([]);
@@ -18,6 +25,7 @@ const FamilyHistoryHomeScreen = ({navigation}: any) => {
       }
 
       const transformedData = res?.familyHistory.map((item, index) => ({
+        requiredUserId: requiredUserId,
         id: item._id,
         name: item.relationShip, // Use the relationShip field for the name
         disease: item.healthCondition, // Use the healthCondition field for the disease
@@ -29,6 +37,17 @@ const FamilyHistoryHomeScreen = ({navigation}: any) => {
     }
   };
 
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    // const retrievedToken = await retrieveData('token');
+    setUserId(retrievedUserId);
+    // setToken(retrievedToken);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   // Use `useFocusEffect` to fetch data when the screen comes into focus
   useFocusEffect(
     useCallback(() => {
@@ -39,6 +58,7 @@ const FamilyHistoryHomeScreen = ({navigation}: any) => {
   return (
     <>
       <CommonHomeScreen
+        requiredUserId={requiredUserId}
         navigation={navigation}
         data={data}
         heading="Family history"

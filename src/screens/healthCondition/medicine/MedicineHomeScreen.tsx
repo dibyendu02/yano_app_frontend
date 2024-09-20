@@ -1,10 +1,12 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect, useRoute} from '@react-navigation/native';
 import CommonHomeScreen from '../components/CommonHomeScreen';
 import {medicinesData} from '../../../api/GET/medicalHistoryData';
 import {retrieveData} from '../../../utils/Storage';
 
 const MedicineHomeScreen = ({navigation}: any) => {
+  const route = useRoute();
+  const requiredUserId = route?.params?.requiredUserId;
   const [data, setData] = useState([]);
   const [token, setToken] = useState('');
   const [userId, setUserId] = useState('');
@@ -23,8 +25,13 @@ const MedicineHomeScreen = ({navigation}: any) => {
 
   const fetchData = async () => {
     try {
-      if (userType === 'patient' && token && userId) {
-        const res = await medicinesData({userId, token});
+      if (token) {
+        const res = await medicinesData({
+          userId: requiredUserId ? requiredUserId : userId,
+          token,
+        });
+
+        console.log(res);
 
         if (res.length === 0) {
           setData([]);
@@ -32,6 +39,7 @@ const MedicineHomeScreen = ({navigation}: any) => {
         }
 
         const transformedData = res?.medicines?.map((item, index) => ({
+          requiredUserId: requiredUserId,
           id: item._id,
           name: item.medicineName,
           volume: item.formOfMedication?.medicineStrength,
@@ -72,6 +80,7 @@ const MedicineHomeScreen = ({navigation}: any) => {
   return (
     <>
       <CommonHomeScreen
+        requiredUserId={requiredUserId}
         navigation={navigation}
         data={data}
         heading="Medicines"
