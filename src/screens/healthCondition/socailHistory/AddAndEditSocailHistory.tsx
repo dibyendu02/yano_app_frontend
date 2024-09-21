@@ -40,6 +40,9 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
   const [userId, setUserId] = useState('');
   const [saved, setSaved] = useState(false);
   const [disabled, setDisabled] = useState(true);
+  const [requiredUserId, setRequiredUserId] = useState(
+    data?.requiredUserId || route?.params?.requiredUserId || '',
+  );
 
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -110,7 +113,7 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
 
   const onSubmit = async (formdata: FormValues) => {
     const StructuredData = {
-      userId,
+      userId: requiredUserId ? requiredUserId : userId,
       occupation: formdata?.occupation,
       education: {field: formdata?.education, date: formdata?.date},
       placeOfBirth: formdata?.placeOfBirth,
@@ -134,7 +137,7 @@ const AddAndEditSocialHistory = ({navigation, route}: any) => {
           data: StructuredData,
           token,
           id: data.id,
-          userId,
+          userId: requiredUserId ? requiredUserId : userId,
         });
       } else {
         await AddSocialHistoryData({data: StructuredData, token});

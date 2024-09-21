@@ -7,9 +7,6 @@ import {retrieveData} from '../../../utils/Storage';
 import {socialHistoryData} from '../../../api/GET/medicalHistoryData';
 import {deleteSocialHistoryData} from '../../../api/DELETE/medicalHistoryDelete';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
-import EmptyScreen from '../components/EmptyScreen';
-import FilledButton from '../../../components/buttons/FilledButton';
-import {PlusIcon} from '../../../assets/icon/IconNames';
 import moment from 'moment';
 
 const SocialHistoryHomeScreen = ({navigation}: any) => {
@@ -32,7 +29,11 @@ const SocialHistoryHomeScreen = ({navigation}: any) => {
 
   const handleDelete = async () => {
     try {
-      await deleteSocialHistoryData({userId, token, id});
+      await deleteSocialHistoryData({
+        userId: requiredUserId ? requiredUserId : userId,
+        token,
+        id,
+      });
       navigation.goBack();
     } catch (err) {
       console.log('error deleting social history');
@@ -48,6 +49,7 @@ const SocialHistoryHomeScreen = ({navigation}: any) => {
       // const res = await socialHistoryData({userId, token});
       if (res?.socialHistory?.length > 0) {
         setData({
+          requiredUserId: requiredUserId,
           id: res?.socialHistory[0]._id,
           occupation: res?.socialHistory[0]?.occupation,
           education: res?.socialHistory[0]?.education.field,
@@ -107,6 +109,7 @@ const SocialHistoryHomeScreen = ({navigation}: any) => {
   return (
     <>
       <CommonHomeScreen2
+        requiredUserId={requiredUserId}
         data={data}
         navigation={navigation}
         onDelete={handleDelete}

@@ -51,7 +51,7 @@ const SurgeriesHomeScreen = ({navigation}: any) => {
   useFocusEffect(
     useCallback(() => {
       fetchData();
-    }, []),
+    }, [userId]),
   );
 
   return (

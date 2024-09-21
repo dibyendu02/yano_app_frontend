@@ -14,8 +14,10 @@ import CommonHeader from './CommonHeader';
 import {Image} from 'react-native';
 import {staticIcons} from '../../../assets/image';
 import Card from '../../main/my-profile/UiUpdateComponents/Card';
+import {retrieveData} from '../../../utils/Storage';
 
 type CommonHomeScreenProps = {
+  requiredUserId?: String;
   navigation: any;
   data: object;
   heading: string;
@@ -28,6 +30,7 @@ type CommonHomeScreenProps = {
 };
 
 const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
+  requiredUserId,
   navigation,
   data,
   heading,
@@ -40,6 +43,20 @@ const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
 }) => {
   const [isClicked, setIsClicked] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [userType, setUserType] = useState('');
+  const getUserData = async () => {
+    // const retrievedToken = await retrieveData('token');
+    // const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    // setToken(retrievedToken);
+    // setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   useEffect(() => {
     if (data?.id === '' || data?.id) {
@@ -47,6 +64,8 @@ const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
       setLoading(false);
     }
   }, [data]);
+
+  console.log('required id in home', requiredUserId);
 
   return (
     <View
@@ -58,25 +77,29 @@ const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
       <CommonHeader
         title={heading}
         rightComp1={
-          data?.id != '' && (
-            <TouchableOpacity
-              onPress={() => navigation.navigate(addItem_path, {data})}>
-              <Image
-                source={staticIcons.EditPencil}
-                style={{height: 22, width: 22}}
-              />
-            </TouchableOpacity>
-          )
+          requiredUserId && userType === 'patient'
+            ? null
+            : data?.id != '' && (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate(addItem_path, {data})}>
+                  <Image
+                    source={staticIcons.EditPencil}
+                    style={{height: 22, width: 22}}
+                  />
+                </TouchableOpacity>
+              )
         }
         rightComp2={
-          data?.id != '' && (
-            <TouchableOpacity onPress={() => setIsClicked(true)}>
-              <Image
-                source={staticIcons.DeleteIcon}
-                style={{height: 22, width: 22}}
-              />
-            </TouchableOpacity>
-          )
+          requiredUserId && userType === 'patient'
+            ? null
+            : data?.id != '' && (
+                <TouchableOpacity onPress={() => setIsClicked(true)}>
+                  <Image
+                    source={staticIcons.DeleteIcon}
+                    style={{height: 22, width: 22}}
+                  />
+                </TouchableOpacity>
+              )
         }
         customStyle={customHeaderStyle}
       />
@@ -89,15 +112,21 @@ const CommonHomeScreen2: FC<CommonHomeScreenProps> = ({
         <>{component}</>
       )}
 
-      {data?.id === '' && (
-        <FilledButton
-          type="blue"
-          label="Add"
-          icon={<PlusIcon />}
-          onPress={() => navigation.navigate(addItem_path)}
-          style={styles.addBtn}
-        />
-      )}
+      {requiredUserId && userType === 'patient'
+        ? null
+        : data?.id === '' && (
+            <FilledButton
+              type="blue"
+              label="Add"
+              icon={<PlusIcon />}
+              onPress={() =>
+                navigation.navigate(addItem_path, {
+                  requiredUserId: requiredUserId,
+                })
+              }
+              style={styles.addBtn}
+            />
+          )}
       {isClicked && (
         <View style={styles.deletbuttonclick}>
           <Card

@@ -52,7 +52,7 @@ const FamilyHistoryHomeScreen = ({navigation}: any) => {
   useFocusEffect(
     useCallback(() => {
       fetchData();
-    }, []),
+    }, [userId]),
   );
 
   return (

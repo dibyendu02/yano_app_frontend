@@ -32,6 +32,8 @@ const BasicInfo = ({navigation}: any) => {
       if (requiredUserId) res = await basicInfoData({userId: requiredUserId});
       else res = await basicInfoData({userId});
 
+      console.log(res);
+
       const transformedData = {
         height: res.userData?.height ? `${res.userData?.height} cm` : '-',
         weight: res.userData?.weight ? `${res.userData?.weight} kg` : '-',
@@ -47,7 +49,7 @@ const BasicInfo = ({navigation}: any) => {
   useFocusEffect(
     useCallback(() => {
       fetchData();
-    }, []),
+    }, [userId]),
   );
 
   const getUserData = async () => {

@@ -118,8 +118,7 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
         const res = await updatePatient({
           data: structuredData,
           token,
-          userId:
-            requiredUserId && userType == 'doctor' ? requiredUserId : userId,
+          userId: requiredUserId ? requiredUserId : userId,
           type: 'json',
         });
         console.log('user dataaaaa ', res);
@@ -143,6 +142,9 @@ const AddAndEditBasicInfo = ({navigation, route}: any) => {
       }
     }
   };
+
+  console.log(requiredUserId);
+  console.log(userId);
 
   return (
     <View

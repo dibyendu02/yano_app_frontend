@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native';
 import {Colors} from '../../../../constants/Colors';
 import Header from '../../../../components/header/Header';
@@ -9,6 +9,9 @@ import FilledButton from '../../../../components/buttons/FilledButton';
 import CustomPasswordField from '../../../../components/formComp/CustomPasswordField';
 import emergencyHome from '../../../../assets/image/emergencyHome.png';
 import UserContext from '../../../../contexts/UserContext';
+import {deletePatientData} from '../../../../api/DELETE/manageData';
+import {deletePatientAccount} from '../../../../api/POST/manageData';
+import {retrieveData} from '../../../../utils/Storage';
 
 const DeleteAccount = () => {
   const {
@@ -24,6 +27,34 @@ const DeleteAccount = () => {
     console.log(value);
   };
   const {logout} = useContext(UserContext);
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
+  const [token, setToken] = useState('');
+
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const deleteUserAccount = async () => {
+    try {
+      const data = {password};
+      const res = await deletePatientAccount({userId, data, token});
+      console.log(res);
+    } catch (error) {
+      // Alert(error.message)
+      console.log(error);
+    }
+  };
 
   return (
     <View
@@ -118,7 +149,10 @@ const DeleteAccount = () => {
                 label="Delete account"
                 disabled={password.length < 6}
                 type="red"
-                onPress={() => logout()}
+                onPress={() => {
+                  deleteUserAccount();
+                  logout();
+                }}
               />
             </View>
           </View>

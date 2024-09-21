@@ -57,7 +57,7 @@ const AllergiesHomeScreen = ({navigation}: any) => {
   useFocusEffect(
     React.useCallback(() => {
       fetchData();
-    }, []),
+    }, [userId]),
   );
 
   return (
