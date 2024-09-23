@@ -18,13 +18,123 @@ import StripCodeScroll from '../components/StripCodeScroll';
 import {StaticImage} from '../../../../../assets/images';
 import {UTurnIcon} from '../../../../../assets/icon/IconNames';
 import Scale from '../../../../../assets/measurements/images/bloodGlucose.png';
+import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+import {fetchHistory} from '../../../../../core/BGMManager/BGMManager';
 
 const BloodGlucoseTest = ({navigation}: any) => {
+  const [historyData, setHistoryData] = useState(null); // State to hold history data
+  const [isLoading, setIsLoading] = useState(false); // State to manage loading state
+  const [errorMessage, setErrorMessage] = useState(''); // State to hold error message
+
   const [step, setStep] = useState('landing');
   const [time, setTime] = useState('');
   const [code, setCode] = useState('C20');
   const [stopClicked, setStopClicked] = useState(false);
   const [value, setValue] = useState('0');
+
+  console.log(time, code, value);
+
+  // Function to request permissions sequentially
+  const requestAllPermissions = async () => {
+    try {
+      if (Platform.OS === 'android' && Platform.Version >= 31) {
+        // Requesting each permission one by one
+        const permissions = [
+          PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION,
+          PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+          PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
+          PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
+        ];
+
+        for (const permission of permissions) {
+          const status = await request(permission);
+          if (status !== RESULTS.GRANTED) {
+            console.warn(`${permission} permission not granted`);
+            setErrorMessage(`${permission} permission not granted`);
+            return false; // Exit if any permission is not granted
+          }
+        }
+      }
+      return true; // All permissions granted
+    } catch (err) {
+      console.error('Failed to request permissions:', err);
+      setErrorMessage('Failed to request permissions.');
+      return false;
+    }
+  };
+
+  // Function to parse the response string into a JavaScript object
+  function parseHistoryData(responseString) {
+    // Remove curly braces and split by comma to get individual key-value pairs
+    const entries = responseString
+      .replace(/[{}]/g, '') // Remove curly braces
+      .split(',') // Split by commas
+      .map(entry => entry.split('=')); // Split key and value by '='
+
+    // Convert to object format
+    const parsedObject = {};
+    entries.forEach(([key, value]) => {
+      // Trim and parse boolean and number values accordingly
+      const trimmedKey = key.trim();
+      const trimmedValue = value.trim();
+      parsedObject[trimmedKey] = isNaN(trimmedValue) // Check if value is not a number
+        ? trimmedValue === 'true'
+          ? true
+          : trimmedValue === 'false'
+          ? false
+          : trimmedValue // Convert string "true"/"false" to boolean
+        : parseFloat(trimmedValue); // Convert number strings to numbers
+    });
+
+    return parsedObject;
+  }
+
+  // Function to convert mg/dL to mmol/L with 2 decimal points
+  function convertToMmolL(valueInMgDl) {
+    return (valueInMgDl / 18).toFixed(2); // Converts to mmol/L and formats to 2 decimal places
+  }
+
+  // Function to fetch history data
+  const getHistoryData = async () => {
+    try {
+      setIsLoading(true); // Set loading state
+      // Request all required permissions
+      const hasPermissions = await requestAllPermissions();
+      if (!hasPermissions) {
+        console.warn('Permissions were not granted');
+        setErrorMessage('Permissions were not granted.');
+        setIsLoading(false); // Stop loading if permissions are not granted
+        return;
+      }
+
+      // Fetch history data from the device
+      const res = await fetchHistory('Z00NQN', 0);
+      console.log('History Data:', res);
+
+      // Parse the response into a JavaScript object
+      const parsedData = parseHistoryData(res);
+      console.log('Parsed History Data:', parsedData);
+
+      // Convert eventValue from mg/dL to mmol/L
+      if (parsedData.eventValue) {
+        parsedData.eventValue = convertToMmolL(parsedData.eventValue);
+      }
+
+      // Set the values in the state
+      setHistoryData(parsedData); // Set parsed data to state
+      setValue(parsedData.eventValue); // Assuming 'eventValue' is what you need
+      setStep('result');
+    } catch (error: any) {
+      // console.error('Error fetching history data:', error);
+      setErrorMessage(error.message || 'Error fetching history data.');
+    } finally {
+      setIsLoading(false); // Stop loading after data is fetched or if an error occurs
+      setTimeout(() => {
+        setStep('landing');
+        setErrorMessage('');
+      }, 5000);
+    }
+  };
 
   const onShare = async () => {
     try {
@@ -51,15 +161,13 @@ const BloodGlucoseTest = ({navigation}: any) => {
         setStep('measurement');
       }, 2000);
 
-    //loading time would be implemented in future
-    if (step == 'measurement')
-      setTimeout(() => {
-        setStep('result');
-        setValue('5.0');
-      }, 3000);
+    if (step == 'measurement') {
+      getHistoryData();
+    }
 
     if (stopClicked) setStep('start');
   }, [step, stopClicked]);
+
   return (
     <View
       style={{
@@ -78,6 +186,14 @@ const BloodGlucoseTest = ({navigation}: any) => {
           </TouchableOpacity>
         }
       />
+
+      {/* Display Error Message if Present */}
+      {errorMessage && (
+        <View style={styles.errorContainer}>
+          <Text style={styles.errorText}>{errorMessage}</Text>
+        </View>
+      )}
+
       {step == 'landing' && (
         <View
           style={{
@@ -324,7 +440,7 @@ const BloodGlucoseTest = ({navigation}: any) => {
         </View>
       )}
 
-      {step == 'result' && (
+      {step == 'result' && !isLoading && (
         <View>
           <View
             style={{
@@ -412,12 +528,9 @@ const BloodGlucoseTest = ({navigation}: any) => {
           step == 'step3') && (
           <View
             style={[
-              // styles.addBtn,
               {
-                // paddingLeft: 25,
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                // gap: 10,
               },
             ]}>
             <FilledButton
@@ -425,8 +538,6 @@ const BloodGlucoseTest = ({navigation}: any) => {
               type={'lightGrey'}
               style={{
                 width: '48%',
-                // alignSelf: 'center',
-                // , marginVertical: 14
               }}
               onPress={() => {
                 if (step == 'start') setStep('landing');
@@ -459,8 +570,6 @@ const BloodGlucoseTest = ({navigation}: any) => {
         {step == 'measurement' && (
           <FilledButton
             label={'Stop measurement'}
-            // icon={
-            // }
             type={'red'}
             style={{width: '100%', alignSelf: 'center'}}
             activeOpacity={0.8}
@@ -495,5 +604,19 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: Colors.White,
     padding: 10,
+  },
+  errorContainer: {
+    padding: 10,
+    backgroundColor: '#f8d7da',
+    borderRadius: 5,
+    position: 'absolute',
+    bottom: 80,
+    left: 0,
+    width: '100%',
+  },
+  errorText: {
+    fontSize: 14,
+    color: '#721c24',
+    textAlign: 'center',
   },
 });

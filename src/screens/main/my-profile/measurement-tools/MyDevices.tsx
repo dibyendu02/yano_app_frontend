@@ -1,4 +1,11 @@
-import {Image, Platform, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../../../components/header/Header';
 import {DummyImage} from '../../../../assets/dummy/images';
@@ -31,11 +38,12 @@ const MyDevices = () => {
                 />
               }
               customTextWidth={'65%'}
+              isConnected={false}
             />
             <CommonItem
               name="Glucómetro Yano"
-              // onPress={() => navigate('DeviceInfo')}
-              onPress={() => navigate('MyDevices')}
+              // onPress={() => navigate('MyDevices')}
+              onPress={() => navigate('BloodGlucoseTest')}
               leftIcon={
                 <Image
                   source={DummyImage.glucometer}

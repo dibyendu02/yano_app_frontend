@@ -17,7 +17,6 @@ import axios from 'axios';
 export const BASE_URL = 'https://yano-backend.onrender.com';
 // export const BASE_URL = 'http://192.168.29.167:5000';
 
-
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isPatient, setIsPatient] = useState(false);
@@ -125,5 +124,6 @@ export default function App() {
         {isLoggedIn ? <MainStack /> : <AuthStack />}
       </UserContext.Provider>
     </NavigationContainer>
+    // <DeviceGetData />
   );
 }

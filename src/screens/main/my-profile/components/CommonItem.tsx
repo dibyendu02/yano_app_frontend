@@ -73,7 +73,7 @@ const CommonItem: FC<props> = ({
             alignItems: 'center',
             paddingTop: 20,
           }}>
-          {isConnected ? (
+          {!isConnected ? (
             <TouchableOpacity
               style={{
                 width: '100%',
@@ -90,15 +90,19 @@ const CommonItem: FC<props> = ({
               <TouchableOpacity
                 style={[
                   styles.connectBtn,
-                  {borderRightWidth: 2, borderColor: Colors.LightGray},
+                  {
+                    borderRightWidth: 2,
+                    borderColor: Colors.LightGray,
+                    width: '100%',
+                  },
                 ]}>
                 <BluetoothConnected />
                 <Text style={styles.textStyle}>Connected</Text>
               </TouchableOpacity>
-              <View style={[styles.connectBtn]}>
+              {/* <View style={[styles.connectBtn]}>
                 <BatteryCharge />
                 <Text style={styles.textStyle}>83%</Text>
-              </View>
+              </View> */}
             </>
           )}
         </View>
