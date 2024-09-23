@@ -7,23 +7,25 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useState } from 'react';
-import { Controller, useFormContext } from 'react-hook-form';
-import { StaticImage } from '../../assets/images';
-import { Colors } from '../../constants/Colors';
+import React, {useState} from 'react';
+import {Controller, useFormContext} from 'react-hook-form';
+import {StaticImage} from '../../assets/images';
+import {Colors} from '../../constants/Colors';
 import Icons from '../../assets/icon/Icon';
 import ImagePicker from 'react-native-image-crop-picker';
 import BottomSheet from '../bottom-sheet/BottomSheet';
-import { staticIcons } from '../../assets/image';
+import {staticIcons} from '../../assets/image';
+import FilledButton from '../buttons/FilledButton';
 
 interface FormImageProps {
   name: string;
+  imageUri: string;
 }
 
-const FormImageInput: React.FC<FormImageProps> = ({ name }) => {
+const FormImageInput: React.FC<FormImageProps> = ({name, imageUri}) => {
   const [showOptionsModal, setShowOptionsModal] = useState(false);
-  const { control, setValue } = useFormContext();
-  const [imagePath, setImagePath] = useState(null);
+  const {control, setValue} = useFormContext();
+  const [imagePath, setImagePath] = useState(imageUri);
   const handleImageCapture = (mode: string) => {
     setShowOptionsModal(false);
     setTimeout(() => {
@@ -61,20 +63,25 @@ const FormImageInput: React.FC<FormImageProps> = ({ name }) => {
   const handleError = (e: any) => {
     console.log(e);
   };
+  console.log(imagePath);
   return (
     <Controller
       name={name}
       control={control}
-      render={({ field: { }, fieldState: { } }) => (
-        <View style={styles.container}>
+      render={({field: {}, fieldState: {}}) => (
+        <TouchableOpacity
+          style={styles.container}
+          onPress={() => setShowOptionsModal(true)}
+          activeOpacity={1}>
           <Image
             source={
-              imagePath ? { uri: imagePath } : StaticImage.PersonPlaceholder
+              imagePath ? {uri: imagePath} : StaticImage.PersonPlaceholder
             }
             style={{
               height: 100,
               width: 100,
-              resizeMode: 'stretch',
+              // resizeMode: 'stretch',
+              objectFit: 'cover',
               borderRadius: 50,
             }}
           />
@@ -87,11 +94,15 @@ const FormImageInput: React.FC<FormImageProps> = ({ name }) => {
               padding: 6,
               borderRadius: 50,
             }}>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               onPress={() => setShowOptionsModal(true)}
-            >
-              <Image source={staticIcons.EditPencil} style={{ height: 20, width: 20, tintColor: Colors.White }} />
-            </TouchableOpacity>
+              activeOpacity={1}
+            > */}
+            <Image
+              source={staticIcons.EditPencil}
+              style={{height: 20, width: 20, tintColor: Colors.White}}
+            />
+            {/* </TouchableOpacity> */}
             {/* <Icons.Feather
               name={'edit-2'}
               color={Colors.White}
@@ -128,7 +139,7 @@ const FormImageInput: React.FC<FormImageProps> = ({ name }) => {
                   size={30}
                   color={Colors.Blue}
                 />
-                <Text style={{ color: Colors.Blue, fontSize: 16 }}>Camera</Text>
+                <Text style={{color: Colors.Blue, fontSize: 16}}>Camera</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.optionContainer}
@@ -138,11 +149,17 @@ const FormImageInput: React.FC<FormImageProps> = ({ name }) => {
                   size={30}
                   color={Colors.Blue}
                 />
-                <Text style={{ color: Colors.Blue, fontSize: 16 }}>Gallery</Text>
+                <Text style={{color: Colors.Blue, fontSize: 16}}>Gallery</Text>
               </TouchableOpacity>
             </View>
+            <FilledButton
+              type="lightGrey"
+              label="Cancel"
+              style={{width: '90%', margin: 'auto', marginTop: 12}}
+              onPress={() => setShowOptionsModal(false)}
+            />
           </BottomSheet>
-        </View>
+        </TouchableOpacity>
       )}
     />
   );
@@ -155,8 +172,8 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 16,
     backgroundColor: Colors.White,
-    width: 120,
-    height: 120,
+    width: 110,
+    height: 110,
     borderRadius: 60,
     alignItems: 'center',
     justifyContent: 'center',

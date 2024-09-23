@@ -9,79 +9,154 @@ import {
   Image,
   FlatList,
   ScrollView,
+  Platform,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import PatientElements from '../../../../components/PatientElements';
 import Header from '../../../../components/header/Header';
-import { Colors } from '../../../../constants/Colors';
+import {Colors} from '../../../../constants/Colors';
 import Card from '../../../../components/cards/Card';
-import { DummyImage } from '../../../../assets/dummy/images';
-import { measurements, userData } from '../../../../test/Data';
+import {DummyImage} from '../../../../assets/dummy/images';
+import {measurements, userData} from '../../../../test/Data';
 import Icons from '../../../../assets/icon/Icon';
-import { navigate } from '../../../../navigation/RootNavigation';
-import { StaticImage } from '../../../../assets/images';
+import {navigate} from '../../../../navigation/RootNavigation';
+import {StaticImage} from '../../../../assets/images';
+import {staticIcons} from '../../../../assets/image';
+import CardLocal from './CardLocal';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import moment from 'moment';
+import {healthParameterDetailsN, HSDGN} from '../../../../test/HealthStatsData';
+import {deletePatientUnderDoctor} from '../../../../api/DELETE/patientUnderDoctor';
+import {retrieveData} from '../../../../utils/Storage';
 
-let data1 = [
-  {
-    label: userData.gender,
-    icon: (
-      <Foundation name="female-symbol" size={20} color={Colors.LightGreen} />
-    ),
-  },
-  {
-    label: userData.age,
-    icon: (
-      <Image
-        source={StaticImage.CalenderIcon}
-        style={{ height: 20, width: 20, tintColor: Colors.LightGreen }}
-      />
-    ),
-  },
-  {
-    label: userData.blood,
-    icon: (
-      <Image source={StaticImage.BloodIcon} style={{ height: 20, width: 20 }} />
-    ),
-  },
-];
+export default function PatientMonitoringProfile({}) {
+  const [isClicked, setIsClicked] = useState(false);
+  const navigation = useNavigation();
+  const route = useRoute();
+  const patientData = route?.params?.patientData; // Access patientData from route.params
+  const [userId, setUserId] = useState('');
+  const [token, setToken] = useState('');
+  console.log('Patient Data:', patientData);
 
-let data2 = [
-  {
-    label: userData.height,
-    icon: <MaterialIcons name="height" size={20} color={Colors.LightGreen} />,
-  },
-  {
-    label: userData.weight,
-    icon: (
-      <Foundation name="female-symbol" size={20} color={Colors.LightGreen} />
-    ),
-  },
-];
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedToken = await retrieveData('token');
+    // const retrievedUserType = await retrieveData('userType');
 
-export default function PatientMonitoringProfile({ }) {
+    setUserId(retrievedUserId);
+    setToken(retrievedToken);
+    // setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const calculateAge = dateString => {
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    // If the birth month hasn't occurred yet this year, subtract one from the age.
+    // Or, if it is the birth month but the day hasn't occurred yet this year, subtract one from the age.
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
+  let data1 = [
+    {
+      label: patientData.gender,
+      icon: (
+        <Foundation name="female-symbol" size={20} color={Colors.LightGreen} />
+      ),
+    },
+    {
+      label: calculateAge(patientData?.dateOfBirth || '0'),
+      icon: (
+        <Image
+          source={StaticImage.CalenderIcon}
+          style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
+        />
+      ),
+      unit: 'years',
+    },
+    {
+      label: patientData.bloodType,
+      icon: (
+        <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
+      ),
+    },
+  ];
+
+  let data2 = [
+    {
+      label: patientData.height,
+      icon: <MaterialIcons name="height" size={20} color={Colors.LightGreen} />,
+      unit: 'cm',
+    },
+    {
+      label: patientData.weight,
+      icon: (
+        <Foundation name="female-symbol" size={20} color={Colors.LightGreen} />
+      ),
+      unit: 'kg',
+    },
+  ];
+
+  const removePatientUnderDoctor = async () => {
+    console.log('it works');
+    try {
+      await deletePatientUnderDoctor({
+        userId,
+        token,
+        patientId: patientData._id,
+      });
+      navigation.navigate('tabs');
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
-    <SafeAreaView style={styles.container}>
-      <Header title="Monitored Patient" />
+    <View style={styles.container}>
+      <Header title="Monitored patient" />
 
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
-        <Card>
+        <Card
+        // contentContainerStyle={{backgroundColor: 'grey'}}
+        >
           <Image
-            source={DummyImage.user}
+            source={
+              patientData?.userImg
+                ? {uri: patientData?.userImg?.secure_url}
+                : DummyImage.user
+            }
             style={{
               height: 80,
               width: 80,
               borderRadius: 40,
             }}
           />
-          <Text style={styles.patientName}>María Clemente</Text>
+          <Text style={styles.patientName}>
+            {patientData.firstName + ' ' + patientData.lastName}
+          </Text>
           <View style={styles.detailRow}>
             {data1.map((e, i, a) => (
               <View style={styles.detailItem} key={e.label}>
                 {e.icon}
                 <Text style={styles.detailText}>{e.label}</Text>
+                <Text style={[styles.detailText, {marginLeft: 0}]}>
+                  {e?.unit}
+                </Text>
                 {i < a.length - 1 && <View style={styles.separator} />}
               </View>
             ))}
@@ -92,21 +167,35 @@ export default function PatientMonitoringProfile({ }) {
               <View style={styles.detailItem} key={e.label}>
                 {e.icon}
                 <Text style={styles.detailText}>{e.label}</Text>
+                <Text style={[styles.detailText, {marginLeft: 0}]}>
+                  {e?.unit}
+                </Text>
                 {i < a.length - 1 && <View style={styles.separator} />}
               </View>
             ))}
           </View>
 
-          <TouchableOpacity
-            style={styles.addButton}
-            onPress={() => navigate('MeasurementTools')}>
-            <Icons.MaterialIcons
-              name="monitor-heart"
-              size={20}
-              color={Colors.White}
-            />
-            <Text style={styles.addButtonText}>Measure vital signs</Text>
-          </TouchableOpacity>
+          <View
+            style={{
+              // backgroundColor: 'red',
+              width: '105%',
+              borderTopWidth: 1,
+              borderBlockColor: Colors.LightGray,
+              marginTop: 10,
+              padding: 10,
+              height: 75,
+            }}>
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={() => navigate('MeasurementTools')}>
+              <Icons.MaterialIcons
+                name="monitor-heart"
+                size={20}
+                color={Colors.White}
+              />
+              <Text style={styles.addButtonText}>Measure vital signs</Text>
+            </TouchableOpacity>
+          </View>
         </Card>
 
         <Card
@@ -129,78 +218,89 @@ export default function PatientMonitoringProfile({ }) {
                   fontFamily: 'Roboto',
                   color: Colors.SteelBlue,
                 }}>
-                View More
+                See more
               </Text>
             </TouchableOpacity>
           }>
           <FlatList
             data={
-              measurements.length >= 2
-                ? measurements.filter((e, i) => i < 2)
+              HSDGN[0].data.length >= 2
+                ? HSDGN[0].data.filter((e, i) => i < 2)
                 : []
             }
             scrollEnabled={false}
-            style={{ width: '100%' }}
-            renderItem={({ item, index }) => (
-              <View
+            style={{width: '100%'}}
+            renderItem={({item, index}) => (
+              <TouchableOpacity
                 style={{
                   width: '100%',
                   paddingVertical: 10,
                   flexDirection: 'row',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                }}>
-                <View style={{ width: '50%' }}>
+                }}
+                onPress={() =>
+                  navigate('HealthParameterDetail', {
+                    //@ts-ignore
+                    healthParameterDetail: healthParameterDetailsN[item.field],
+                  })
+                }>
+                <View style={{width: '50%'}}>
                   <Text
                     style={{
                       fontSize: 18,
-                      fontFamily: 'Roboto',
-                      marginBottom: 4,
-                      fontWeight: 'bold',
                       color: Colors.Blue,
+                      fontWeight: 'bold',
+                      marginBottom: 4,
                     }}>
-                    {item.mType}
+                    {item.field_full}
                   </Text>
                   <Text
                     style={{
                       fontSize: 13,
                       fontFamily: 'Roboto',
-                      color: Colors.Blue,
+                      color: Colors.SteelBlue,
                     }}>
-                    {item.dt}
+                    {moment(item.timestamp).format('M/D/YYYY - h:mm A')}
                   </Text>
                 </View>
-                <Text
+                <View
                   style={{
-                    fontSize: 18,
-                    fontFamily: 'Roboto',
-                    marginBottom: 4,
-                    fontWeight: '500',
+                    flexDirection: 'column',
+                    alignItems: 'flex-end',
+                    width: '30%',
+                    marginRight: 14,
                   }}>
-                  {item.amt}{' '}
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      fontFamily: 'Roboto',
-                      fontWeight: 'light',
-                    }}>
-                    mmol/L
-                  </Text>
-                </Text>
-                {index === 0 ? (
-                  <Icons.AntDesign
-                    name="checkcircleo"
-                    color={Colors.Green}
-                    size={22}
-                  />
-                ) : (
-                  <Icons.AntDesign
-                    name="checkcircle"
-                    color={Colors.Green}
-                    size={22}
-                  />
-                )}
-              </View>
+                  {item.measurements.map(itm => (
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontFamily: 'Roboto',
+                        marginBottom: 4,
+                        fontWeight: Platform.OS === 'android' ? 'bold' : '600',
+                        color: Colors.Blue,
+                      }}
+                      key={itm.unit}>
+                      {itm.value}{' '}
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontFamily: 'Roboto',
+                          fontWeight: 'light',
+                          color: Colors.SteelBlue,
+                        }}>
+                        {itm.unit}
+                      </Text>
+                    </Text>
+                  ))}
+                </View>
+
+                <Icons.AntDesign
+                  name={index === 0 ? 'checkcircleo' : 'checkcircle'}
+                  color={Colors.Green}
+                  size={22}
+                />
+              </TouchableOpacity>
             )}
             ItemSeparatorComponent={() => (
               <View
@@ -215,72 +315,89 @@ export default function PatientMonitoringProfile({ }) {
           />
         </Card>
 
-        <Card contentContainerStyle={{ marginBottom: 200 }}>
-          <View style={{ width: '100%' }}>
-            <TouchableOpacity onPress={() => navigate('MedicalHistory')}>
-              <View style={styles.container1}>
-                <Image source={require('../../../../assets/image/receipt_long.png')}
-                  style={{ height: 22, width: 22 }}
+        <Card contentContainerStyle={{marginBottom: 50}}>
+          <View style={{width: '100%'}}>
+            <TouchableOpacity
+              onPress={() =>
+                navigate('MedicalHistory', {fetchedUserId: patientData?._id})
+              }>
+              <View style={[styles.container1, {paddingTop: 8}]}>
+                <Image
+                  source={require('../../../../assets/image/receipt_long.png')}
+                  style={{height: 22, width: 22}}
                 />
                 <Text style={styles.name}>Medical history</Text>
-                <MaterialIcons name="navigate-next" size={25} color={'black'} />
+                <Image
+                  source={staticIcons.nextIcon}
+                  style={{height: 12, width: 10, objectFit: 'contain'}}
+                />
               </View>
             </TouchableOpacity>
-
-            <TouchableOpacity onPress={() => navigate('HealthThresholdHomeScreen')}>
+            <View
+              style={{
+                height: 1,
+                width: '100%',
+                backgroundColor: Colors.LightGray,
+                alignSelf: 'center',
+              }}
+            />
+            <TouchableOpacity
+              onPress={() => navigate('HealthThresholdHomeScreen')}>
               <View style={styles.container1}>
-                <Image source={require('../../../../assets/image/data_thresholding.png')}
-                  style={{ height: 22, width: 22 }}
+                <Image
+                  source={require('../../../../assets/image/data_thresholding.png')}
+                  style={{height: 22, width: 22}}
                 />
                 <Text style={styles.name}>Health thresholds</Text>
-                <MaterialIcons name="navigate-next" size={25} color={'black'} />
+                <Image
+                  source={staticIcons.nextIcon}
+                  style={{height: 12, width: 10, objectFit: 'contain'}}
+                />
               </View>
             </TouchableOpacity>
-
+            <View
+              style={{
+                height: 1,
+                width: '100%',
+                backgroundColor: Colors.LightGray,
+                alignSelf: 'center',
+              }}
+            />
             <TouchableOpacity onPress={() => navigate('RemainderScreen')}>
-              <View style={styles.container1}>
-                <Image source={require('../../../../assets/image/notification_add.png')}
-                  style={{ height: 22, width: 22 }}
+              <View style={[styles.container1, {paddingBottom: 8}]}>
+                <Image
+                  source={require('../../../../assets/image/notification_add.png')}
+                  style={{height: 22, width: 22}}
                 />
                 <Text style={styles.name}>Reminders</Text>
-                <MaterialIcons name="navigate-next" size={25} color={'black'} />
+                <Image
+                  source={staticIcons.nextIcon}
+                  style={{height: 12, width: 10, objectFit: 'contain'}}
+                />
               </View>
             </TouchableOpacity>
-            {/* <PatientElements
-              name="Medical history"
-              icon="file-medical"
-              iconsname="FontAwesome5"
-              color="#76BC21"
-              onPress={() => navigate('MedicalHistory')}
-            /> */}
-            {/* <PatientElements
-              name="Health thresholds"
-              icon="history-edu"
-              iconsname="MaterialIcons"
-              color="#76BC21"
-              onPress={() => navigate('HealthThresholdHomeScreen')}
-            /> */}
-            {/* <PatientElements
-              name="Reminders"
-              icon="bell-plus"
-              iconsname="MaterialCommunityIcons"
-              color="#76BC21"
-              onPress={() => navigate('RemainderScreen')}
-            /> */}
           </View>
         </Card>
+        <TouchableOpacity
+          onPress={() => setIsClicked(true)}
+          style={styles.stopMonitoringButton}>
+          <Icons.Ionicons name="exit-outline" size={20} color={'red'} />
+          <Text style={styles.monintoring}>Stop Monitoring</Text>
+        </TouchableOpacity>
       </ScrollView>
-      <View style={{ paddingBottom: 10 }}>
-        <View style={styles.basicDetails}>
-          <View style={styles.stopMonitoringButton}>
-            <Icons.Ionicons name="exit-outline" size={20} color={'red'} />
-            <TouchableOpacity>
-              <Text style={styles.monintoring}>Stop Monitoring</Text>
-            </TouchableOpacity>
-          </View>
+      {isClicked && (
+        <View style={styles.deletbuttonclick}>
+          <CardLocal
+            title={'Want to Stop monitoring your patient?'}
+            children={
+              'After doing so, you will not be able to access your medical history, nor receive alerts about your health.'
+            }
+            active={setIsClicked}
+            action={removePatientUnderDoctor}
+          />
         </View>
-      </View>
-    </SafeAreaView>
+      )}
+    </View>
   );
 }
 
@@ -291,6 +408,7 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
+    paddingTop: 6,
     backgroundColor: Colors.GhostWhite,
   },
   separator: {
@@ -348,11 +466,13 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     alignSelf: 'center',
     padding: 10,
-    width: '100%',
+    width: '94%',
+    // marginBottom: Platform.OS === 'ios' ? 50 : 20,
+    marginBottom: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    backgroundColor: 'white',
+    backgroundColor: Colors.GhostWhite,
     height: 60,
   },
   monintoring: {
@@ -366,15 +486,37 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'white',
-    padding: 20,
+    paddingVertical: 16,
+    paddingHorizontal: 10,
     borderRadius: 8,
   },
   name: {
     color: '#00263E',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
     marginLeft: 15,
     flex: 1,
+  },
+  afterLogoutBtnClick: {
+    // backgroundColor: Colors.LightBlack,
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    zIndex: 1,
+    flex: 1,
+    alignItems: 'center',
+    padding: 20,
+  },
+  deletbuttonclick: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    zIndex: 1,
+    flex: 1,
+    alignItems: 'center',
+    paddingHorizontal: 12,
   },
 });

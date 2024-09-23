@@ -1,9 +1,10 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useNavigation} from '@react-navigation/native';
 import Icons from '../assets/icon/Icon';
 import {Colors} from '../constants/Colors';
+import {staticIcons} from '../assets/image';
 
 type PatientElementsProps = {
   name: string;
@@ -12,6 +13,7 @@ type PatientElementsProps = {
   color: string;
   element?: React.ReactNode;
   customStyle?: object;
+  customTextStyle?: object;
   onPress?: () => void;
 };
 
@@ -22,6 +24,7 @@ const PatientElements: React.FC<PatientElementsProps> = ({
   color,
   element,
   customStyle,
+  customTextStyle,
   onPress,
 }) => {
   const navigation = useNavigation();
@@ -36,8 +39,12 @@ const PatientElements: React.FC<PatientElementsProps> = ({
           <IconComponent name={icon!} size={25} color={color} />
         )}
         {element}
-        <Text style={styles.name}>{name}</Text>
+        <Text style={[styles.name, customTextStyle]}>{name}</Text>
         <MaterialIcons name="navigate-next" size={25} color={Colors.Blue} />
+        {/* <Image
+          source={staticIcons.nextIcon}
+          style={{height: 12, width: 10, objectFit: 'contain'}}
+        /> */}
       </View>
     </TouchableOpacity>
   );
@@ -56,10 +63,11 @@ const styles = StyleSheet.create({
   },
   name: {
     color: '#00263E',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
     marginLeft: 15,
+    marginRight: 10,
     flex: 1,
   },
 });

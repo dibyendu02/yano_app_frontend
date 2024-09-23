@@ -27,7 +27,7 @@ const BodyTemperature = () => {
 
   return (
     <ThresholdInputWrapper
-      title="Body Temperature"
+      title="Body temperature"
       inputs={temperatureInputs}
     />
   );

@@ -1,5 +1,6 @@
 import {
   Image,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -15,48 +16,101 @@ import OutlineButton from '../../../../components/buttons/OutlineButton';
 import {navigate} from '../../../../navigation/RootNavigation';
 import {AuthScreen} from '../../../../navigation/auth/AuthScreens';
 
+const devices = [
+  {
+    id: 1,
+    name: 'Monitor Multiparámetros Yano',
+    image: DummyImage.largeDevice,
+    navigateTo: AuthScreen.DeviceInfo,
+  },
+  {
+    id: 2,
+    name: 'Medidor continuo de glucosa',
+    image: DummyImage.glucoround,
+    navigateTo: 'AuthDeviceInfo',
+  },
+  {
+    id: 3,
+    name: 'Glucómetro',
+    image: DummyImage.glucometer,
+    navigateTo: 'AuthDeviceInfo',
+  },
+];
+
 const ChooseDevice = () => {
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title="Choose Device" />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <Header title="Choose a device" />
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View
+          style={{
+            backgroundColor: Colors.White,
+            paddingHorizontal: 12,
+            borderRadius: 8,
+          }}>
           <PatientElements
-            name="Monitor Multiparámetros Yano"
-            onPress={() => navigate(AuthScreen.DeviceInfo)}
+            name="Yano Multi-Parameter Monitor"
+            onPress={() =>
+              navigate(AuthScreen.DeviceInfo, {devicename: 'multimeter'})
+            }
             element={
               <Image
-                source={DummyImage.largeDevice}
+                source={DummyImage.monitor}
                 style={{width: 50, height: 50}}
               />
             }
+            customStyle={{
+              borderBottomWidth: 1,
+              borderColor: Colors.LightGray,
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+              paddingHorizontal: 5,
+            }}
+            customTextStyle={{marginRight: 20}}
             color=""
           />
           <PatientElements
             name="Medidor continuo de glucosa"
-            onPress={() => navigate('AuthDeviceInfo')}
+            onPress={() =>
+              navigate(AuthScreen.DeviceInfo, {devicename: 'medidor'})
+            }
             element={
               <Image
                 source={DummyImage.glucoround}
                 style={{width: 50, height: 50}}
               />
             }
+            customStyle={{
+              borderBottomWidth: 1,
+              borderColor: Colors.LightGray,
+              borderRadius: 0,
+              paddingHorizontal: 5,
+            }}
+            customTextStyle={{marginRight: 25}}
             color=""
           />
           <PatientElements
             name="Glucómetro"
-            onPress={() => navigate('AuthDeviceInfo')}
+            onPress={() =>
+              navigate(AuthScreen.DeviceInfo, {devicename: 'glucometer'})
+            }
             element={
               <Image
                 source={DummyImage.glucometer}
                 style={{width: 50, height: 50}}
               />
             }
+            customStyle={{
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+              paddingHorizontal: 5,
+            }}
+            customTextStyle={{marginRight: 20}}
             color=""
           />
         </View>
@@ -76,13 +130,20 @@ const ChooseDevice = () => {
           onPress={() => navigate('DeviceAndAccessories')}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
 export default ChooseDevice;
 
 const styles = StyleSheet.create({
+  deviceContainer: {
+    borderWidth: 1,
+    borderColor: Colors.LightGray,
+  },
+  middleDevice: {
+    borderRadius: 0, // Remove all border radius for the middle device
+  },
   connectBtn: {
     width: '50%',
     alignItems: 'center',
@@ -97,7 +158,7 @@ const styles = StyleSheet.create({
   },
   addBtn: {
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 10 : 0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

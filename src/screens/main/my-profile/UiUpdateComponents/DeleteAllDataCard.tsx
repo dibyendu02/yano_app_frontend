@@ -6,11 +6,15 @@ import {
   View,
   ViewStyle,
   Image,
+  Alert,
 } from 'react-native';
-import React, {ReactNode} from 'react';
+import React, {ReactNode, useContext, useEffect, useState} from 'react';
 import {Colors} from '../../../../constants/Colors';
 import checkCircle from '../../../../assets/image/checkCircle.png';
 import {useNavigation} from '@react-navigation/native';
+import {retrieveData} from '../../../../utils/Storage';
+import {deletePatientData} from '../../../../api/DELETE/manageData';
+import UserContext from '../../../../contexts/UserContext';
 
 interface CardProps {
   title?: string;
@@ -28,7 +32,36 @@ const DeleteAllDataCard: React.FC<CardProps> = ({
   active,
 }) => {
   const navigation = useNavigation();
-  const [isDelete, setIsDelete] = React.useState(false);
+  const [isDelete, setIsDelete] = useState(false);
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
+  const [token, setToken] = useState('');
+  const {login} = useContext(UserContext);
+
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const deleteUserData = async () => {
+    try {
+      const res = await deletePatientData({userId, token});
+      login(res?.userData);
+      console.log(res);
+    } catch (error) {
+      // Alert(error.message)
+      console.log(error);
+    }
+  };
 
   return (
     <View style={[styles.container, contentContainerStyle]}>
@@ -69,6 +102,7 @@ const DeleteAllDataCard: React.FC<CardProps> = ({
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
+                deleteUserData();
                 setIsDelete(true);
               }}>
               <Text style={styles.deleteButtonText}>Delete</Text>
@@ -94,12 +128,13 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   content: {
-    width: '100%',
+    width: '98%',
+    paddingLeft: 8,
     alignItems: 'flex-start',
   },
   title: {
     fontWeight: 'bold',
-    marginTop: 10,
+    // marginTop: 10,
     marginBottom: 10,
     fontSize: 20,
     color: Colors.Blue,
@@ -115,7 +150,7 @@ const styles = StyleSheet.create({
   footer: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
-    marginTop: 20,
+    marginTop: 8,
     width: '100%',
   },
   button: {

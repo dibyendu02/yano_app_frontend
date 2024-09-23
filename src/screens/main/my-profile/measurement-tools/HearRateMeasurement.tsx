@@ -86,6 +86,7 @@ const HeartRateMeasurement = () => {
     <>
       <CommonMeasurementScreen
         loading={loading}
+        count={count}
         onPress={() => handleStartMeasurements()}
         element={
           <>
@@ -101,8 +102,9 @@ const HeartRateMeasurement = () => {
               }
             />
             <ScrollView>
-              <View style={{padding: 15}}>
-                <View style={{padding: 20}}>
+              <View>
+                <View
+                  style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -117,18 +119,22 @@ const HeartRateMeasurement = () => {
                         unit: 'Beats/Min',
                       }}
                       customStyles={{
-                        width: '60%',
+                        width: '65%',
+                        borderTopLeftRadius: 8,
+                        borderBottomLeftRadius: 8,
                       }}
                     />
                     <MeasurementBox
                       loading={loading}
                       fields={{
-                        name: 'Blood Oxygen',
+                        name: 'Blood oxygen',
                         value: values.spo2,
                         unit: 'SpO2H',
                       }}
                       customStyles={{
-                        width: '40%',
+                        width: '35%',
+                        borderTopRightRadius: 8,
+                        borderBottomRightRadius: 8,
                       }}
                     />
                   </View>

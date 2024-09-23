@@ -41,10 +41,12 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
   const {control, setValue, getValues} = useFormContext();
   const [showOptionsModal, setShowOptionsModal] = useState(false);
   const handleOptionValueSelection = (value: string) => {
+    console.log(value);
     lastValue = getValues(name);
     setValue(name, value);
     !showActionButtons && setShowOptionsModal(false);
   };
+
   return (
     <View style={styles.inputBox}>
       <Controller
@@ -57,29 +59,31 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
                 {label}
               </Text>
             )}
-            <TextInput
-              style={[styles.input, error && styles.errorInput]}
-              mode="outlined"
-              outlineColor="transparent"
-              activeOutlineColor="transparent"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              outlineStyle={styles.outline}
-              cursorColor={Colors.Black}
-              selectionColor={Colors.Black}
-              editable={false}
-              placeholder={placeholder}
-              placeholderTextColor={Colors.LightBlack}
-              right={
-                <TextInput.Icon
-                  icon="chevron-down"
-                  size={25}
-                  color={Colors.Blue}
-                  onPress={() => setShowOptionsModal(true)}
-                />
-              }
-            />
+            <TouchableOpacity onPress={() => setShowOptionsModal(true)}>
+              <TextInput
+                style={[styles.input, error && styles.errorInput]}
+                mode="outlined"
+                outlineColor="transparent"
+                activeOutlineColor="transparent"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value}
+                outlineStyle={styles.outline}
+                cursorColor={Colors.Black}
+                selectionColor={Colors.Black}
+                editable={false}
+                placeholder={placeholder}
+                placeholderTextColor={Colors.LightBlack}
+                right={
+                  <TextInput.Icon
+                    icon="chevron-down"
+                    size={25}
+                    color={Colors.Blue}
+                    onPress={() => setShowOptionsModal(true)}
+                  />
+                }
+              />
+            </TouchableOpacity>
             {error && (
               <Text style={styles.errorText}>
                 {(error as FieldError).message}
@@ -117,7 +121,6 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
                     style={{
                       height: optionsListHeight,
                       width: '100%',
-                      paddingHorizontal: 20,
                       marginBottom: 10,
                     }}>
                     <RadioButton.Group
@@ -156,7 +159,7 @@ const FormSelectionInput: FC<FormSelectionInputProps> = ({
                         justifyContent: 'space-around',
                         alignItems: 'center',
                         width: '90%',
-                        paddingVertical: 10,
+                        paddingTop: 10,
                       }}>
                       <FilledButton
                         label="Cancel"
@@ -195,6 +198,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
+    // gap: 20
     borderBottomWidth: 1,
     borderBottomColor: Colors.LightGray,
     paddingVertical: 6,
@@ -203,6 +207,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.Blue,
     fontSize: 16,
+    marginLeft: -10,
   },
   errorInput: {
     borderColor: Colors.Red,
@@ -225,6 +230,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     borderWidth: 1,
     borderColor: Colors.LightGray,
+    borderRadius: 8,
     fontSize: 16,
     height: 56,
     color: Colors.Blue,

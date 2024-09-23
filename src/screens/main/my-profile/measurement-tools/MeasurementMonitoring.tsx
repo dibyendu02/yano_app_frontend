@@ -22,7 +22,7 @@ import {StaticImage} from '../../../../assets/images';
 
 const MeasurementMonitoring = ({navigation}: any) => {
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -42,16 +42,20 @@ const MeasurementMonitoring = ({navigation}: any) => {
       />
 
       <ScrollView>
-        <View style={{padding: 20}}>
+        <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
           <View style={styles.boxStyle}>
             <TouchableOpacity
               style={[
                 styles.connectBtn,
-                {borderRightWidth: 2, borderColor: Colors.LightGray},
+                {
+                  borderRightWidth: 2,
+                  borderColor: Colors.LightGray,
+                  paddingVertical: 15,
+                },
               ]}>
               <BluetoothConnected size={22} />
               {/* <Image source={} /> */}
-              <Text style={styles.textStyle}>Connect</Text>
+              <Text style={styles.textStyle}>Connected</Text>
             </TouchableOpacity>
             <View style={[styles.connectBtn]}>
               <BatteryCharge size={22} />
@@ -59,12 +63,12 @@ const MeasurementMonitoring = ({navigation}: any) => {
             </View>
           </View>
           <View style={styles.container}>
-            <Text style={styles.heading}>measure</Text>
+            <Text style={styles.heading}>start measuring</Text>
             <MeasurementItems data={measurementList} />
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
     // <>
     //     <DeviceConnectedScreen/>
     // </>
@@ -87,14 +91,14 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     fontWeight: '500',
     paddingTop: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
   },
   boxStyle: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 80,
+    height: 90,
     backgroundColor: Colors.White,
-    marginBottom: 20,
+    marginBottom: 12,
     borderRadius: 10,
   },
   connectBtn: {
@@ -106,7 +110,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontSize: 18,
-    fontWeight: '500',
+    // fontWeight: '500',
     color: Colors.SteelBlue,
   },
 });

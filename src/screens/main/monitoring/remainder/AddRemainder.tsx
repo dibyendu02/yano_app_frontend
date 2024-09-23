@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -5,7 +6,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
 import CommonLayout from '../../../../components/CommonLayout';
 import Header from '../../../../components/header/Header';
 import FilledButton from '../../../../components/buttons/FilledButton';
@@ -15,8 +15,7 @@ import {RepeatIcon} from '../../../../assets/icon/IconNames';
 import {Colors} from '../../../../constants/Colors';
 import {navigate} from '../../../../navigation/RootNavigation';
 import FormDateInput from '../../../../components/hook-form/FormDateInput';
-import FormTimeInput from './component/CustomModalTimePicker'; // Ensure this path is correct
-import CustomTimePicker from '../../../../components/formComp/CustomTimePicker';
+import FormTimePicker from '../../../../components/hook-form/FormTimeInput';
 
 const AddReminder = ({route}: any) => {
   let data = null;
@@ -42,7 +41,7 @@ const AddReminder = ({route}: any) => {
     <FormProvider {...methods}>
       <CommonLayout>
         <Header
-          title="Add Reminder"
+          title="Add reminder"
           headerRightComponent={
             <FilledButton
               type="blue"
@@ -55,6 +54,7 @@ const AddReminder = ({route}: any) => {
               }}
             />
           }
+          customStyle={{paddingBottom: 2, paddingTop: 45}}
         />
         <ScrollView>
           <View style={{padding: 20}}>
@@ -71,7 +71,7 @@ const AddReminder = ({route}: any) => {
               name="date"
               label="Date"
               placeholder="Select a date"
-              placeholderTextColor={Colors.Grey}
+              placeholderTextColor={Colors.SteelBlue}
               rules={{
                 required: {
                   value: true,
@@ -80,6 +80,7 @@ const AddReminder = ({route}: any) => {
               }}
               buttonColor={Colors.Blue}
             />
+
             <View
               style={{
                 flexDirection: 'row',
@@ -106,23 +107,15 @@ const AddReminder = ({route}: any) => {
                 a day
               </Text>
             </View>
+
             <View style={{width: '50%', marginVertical: 10}}>
-              {/* <FormTimeInput
+              <FormTimePicker
                 name="time"
                 label="At"
-                control={
-                  methods.control as unknown as Control<FieldValues, object>
-                }
-                placeholder="Choose a time"
-              /> */}
-              <CustomTimePicker
-                name="time"
-                label="At"
-                control={
-                  methods.control as unknown as Control<FieldValues, object>
-                }
+                rules={{required: 'This field is required'}}
               />
             </View>
+
             <View
               style={{
                 borderTopWidth: 1,
@@ -143,10 +136,9 @@ const AddReminder = ({route}: any) => {
                 <Text
                   style={{
                     fontSize: 18,
-                    // fontWeight: '600',
                     color: Colors.Blue,
                   }}>
-                  Set repetation
+                  Set repetition
                 </Text>
               </TouchableOpacity>
             </View>

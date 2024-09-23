@@ -1,11 +1,14 @@
 // CustomDatePicker.tsx
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Pressable, Image} from 'react-native';
 import DatePicker from 'react-native-date-picker';
+import DateTimePicker from 'react-native-ui-datepicker';
 import {Controller, Control, FieldValues, FieldError} from 'react-hook-form';
 import {TextInput} from 'react-native';
 import {DateIcon} from '../../assets/icon/IconNames';
 import {Colors} from '../../constants/Colors';
+import {StaticImage} from '../../assets/images';
+import moment from 'moment';
 
 interface CustomDatePickerProps {
   name: string;
@@ -36,10 +39,10 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
               <TextInput
                 style={[
                   styles.input,
-                  {color: Colors.Black},
+                  {color: Colors.Blue},
                   error && styles.errorInput,
                 ]}
-                value={value && new Date(value).toDateString()}
+                value={value ? moment(value).format('DD-MM-YYYY') : ''}
                 placeholder={'Select a date'}
                 editable={false}
               />
@@ -49,7 +52,11 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
                   top: 25,
                   right: 20,
                 }}>
-                <DateIcon />
+                {/* <DateIcon /> */}
+                <Image
+                  source={StaticImage.CalenderIcon}
+                  style={{width: 25, height: 25, tintColor: Colors.SteelBlue}}
+                />
               </View>
             </Pressable>
             <DatePicker

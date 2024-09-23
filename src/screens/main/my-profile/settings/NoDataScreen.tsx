@@ -12,13 +12,13 @@ const NoDataScreen = () => {
   const [downloaded, setDownloaded] = useState(false);
   const downloadData = true;
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
-      <Header title={'Download Your Data'} />
+      <Header title={'Download your data'} />
       <View
         style={{
           flex: 1,
@@ -36,7 +36,7 @@ const NoDataScreen = () => {
           Your data is collected from Yano.
         </Text>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

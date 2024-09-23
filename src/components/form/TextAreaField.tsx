@@ -35,7 +35,7 @@ export const TextArea: FC<inputProps> = ({
 
 const styles = StyleSheet.create({
   inputBox: {
-    marginBottom: 20,
+    marginBottom: 12,
   },
   label: {
     fontSize: 16,
@@ -51,5 +51,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     fontSize: 16,
     textAlignVertical: 'top',
+    color: Colors.SteelBlue,
   },
 });

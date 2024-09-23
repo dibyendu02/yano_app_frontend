@@ -1,20 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../../../components/header/Header';
-import { Colors } from '../../../../../constants/Colors';
+import {Colors} from '../../../../../constants/Colors';
 import FilledButton from '../../../../../components/buttons/FilledButton';
 import Card from '../../../../../components/cards/Card';
 import CustomRadioButton from '../../../../../components/formComp/CustomRadio';
 import RadioButton from '../components/RadioButton';
 import StripCodeScroll from '../components/StripCodeScroll';
-import { StaticImage } from '../../../../../assets/images';
-import { Image } from 'react-native';
+import {StaticImage} from '../../../../../assets/images';
+import {Image} from 'react-native';
 
-const BloodGlucoseStep2 = ({ navigation }: any) => {
+const BloodGlucoseStep2 = ({navigation}: any) => {
   const [code, setCode] = useState('C20');
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -27,9 +27,12 @@ const BloodGlucoseStep2 = ({ navigation }: any) => {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          margin: 15,
+          marginTop: 12,
+          width: '94%',
+          margin: 'auto',
           borderRadius: 10,
           padding: 15,
+          paddingHorizontal: 0,
         }}>
         <Text
           style={{
@@ -37,14 +40,18 @@ const BloodGlucoseStep2 = ({ navigation }: any) => {
             fontSize: 18,
             marginBottom: 20,
             fontWeight: '400',
+            marginHorizontal: 10,
           }}>
           Take a drop of blood from one of your fingers using a lancing device.
         </Text>
         <View>
-          <Image source={StaticImage.TakeADropOfBlood} style={{
-            height: 296,
-            width: 296
-          }} />
+          <Image
+            source={StaticImage.TakeADropOfBlood}
+            style={{
+              height: 296,
+              width: 296,
+            }}
+          />
         </View>
       </View>
 
@@ -54,7 +61,7 @@ const BloodGlucoseStep2 = ({ navigation }: any) => {
           // icon={
           // }
           type={'lightGrey'}
-          style={{ width: '48%', alignSelf: 'center', marginVertical: 14 }}
+          style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.goBack()}
           activeOpacity={0.8}
         />
@@ -63,12 +70,12 @@ const BloodGlucoseStep2 = ({ navigation }: any) => {
           // icon={
           // }
           type={'blue'}
-          style={{ width: '48%', alignSelf: 'center', marginVertical: 14 }}
+          style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.navigate('BloodGlucoseStep3')}
           activeOpacity={0.8}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -77,7 +84,7 @@ export default BloodGlucoseStep2;
 const styles = StyleSheet.create({
   addBtn: {
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 10 : 0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

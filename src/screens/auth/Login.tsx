@@ -1,4 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
+import React, {useContext, useState} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -6,37 +6,80 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
-import React, { useContext, useEffect } from 'react';
 
+import axios from 'axios';
 import Header from '../../components/header/Header';
-import { navigate } from '../../navigation/RootNavigation';
-import { Colors } from '../../constants/Colors';
-import { AuthScreen } from '../../navigation/auth/AuthScreens';
+import {navigate} from '../../navigation/RootNavigation';
+import {Colors} from '../../constants/Colors';
+import {AuthScreen} from '../../navigation/auth/AuthScreens';
 import FormInput from '../../components/hook-form/FormInput';
-import { FormInputType } from '../../components/hook-form/types';
-import { FormProvider, useForm } from 'react-hook-form';
+import {FormInputType} from '../../components/hook-form/types';
+import {FormProvider, useForm} from 'react-hook-form';
 import FilledButton from '../../components/buttons/FilledButton';
-import { StaticImage } from '../../assets/images';
+import {StaticImage} from '../../assets/images';
 import UserContext from '../../contexts/UserContext';
+import {BASE_URL} from '../../../App';
+import {storeData} from '../../utils/Storage';
 
-const Login = () => {
-  const { login } = useContext(UserContext);
-  const { ...methods } = useForm({ mode: 'onBlur' });
+const Login = ({navigation}: any) => {
+  const {login, PatientLogin, ProviderLogin} = useContext(UserContext);
+  const [isClicked, setIsClicked] = useState(false);
+  const methods = useForm({mode: 'onBlur'});
 
-  const onSubmit = () => {
-    login();
-    // navigate('tabs');
+  const onSubmit = async (data: any) => {
+    const {email, password} = data;
+
+    setIsClicked(true);
+
+    try {
+      const response = await axios.post(`${BASE_URL}/api/login`, {
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        // Store necessary data locally
+        await storeData('token', response.data.token);
+        await storeData('userId', response.data.userData._id);
+        await storeData('isAuth', true);
+        await storeData('userType', response.data.userData.userType);
+
+        // Update global userData
+        login(response.data.userData);
+
+        if (response.data.userData.userType === 'patient') {
+          PatientLogin();
+          navigation.navigate(AuthScreen.LoadingScreen);
+        } else {
+          ProviderLogin();
+          navigation.navigate(AuthScreen.LoadingScreen);
+        }
+      } else {
+        Alert.alert(
+          'Login Failed',
+          response.data.message || 'An error occurred',
+        );
+        setIsClicked(false);
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      Alert.alert(
+        'Login Failed',
+        error.response?.data?.message || 'An unexpected error occurred.',
+      );
+      setIsClicked(false);
+    }
   };
-  useEffect(() => {
-    console.log();
-  }, []);
+
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header
         title=""
         headerRightComponent={
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Text style={styles.text}>Not registered?</Text>
             <TouchableOpacity
               onPress={() => navigate(AuthScreen.SelectUserType)}>
@@ -44,6 +87,7 @@ const Login = () => {
             </TouchableOpacity>
           </View>
         }
+        customStyle={{paddingVertical: 4, paddingTop: 50}}
       />
       <View style={styles.body}>
         <Text
@@ -61,7 +105,6 @@ const Login = () => {
             name="email"
             label="Email"
             type={FormInputType.Email}
-            // placeholder="Enter your email"
             autoCapitalize="none"
             keyboardType="email-address"
             rules={{
@@ -75,7 +118,6 @@ const Login = () => {
             name="password"
             label="Password"
             type={FormInputType.Password}
-            // placeholder="Enter your password"
             rules={{
               required: {
                 value: true,
@@ -90,18 +132,20 @@ const Login = () => {
             justifyContent: 'flex-end',
             marginBottom: 20,
           }}>
-          <TouchableOpacity
-            onPress={() => navigate(AuthScreen.ForgotPass)}
-          >
-            <Text style={{ color: Colors.Blue }}>Forgot your password?</Text>
+          <TouchableOpacity onPress={() => navigate(AuthScreen.ForgotPass)}>
+            <Text style={{color: Colors.Blue}}>Forgot your password?</Text>
           </TouchableOpacity>
         </View>
-        <FilledButton
-          label="Log in"
-          type="blue"
-          disabled={!methods.formState.isValid}
-          onPress={methods.handleSubmit(onSubmit)}
-        />
+        {isClicked ? (
+          <ActivityIndicator size={'large'} color={Colors.Blue} />
+        ) : (
+          <FilledButton
+            label="Log in"
+            type="blue"
+            disabled={!methods.formState.isValid}
+            onPress={methods.handleSubmit(onSubmit)}
+          />
+        )}
         <View
           style={{
             flexDirection: 'row',
@@ -110,11 +154,11 @@ const Login = () => {
             marginVertical: 40,
           }}>
           <View
-            style={{ width: '45%', height: 2, backgroundColor: Colors.LightGray }}
+            style={{width: '45%', height: 2, backgroundColor: Colors.LightGray}}
           />
-          <Text style={{ fontSize: 18, color: Colors.Blue }}>o</Text>
+          <Text style={{fontSize: 16, color: Colors.Blue}}>or</Text>
           <View
-            style={{ width: '45%', height: 2, backgroundColor: Colors.LightGray }}
+            style={{width: '45%', height: 2, backgroundColor: Colors.LightGray}}
           />
         </View>
         <FilledButton
@@ -135,7 +179,7 @@ const Login = () => {
           label="Log in with Facebook"
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

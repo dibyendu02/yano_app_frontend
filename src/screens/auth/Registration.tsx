@@ -9,24 +9,28 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
 import React from 'react';
 import Header from '../../components/header/Header';
-import { navigate } from '../../navigation/RootNavigation';
-import { Colors } from '../../constants/Colors';
-import { AuthScreen } from '../../navigation/auth/AuthScreens';
-import { FormProvider, useForm } from 'react-hook-form';
+import {navigate} from '../../navigation/RootNavigation';
+import {Colors} from '../../constants/Colors';
+import {AuthScreen} from '../../navigation/auth/AuthScreens';
+import {FormProvider, useForm} from 'react-hook-form';
 import FormInput from '../../components/hook-form/FormInput';
-import { FormInputType } from '../../components/hook-form/types';
+import {FormInputType} from '../../components/hook-form/types';
 import FormDateInput from '../../components/hook-form/FormDateInput';
 import FormSelectionInput from '../../components/hook-form/FormSelectionInput';
 import FilledButton from '../../components/buttons/FilledButton';
 import FormPhoneNumberInput from '../../components/hook-form/FormPhoneNumberInput';
 import FormImageInput from '../../components/hook-form/FormImageInput';
-import { AuthScreensProps } from '../../navigation/auth/types';
-import { UserType } from '../../constants/enums';
+import {AuthScreensProps} from '../../navigation/auth/types';
+import {UserType} from '../../constants/enums';
 import moment from 'moment';
-import { registerDoctor, registerPatient } from '../../services/Endpoints';
+import {registerPatient} from '../../services/Endpoints';
+import {signUPPatient, registerDoctor} from '../../api/POST/signup';
+import axios from 'axios';
+import {ActivityIndicator} from 'react-native-paper';
 
 const Gender = [
   {
@@ -104,72 +108,147 @@ const DoctorSpecialties = [
   },
 ];
 
-const Registration: React.FC<AuthScreensProps> = ({ route }) => {
+const Registration: React.FC<AuthScreensProps> = ({route}) => {
   //@ts-ignore
+
+  const [isContinue, setIsContinue] = React.useState(false);
   const userType = route?.params?.userType;
+
+  const {...methods} = useForm({
+    mode: 'onChange',
+  });
+  // const onSubmit = async (data: any) => {
+  //   let requestData = new FormData();
+  //   if (data?.file) {
+  //     requestData.append('image', {
+  //       uri:
+  //         Platform.OS === 'ios'
+  //           ? `file:///${data?.file?.path}`
+  //           : data?.file.path,
+  //       type: data?.file?.mime,
+  //       name: `${moment()}.jpeg`,
+  //     });
+  //   }
+
+  //   let payload: any = {
+  //     firstName: '',
+  //     lastName: '',
+  //     email: '',
+  //     phoneNumber: '',
+  //     gender: '',
+  //     dateOfBirth: '',
+  //     password: '',
+  //     specialty: '',
+  //   };
+
+  //   for (let key in payload) {
+  //     requestData.append(key, data[key]);
+  //   }
+
+  //   const res = await signUP(requestData)
+  //   console.log(res, 'res')
+
+  //   if (userType === UserType.Patient) {
+  //     const res = await signUP(requestData)
+  //     console.log(res, 'res')
+  //   } else {
+  //     registerDoctor(requestData)
+  //       .then(res => {
+  //         console.log(res, '<--------->');
+  //       })
+  //       .catch(e => console.log('Error!', e?.response?.data?.message));
+  //   }
+  //   // navigate(AuthScreen.AccountVerification);
+  // };
 
   console.log(userType);
 
-  const { ...methods } = useForm({
-    mode: 'onChange',
-  });
   const onSubmit = async (data: any) => {
-    let requestData = new FormData();
-    if (data?.file) {
-      requestData.append('image', {
-        uri:
-          Platform.OS === 'ios'
-            ? `file:///${data?.file?.path}`
-            : data?.file.path,
-        type: data?.file?.mime,
-        name: `${moment()}.jpeg`,
+    setIsContinue(true); // Start loading state
+    try {
+      // Prepare form data
+      let requestData = new FormData();
+      Object.keys(data).forEach(key => {
+        if (key !== 'file' && key !== 'repeatPassword') {
+          if (key === 'dateOfBirth') {
+            requestData.append(key, moment(data[key]).format('YYYY-MM-DD'));
+          } else {
+            requestData.append(key, data[key]);
+          }
+        }
       });
-    }
 
-    let payload: any = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phoneNumber: '',
-      gender: '',
-      dateOfBirth: '',
-      password: '',
-      specialty: '',
-    };
-    for (let key in payload) {
-      requestData.append(key, data[key]);
+      requestData.append('country', 'India');
+
+      if (data.file) {
+        requestData.append('file', {
+          uri:
+            Platform.OS === 'ios' ? `file://${data.file.path}` : data.file.path,
+          type: data.file.mime,
+          name: `photo_${Date.now()}.jpg`,
+        });
+      }
+
+      let res;
+
+      if (userType === UserType.Patient) {
+        res = await signUPPatient(requestData);
+      } else {
+        res = await registerDoctor(requestData);
+      }
+
+      console.log(res);
+
+      // Check for success response or errors
+      if (res.status === 201) {
+        // Success: Navigate to account verification page
+        console.log('Navigating with userType:', userType);
+        navigate(AuthScreen.AccountVerification, {userType: userType});
+      } else if (
+        res.status === 400 &&
+        res.error.message === 'User already exists'
+      ) {
+        // User already exists: Show alert
+        Alert.alert('Error', 'User with this email already exists.');
+        setIsContinue(false); // Stop loading state
+      } else {
+        // Handle other errors
+        Alert.alert('Error', res.error.message || 'An error occurred.');
+        setIsContinue(false); // Stop loading state
+      }
+    } catch (e) {
+      console.error('Error!', e);
+      if (axios.isAxiosError(e) && e.response) {
+        console.error('Server Response:', e.response.data);
+        Alert.alert('Error', e.response.data.message || 'An error occurred');
+      }
+    } finally {
+      setIsContinue(false); // Ensure loading stops in all cases
     }
-    if (userType === UserType.Patient) {
-      registerPatient(requestData)
-        .then(res => {
-          console.log(res, '<--------->');
-        })
-        .catch(e => console.log('Error!', e?.response?.data?.message));
-    } else {
-      registerDoctor(requestData)
-        .then(res => {
-          console.log(res, '<--------->');
-        })
-        .catch(e => console.log('Error!', e?.response?.data?.message));
-    }
-    navigate(AuthScreen.AccountVerification);
   };
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
+        style={{flex: 1}}>
+        <View style={{flex: 1}}>
           <Header
             title=""
             headerRightComponent={
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  marginBottom: 5,
+                }}>
                 <Text style={styles.text}>Already registered?</Text>
                 <TouchableOpacity onPress={() => navigate(AuthScreen.Login)}>
                   <Text style={styles.loginButton}>Log in</Text>
                 </TouchableOpacity>
               </View>
             }
+            customStyle={{paddingTop: 50}}
           />
           <View style={styles.body}>
             <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
@@ -197,7 +276,7 @@ const Registration: React.FC<AuthScreensProps> = ({ route }) => {
                 />
                 <FormInput
                   name="lastName"
-                  label="Last Name"
+                  label="Last name"
                   // placeholder="Enter your last name"
                   rules={{
                     required: {
@@ -258,7 +337,7 @@ const Registration: React.FC<AuthScreensProps> = ({ route }) => {
                 />
                 {userType === UserType.Doctor && (
                   <FormSelectionInput
-                    name="specialty"
+                    name="speciality"
                     placeholder="Select your specialty"
                     label="Specialty"
                     options={DoctorSpecialties}
@@ -310,29 +389,42 @@ const Registration: React.FC<AuthScreensProps> = ({ route }) => {
           marginHorizontal: 'auto',
           textAlign: 'center',
           paddingTop: 10,
+          bottom: Platform.OS === 'ios' ? 10 : 0,
+
           color: '#3D5A6C',
         }}>
         When registering you are accepting our{' '}
-        <Text style={{ color: Colors.Blue, textDecorationLine: 'underline' }}>
+        <Text style={{color: Colors.Blue, textDecorationLine: 'underline'}}>
           Terms and conditions
         </Text>{' '}
         and
-        <Text style={{ color: Colors.Blue, textDecorationLine: 'underline' }}>
+        <Text style={{color: Colors.Blue, textDecorationLine: 'underline'}}>
           {' '}
           Privacy policies
         </Text>
       </Text>
-      <FilledButton
-        label="Continue"
-        type="blue"
-        style={{ width: '92%', alignSelf: 'center', marginVertical: 10 }}
-        // disabled={!methods.formState.isDirty}
-        // onPress={methods.handleSubmit(onSubmit)}
-        onPress={() =>
-          navigate(AuthScreen.AccountVerification, { userType: userType })
-        }
-      />
-    </SafeAreaView>
+      {isContinue ? (
+        <View style={{marginVertical: 10, marginBottom: 20}}>
+          <ActivityIndicator size={30} color={Colors.Blue} />
+        </View>
+      ) : (
+        <FilledButton
+          label="Continue"
+          type="blue"
+          style={{
+            width: '92%',
+            alignSelf: 'center',
+            marginVertical: 10,
+            bottom: Platform.OS === 'ios' ? 10 : 0,
+          }}
+          // disabled={!methods.formState.isDirty}
+          onPress={methods.handleSubmit(onSubmit)}
+          // onPress={() =>
+          //   navigate(AuthScreen.AccountVerification, { userType: userType })
+          // }
+        />
+      )}
+    </View>
   );
 };
 
@@ -357,5 +449,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.GhostWhite,
     paddingHorizontal: 14,
+    bottom: Platform.OS === 'ios' ? 10 : 0,
   },
 });

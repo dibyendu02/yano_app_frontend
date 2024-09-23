@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from '../../../../../components/header/Header';
@@ -11,7 +11,7 @@ import RadioButton from '../components/RadioButton';
 const BloodGlucoseTestTime = ({navigation}: any) => {
   const [time, setTime] = useState('before-breakfast');
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -23,7 +23,9 @@ const BloodGlucoseTestTime = ({navigation}: any) => {
       <View
         style={{
           backgroundColor: Colors.White,
-          margin: 15,
+          marginTop: 12,
+          width: '94%',
+          margin: 'auto',
           borderRadius: 10,
           padding: 15,
         }}>
@@ -82,8 +84,6 @@ const BloodGlucoseTestTime = ({navigation}: any) => {
       <View style={styles.addBtn}>
         <FilledButton
           label={'Back'}
-          // icon={
-          // }
           type={'lightGrey'}
           style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.goBack()}
@@ -91,15 +91,13 @@ const BloodGlucoseTestTime = ({navigation}: any) => {
         />
         <FilledButton
           label={'Next'}
-          // icon={
-          // }
           type={'blue'}
           style={{width: '48%', alignSelf: 'center', marginVertical: 14}}
           onPress={() => navigation.navigate('BloodGlucoseSelectStrip')}
           activeOpacity={0.8}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -108,7 +106,7 @@ export default BloodGlucoseTestTime;
 const styles = StyleSheet.create({
   addBtn: {
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 10 :  0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

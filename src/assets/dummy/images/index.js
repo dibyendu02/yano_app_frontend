@@ -20,5 +20,9 @@ export const DummyImage = {
   glucoround: require('./gluco-round.png'),
   monitor: require('./monitor-device.png'),
   grid: require('./grid.png'),
-  bloodTemp: require('./body_temperature_result.png')
+  bodyTemp: require('./body_temperature_result.png'),
+  farmaciasLogo: require('./farmacias.png'),
+  farmatodoLogo: require('./farmatodo.png'),
+  locatelLogo: require('./locatel.png'),
+  stripsBox: require('./strips.png'),
 };

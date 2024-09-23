@@ -61,6 +61,7 @@ const styles = StyleSheet.create({
   content: {
     width: '100%',
     alignItems: 'flex-start',
+    // backgroundColor: 'yellow',
   },
   title: {
     fontWeight: 'bold',
@@ -82,10 +83,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     marginTop: 20,
     width: '100%',
+    // backgroundColor: 'red',
   },
   button: {
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingLeft: 30,
   },
   cancelButtonText: {
     color: Colors.LightGreen,

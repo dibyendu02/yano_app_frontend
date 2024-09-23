@@ -65,7 +65,7 @@ export const MeasurementSettingItems = [
     unit2: 'Feets, inches',
   },
   {
-    title: 'Glucose level',
+    title: 'Blood glucose',
     subtitle: 'mmol/L',
     img: require('./image/glucoseLavel.png'),
     path: '',

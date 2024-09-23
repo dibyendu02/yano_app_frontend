@@ -10,60 +10,33 @@ import {
   FlatList,
   ScrollView,
   Share,
+  Platform,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { userData } from '../../../../test/Data';
+// import {userData} from '../../../../test/Data';
 import Header from '../../../../components/header/Header';
-import { EditIcon } from '../../../../assets/icon/IconNames';
+import {EditIcon} from '../../../../assets/icon/IconNames';
 import Card from '../../../../components/cards/Card';
-import { DummyImage } from '../../../../assets/dummy/images';
-import { navigate } from '../../../../navigation/RootNavigation';
-import { Colors } from '../../../../constants/Colors';
+import {DummyImage} from '../../../../assets/dummy/images';
+import {navigate} from '../../../../navigation/RootNavigation';
+import {Colors} from '../../../../constants/Colors';
 import PatientElements from '../../../../components/PatientElements';
 import Icons from '../../../../assets/icon/Icon';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import BottomSheet from '../../../../components/bottom-sheet/BottomSheet';
-import { CardStyles } from '../../../../components/cards/CardStyle';
+import {CardStyles} from '../../../../components/cards/CardStyle';
 import Badge from '../../../../components/Badge';
 import ShareButton from './ShareButton';
-import { StaticImage } from '../../../../assets/images';
-
-let data1 = [
-  {
-    label: userData.gender,
-    icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
-  },
-  {
-    label: userData.age,
-    icon: (
-      <Image
-        source={StaticImage.CalenderIcon}
-        style={{ height: 20, width: 20, tintColor: Colors.LightGreen }}
-      />
-    ),
-  },
-  {
-    label: userData.blood,
-    icon: (
-      <Image source={StaticImage.BloodIcon} style={{ height: 20, width: 20 }} />
-    ),
-  },
-];
-
-let data2 = [
-  {
-    label: userData.height,
-    icon: <MaterialIcons name="height" size={20} color={'#76BC21'} />,
-  },
-  {
-    label: userData.weight,
-    icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
-  },
-];
+import {StaticImage} from '../../../../assets/images';
+import UserContext from '../../../../contexts/UserContext';
+import {useNavigation} from '@react-navigation/native';
+import {staticIcons} from '../../../../assets/image';
+import {StatusBar} from 'react-native';
+import QRCodeSVG from 'react-native-qrcode-svg';
 
 const menuData = [
   {
@@ -81,14 +54,9 @@ const menuData = [
   {
     id: '2',
     icon: (
-      // <Icons.MaterialIcons
-      //   name="diversity-3"
-      //   size={25}
-      //   color={Colors.LightGreen}
-      // />
       <Image
         source={StaticImage.FamilyIcon}
-        style={{ height: 20, width: 20, marginRight: 3 }}
+        style={{height: 20, width: 20, marginRight: 3}}
       />
     ),
     text: 'Family link',
@@ -105,7 +73,7 @@ const menuData = [
     icon: (
       <Image
         source={StaticImage.QuestionIcon}
-        style={{ height: 20, width: 18, marginRight: 3 }}
+        style={{height: 20, width: 18, marginRight: 3}}
       />
     ),
     text: "Yano's support",
@@ -116,7 +84,7 @@ const menuData = [
 const onShare = async () => {
   try {
     const result = await Share.share({
-      message: ''
+      message: 'Join me on Yano',
     });
     if (result.action === Share.sharedAction) {
       if (result.activityType) {
@@ -134,15 +102,91 @@ const onShare = async () => {
 
 export default function () {
   const [showQR, setShowQR] = useState(false);
+  const {userData} = useContext(UserContext);
+
+  const calculateAge = dateString => {
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDifference = today.getMonth() - birthDate.getMonth();
+
+    // If the birth month hasn't occurred yet this year, subtract one from the age.
+    // Or, if it is the birth month but the day hasn't occurred yet this year, subtract one from the age.
+    if (
+      monthDifference < 0 ||
+      (monthDifference === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      age--;
+    }
+
+    return age;
+  };
+
+  let data1 = [
+    {
+      label: userData?.gender,
+      icon: (
+        <Foundation
+          name={userData?.gender === 'Male' ? `female-symbol` : `male-symbol`}
+          size={20}
+          color={'#76BC21'}
+        />
+      ),
+    },
+    {
+      label: calculateAge(userData?.dateOfBirth || '60'),
+      icon: (
+        <Image
+          source={StaticImage.CalenderIcon}
+          style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
+        />
+      ),
+      unit: 'years',
+    },
+    {
+      label: userData?.bloodType,
+      icon: (
+        <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
+      ),
+    },
+  ];
+
+  let data2 = [
+    {
+      label: userData?.height,
+      icon: <MaterialIcons name="height" size={20} color={'#76BC21'} />,
+      unit: 'cm',
+    },
+    {
+      label: userData?.weight,
+      icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
+      unit: 'kg',
+    },
+  ];
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    console.log('it runs');
+    if (Platform.OS === 'android') {
+      if (showQR) {
+        StatusBar.setBackgroundColor('rgba(0,0,0,0.3)');
+        StatusBar.setTranslucent(true);
+      } else {
+        StatusBar.setBackgroundColor('transparent');
+        StatusBar.setTranslucent(true);
+      }
+    }
+  }, [showQR]);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header
         title="My profile"
         headerRightComponent={
-          <TouchableOpacity>
-            {/* <EditIcon /> */}
-            <Image source={require('../../../../assets/image/EditPencil.png')}
-              style={{ height: 26, width: 24 }}
+          <TouchableOpacity
+            onPress={() => navigation.navigate('EditPatientProfile')}>
+            <Image
+              source={staticIcons.EditPencil}
+              style={{height: 26, width: 24}}
             />
           </TouchableOpacity>
         }
@@ -150,21 +194,31 @@ export default function () {
       />
 
       <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
-        <Card>
+        <Card contentContainerStyle={{marginTop: 12, marginBottom: 8}}>
           <Image
-            source={DummyImage.user}
+            source={
+              userData?.userImg
+                ? {uri: userData?.userImg?.secure_url}
+                : DummyImage.user
+            }
             style={{
               height: 80,
               width: 80,
               borderRadius: 40,
+              marginTop: 2,
             }}
           />
-          <Text style={styles.patientName}>María Clemente</Text>
+          <Text style={styles.patientName}>
+            {userData?.firstName} {userData?.lastName}
+          </Text>
           <View style={styles.detailRow}>
             {data1.map((e, i, a) => (
               <View style={styles.detailItem} key={e.label}>
                 {e.icon}
                 <Text style={styles.detailText}>{e.label}</Text>
+                <Text style={[styles.detailText, {marginLeft: 0}]}>
+                  {e?.unit}
+                </Text>
                 {i < a.length - 1 && <View style={styles.separator} />}
               </View>
             ))}
@@ -175,43 +229,28 @@ export default function () {
               <View style={styles.detailItem} key={e.label}>
                 {e.icon}
                 <Text style={styles.detailText}>{e.label}</Text>
+                <Text style={[styles.detailText, {marginLeft: 0}]}>
+                  {e.unit}
+                </Text>
                 {i < a.length - 1 && <View style={styles.separator} />}
               </View>
             ))}
           </View>
-          {/* <Badge
-            icon={
-              <Icons.MaterialIcons
-                name="health-and-safety"
-                size={18}
-                color={Colors.Blue}
-              />
-            }
-            text="Healthcare provider: Dr. Eduardo Escobar"
-          /> */}
-          {/* <Badge
-            icon={
-              <Icons.MaterialIcons
-                name="diversity-3"
-                size={18}
-                color={Colors.Blue}
-              />
-            }
-            text="Mother of: Pedro Anzola"
-            color="#B8DAFF"
-          /> */}
+
+          <View style={styles.horizontalSeparator} />
 
           <View
             style={{
               width: '100%',
               flexDirection: 'row',
               justifyContent: 'center',
-              padding: 14,
+              paddingHorizontal: 14,
+              paddingTop: 14,
             }}>
             <ShareButton
-              label="Share Profile"
+              label="Share profile"
               type="blue"
-              style={{ width: '85%' }}
+              style={{width: '85%'}}
               onPress={onShare}
               icon={
                 <Icons.EvilIcons
@@ -221,18 +260,27 @@ export default function () {
                 />
               }
             />
-            <FilledButton
-              type="lightGrey"
-              style={{ width: '18%', marginLeft: 8 }}
-              icon={
-                // <Icons.AntDesign name="qrcode" color={Colors.Blue} size={25} />
-                <Image
-                  source={StaticImage.QrCode}
-                  style={{ width: 20, height: 20 }}
-                />
-              }
+            <TouchableOpacity
               onPress={() => setShowQR(true)}
-            />
+              style={{
+                width: 60,
+                height: 60,
+                backgroundColor: Colors.LightGray,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                marginVertical: 5,
+                marginLeft: 8,
+              }}>
+              <Image
+                source={StaticImage.QrCode}
+                style={{
+                  width: 20,
+                  height: 20,
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </Card>
 
@@ -240,10 +288,11 @@ export default function () {
           <FlatList
             data={menuData}
             style={{
-              paddingHorizontal: 20,
-              paddingVertical: 10,
+              paddingLeft: 20,
+              paddingRight: 13,
+              // paddingVertical: 10,
             }}
-            renderItem={({ item, index: _i }) => (
+            renderItem={({item, index: _i}) => (
               <TouchableOpacity
                 onPress={() => navigate(item.path)}
                 style={{
@@ -262,8 +311,9 @@ export default function () {
                   <Text
                     style={{
                       color: Colors.Blue,
-                      fontSize: 18,
-                      fontWeight: '800',
+                      fontSize: 16,
+                      // fontWeight: '800',
+                      fontWeight: '600',
                       marginLeft: 14,
                     }}>
                     {item.text}
@@ -271,7 +321,7 @@ export default function () {
                 </View>
                 <Icons.MaterialIcons
                   name="navigate-next"
-                  size={30}
+                  size={25}
                   color={Colors.Blue}
                 />
               </TouchableOpacity>
@@ -281,24 +331,39 @@ export default function () {
         </View>
       </ScrollView>
       <BottomSheet isVisible={showQR} onBackdropPress={() => setShowQR(false)}>
-        <View style={{ padding: 20, alignItems: 'center' }}>
+        <View style={{padding: 20, alignItems: 'center'}}>
           <View
             style={{
               padding: 5,
-            }}
-          >
+            }}>
             <Text
               style={{
-                fontFamily: "Roboto",
+                fontFamily: 'Roboto',
                 fontSize: 20,
                 fontWeight: '700',
-                color: Colors.Blue
-              }}
-            >Share QR code</Text>
+                color: Colors.Blue,
+              }}>
+              Share QR code
+            </Text>
           </View>
-          <Image source={DummyImage.QR}
-            style={{ width: 200, height: 200 }}
-          />
+          {/* <Image source={DummyImage.QR} style={{width: 150, height: 150}} /> */}
+          {/* Dynamically generated QR code based on user's email */}
+          <View
+            style={{
+              backgroundColor: Colors.GhostWhite,
+              padding: 16,
+              borderRadius: 8,
+              marginTop: 10,
+            }}>
+            {userData?.email && (
+              <QRCodeSVG
+                value={userData.email} // Pass the user's email here
+                size={120}
+                color={Colors.Black}
+              />
+            )}
+          </View>
+
           <Text
             style={{
               marginVertical: 20,
@@ -317,7 +382,7 @@ export default function () {
           />
         </View>
       </BottomSheet>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -340,6 +405,12 @@ const styles = StyleSheet.create({
     height: 20,
     backgroundColor: '#E9E9E9',
     marginHorizontal: 8,
+  },
+  horizontalSeparator: {
+    width: '120%',
+    height: 1.4,
+    backgroundColor: '#e9e9e9',
+    marginTop: 10,
   },
   secondContainer: {
     flex: 1,

@@ -6,6 +6,7 @@ import {
   Image,
   ImageBackground,
   SafeAreaView,
+  Share,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -29,11 +30,16 @@ const HealthParameterDetail = ({route}) => {
   let healthParameterDetail = route?.params?.healthParameterDetail;
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <Header
         title={healthParameterDetail?.field_full}
         headerRightComponent={
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              Share.share({
+                message: `Check out my ${healthParameterDetail?.field_full} health parameter details on the Health App`,
+              });
+            }}>
             <Image
               source={StaticImage.SharerIcon}
               style={{height: 25, width: 25}}
@@ -41,7 +47,12 @@ const HealthParameterDetail = ({route}) => {
           </TouchableOpacity>
         }
       />
-      <View style={{flex: 1, backgroundColor: Colors.GhostWhite}}>
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: Colors.GhostWhite,
+          paddingTop: healthParameterDetail?.field !== 'ECG' ? 8 : 0,
+        }}>
         {healthParameterDetail?.field !== 'ECG' ? (
           <View style={[CardStyles.container]}>
             <View style={{width: '100%', padding: 20}}>
@@ -61,7 +72,10 @@ const HealthParameterDetail = ({route}) => {
                     fontWeight: 'bold',
                     color: Colors.Blue,
                   }}>
-                  {'Normal' + ' ' + healthParameterDetail?.field_full}
+                  {/* {'Normal' + ' ' + healthParameterDetail?.field_full} */}
+                  {healthParameterDetail?.field == 'BP'
+                    ? `Normal blood pressure`
+                    : `Normal`}
                 </Text>
               </View>
               <Text style={{fontSize: 12, color: Colors.SteelBlue}}>
@@ -100,25 +114,26 @@ const HealthParameterDetail = ({route}) => {
                       {item.label}
                     </Text>
                   </View>
+
                   <Text
                     style={{
-                      fontSize: 17,
+                      fontSize: 18,
                       fontFamily: 'Roboto',
                       marginBottom: 4,
-                      fontWeight: '500',
-                    }}>
+                      fontWeight: Platform.OS === 'android' ? 'bold' : '600',
+                      color: Colors.Blue,
+                    }}
+                    key={item.unit}>
                     {item.value}{' '}
-                    {item.unit && (
-                      <Text
-                        style={{
-                          fontSize: 15,
-                          fontFamily: 'Roboto',
-                          fontWeight: 'light',
-                          color: Colors.SteelBlue,
-                        }}>
-                        {item.unit}
-                      </Text>
-                    )}
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontFamily: 'Roboto',
+                        fontWeight: 'light',
+                        color: Colors.SteelBlue,
+                      }}>
+                      {item.unit}
+                    </Text>
                   </Text>
                 </View>
               )}
@@ -200,8 +215,8 @@ const HealthParameterDetail = ({route}) => {
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}>
-                <Text style={styles.dataLabel}>Gain: 10mm/mv</Text>
-                <Text style={styles.dataLabel}>Paper speed: 10mm/mv</Text>
+                <Text style={styles.dataLabel}>Gain: 10mm/mV</Text>
+                <Text style={styles.dataLabel}>Paper speed: 10mm/mV</Text>
               </View>
             </View>
 
@@ -308,7 +323,7 @@ const HealthParameterDetail = ({route}) => {
         onPress={() => setIsReviewed(!isReviewed)}
         activeOpacity={0.8}
       /> */}
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -8,7 +8,7 @@ export const healthStatsData = [
     month: 'July',
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5,6',
@@ -80,10 +80,10 @@ export const healthStatsData = [
 const healthParameterDetails = {
   GL: {
     field: 'GL',
-    field_full: 'Glucose Level',
+    field_full: 'Blood glucose',
     data: [
       {
-        label: 'Glucose Level',
+        label: 'Blood glucose',
         value: '5.6',
         unit: 'mmol/L',
       },
@@ -99,10 +99,10 @@ const healthParameterDetails = {
 export const healthParameterDetailsN = {
   GL: {
     field: 'GL',
-    field_full: 'Glucose Level',
+    field_full: 'Blood glucose',
     data: [
       {
-        label: 'Glucose Level',
+        label: 'Blood glucose',
         value: '5.6',
         unit: 'mmol/L',
       },
@@ -115,7 +115,7 @@ export const healthParameterDetailsN = {
   },
   BP: {
     field: 'BP',
-    field_full: 'Blood Pressure',
+    field_full: 'Blood pressure',
     data: [
       {
         label: 'Systolic Pressure',
@@ -136,7 +136,7 @@ export const healthParameterDetailsN = {
   },
   HR: {
     field: 'HR',
-    field_full: 'Heart Rhythm',
+    field_full: 'Heart rhythm',
     data: [
       {
         label: 'Heart Rate',
@@ -152,7 +152,7 @@ export const healthParameterDetailsN = {
   },
   BO: {
     field: 'BO',
-    field_full: 'Blood Oxygen',
+    field_full: 'Blood oxygen',
     data: [
       {
         label: 'Blood Oxygen',
@@ -168,7 +168,7 @@ export const healthParameterDetailsN = {
   },
   BT: {
     field: 'BT',
-    field_full: 'Body Temperature',
+    field_full: 'Body temperature',
     data: [
       {
         label: 'Body Temperature',
@@ -179,7 +179,7 @@ export const healthParameterDetailsN = {
   },
   ECG: {
     field: 'ECG',
-    field_full: 'Electrocardiogram',
+    field_full: 'ECG',
     data: [
       {
         label: 'ECG Date',
@@ -224,7 +224,7 @@ export const healthParameterDetailsN = {
 
 export const GlucoseDetail = [
   {
-    label: 'Glucose Level',
+    label: 'Blood glucose',
     value: '5.6',
     unit: 'mmol/L',
   },
@@ -241,7 +241,7 @@ export const HSDG = [
     sequence: 7,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5.6',
@@ -317,7 +317,7 @@ export const HSDG = [
     sequence: 6,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5.7',
@@ -389,7 +389,7 @@ export const HSDG = [
     sequence: 5,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5.8',
@@ -461,7 +461,7 @@ export const HSDG = [
     sequence: 4,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5.9',
@@ -533,7 +533,7 @@ export const HSDG = [
     sequence: 3,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '6.0',
@@ -605,7 +605,7 @@ export const HSDG = [
     sequence: 2,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5.5',
@@ -677,7 +677,7 @@ export const HSDG = [
     sequence: 1,
     data: [
       {
-        field: 'Glucose Level',
+        field: 'Blood glucose',
         measurements: [
           {
             value: '5.4',
@@ -753,7 +753,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '5.6',
@@ -761,7 +761,7 @@ export const HSDGN = [
           },
         ],
         measurement_time: {
-          value: 'After Lunch',
+          value: 'After lunch',
           unit: '',
         },
         timestamp: '2024-07-28T00:00:00Z',
@@ -769,7 +769,7 @@ export const HSDGN = [
       },
       {
         field: 'BP',
-        field_full: 'Blood Pressure',
+        field_full: 'Blood pressure',
         measurements: [
           {
             value: '121',
@@ -785,7 +785,7 @@ export const HSDGN = [
       },
       {
         field: 'BO',
-        field_full: 'Blood Oxygen',
+        field_full: 'Blood oxygen',
         measurements: [
           {
             value: '98',
@@ -797,7 +797,7 @@ export const HSDGN = [
       },
       {
         field: 'HR',
-        field_full: 'Heart Rhythm',
+        field_full: 'Heart rhythm',
         measurements: [
           {
             value: '84',
@@ -809,7 +809,7 @@ export const HSDGN = [
       },
       {
         field: 'BT',
-        field_full: 'Body Temperature',
+        field_full: 'Body temperature',
         measurements: [
           {
             value: '36.7',
@@ -821,7 +821,7 @@ export const HSDGN = [
       },
       {
         field: 'ECG',
-        field_full: 'Electrocardiogram',
+        field_full: 'ECG',
         measurements: [],
         diagram: DummyImage.Electrocardiogram,
         timestamp: '2024-07-28T00:00:00Z',
@@ -835,7 +835,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '5.7',
@@ -913,7 +913,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '5.8',
@@ -991,7 +991,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '5.9',
@@ -1069,7 +1069,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '6.0',
@@ -1147,7 +1147,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '5.5',
@@ -1225,7 +1225,7 @@ export const HSDGN = [
     data: [
       {
         field: 'GL',
-        field_full: 'Glucose Level',
+        field_full: 'Blood glucose',
         measurements: [
           {
             value: '5.4',

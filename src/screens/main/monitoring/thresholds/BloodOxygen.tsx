@@ -10,7 +10,7 @@ const BloodOxygen = () => {
   return (
     <FormProvider {...methods}>
       <CommonThresholdLayout
-        title="Blood Oxygen"
+        title="Blood oxygen"
         onPress={methods.handleSubmit(data => {
           console.log('Form Data:', data);
           // Handle form submission here
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   inputWrapper: {
     width: '100%',

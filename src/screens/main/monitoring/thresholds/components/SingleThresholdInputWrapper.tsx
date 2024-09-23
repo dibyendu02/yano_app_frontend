@@ -4,6 +4,7 @@ import {FormProvider, useForm} from 'react-hook-form';
 import CommonThresholdLayout from '../../components/CommonThresholdLayout';
 import ThresholdPickerInput from './ThresholdPickerInput';
 import {useNavigation} from '@react-navigation/native';
+import SaveConfirmationModal from '../../../../../components/SaveConfirmationModal';
 
 interface SingleThresholdInputWrapperProps {
   title: string;
@@ -47,6 +48,13 @@ const SingleThresholdInputWrapper: React.FC<
             </View>
           ))}
         </View>
+        <SaveConfirmationModal
+          isVisible={false}
+          // onClose={() => {
+          //   console.log('Modal closed');
+          // }}
+          text="Updated health threshold."
+        />
       </CommonThresholdLayout>
     </FormProvider>
   );
@@ -59,12 +67,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   inputWrapper: {
-    width: '45%', // Adjusted width for single column layout
+    width: '49%', // Adjusted width for single column layout
     borderRadius: 10,
     overflow: 'hidden',
-    marginBottom: 15, // Added margin between inputs
+    // marginBottom: 15, // Added margin between inputs
+    // backgroundColor: 'red',
   },
 });

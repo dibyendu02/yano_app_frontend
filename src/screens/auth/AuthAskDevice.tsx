@@ -1,5 +1,6 @@
 import {
   Image,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -7,26 +8,26 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useContext, useState } from 'react';
-import { Colors } from '../../constants/Colors';
+import React, {useContext, useState} from 'react';
+import {Colors} from '../../constants/Colors';
 import Header from '../../components/header/Header';
-import { DummyImage } from '../../assets/dummy/images';
+import {DummyImage} from '../../assets/dummy/images';
 import FilledButton from '../../components/buttons/FilledButton';
-import { navigate } from '../../navigation/RootNavigation';
+import {navigate} from '../../navigation/RootNavigation';
 import UserContext from '../../contexts/UserContext';
-import { StaticImage } from '../../assets/images';
-import { AuthScreen } from '../../navigation/auth/AuthScreens';
+import {StaticImage} from '../../assets/images';
+import {AuthScreen} from '../../navigation/auth/AuthScreens';
 import Card from '../main/my-profile/UiUpdateComponents/Card';
 
-const AuthAskDevice = ({ navigation }: any) => {
-  const { login, isPatient } = useContext(UserContext);
+const AuthAskDevice = ({navigation}: any) => {
+  const {login, isPatient} = useContext(UserContext);
   const [isClicked, setIsClicked] = useState(false);
 
   const loginAction = () => {
     navigation.navigate(AuthScreen.LoadingScreen);
   };
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -35,7 +36,7 @@ const AuthAskDevice = ({ navigation }: any) => {
       <Header
         title=""
         headerRightComponent={
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity
               onPress={() => {
                 setIsClicked(true);
@@ -46,7 +47,7 @@ const AuthAskDevice = ({ navigation }: any) => {
         }
       />
       <ScrollView>
-        <View style={{ padding: 20 }}>
+        <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
           <View
             style={{
               backgroundColor: Colors.White,
@@ -80,7 +81,7 @@ const AuthAskDevice = ({ navigation }: any) => {
                 fontSize: 16,
                 color: Colors.SteelBlue,
                 textAlign: 'center',
-                width: '85%',
+                width: '90%',
                 marginHorizontal: 'auto',
               }}>
               Use our app to connect your Yano device and start taking control
@@ -108,7 +109,7 @@ const AuthAskDevice = ({ navigation }: any) => {
           />
         </View>
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -117,7 +118,7 @@ export default AuthAskDevice;
 const styles = StyleSheet.create({
   addBtn: {
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 10 : 0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

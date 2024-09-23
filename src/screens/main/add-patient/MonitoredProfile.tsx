@@ -9,7 +9,7 @@ import FilledButton from '../../../components/buttons/FilledButton';
 
 const MonitoredProfile = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header
         title="Monitored Patient"
         // headerRightComponent={
@@ -53,7 +53,7 @@ const MonitoredProfile = () => {
           </Text>
         </Card>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

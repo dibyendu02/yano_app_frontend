@@ -94,6 +94,7 @@ const BloodPressureScreen = () => {
     <CommonMeasurementScreen
       loading={loading}
       onPress={handleStartMeasurements}
+      count={count}
       element={
         <>
           <Header
@@ -107,8 +108,9 @@ const BloodPressureScreen = () => {
               </TouchableOpacity>
             }
           />
-          <ScrollView>
-            <View style={{padding: 20}}>
+          <ScrollView
+            style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+            <View>
               <View
                 style={{
                   flexDirection: 'row',
@@ -122,6 +124,11 @@ const BloodPressureScreen = () => {
                     value: values.systolic,
                     unit: 'mmHg',
                   }}
+                  customStyles={{
+                    borderTopLeftRadius: 8,
+                    borderBottomLeftRadius: 8,
+                    width: '34.5%',
+                  }}
                 />
                 <MeasurementBox
                   loading={loading}
@@ -130,6 +137,10 @@ const BloodPressureScreen = () => {
                     value: values.diastolic,
                     unit: 'mmHg',
                   }}
+                  customStyles={{
+                    borderTopRightRadius: 8,
+                    borderBottomRightRadius: 8,
+                  }}
                 />
                 <MeasurementBox
                   loading={loading}
@@ -137,6 +148,11 @@ const BloodPressureScreen = () => {
                     name: 'Heart rate',
                     value: values.heartRate,
                     unit: 'Beats/Min',
+                  }}
+                  customStyles={{
+                    marginLeft: 5,
+                    borderRadius: 8,
+                    width: '30%',
                   }}
                 />
               </View>
@@ -147,7 +163,7 @@ const BloodPressureScreen = () => {
                     padding: 20,
                     backgroundColor: Colors.White,
                     borderRadius: 10,
-                    marginVertical: 20,
+                    marginVertical: 12,
                   }}>
                   <View
                     style={{
@@ -171,14 +187,17 @@ const BloodPressureScreen = () => {
                       Normal blood pressure
                     </Text>
                   </View>
-                  <View>
+                  <View style={{position: 'relative', height: 120}}>
                     <Image
-                      source={DummyImage.bloodOxygen}
+                      source={DummyImage.bp}
                       width={400}
                       style={{
                         width: '100%',
+                        // height: '100%',
                         marginTop: 20,
                         objectFit: 'contain',
+                        position: 'absolute',
+                        bottom: -100,
                       }}
                     />
                   </View>

@@ -1,5 +1,6 @@
 import {
   Image,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -21,7 +22,7 @@ import {AuthScreen} from '../../navigation/auth/AuthScreens';
 const AuthChooseDevice = () => {
   const {login, isPatient} = useContext(UserContext);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -40,8 +41,13 @@ const AuthChooseDevice = () => {
           </View>
         }
       />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View
+          style={{
+            backgroundColor: Colors.White,
+            paddingHorizontal: 12,
+            borderRadius: 8,
+          }}>
           <PatientElements
             name="Yano Multi-Parameter Monitor"
             onPress={() => navigate(AuthScreen.DeviceInfo)}
@@ -51,6 +57,13 @@ const AuthChooseDevice = () => {
                 style={{width: 50, height: 50}}
               />
             }
+            customStyle={{
+              borderBottomWidth: 1,
+              borderColor: Colors.LightGray,
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+              paddingHorizontal: 5,
+            }}
             color=""
           />
           <PatientElements
@@ -62,6 +75,12 @@ const AuthChooseDevice = () => {
                 style={{width: 50, height: 50}}
               />
             }
+            customStyle={{
+              borderBottomWidth: 1,
+              borderColor: Colors.LightGray,
+              borderRadius: 0,
+              paddingHorizontal: 5,
+            }}
             color=""
           />
           <PatientElements
@@ -73,11 +92,16 @@ const AuthChooseDevice = () => {
                 style={{width: 50, height: 50}}
               />
             }
+            customStyle={{
+              borderTopLeftRadius: 0,
+              borderTopRightRadius: 0,
+              paddingHorizontal: 5,
+            }}
             color=""
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -98,7 +122,7 @@ const styles = StyleSheet.create({
   },
   addBtn: {
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 10 : 0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

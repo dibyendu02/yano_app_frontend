@@ -6,9 +6,10 @@ interface SwitchButtonProps {
     label?: string,
     getValue?: (value: boolean) => void,
     element?: React.ReactNode
+    customStyle?: object
 }
 
-const SwitchButton: FC<SwitchButtonProps> = ({ label, getValue, element }) => {
+const SwitchButton: FC<SwitchButtonProps> = ({ label, getValue, element, customStyle }) => {
     const [isEnabled, setIsEnabled] = useState(false);
     const toggleSwitch = () => {
         setIsEnabled(previousState => !previousState);
@@ -17,14 +18,14 @@ const SwitchButton: FC<SwitchButtonProps> = ({ label, getValue, element }) => {
 
     return (
         <>
-            <View style={styles.container}>
+            <View style={[styles.container, { ...customStyle }]}>
                 <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                     {element}
                     <Text style={styles.label}>{label}</Text>
                 </View>
                 <Switch
-                    trackColor={{ false: Colors.LightGray, true: Colors.LighterGreen }}
-                    thumbColor={isEnabled ? Colors.LightGreen : Colors.LightBlack}
+                    trackColor={{ false: '#EDEDED', true: Colors.LighterGreen }}
+                    thumbColor={isEnabled ? Colors.LightGreen : Colors.White}
                     ios_backgroundColor={Colors.LightBlack}
                     onValueChange={toggleSwitch}
                     value={isEnabled}

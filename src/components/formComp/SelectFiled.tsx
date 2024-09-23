@@ -1,8 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import {Controller, Control, FieldValues, FieldError} from 'react-hook-form';
-import {Colors} from '../../constants/Colors';
+import { Controller, Control, FieldValues, FieldError } from 'react-hook-form';
+import { Colors } from '../../constants/Colors';
 
 interface Option {
   label: string;
@@ -32,7 +32,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
       <Controller
         control={control}
         rules={rules}
-        render={({field: {onChange, value}, fieldState: {error}}) => (
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
           <>
             <RNPickerSelect
               onValueChange={onChange}

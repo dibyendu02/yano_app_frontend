@@ -1,24 +1,57 @@
-/* eslint-disable react/no-unstable-nested-components */
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   View,
+  Animated,
 } from 'react-native';
-import React from 'react';
 import Header from '../../../../components/header/Header';
-import { Colors } from '../../../../constants/Colors';
-import { patientList } from '../../../../test/Data';
+import {Colors} from '../../../../constants/Colors';
+import {patientList} from '../../../../test/Data';
 import PatientListItem from '../components/PatientListItem';
 import Card from '../../../../components/cards/Card';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import Icons from '../../../../assets/icon/Icon';
-import { navigate } from '../../../../navigation/RootNavigation';
+import {navigate} from '../../../../navigation/RootNavigation';
+import {retrieveData} from '../../../../utils/Storage';
+import {useFocusEffect} from '@react-navigation/native';
+import {getPatientsUnderDoctorData} from '../../../../api/GET/patientsUnderDoctor';
 
 const PatientMonitoringList = () => {
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [userId, setUserId] = useState('');
+  const [patientsData, setPatientsData] = useState([]);
+
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    setUserId(retrievedUserId);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getPatientsData = useCallback(async () => {
+    try {
+      if (userId) {
+        const res = await getPatientsUnderDoctorData({userId});
+        setPatientsData(res?.patients || []);
+        console.log(res?.patients);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [userId]);
+
+  useFocusEffect(
+    useCallback(() => {
+      getPatientsData();
+    }, [getPatientsData]),
+  );
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header
         title="Monitoring"
         showBackIcon={false}
@@ -28,7 +61,6 @@ const PatientMonitoringList = () => {
               name="notifications"
               size={25}
               color={Colors.Blue}
-              style={{ width: 40 }}
             />
           </TouchableOpacity>
         }
@@ -36,26 +68,38 @@ const PatientMonitoringList = () => {
       <View style={styles.contentContainer}>
         <Card>
           <FlatList
-            data={patientList}
+            data={patientsData}
             showsVerticalScrollIndicator={false}
-            renderItem={({ item, index: _index }) => (
-              <PatientListItem name={item.name} />
+            renderItem={({item, index: _index}) => (
+              <PatientListItem
+                customStyle={{
+                  paddingTop: _index === 0 ? 0 : 16,
+                  paddingBottom: _index === patientsData.length - 1 ? 0 : 16,
+                }}
+                name={item?.firstName + ' ' + item?.lastName}
+                patientData={item}
+              />
             )}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
+            onScrollBeginDrag={() => setIsScrolling(true)}
+            onScrollEndDrag={() => setIsScrolling(false)}
+            onMomentumScrollEnd={() => setIsScrolling(false)}
           />
         </Card>
-        <FilledButton
-          type="blue"
-          label="Add patient"
-          activeOpacity={1}
-          onPress={() => navigate('AddPatient')}
-          icon={
-            <Icons.MaterialIcons name="add" color={Colors.White} size={25} />
-          }
-          style={styles.floatingBtn}
-        />
+        {!isScrolling && (
+          <FilledButton
+            type="blue"
+            label="Add patient"
+            activeOpacity={1}
+            onPress={() => navigate('AddPatient')}
+            icon={
+              <Icons.MaterialIcons name="add" color={Colors.White} size={25} />
+            }
+            style={styles.floatingBtn}
+          />
+        )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -70,6 +114,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.GhostWhite,
     width: '100%',
     position: 'relative',
+    paddingVertical: 6,
   },
   separator: {
     backgroundColor: Colors.LightGray,
@@ -78,8 +123,8 @@ const styles = StyleSheet.create({
   },
   floatingBtn: {
     position: 'absolute',
-    bottom: '4%',
-    right: '4%',
+    bottom: 15,
+    right: 15,
     width: '40%',
     borderRadius: 10,
   },

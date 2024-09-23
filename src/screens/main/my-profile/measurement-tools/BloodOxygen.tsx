@@ -1,12 +1,20 @@
-import { Image, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import React, { useState } from 'react';
+import {
+  Image,
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import React, {useState} from 'react';
 import CommonMeasurementScreen from '../components/CommonMeasurementScreen';
 import Header from '../../../../components/header/Header';
 import MeasurementBox from '../components/MeasurementBox';
-import { Colors } from '../../../../constants/Colors';
-import { DummyImage } from '../../../../assets/dummy/images';
-import { ShareIcon } from '../../../../assets/icon/IconNames';
-import { StaticImage } from '../../../../assets/images';
+import {Colors} from '../../../../constants/Colors';
+import {DummyImage} from '../../../../assets/dummy/images';
+import {ShareIcon} from '../../../../assets/icon/IconNames';
+import {StaticImage} from '../../../../assets/images';
 
 const help = [
   {
@@ -80,19 +88,24 @@ const BloodOxygenScreen = () => {
       <CommonMeasurementScreen
         loading={loading}
         onPress={() => handleStartMeasurements()}
+        count={count}
         element={
           <>
-            <Header title="Blood oxygen" headerRightComponent={
-              <TouchableOpacity onPress={onShare}>
-                <Image
-                  source={StaticImage.SharerIcon}
-                  style={{ width: 24, height: 24 }}
-                />
-              </TouchableOpacity>
-            } />
-            <ScrollView>
-              <View style={{ padding: 15 }}>
-                <View style={{ padding: 20 }}>
+            <Header
+              title="Blood oxygen"
+              headerRightComponent={
+                <TouchableOpacity onPress={onShare}>
+                  <Image
+                    source={StaticImage.SharerIcon}
+                    style={{width: 24, height: 24}}
+                  />
+                </TouchableOpacity>
+              }
+            />
+            <ScrollView
+              style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+              <View>
+                <View>
                   <View
                     style={{
                       flexDirection: 'row',
@@ -107,15 +120,22 @@ const BloodOxygenScreen = () => {
                         unit: 'SpO2H',
                       }}
                       customStyles={{
-                        width: '70%',
+                        width: '69.5%',
+                        borderTopLeftRadius: 8,
+                        borderBottomLeftRadius: 8,
                       }}
                     />
                     <MeasurementBox
                       loading={loading}
                       fields={{
-                        name: 'Heart Rate',
+                        name: 'Heart rate',
                         value: values.heartRate,
                         unit: 'Beats/Min',
+                      }}
+                      customStyles={{
+                        borderTopRightRadius: 8,
+                        borderBottomRightRadius: 8,
+                        width: '30%',
                       }}
                     />
                   </View>
@@ -125,7 +145,7 @@ const BloodOxygenScreen = () => {
                         padding: 20,
                         backgroundColor: Colors.White,
                         borderRadius: 10,
-                        marginVertical: 20,
+                        marginVertical: 12,
                       }}>
                       <View
                         style={{
@@ -146,17 +166,20 @@ const BloodOxygenScreen = () => {
                             fontWeight: '600',
                             color: Colors.Blue,
                           }}>
-                          Normal blood Oxygen
+                          Normal level
                         </Text>
                       </View>
-                      <View>
+                      <View style={{position: 'relative', height: 60}}>
                         <Image
-                          source={DummyImage.bp}
+                          source={DummyImage.bloodOxygen}
                           width={400}
                           style={{
                             width: '100%',
-                            // height: 10,
-                            marginTop: 30,
+                            // height: '100%',
+                            marginTop: 20,
+                            objectFit: 'contain',
+                            position: 'absolute',
+                            bottom: -80,
                           }}
                         />
                       </View>

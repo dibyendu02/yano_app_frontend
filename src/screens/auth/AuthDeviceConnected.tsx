@@ -1,5 +1,6 @@
 import {
   Image,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -13,11 +14,12 @@ import FilledButton from '../../components/buttons/FilledButton';
 import {OkIcon} from '../../assets/icon/IconNames';
 import UserContext from '../../contexts/UserContext';
 import {AuthScreen} from '../../navigation/auth/AuthScreens';
+import {staticIcons} from '../../assets/image';
 
 const AuthDeviceConnected = ({navigation}: any) => {
   const {login} = useContext(UserContext);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -27,11 +29,13 @@ const AuthDeviceConnected = ({navigation}: any) => {
       <View
         style={{
           width: '100%',
-          height: 50,
+          // height: 50,
+          paddingBottom: 10,
           backgroundColor: Colors.White,
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
+          paddingTop: Platform.OS === 'ios' ? 0 : 45,
         }}>
         <Text
           style={{
@@ -42,12 +46,12 @@ const AuthDeviceConnected = ({navigation}: any) => {
           ¡Felicidades!
         </Text>
       </View>
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View
             style={{
               backgroundColor: Colors.White,
-              paddingVertical: 40,
+              paddingVertical: 24,
               paddingHorizontal: 40,
               borderRadius: 10,
               marginBottom: 20,
@@ -55,11 +59,14 @@ const AuthDeviceConnected = ({navigation}: any) => {
             <View
               style={{
                 alignSelf: 'center',
-                marginBottom: 20,
+                marginBottom: 0,
                 width: 100,
                 height: 100,
               }}>
-              <OkIcon size={90} />
+              <Image
+                source={staticIcons.checkIcon}
+                style={{height: 88, width: 88}}
+              />
             </View>
             <Text
               style={{
@@ -92,7 +99,7 @@ const AuthDeviceConnected = ({navigation}: any) => {
           }}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -101,7 +108,7 @@ export default AuthDeviceConnected;
 const styles = StyleSheet.create({
   addBtn: {
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 10 : 0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

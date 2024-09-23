@@ -9,7 +9,8 @@ import moment from 'moment';
 import {StaticImage} from '../../assets/images';
 import DateTimePicker from 'react-native-ui-datepicker';
 import DialogBase from '../dialog/DialogBase';
-import {CalendarViews} from 'react-native-ui-datepicker/lib/typescript/src/enums';
+import dayjs from 'dayjs';
+import 'dayjs/locale/en';
 interface FormDateInputProps extends TextInputProps {
   name: string;
   rules?: object;
@@ -44,7 +45,7 @@ const FormDateInput: FC<FormDateInputProps> = ({
               outlineColor="transparent"
               activeOutlineColor="transparent"
               onBlur={onBlur}
-              value={value ? moment(value).format('DD/MM/YYYY') : ''}
+              value={value ? moment(value).format('DD-MM-YYYY') : ''}
               outlineStyle={styles.outline}
               cursorColor={Colors.Black}
               selectionColor={Colors.Black}
@@ -117,6 +118,10 @@ const FormDateInput: FC<FormDateInputProps> = ({
                     headerContainerStyle={{paddingVertical: 10}}
                     weekDaysContainerStyle={{borderBottomWidth: 0}}
                     weekDaysTextStyle={{color: Colors.GreyText}}
+                    locale={{
+                      ...dayjs.Ls.en,
+                      weekdays: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+                    }}
                     yearContainerStyle={{
                       backgroundColor: Colors.Transparent,
                       borderWidth: 0,
@@ -199,6 +204,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     borderWidth: 1,
     borderColor: Colors.LightGray,
+    borderRadius: 10,
     fontSize: 16,
     height: 56,
     color: Colors.Blue,

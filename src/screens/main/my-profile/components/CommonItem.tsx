@@ -7,12 +7,14 @@ import {
   BluetoothDisconnected,
   NextIcon,
 } from '../../../../assets/icon/IconNames';
+import {staticIcons} from '../../../../assets/image';
 
 type props = {
   name: string;
   leftIcon: React.ReactNode;
   isConnected?: boolean;
   onPress: () => void;
+  customTextWidth?: string;
 };
 
 const CommonItem: FC<props> = ({
@@ -20,6 +22,7 @@ const CommonItem: FC<props> = ({
   name,
   leftIcon,
   isConnected = false,
+  customTextWidth,
 }) => {
   return (
     <>
@@ -28,7 +31,7 @@ const CommonItem: FC<props> = ({
           backgroundColor: Colors.White,
           borderRadius: 10,
           padding: 20,
-          marginBottom: 20,
+          marginBottom: 12,
         }}>
         <TouchableOpacity
           onPress={onPress}
@@ -52,13 +55,16 @@ const CommonItem: FC<props> = ({
                 fontSize: 18,
                 fontWeight: '600',
                 color: Colors.Blue,
-                width: '70%',
+                width: customTextWidth ? customTextWidth : '65%',
               }}>
               {name}
             </Text>
           </View>
           <View>
-            <NextIcon />
+            <Image
+              source={staticIcons.nextIcon}
+              style={{height: 12, width: 10, objectFit: 'contain'}}
+            />
           </View>
         </TouchableOpacity>
         <View

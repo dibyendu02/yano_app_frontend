@@ -25,6 +25,7 @@ export const measurementList = [
     path: 'EcgMeasurement',
   },
   {
+    // title: 'Glucose level',
     title: 'Blood glucose',
     img: require('./image/glucose.png'),
     path: 'BloodGlucoseTest',
@@ -34,31 +35,37 @@ export const measurementList2 = [
   {
     title: 'Heart rate',
     img: require('./image/heart_rate.png'),
+    state: 'heartrate',
     path: 'HeartRateModal',
   },
   {
     title: 'Blood pressure',
     img: require('./image/pressure.png'),
+    state: 'bloodpressure',
     path: 'BloodPressureModal',
   },
   {
     title: 'Blood oxygen',
     img: require('./image/bloodOxygen.png'),
+    state: 'bloodoxygen',
     path: 'BloodOxygenModal',
   },
   {
     title: 'Body temperature',
     img: require('./image/temparature.png'),
+    state: 'bodytemperature',
     path: 'BodyTemperatureModal',
   },
   {
     title: 'ECG',
     img: require('./image/ecg.png'),
+    state: 'ecg',
     path: 'ECGModal',
   },
   {
     title: 'Blood glucose ',
     img: require('./image/glucose.png'),
+    state: 'bloodglucose',
     path: 'GlucoseLevelModal',
   },
 ];
@@ -76,7 +83,7 @@ export const DeviceSettings = [
   },
   {
     title: "Yano's support",
-    img: require('./images/live_help.png'),
+    img: require('./images/question.png'),
     path: 'YanoSupport',
   },
 ];

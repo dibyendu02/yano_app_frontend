@@ -1,12 +1,21 @@
-import { Image, ScrollView, Share, StyleSheet, Text, TouchableOpacity, View, SafeAreaView } from 'react-native';
-import React, { useEffect, useState } from 'react';
+import {
+  Image,
+  ScrollView,
+  Share,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  SafeAreaView,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import CommonMeasurementScreen from '../components/CommonMeasurementScreen';
 import Header from '../../../../components/header/Header';
 import MeasurementBox from '../components/MeasurementBox';
-import { Colors } from '../../../../constants/Colors';
-import { DummyImage } from '../../../../assets/dummy/images';
-import { ShareIcon } from '../../../../assets/icon/IconNames';
-import { StaticImage } from '../../../../assets/images';
+import {Colors} from '../../../../constants/Colors';
+import {DummyImage} from '../../../../assets/dummy/images';
+import {ShareIcon} from '../../../../assets/icon/IconNames';
+import {StaticImage} from '../../../../assets/images';
 import Card from '../../../../components/cards/Card';
 
 const help = [
@@ -46,7 +55,6 @@ const EcgMeasurement = () => {
   });
   const [timer, setTimer] = useState(31);
 
-
   const handleStartMeasurements = () => {
     setCount(0);
     setLoading(true);
@@ -54,10 +62,10 @@ const EcgMeasurement = () => {
     setValues({
       spo2: 100,
       heartRate: 80,
-    })
+    });
 
     const interval = setInterval(() => {
-      setTimer((prevTimer) => {
+      setTimer(prevTimer => {
         if (prevTimer <= 27) {
           clearInterval(interval);
           setLoading(false);
@@ -69,7 +77,6 @@ const EcgMeasurement = () => {
       });
     }, 1000); // Decrement every second
   };
-
 
   const onShare = async () => {
     try {
@@ -90,36 +97,41 @@ const EcgMeasurement = () => {
     }
   };
 
-
   return (
     <>
       <CommonMeasurementScreen
         loading={loading}
         onPress={() => handleStartMeasurements()}
+        count={count}
         element={
           <>
-            <Header title="ECG" headerRightComponent={
-              <TouchableOpacity onPress={onShare}>
-                <Image
-                  source={StaticImage.SharerIcon}
-                  style={{ width: 24, height: 24 }}
-                />
-              </TouchableOpacity>
-            } />
+            <Header
+              title="ECG"
+              headerRightComponent={
+                <TouchableOpacity onPress={onShare}>
+                  <Image
+                    source={StaticImage.SharerIcon}
+                    style={{width: 24, height: 24}}
+                  />
+                </TouchableOpacity>
+              }
+            />
             <ScrollView>
-              <View style={{ padding: 15 }}>
+              <View>
                 <View
                   style={{
                     backgroundColor: Colors.White,
                     width: '100%',
                     borderRadius: 10,
                     padding: 20,
+                    flexDirection: 'column',
+                    alignItems: 'center',
                   }}>
                   <Image
                     source={timer == 31 ? DummyImage.grid : DummyImage.graph}
                     style={{
-                      width: 328,
-                      height: 170,
+                      width: '100%',
+                      height: 165,
                       objectFit: 'cover',
                     }}
                   />
@@ -135,7 +147,7 @@ const EcgMeasurement = () => {
                         fontWeight: '500',
                         color: Colors.SteelBlue,
                       }}>
-                      Gain: 10mm/mv
+                      Gain: 10mm/mV
                     </Text>
                     <Text
                       style={{
@@ -143,145 +155,157 @@ const EcgMeasurement = () => {
                         fontWeight: '500',
                         color: Colors.SteelBlue,
                       }}>
-                      Paper speed: 10mm/mv
+                      Paper speed: 10mm/mV
                     </Text>
                   </View>
                 </View>
-                <View style={{ padding: 20 }}>
-
-                  <View style={{ padding: 0 }}>
+                <View style={{padding: 15}}>
+                  <View style={{padding: 0}}>
                     {count === 0 ? (
                       <View
                         style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                          gap: 2,
+                          padding: 10,
+                          backgroundColor: Colors.White,
+                          borderRadius: 8,
+                          paddingVertical: 15,
                         }}>
-                        <MeasurementBox
-                          loading={loading}
-                          fields={{
-                            name: 'Heart Rate',
-                            value: values.heartRate,
-                            unit: 'Beats/Min',
-                          }}
-                          customStyles={{
-                            width: '70%',
-                          }}
-                        />
-                        <MeasurementBox
-                          loading={false}
-                          fields={{
-                            name: 'Time Left',
-                            value: timer % 31,
-                            unit: 'Seconds',
-                          }}
-                        />
+                        <View
+                          style={{
+                            backgroundColor: Colors.LightGray,
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            gap: 2,
+                            borderRadius: 8,
+                          }}>
+                          <MeasurementBox
+                            loading={loading}
+                            fields={{
+                              name: 'Heart Rate',
+                              value: values.heartRate,
+                              unit: 'Beats/Min',
+                            }}
+                            customStyles={{
+                              width: '50.5%',
+                              borderTopLeftRadius: 8,
+                              borderBottomLeftRadius: 8,
+                            }}
+                          />
+                          <MeasurementBox
+                            loading={false}
+                            fields={{
+                              name: 'Time Left',
+                              value: timer % 31,
+                              unit: 'Seconds',
+                            }}
+                            customStyles={{
+                              width: '49.5%',
+                              borderTopRightRadius: 8,
+                              borderBottomRightRadius: 8,
+                            }}
+                          />
+                        </View>
                       </View>
                     ) : (
                       <View
                         style={{
-                          padding: 20,
+                          paddingHorizontal: 20,
+                          paddingTop: 20,
                           backgroundColor: Colors.White,
                           borderRadius: 10,
-                          borderWidth: 1,
-                          borderColor: Colors.LightGray,
+                          // borderWidth: 1,
+                          // borderColor: Colors.LightGray,
                         }}>
                         <Text style={styles.title}>Sample details</Text>
                         <View style={styles.boxStyle}>
-                          <Text style={styles.text}>
-                            ECG date:
-                          </Text>
+                          <Text style={styles.text}>ECG date:</Text>
                           <Text
                             style={[
                               styles.text,
-                              { color: Colors.Blue, fontWeight: '600' },
+                              {color: Colors.Blue, fontWeight: '600'},
                             ]}>
                             16/2/2022 - 13:45 PM
                           </Text>
                         </View>
                         <View style={styles.boxStyle}>
-                          <Text style={styles.text}>
-                            Average heart rate:
-                          </Text>
+                          <Text style={styles.text}>Average heart rate:</Text>
                           <Text
                             style={[
                               styles.text,
-                              { color: Colors.Blue, fontWeight: '600' },
+                              {color: Colors.Blue, fontWeight: '600'},
                             ]}>
                             80 LPM
                           </Text>
                         </View>
-                        <View style={[styles.boxStyle, {
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-
-                        }]} >
-                          <View style={{
-                            flexDirection: "row",
-                            alignItems: "center"
-                          }} >
-                            <Text style={styles.text}>
-                              RR Max:
-                            </Text>
+                        <View
+                          style={[
+                            styles.boxStyle,
+                            {
+                              flexDirection: 'row',
+                              justifyContent: 'space-between',
+                            },
+                          ]}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              gap: 6,
+                            }}>
+                            <Text style={styles.text}>RR Max:</Text>
                             <Text
                               style={[
                                 styles.text,
-                                { color: Colors.Blue, fontWeight: '600' },
+                                {color: Colors.Blue, fontWeight: '600'},
                               ]}>
                               804
                             </Text>
                           </View>
-                          <View style={{
-                            flexDirection: "row",
-                            alignItems: "center"
-                          }} >
-                            <Text style={styles.text}>
-                              RR Min:
-                            </Text>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              gap: 6,
+                            }}>
+                            <Text style={styles.text}>RR Min:</Text>
                             <Text
                               style={[
                                 styles.text,
-                                { color: Colors.Blue, fontWeight: '600' },
+                                {color: Colors.Blue, fontWeight: '600'},
                               ]}>
                               693
                             </Text>
                           </View>
-                          <View style={{
-                            flexDirection: "row",
-                            alignItems: "center"
-                          }} >
-                            <Text style={styles.text}>
-                              HRV:
-                            </Text>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'center',
+                              gap: 6,
+                            }}>
+                            <Text style={styles.text}>HRV:</Text>
                             <Text
                               style={[
                                 styles.text,
-                                { color: Colors.Blue, fontWeight: '600' },
+                                {color: Colors.Blue, fontWeight: '600'},
                               ]}>
                               28
                             </Text>
                           </View>
                         </View>
                         <View style={styles.boxStyle}>
-                          <Text style={styles.text}>
-                            Respiratory rate:
-                          </Text>
+                          <Text style={styles.text}>Respiratory rate:</Text>
                           <Text
                             style={[
                               styles.text,
-                              { color: Colors.Blue, fontWeight: '600' },
+                              {color: Colors.Blue, fontWeight: '600'},
                             ]}>
                             19
                           </Text>
                         </View>
-                        <View style={styles.boxStyle}>
-                          <Text style={styles.text}>
-                            Mood:
-                          </Text>
+                        <View style={[styles.boxStyle, {borderBottomWidth: 0}]}>
+                          <Text style={styles.text}>Mood:</Text>
                           <Text
                             style={[
                               styles.text,
-                              { color: Colors.Blue, fontWeight: '600' },
+                              {color: Colors.Blue, fontWeight: '600'},
                             ]}>
                             Relaxed
                           </Text>
@@ -354,11 +378,10 @@ const styles = StyleSheet.create({
     borderColor: Colors.LightGray,
   },
   title: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: '600',
     color: Colors.Blue,
     marginBottom: 6,
-
   },
   boxStyle: {
     flexDirection: 'row',
@@ -367,10 +390,11 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderBottomWidth: 1,
     borderColor: Colors.LightGray,
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   text: {
     fontSize: 16,
     color: Colors.SteelBlue,
+    // marginRight: 5,
   },
 });

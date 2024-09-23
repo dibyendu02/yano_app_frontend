@@ -25,7 +25,7 @@ const EditHeartRate = () => {
     },
   ];
 
-  return <SingleThresholdInputWrapper title="Heart Rate" inputs={inputs} />;
+  return <SingleThresholdInputWrapper title="Heart rate" inputs={inputs} />;
 };
 
 export default EditHeartRate;

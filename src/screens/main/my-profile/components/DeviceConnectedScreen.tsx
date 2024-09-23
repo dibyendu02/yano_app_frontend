@@ -23,7 +23,7 @@ import {
 
 const DeviceConnectedScreen = ({navigation}: any) => {
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -49,7 +49,7 @@ const DeviceConnectedScreen = ({navigation}: any) => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

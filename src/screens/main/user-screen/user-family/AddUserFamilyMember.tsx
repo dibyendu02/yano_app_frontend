@@ -1,12 +1,13 @@
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   ScrollView,
+  Share,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
 import CommonLayout from '../../../../components/CommonLayout';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import CommonHeader from '../../../healthCondition/components/CommonHeader';
@@ -14,9 +15,9 @@ import CustomInputField from '../../../../components/formComp/CustomInputField';
 import {useForm} from 'react-hook-form';
 import Icons from '../../../../assets/icon/Icon';
 import {Colors} from '../../../../constants/Colors';
-import {navigate} from '../../../../navigation/RootNavigation';
-import {CloseIcon, ShareIcon} from '../../../../assets/icon/IconNames';
 import {useNavigation} from '@react-navigation/native';
+import {findPatientByEmail} from '../../../../api/POST/addPatient'; // Import API call
+import {retrieveData} from '../../../../utils/Storage';
 
 const menuData = [
   {
@@ -29,13 +30,15 @@ const menuData = [
       />
     ),
     text: 'Scan QR code',
-    path: '',
+    path: 'AddFamilyQr',
   },
   {
     id: '2',
-    icon: <ShareIcon color={Colors.LightGreen} />,
+    icon: (
+      <Icons.MaterialIcons name="share" size={25} color={Colors.LightGreen} />
+    ),
     text: 'Invite family member',
-    path: '',
+    path: 'invite',
   },
   {
     id: '3',
@@ -47,25 +50,73 @@ const menuData = [
       />
     ),
     text: 'Create family member account',
-    path: 'EditFamilyMembers',
+    path: 'CreateFamilyMember',
   },
 ];
 
 const AddUserFamilyMember = () => {
-  const {control, handleSubmit} = useForm();
-  const [isComplete, setIsComplete] = React.useState(false);
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm();
+  const [isComplete, setIsComplete] = useState(false);
+  const [searchError, setSearchError] = useState(''); // To show not found message
   const navigation = useNavigation();
+  const [userId, setUserId] = useState('');
+  const [token, setToken] = useState('');
+
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedToken = await retrieveData('token');
+    // const retrievedUserType = await retrieveData('userType');
+
+    setUserId(retrievedUserId);
+    setToken(retrievedToken);
+    // setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  // Handle the form submission
+  const onSubmit = async data => {
+    try {
+      // Reset previous error message
+      setSearchError('');
+
+      // Search the patient by email
+      const response = await findPatientByEmail({
+        data: {email: data.email},
+        token,
+      });
+
+      if (response?.userData) {
+        // Navigate to EditFamilyMembers with the found userData
+        navigation.replace('EditFamilyMembers', {userData: response.userData});
+      } else {
+        // If not found, set an error message
+        setSearchError(
+          `No se encontró un paciente asociado a: ‘${data.email}’`,
+        );
+        setIsComplete(true);
+      }
+    } catch (error) {
+      setSearchError(`Error occurred: ${error.message}`);
+    }
+  };
+
   return (
     <CommonLayout>
       {!isComplete ? (
         <CommonHeader
-          title={'Add Family Member'}
+          title={'Add family member'}
           rightComp1={
             <FilledButton
               type="blue"
               label="Save"
-              onPress={() => setIsComplete(true)}
-              // disabled={!disabled}
+              onPress={handleSubmit(onSubmit)} // Submit the form
               style={{
                 width: 70,
                 paddingVertical: 10,
@@ -79,7 +130,7 @@ const AddUserFamilyMember = () => {
           title="Agregar paciente"
           leftIcon={
             <TouchableOpacity onPress={() => navigation.goBack()}>
-              <CloseIcon size={32} />
+              <Icons.AntDesign name="close" size={32} color={Colors.Black} />
             </TouchableOpacity>
           }
           rightComp1={
@@ -87,7 +138,6 @@ const AddUserFamilyMember = () => {
               type="blue"
               label="Agregar"
               onPress={() => setIsComplete(true)}
-              // disabled={!disabled}
               style={{
                 width: 90,
                 paddingVertical: 10,
@@ -97,12 +147,13 @@ const AddUserFamilyMember = () => {
           }
         />
       )}
-      <View style={{padding: 20}}>
+      <View
+        style={{paddingVertical: 12, width: '94%', marginHorizontal: 'auto'}}>
         {!isComplete ? (
           <CustomInputField
             name="email"
-            label="Email of Family Member"
-            placeholder="Enter Email"
+            label="Email of family member"
+            placeholder="Ej. paciente@email.com"
             control={control}
             rules={{required: 'Email is required'}}
           />
@@ -111,13 +162,23 @@ const AddUserFamilyMember = () => {
             style={{
               paddingBottom: 20,
             }}>
-            <Text
-              style={{
-                textAlign: 'center',
-                color: Colors.SteelBlue,
-              }}>
-              No se encontró un paciente asociado a: ‘maria.clemente@gmail.com’
-            </Text>
+            {searchError ? (
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: Colors.SteelBlue,
+                }}>
+                {searchError}
+              </Text>
+            ) : (
+              <Text
+                style={{
+                  textAlign: 'center',
+                  color: Colors.SteelBlue,
+                }}>
+                No se encontró un paciente asociado a: ‘{searchError}’
+              </Text>
+            )}
           </View>
         )}
 
@@ -130,7 +191,7 @@ const AddUserFamilyMember = () => {
           <Text
             style={{
               color: Colors.SteelBlue,
-              fontSize: 16,
+              fontSize: 12,
               fontWeight: '600',
               paddingHorizontal: 20,
               paddingTop: 10,
@@ -147,12 +208,17 @@ const AddUserFamilyMember = () => {
               }}
               renderItem={({item, index: _i}) => (
                 <TouchableOpacity
-                  onPress={() => navigate(item.path)}
+                  onPress={() => {
+                    if (item.path === 'invite') {
+                      Share.share({message: 'Join Yano using this link'});
+                    } else navigation.replace(item.path);
+                  }}
                   style={{
                     width: '100%',
                     flexDirection: 'row',
                     justifyContent: 'space-between',
                     paddingVertical: 14,
+                    paddingBottom: _i == menuData.length - 1 ? 6 : 14,
                     alignItems: 'center',
                   }}>
                   <View
@@ -160,7 +226,8 @@ const AddUserFamilyMember = () => {
                       flexDirection: 'row',
                       alignItems: 'center',
                     }}>
-                    {item.icon}
+                    <View style={{width: 25, marginRight: 5}}>{item.icon}</View>
+
                     <Text
                       style={{
                         color: Colors.Blue,

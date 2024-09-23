@@ -1,5 +1,6 @@
 import {
   Image,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -11,18 +12,23 @@ import {Colors} from '../../../../constants/Colors';
 import Header from '../../../../components/header/Header';
 import {DummyImage} from '../../../../assets/dummy/images';
 import FilledButton from '../../../../components/buttons/FilledButton';
+import {useRoute} from '@react-navigation/native';
 
 const DeviceInfo = ({navigation}: any) => {
+  const route = useRoute();
+  const devicename = route?.params?.devicename;
+
+  console.log(devicename);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
       <Header title="" />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View
             style={{
               backgroundColor: Colors.White,
@@ -31,7 +37,11 @@ const DeviceInfo = ({navigation}: any) => {
               marginBottom: 20,
             }}>
             <Image
-              source={DummyImage.largeDevice}
+              source={
+                (devicename == 'multimeter' && DummyImage.monitor) ||
+                (devicename == 'medidor' && DummyImage.glucoround) ||
+                (devicename == 'glucometer' && DummyImage.glucometer)
+              }
               width={250}
               height={250}
               style={{
@@ -43,23 +53,26 @@ const DeviceInfo = ({navigation}: any) => {
             />
             <Text
               style={{
-                fontSize: 20,
+                fontSize: 24,
                 fontWeight: 'bold',
                 color: Colors.Blue,
                 textAlign: 'center',
                 marginBottom: 10,
+                marginHorizontal: 40,
               }}>
-              Información del dispositivo
+              {(devicename == 'multimeter' && `Yano Multi-Parameter Monitor`) ||
+                (devicename == 'medidor' && `Medidor continuo de glucosa`) ||
+                (devicename == 'glucometer' && `Glucómetro`)}
             </Text>
             <Text
               style={{
                 fontSize: 16,
                 color: Colors.SteelBlue,
                 textAlign: 'center',
+                // marginHorizontal: 27,
               }}>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio
-              veritatis alias quo delectus eos voluptas at doloremque ipsam
-              necessitatibus aut?
+              It allows you to measure your blood {'\n'} pressure, glucose
+              level, body {'\n'} temperature, heart rate and ECG.
             </Text>
           </View>
         </View>
@@ -68,10 +81,12 @@ const DeviceInfo = ({navigation}: any) => {
         <FilledButton
           label="Add a device"
           type="blue"
-          onPress={() => navigation.navigate('DeviceConnected')}
+          onPress={() =>
+            navigation.navigate('TurnOnDevice', {devicename: devicename})
+          }
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -80,7 +95,7 @@ export default DeviceInfo;
 const styles = StyleSheet.create({
   addBtn: {
     position: 'absolute',
-    bottom: 0,
+    bottom:Platform.OS === 'ios' ? 10 :  0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

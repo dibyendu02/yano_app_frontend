@@ -1,5 +1,5 @@
-import React, {FC, useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, { FC, useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
 import {
   Controller,
   FieldError,
@@ -7,17 +7,17 @@ import {
   RegisterOptions,
   useFormContext,
 } from 'react-hook-form';
-import {Colors} from '../../constants/Colors';
-import {TextInput, TextInputProps} from 'react-native-paper';
-import {FormInputType} from './types';
+import { Colors } from '../../constants/Colors';
+import { TextInput, TextInputProps } from 'react-native-paper';
+import { FormInputType } from './types';
 interface FormInputProps extends TextInputProps {
   name: string;
   rules?:
-    | Omit<
-        RegisterOptions<FieldValues, string>,
-        'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
-      >
-    | undefined;
+  | Omit<
+    RegisterOptions<FieldValues, string>,
+    'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
+  >
+  | undefined;
   label?: string;
   instruction?: string;
   type?: FormInputType;
@@ -31,7 +31,7 @@ const FormInput: FC<FormInputProps> = ({
   type = FormInputType.Default,
   ...inputProps
 }) => {
-  const {control} = useFormContext();
+  const { control } = useFormContext();
   const [showSecureValue, setShowSecureValue] = useState(
     type === FormInputType.Password,
   );
@@ -49,11 +49,11 @@ const FormInput: FC<FormInputProps> = ({
     <View style={styles.inputBox}>
       <Controller
         control={control}
-        rules={{...rules, ...defaultRules[type]}}
-        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+        rules={{ ...rules, ...defaultRules[type] }}
+        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
           <View>
             {label && (
-              <Text style={[styles.label, error && {color: Colors.Red}]}>
+              <Text style={[styles.label, error && { color: Colors.Red }]}>
                 {label}
               </Text>
             )}
@@ -68,7 +68,8 @@ const FormInput: FC<FormInputProps> = ({
               secureTextEntry={showSecureValue}
               outlineStyle={styles.outline}
               cursorColor={Colors.Black}
-              selectionColor={Colors.Black}
+              selectionColor={Colors.Blue}
+              placeholderTextColor={Colors.SteelBlue}
               right={
                 type === FormInputType.Password ? (
                   <TextInput.Icon
@@ -82,7 +83,7 @@ const FormInput: FC<FormInputProps> = ({
               {...inputProps}
             />
             {instruction && (
-              <Text style={{color: Colors.SteelBlue}}>{instruction}</Text>
+              <Text style={{ color: Colors.SteelBlue }}>{instruction}</Text>
             )}
             {error && (
               <Text style={styles.errorText}>
@@ -117,11 +118,13 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: Colors.White,
     marginTop: 5,
-    borderWidth: 1,
+    borderWidth: 1.3,
     borderColor: Colors.LightGray,
     fontSize: 16,
     height: 56,
     color: Colors.Blue,
+    borderRadius: 10,
+
   },
   outline: {
     borderRadius: 10,

@@ -7,15 +7,15 @@ import {
   View,
   TouchableOpacity,
 } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
-import { Colors } from '../../constants/Colors';
+import React, {useContext, useEffect, useState} from 'react';
+import {Colors} from '../../constants/Colors';
 import Header from '../../components/header/Header';
 import FilledButton from '../../components/buttons/FilledButton';
-import { RadioButton } from 'react-native-paper';
-import { navigate } from '../../navigation/RootNavigation';
-import { AuthScreen } from '../../navigation/auth/AuthScreens';
-import { useRoute } from '@react-navigation/native';
-import { FormProvider, useForm, useWatch } from 'react-hook-form';
+import {RadioButton} from 'react-native-paper';
+import {navigate} from '../../navigation/RootNavigation';
+import {AuthScreen} from '../../navigation/auth/AuthScreens';
+import {useRoute} from '@react-navigation/native';
+import {FormProvider, useForm, useWatch} from 'react-hook-form';
 import FormInput from '../../components/hook-form/FormInput';
 import UserContext from '../../contexts/UserContext';
 
@@ -23,28 +23,30 @@ const AccountVerification = () => {
   const route = useRoute();
   //@ts-ignore
   const userType = route?.params?.userType;
+  console.log(route);
   const mode = route.params?.mode;
   const [selectedKey, setSelectedKey] = useState<string | null>('Email');
-  const { control, ...methods } = useForm();
-  const { login, isPatient } = useContext(UserContext);
+  const {control, ...methods} = useForm();
+  const {login, isPatient} = useContext(UserContext);
 
   const Options = [
     {
       key: 'Email',
       label: 'Email verification',
-      description: `We will send you a 6-digit verification code to ${userType === 'Patient'
-        ? 'patient.email@example.com'
-        : 'provider.email@example.com'
-        }`,
+      description: `We will send you a 6-digit verification code to ${
+        userType === 'Patient'
+          ? 'patient.email@gmail.com'
+          : 'provider.email@gmail.com'
+      }`,
     },
     {
       key: 'Mobile',
       label: 'SMS verification',
-      description: `We will send you a 6-digit verification code to \n+1234567890`,
+      description: `We will send you a 6-digit verification code to +1234567890`,
     },
   ];
 
-  const code: string = useWatch({ control, name: 'code' }) || '';
+  const code: string = useWatch({control, name: 'code'}) || '';
   useEffect(() => {
     if (code && code.length === 6) {
       verifyCode(code);
@@ -81,12 +83,14 @@ const AccountVerification = () => {
   };
 
   const resendCode = () => {
-    methods.resetField('code', { defaultValue: '' });
+    methods.resetField('code', {defaultValue: ''});
     methods.clearErrors('code');
   };
 
+  console.log('userType ', userType);
+
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header title="Account Verification" />
       <View style={styles.body}>
         <Text style={styles.instructionText}>
@@ -98,11 +102,11 @@ const AccountVerification = () => {
               </Text>
             </>
           ) : (
-            "For your safety, we want to make sure it's \nreally you. Select a method to verify your \naccount."
+            "For your safety, we want to make sure it's really you. Select a method to verify your account."
           )}
         </Text>
         {mode === 'Verification' ? (
-          <View style={{ marginTop: 24 }}>
+          <View style={{marginTop: 24}}>
             <FormProvider control={control} {...methods}>
               <FormInput
                 name="code"
@@ -166,7 +170,7 @@ const AccountVerification = () => {
           }
         />
       )}
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -195,7 +199,10 @@ const styles = StyleSheet.create({
   optionContainer: {
     width: '100%',
     backgroundColor: Colors.White,
-    padding: 16,
+    paddingTop: 10,
+    paddingBottom: 14,
+    paddingLeft: 8,
+    paddingRight: 30,
     marginVertical: 6,
     borderRadius: 8,
     borderWidth: 2,
@@ -214,13 +221,14 @@ const styles = StyleSheet.create({
     marginLeft: 35,
     fontSize: 14,
     fontFamily: 'Roboto',
+    width: '80%',
   },
   resendContainer: {
     width: '100%',
     backgroundColor: Colors.GhostWhite,
   },
   resendContent: {
-    width: '80%',
+    width: '100%',
     alignSelf: 'center',
     backgroundColor: Colors.White,
     padding: 16,
@@ -240,8 +248,8 @@ const styles = StyleSheet.create({
     fontWeight: '400',
   },
   sendButton: {
-    width: '92%',
+    width: '94%',
     alignSelf: 'center',
-    marginTop: 20,
+    marginVertical: 12,
   },
 });

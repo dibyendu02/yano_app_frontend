@@ -1,4 +1,4 @@
-import {Image, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {Image, Platform, SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useState} from 'react';
 import Header from '../../../../components/header/Header';
 import {DummyImage} from '../../../../assets/dummy/images';
@@ -11,7 +11,7 @@ import {navigate} from '../../../../navigation/RootNavigation';
 const MyDevices = () => {
   const [visible, isVisible] = useState(true);
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -20,7 +20,7 @@ const MyDevices = () => {
       <Header title="My devices" />
       {visible ? (
         <ScrollView>
-          <View style={{padding: 20}}>
+          <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
             <CommonItem
               name="Yano Multi-parameter Monitor"
               onPress={() => navigate('MeasurementMonitoring')}
@@ -30,6 +30,7 @@ const MyDevices = () => {
                   style={{width: 65, height: 65}}
                 />
               }
+              customTextWidth={'65%'}
             />
             <CommonItem
               name="Glucómetro Yano"
@@ -55,10 +56,10 @@ const MyDevices = () => {
         <FilledButton
           label="Add a device"
           type="blue"
-          // onPress={() => navigate('ChooseDevice')}
+          onPress={() => navigate('ChooseDevice')}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
   },
   addBtn: {
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 10 : 0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

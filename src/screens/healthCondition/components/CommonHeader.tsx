@@ -9,18 +9,30 @@ type props = {
   leftIcon?: React.ReactNode;
   rightComp1?: React.ReactNode;
   rightComp2?: React.ReactNode;
+  customStyle?: object;
 };
 
-const CommonHeader: FC<props> = ({title, leftIcon, rightComp1, rightComp2}) => {
+const CommonHeader: FC<props> = ({
+  title,
+  leftIcon,
+  rightComp1,
+  rightComp2,
+  customStyle,
+}) => {
   const navigation = useNavigation();
+
+  // Determine paddingVertical based on whether right components are present
+  const paddingVertical = rightComp1 || rightComp2 ? 1 : 10;
+
   return (
-    <View style={[styles.navbar, styles.flexBox]}>
+    <View
+      style={[styles.navbar, styles.flexBox, {paddingVertical}, customStyle]}>
       <View style={[styles.flexBox, {justifyContent: 'center'}]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           {leftIcon ? (
             leftIcon
           ) : (
-            <Icons.AntDesign name="arrowleft" size={28} color={'black'} />
+            <Icons.AntDesign name="arrowleft" size={25} color={Colors.Blue} />
           )}
         </TouchableOpacity>
         <Text style={styles.navbarTitle}>
@@ -40,17 +52,16 @@ export default CommonHeader;
 const styles = StyleSheet.create({
   navbar: {
     alignItems: 'center',
-    paddingVertical: 20,
     paddingHorizontal: 10,
-    paddingEnd: 20,
+    paddingEnd: 10,
     backgroundColor: Colors.White,
+    paddingTop: 50,
   },
   navbarTitle: {
     color: Colors.Blue,
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'Roboto',
-
     paddingLeft: 15,
   },
   boxStyle: {

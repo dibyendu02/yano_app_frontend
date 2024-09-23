@@ -4,20 +4,37 @@ import {navigate} from '../../../../navigation/RootNavigation';
 import Icons from '../../../../assets/icon/Icon';
 import {DummyImage} from '../../../../assets/dummy/images';
 import {Colors} from '../../../../constants/Colors';
+import {staticIcons} from '../../../../assets/image';
 
 interface PatientListItem {
   name: string;
+  customStyle?: object;
+  patientData?: object;
 }
 const PatientListItem: React.FC<PatientListItem> = props => {
+  const {patientData, name, customStyle} = props;
+  console.log(patientData);
   return (
-    <TouchableOpacity onPress={() => navigate('PatientMonitoringProfile')}>
-      <View style={styles.container}>
-        <Image source={DummyImage.user} style={styles.avatar} />
-        <Text style={styles.name}>{props.name}</Text>
-        <Icons.MaterialIcons
+    <TouchableOpacity
+      onPress={() => navigate('PatientMonitoringProfile', {patientData})}>
+      <View style={[styles.container, customStyle]}>
+        <Image
+          source={
+            patientData?.userImg
+              ? {uri: patientData?.userImg?.secure_url}
+              : DummyImage.user
+          }
+          style={styles.avatar}
+        />
+        <Text style={styles.name}>{name}</Text>
+        {/* <Icons.MaterialIcons
           name="navigate-next"
           size={30}
           color={Colors.Blue}
+        /> */}
+        <Image
+          source={staticIcons.nextIcon}
+          style={{height: 12, width: 10, objectFit: 'contain'}}
         />
       </View>
     </TouchableOpacity>

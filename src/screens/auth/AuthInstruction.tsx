@@ -1,5 +1,6 @@
 import {
   Image,
+  Platform,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -7,18 +8,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, { useContext, useEffect } from 'react';
-import { Colors } from '../../constants/Colors';
+import React, {useContext, useEffect} from 'react';
+import {Colors} from '../../constants/Colors';
 import Header from '../../components/header/Header';
-import { DummyImage } from '../../assets/dummy/images';
+import {DummyImage} from '../../assets/dummy/images';
 import FilledButton from '../../components/buttons/FilledButton';
-import { navigate } from '../../navigation/RootNavigation';
+import {navigate} from '../../navigation/RootNavigation';
 import UserContext from '../../contexts/UserContext';
-import { StaticImage } from '../../assets/images';
-import { AuthScreen } from '../../navigation/auth/AuthScreens';
+import {StaticImage} from '../../assets/images';
+import {AuthScreen} from '../../navigation/auth/AuthScreens';
 
-const AuthInstruction = ({ navigation }: any) => {
-  const { login, isPatient } = useContext(UserContext);
+const AuthInstruction = ({navigation}: any) => {
+  const {login, isPatient} = useContext(UserContext);
   useEffect(() => {
     setTimeout(() => {
       navigate(AuthScreen.DeviceConnected);
@@ -26,7 +27,7 @@ const AuthInstruction = ({ navigation }: any) => {
   }, []);
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
@@ -35,7 +36,7 @@ const AuthInstruction = ({ navigation }: any) => {
       <Header
         title=""
         headerRightComponent={
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <TouchableOpacity
               onPress={() => {
                 login();
@@ -46,8 +47,8 @@ const AuthInstruction = ({ navigation }: any) => {
           </View>
         }
       />
-      <ScrollView>
-        <View style={{ padding: 20 }}>
+      <ScrollView style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
+        <View>
           <View
             style={{
               backgroundColor: Colors.White,
@@ -65,26 +66,27 @@ const AuthInstruction = ({ navigation }: any) => {
               }}>
               Turn on the device
             </Text>
-            <View style={{
-              width: '100%',
-              paddingHorizontal: 4
-            }}>
+            <View
+              style={{
+                width: '100%',
+                paddingHorizontal: 4,
+              }}>
               <Text
                 style={{
                   fontSize: 16,
                   color: Colors.SteelBlue,
                   textAlign: 'center',
-                  paddingHorizontal: 10,
+                  paddingHorizontal: 12,
                 }}>
-                Please turn on the Yano Multi-Parameter device by holding down the
-                power button until the blue light flashes.
+                Please turn on the Yano Multi- Parameter device by holding down
+                the power button until the blue light flashes.
               </Text>
             </View>
             <Image
               source={StaticImage.DeviceStart}
               style={{
                 alignSelf: 'center',
-                marginBottom: 20,
+                marginTop: 20,
                 // width: 250,
                 height: 300,
               }}
@@ -92,7 +94,7 @@ const AuthInstruction = ({ navigation }: any) => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -101,7 +103,7 @@ export default AuthInstruction;
 const styles = StyleSheet.create({
   addBtn: {
     position: 'absolute',
-    bottom: 0,
+    bottom: Platform.OS === 'ios' ? 10 : 0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

@@ -10,55 +10,60 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Foundation from 'react-native-vector-icons/Foundation';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { userData } from '../../../../test/Data';
+// import {userData} from '../../../../test/Data';
 import Header from '../../../../components/header/Header';
-import { EditIcon, NotificationIcon } from '../../../../assets/icon/IconNames';
+import {EditIcon, NotificationIcon} from '../../../../assets/icon/IconNames';
 import Card from '../../../../components/cards/Card';
-import { DummyImage } from '../../../../assets/dummy/images';
-import { navigate } from '../../../../navigation/RootNavigation';
-import { Colors } from '../../../../constants/Colors';
+import {DummyImage} from '../../../../assets/dummy/images';
+import {navigate} from '../../../../navigation/RootNavigation';
+import {Colors} from '../../../../constants/Colors';
 import Icons from '../../../../assets/icon/Icon';
-import { CardStyles } from '../../../../components/cards/CardStyle';
+import {CardStyles} from '../../../../components/cards/CardStyle';
 import Badge from '../../../../components/Badge';
 import OutlineButton from '../../../../components/buttons/OutlineButton';
 import SwitchButton from '../../../../components/formComp/SwitchButton';
-import { Switch } from 'react-native-paper';
-import { StaticImage } from '../../../../assets/images';
+import {Switch} from 'react-native-paper';
+import {StaticImage} from '../../../../assets/images';
+import CardLocal from '../../monitoring/patient-monitoring/CardLocal';
+import {useNavigation} from '@react-navigation/native';
+import {getPatientDatabyId} from '../../../../api/GET/userData';
+import {retrieveData} from '../../../../utils/Storage';
+import {deleteFamilyMemberData} from '../../../../api/DELETE/familyLink';
 
 let data1 = [
   {
-    label: userData.gender,
+    label: 'gender',
     icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
   },
   {
-    label: userData.age,
+    label: 'dateOfBirth',
     icon: (
       <Image
         source={StaticImage.CalenderIcon}
-        style={{ height: 20, width: 20, tintColor: Colors.LightGreen }}
+        style={{height: 20, width: 20, tintColor: Colors.LightGreen}}
       />
     ),
   },
   {
-    label: userData.blood,
+    label: 'bloodType',
     icon: (
-      <Image source={StaticImage.BloodIcon} style={{ height: 20, width: 20 }} />
+      <Image source={StaticImage.BloodIcon} style={{height: 20, width: 20}} />
     ),
   },
 ];
 
 let data2 = [
   {
-    label: userData.height,
+    label: 'height',
     icon: <MaterialIcons name="height" size={20} color={'#76BC21'} />,
   },
   {
-    label: userData.weight,
+    label: 'weight',
     icon: <Foundation name="female-symbol" size={20} color={'#76BC21'} />,
   },
 ];
@@ -86,7 +91,7 @@ const menuData = [
       />
     ),
     text: 'Sus mediciones',
-    path: '',
+    path: 'HealthParametersList',
   },
   {
     id: '3',
@@ -96,30 +101,88 @@ const menuData = [
   },
 ];
 
-export default function ViewFamilyMemberDetails() {
+export default function ViewFamilyMemberDetails({route}) {
   const [isEnabled, setIsEnabled] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+  const [userId, setUserId] = useState('');
+  const [token, setToken] = useState('');
+  const [userData, setUserData] = useState({});
+  const navigation = useNavigation();
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
   };
+  const {data} = route.params || {};
+
+  const getFamilyMemberData = async () => {
+    try {
+      const memberData = await getPatientDatabyId({
+        patientId: data.userId,
+        token,
+      });
+      setUserData(memberData.userData);
+      console.log(memberData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedToken = await retrieveData('token');
+    // const retrievedUserType = await retrieveData('userType');
+
+    setUserId(retrievedUserId);
+    setToken(retrievedToken);
+    // setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+    getFamilyMemberData();
+  }, []);
+
+  const removeFamilyMember = async () => {
+    try {
+      await deleteFamilyMemberData({
+        userId,
+        token,
+        familylinkId: userData._id,
+      });
+      navigation.navigate('UserFamilyMembers');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  console.log('here isss data', userData._id);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header title="Perfil del familiar" />
       <View style={styles.body}>
         <Card>
           <Image
-            source={DummyImage.user}
+            source={
+              data.userImg ? {uri: data.userImg.secure_url} : DummyImage.user
+            }
             style={{
               height: 80,
               width: 80,
               borderRadius: 40,
             }}
           />
-          <Text style={styles.patientName}>María Clemente</Text>
+          <Text style={styles.patientName}>{data.name}</Text>
           <View style={styles.detailRow}>
             {data1.map((e, i, a) => (
               <View style={styles.detailItem} key={e.label}>
                 {e.icon}
-                <Text style={styles.detailText}>{e.label}</Text>
+                <Text style={styles.detailText}>
+                  {' '}
+                  {e.label === 'dateOfBirth'
+                    ? new Date(userData?.dateOfBirth)
+                        .toLocaleDateString('en-GB')
+                        .replace(/\//g, '-')
+                    : userData?.[e.label] || 'N/A'}
+                </Text>
                 {i < a.length - 1 && <View style={styles.separator} />}
               </View>
             ))}
@@ -129,35 +192,42 @@ export default function ViewFamilyMemberDetails() {
             {data2.map((e, i, a) => (
               <View style={styles.detailItem} key={e.label}>
                 {e.icon}
-                <Text style={styles.detailText}>{e.label}</Text>
+                <Text style={styles.detailText}>
+                  {userData?.[e.label] || 'N/A'}
+                </Text>
                 {i < a.length - 1 && <View style={styles.separator} />}
               </View>
             ))}
           </View>
           <Badge
             icon={
-              <Icons.MaterialIcons
-                name="diversity-3"
-                size={18}
-                color={Colors.Blue}
-                style={{ marginRight: 3 }}
+              <Image
+                source={StaticImage.FamilyIcon}
+                style={{
+                  height: 15,
+                  width: 15,
+                  objectFit: 'contain',
+                  tintColor: Colors.Blue,
+                }}
               />
             }
-            text="Mother"
+            text={data.relation}
             color="#B8DAFF"
           />
         </Card>
 
-        <View style={CardStyles.container}>
+        <View style={[CardStyles.container, {marginTop: 8}]}>
           <FlatList
             data={menuData}
             style={{
               paddingHorizontal: 20,
-              paddingVertical: 10,
+              // paddingVertical: 10,
             }}
-            renderItem={({ item, index: _i }) => (
+            renderItem={({item, index: _i}) => (
               <TouchableOpacity
-                onPress={() => navigate(item.path)}
+                onPress={() =>
+                  navigate(item.path, {fetchedUserId: userData._id})
+                }
                 style={{
                   width: '100%',
                   flexDirection: 'row',
@@ -213,20 +283,40 @@ export default function ViewFamilyMemberDetails() {
         style={{
           paddingHorizontal: 20,
           paddingVertical: 10,
+          backgroundColor: Colors.GhostWhite,
         }}>
         <OutlineButton
           type="red"
           label="Stop monitoring"
+          style={{backgroundColor: Colors.GhostWhite}}
           icon={
             // <FontAwesome5 name="stop" size={15} color={Colors.Red} />
-            <Image source={require('../../../../assets/image/exit_to_app.png')}
-              style={{ height: 20, width: 20, tintColor: Colors.Red }}
+            <Image
+              source={require('../../../../assets/image/exit_to_app.png')}
+              style={{
+                height: 20,
+                width: 20,
+                tintColor: Colors.Red,
+                objectFit: 'contain',
+              }}
             />
           }
-          onPress={() => console.log('stop monitoring')}
+          onPress={() => setIsClicked(true)}
         />
       </View>
-    </SafeAreaView>
+      {isClicked && (
+        <View style={styles.deletbuttonclick}>
+          <CardLocal
+            title={'Want to Stop monitoring your patient?'}
+            children={
+              'After doing so, you will not be able to access your medical history, nor receive alerts about your health.'
+            }
+            active={setIsClicked}
+            action={removeFamilyMember}
+          />
+        </View>
+      )}
+    </View>
   );
 }
 
@@ -238,6 +328,7 @@ const styles = StyleSheet.create({
   },
   body: {
     flex: 1,
+    paddingTop: 10,
     backgroundColor: Colors.GhostWhite,
   },
   separate: {
@@ -338,5 +429,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.Blue,
     fontWeight: '600',
+  },
+  deletbuttonclick: {
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    // marginHorizontal: '2%',
+    zIndex: 1,
+    flex: 1,
+    alignItems: 'center',
+    paddingHorizontal: 12,
   },
 });

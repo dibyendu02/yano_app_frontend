@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {Controller, FieldError, useFormContext} from 'react-hook-form';
 import {Colors} from '../../constants/Colors';
 import {TextInput} from 'react-native-paper';
@@ -25,10 +25,8 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
 }) => {
   const {control, setValue} = useFormContext();
   const [showOptionsModal, setShowOptionsModal] = useState(false);
-  const [middleItem, setMiddleItem] = useState<number | string>(0);
-  const [middleDecimalItem, setMiddleDecimalItem] = useState<number | string>(
-    0,
-  );
+  const [middleItem, setMiddleItem] = useState<number>(0);
+  const [middleDecimalItem, setMiddleDecimalItem] = useState<number>(0);
 
   const handleViewableItemsChanged = ({viewableItems}) => {
     if (viewableItems.length > 0) {
@@ -40,7 +38,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
   const handleDecimalViewableItemsChanged = ({viewableItems}) => {
     if (viewableItems.length > 0) {
       const middleIndex = Math.floor(viewableItems.length / 2);
-      setMiddleDecimalItem(viewableItems[middleIndex].item);
+      setMiddleDecimalItem(Number(viewableItems[middleIndex].item));
     }
   };
 
@@ -49,7 +47,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
   };
 
   const data = [];
-  const decimalData = [8, 9];
+  const decimalData = [];
   let unit = '';
 
   if (name === 'weight') {
@@ -82,29 +80,31 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                 {label}
               </Text>
             )}
-            <TextInput
-              style={[styles.input, error && styles.errorInput]}
-              mode="outlined"
-              outlineColor="transparent"
-              activeOutlineColor="transparent"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-              outlineStyle={styles.outline}
-              cursorColor={Colors.Black}
-              selectionColor={Colors.Black}
-              editable={false}
-              placeholder={placeholder}
-              placeholderTextColor={Colors.LightBlack}
-              right={
-                <TextInput.Icon
-                  icon="chevron-down"
-                  size={25}
-                  color={Colors.Blue}
-                  onPress={() => setShowOptionsModal(true)}
-                />
-              }
-            />
+            <TouchableOpacity onPress={() => setShowOptionsModal(true)}>
+              <TextInput
+                style={[styles.input, error && styles.errorInput]}
+                mode="outlined"
+                outlineColor="transparent"
+                activeOutlineColor="transparent"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value ? `${value} ${unit}` : ''}
+                outlineStyle={styles.outline}
+                cursorColor={Colors.Black}
+                selectionColor={Colors.Black}
+                editable={false}
+                placeholder={placeholder}
+                placeholderTextColor={Colors.LightBlack}
+                right={
+                  <TextInput.Icon
+                    icon="chevron-down"
+                    size={25}
+                    color={Colors.Blue}
+                    onPress={() => setShowOptionsModal(true)}
+                  />
+                }
+              />
+            </TouchableOpacity>
             {error && (
               <Text style={styles.errorText}>
                 {(error as FieldError).message}
@@ -149,7 +149,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                         alignItems: 'center',
                         justifyContent: 'center',
                         height: 200,
-                        borderRadius: 10,
+                        borderRadius: 8,
                         backgroundColor: Colors.White,
                         overflow: 'hidden',
                       }}>
@@ -179,9 +179,6 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                               alignItems: 'center',
                               backgroundColor: Colors.BlueGrey,
                               marginVertical: item - middleItem === 0 ? 1 : 0,
-                              // borderTopWidth: item - middleItem === 0 ? 1 : 0,
-                              // borderBottomWidth:
-                              //   item - middleItem === 0 ? 1 : 0,
                               borderColor: '#D8D7D9',
                             }}
                             key={item}>
@@ -197,7 +194,6 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                                 fontWeight: 'bold',
                                 fontFamily: 'Roboto',
                                 fontSize:
-                                  // item === middleItem
                                   item - middleItem === 0
                                     ? 22
                                     : item - middleItem === 1 ||
@@ -281,7 +277,7 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                       justifyContent: 'space-around',
                       alignItems: 'center',
                       width: '90%',
-                      paddingVertical: 10,
+                      paddingTop: 10,
                     }}>
                     <FilledButton
                       label="Cancel"
@@ -296,7 +292,9 @@ const FormPickerInputInput: FC<FormPickerInputInputProps> = ({
                       type="blue"
                       style={styles.bottomSheetBtn}
                       onPress={() => {
-                        const selectedValue = `${middleItem}.${middleDecimalItem} ${unit}`;
+                        const selectedValue = parseFloat(
+                          `${middleItem}.${middleDecimalItem}`,
+                        ); // Ensure this is a number
                         setValue(name, selectedValue);
                         setShowOptionsModal(false);
                       }}
@@ -336,7 +334,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   inputBox: {
-    marginBottom: 15,
+    marginBottom: 12,
   },
   label: {
     fontSize: 16,
@@ -350,6 +348,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.LightGray,
     fontSize: 16,
     height: 56,
+    borderRadius: 8,
     color: Colors.Blue,
   },
   outline: {

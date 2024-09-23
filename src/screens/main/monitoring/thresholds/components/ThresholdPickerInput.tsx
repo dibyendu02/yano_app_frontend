@@ -1,12 +1,20 @@
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import React, {FC, useState, useEffect} from 'react';
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
 import {Controller, FieldError, useFormContext} from 'react-hook-form';
 import {TextInput} from 'react-native-paper';
 import {Colors} from '../../../../../constants/Colors';
 import BottomSheet from '../../../../../components/bottom-sheet/BottomSheet';
 import FilledButton from '../../../../../components/buttons/FilledButton';
+import {staticIcons} from '../../../../../assets/image';
 
 interface ThresholdPickerInputProps {
   name: string;
@@ -76,29 +84,39 @@ const ThresholdPickerInput: FC<ThresholdPickerInputProps> = ({
                 {label}
               </Text>
             )}
-            <TextInput
-              style={[styles.input, error && styles.errorInput]}
-              mode="outlined"
-              outlineColor="transparent"
-              activeOutlineColor="transparent"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value ? `${value} ${unit}` : value}
-              outlineStyle={styles.outline}
-              cursorColor={Colors.Black}
-              selectionColor={Colors.Black}
-              editable={false}
-              placeholder={placeholder}
-              placeholderTextColor={Colors.LightBlack}
-              right={
-                <TextInput.Icon
-                  icon="menu-down"
-                  size={25}
-                  color={Colors.Grey}
-                  onPress={() => setShowOptionsModal(true)}
-                />
-              }
-            />
+            <TouchableOpacity onPress={() => setShowOptionsModal(true)}>
+              <TextInput
+                style={[styles.input, error && styles.errorInput]}
+                mode="outlined"
+                outlineColor="transparent"
+                activeOutlineColor="transparent"
+                onBlur={onBlur}
+                onChangeText={onChange}
+                value={value ? `${value} ${unit}` : value}
+                outlineStyle={styles.outline}
+                cursorColor={Colors.Black}
+                selectionColor={Colors.Black}
+                editable={false}
+                placeholder={placeholder}
+                placeholderTextColor={Colors.LightBlack}
+                right={
+                  <TextInput.Icon
+                    icon={() => (
+                      <Image
+                        source={staticIcons.downIcon} // Replace with your image source
+                        style={{
+                          width: 12, // Set width as per your requirement
+                          height: 12, // Set height as per your requirement
+                          tintColor: Colors.Blue, // Optionally apply tint color
+                          resizeMode: 'contain', // Adjust the image aspect ratio
+                          marginRight: -10,
+                        }}
+                      />
+                    )}
+                  />
+                }
+              />
+            </TouchableOpacity>
             {error && (
               <Text style={styles.errorText}>
                 {(error as FieldError).message}
@@ -284,6 +302,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     height: 56,
     color: Colors.Blue,
+    borderRadius: 10,
   },
   outline: {
     borderRadius: 10,

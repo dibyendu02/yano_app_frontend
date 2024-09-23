@@ -15,7 +15,7 @@ const EmailNotFoundPatient = ({navigation}) => {
   const [email, setEmail] = useState('');
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <View style={styles.Navbar}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -84,7 +84,7 @@ const EmailNotFoundPatient = ({navigation}) => {
           color="#76BC21"
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

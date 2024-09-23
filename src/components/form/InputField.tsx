@@ -33,6 +33,7 @@ export const InputField: FC<inputProps> = ({
         numberOfLines={isTextarea ? 10 : 1}
         placeholder={placeholder}
         onChangeText={e => onchange(name, e)}
+        placeholderTextColor={Colors.SteelBlue}
       />
     </View>
   );
@@ -40,7 +41,7 @@ export const InputField: FC<inputProps> = ({
 
 const styles = StyleSheet.create({
   inputBox: {
-    marginBottom: 20,
+    marginBottom: 12,
   },
   label: {
     fontSize: 16,
@@ -48,13 +49,15 @@ const styles = StyleSheet.create({
     color: Colors.Blue,
   },
   input: {
-    backgroundColor: Colors.White,
-    borderRadius: 8,
-    marginTop: 5,
-    borderWidth: 1,
-    borderColor: Colors.LightGray,
     // height: 56,
     paddingHorizontal: 15,
+    backgroundColor: Colors.White,
+    marginTop: 5,
+    borderWidth: 1.3,
+    borderColor: Colors.LightGray,
     fontSize: 16,
+    height: 56,
+    color: Colors.Blue,
+    borderRadius: 8,
   },
 });

@@ -9,7 +9,7 @@ import { measurementList } from '../../../../assets/measurement-items/measuremen
 
 const WhatToMeasure = ({ navigation }: any) => {
     return (
-        <SafeAreaView
+        <View
             style={{
                 flex: 1,
                 backgroundColor: Colors.GhostWhite,
@@ -47,7 +47,7 @@ const WhatToMeasure = ({ navigation }: any) => {
                     }
                 </View>
             </ScrollView>
-        </SafeAreaView>
+        </View>
     )
 }
 

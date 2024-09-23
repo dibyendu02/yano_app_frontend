@@ -123,7 +123,7 @@ export default FilledButton;
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',

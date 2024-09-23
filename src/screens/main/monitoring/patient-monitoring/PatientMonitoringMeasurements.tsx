@@ -4,6 +4,7 @@
 import {
   FlatList,
   Image,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -26,9 +27,9 @@ import {navigate} from '../../../../navigation/RootNavigation';
 
 const PatientMonitoringMeasurements = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Header
-        title="Health Parameters"
+        title="Health parameters"
         // headerRightComponent={
         //   <Icons.MaterialIcons
         //     name="checklist-rtl"
@@ -84,14 +85,22 @@ const PatientMonitoringMeasurements = () => {
                         {moment(e.timestamp).format('M/D/YYYY - h:mm A')}
                       </Text>
                     </View>
-                    <View>
+                    <View
+                      style={{
+                        flexDirection: 'column',
+                        alignItems: 'flex-end',
+                        width: '30%',
+                        marginRight: 14,
+                      }}>
                       {e.measurements.map(itm => (
                         <Text
                           style={{
                             fontSize: 18,
                             fontFamily: 'Roboto',
                             marginBottom: 4,
-                            fontWeight: '500',
+                            fontWeight:
+                              Platform.OS === 'android' ? 'bold' : '600',
+                            color: Colors.Blue,
                           }}
                           key={itm.unit}>
                           {itm.value}{' '}
@@ -100,13 +109,21 @@ const PatientMonitoringMeasurements = () => {
                               fontSize: 16,
                               fontFamily: 'Roboto',
                               fontWeight: 'light',
+                              color: Colors.SteelBlue,
                             }}>
                             {itm.unit}
                           </Text>
                         </Text>
                       ))}
                       {e?.diagram && (
-                        <Image source={e.diagram} height={40} width={60} />
+                        <Image
+                          source={e.diagram}
+                          style={{
+                            height: 40,
+                            width: 60,
+                            tintColor: Colors.Blue,
+                          }}
+                        />
                       )}
                     </View>
 
@@ -140,7 +157,7 @@ const PatientMonitoringMeasurements = () => {
           )}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

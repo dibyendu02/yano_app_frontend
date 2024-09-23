@@ -2,6 +2,7 @@
 import React, {useContext, useState} from 'react';
 import {
   Image,
+  Platform,
   SafeAreaView,
   StyleSheet,
   Text,
@@ -54,7 +55,7 @@ const SelectUserType = () => {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <Header
         title=""
         headerRightComponent={
@@ -65,6 +66,7 @@ const SelectUserType = () => {
             </TouchableOpacity>
           </View>
         }
+        customStyle={{paddingBottom: 4, paddingTop: 50}}
       />
       <View
         style={{
@@ -105,10 +107,11 @@ const SelectUserType = () => {
         type="blue"
         label="Continue"
         disabled={!selectedRole}
-        style={{width: '92%', marginVertical: 10, alignSelf: 'center'}}
+        style={{width: '92%', marginVertical: 10, alignSelf: 'center',    bottom: Platform.OS === 'ios' ? 10 : 0,
+}}
         onPress={handleContinue}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -119,6 +122,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.Blue,
     marginRight: 15,
+
   },
   loginButton: {
     borderWidth: 1,
@@ -129,6 +133,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingHorizontal: 15,
     fontSize: 15,
+
   },
   selectionCardContainer: {
     width: '48%',

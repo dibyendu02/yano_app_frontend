@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View, Image} from 'react-native';
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native';
 import {Colors} from '../../../../constants/Colors';
 import Header from '../../../../components/header/Header';
@@ -8,6 +8,10 @@ import {Control, FieldValues, useForm} from 'react-hook-form';
 import FilledButton from '../../../../components/buttons/FilledButton';
 import CustomPasswordField from '../../../../components/formComp/CustomPasswordField';
 import emergencyHome from '../../../../assets/image/emergencyHome.png';
+import UserContext from '../../../../contexts/UserContext';
+import {deletePatientData} from '../../../../api/DELETE/manageData';
+import {deletePatientAccount} from '../../../../api/POST/manageData';
+import {retrieveData} from '../../../../utils/Storage';
 
 const DeleteAccount = () => {
   const {
@@ -22,17 +26,53 @@ const DeleteAccount = () => {
   const onSubmit = (value: string) => {
     console.log(value);
   };
+  const {logout} = useContext(UserContext);
+  const [userId, setUserId] = useState('');
+  const [userType, setUserType] = useState('');
+  const [token, setToken] = useState('');
+
+  const getUserData = async () => {
+    const retrievedToken = await retrieveData('token');
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedUserType = await retrieveData('userType');
+
+    setToken(retrievedToken);
+    setUserId(retrievedUserId);
+    setUserType(retrievedUserType);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const deleteUserAccount = async () => {
+    try {
+      const data = {password};
+      const res = await deletePatientAccount({userId, data, token});
+      console.log(res);
+    } catch (error) {
+      // Alert(error.message)
+      console.log(error);
+    }
+  };
 
   return (
-    <SafeAreaView
+    <View
       style={{
         flex: 1,
         backgroundColor: Colors.GhostWhite,
         position: 'relative',
       }}>
       <Header title={'Delete this account'} />
-      <ScrollView>
-        <View style={{padding: 20}}>
+      <ScrollView
+        style={{
+          //   paddingVertical: 12,
+          width: '94%',
+          margin: 'auto',
+          marginTop: -5,
+          //   backgroundColor: 'red',
+        }}>
+        <View>
           <View style={styles.versionBox}>
             <View style={styles.confirmationContainer}>
               <Image
@@ -52,19 +92,40 @@ const DeleteAccount = () => {
                 paddingRight: 10,
               }}>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{paddingStart: 20, fontSize: 16}}>•</Text>
+                <Text
+                  style={{
+                    paddingStart: 20,
+                    fontSize: 16,
+                    color: Colors.SteelBlue,
+                  }}>
+                  •
+                </Text>
                 <Text style={styles.list}>
                   The account will be deleted from Yano and all your devices.
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{paddingStart: 20, fontSize: 16}}>•</Text>
+                <Text
+                  style={{
+                    paddingStart: 20,
+                    fontSize: 16,
+                    color: Colors.SteelBlue,
+                  }}>
+                  •
+                </Text>
                 <Text style={styles.list}>
                   Your health history will be erased.
                 </Text>
               </View>
               <View style={{flexDirection: 'row'}}>
-                <Text style={{paddingStart: 20, fontSize: 16}}>•</Text>
+                <Text
+                  style={{
+                    paddingStart: 20,
+                    fontSize: 16,
+                    color: Colors.SteelBlue,
+                  }}>
+                  •
+                </Text>
                 <Text style={styles.list}>
                   Your measurements will be erased.
                 </Text>
@@ -88,12 +149,16 @@ const DeleteAccount = () => {
                 label="Delete account"
                 disabled={password.length < 6}
                 type="red"
+                onPress={() => {
+                  deleteUserAccount();
+                  logout();
+                }}
               />
             </View>
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

@@ -6,7 +6,7 @@ import {DateIcon} from '../../assets/icon/IconNames';
 
 interface CustomInputProps extends TextInputProps {
   name: string;
-  control: Control<FieldValues, object>;
+  control?: Control<FieldValues, object>;
   rules?: object;
   label?: string;
   icon?: React.ReactNode;
@@ -33,6 +33,7 @@ const CustomInputField: FC<CustomInputProps> = ({
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
+              placeholderTextColor={Colors.SteelBlue}
               {...inputProps}
             />
             {icon && (
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   inputBox: {
-    marginBottom: 15,
+    marginBottom: 12,
   },
   label: {
     fontSize: 16,
