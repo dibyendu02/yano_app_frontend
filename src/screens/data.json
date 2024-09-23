@@ -1,0 +1,174 @@
+{
+    "advertising": {
+        "isConnectable": true,
+        "localName": "HC02-F27D9E",    
+        "manufacturerData": {},
+        "manufacturerRawData": {
+            "CDVType": "ArrayBuffer",
+            "bytes": [Array],
+            "data": ""
+        },
+        "rawData": {
+            "CDVType": "ArrayBuffer",
+            "bytes": [Array
+            ],
+            "data": "AgEGAwIn/wwJSEMwMi1GMjdEOUUFEgoAFAACCgAD7UZGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+        },
+        "serviceData": {},
+        "serviceUUIDs": [
+            "ff27"
+        ],
+        "txPowerLevel": 0
+    },
+    "characteristics": [
+        {
+            "characteristic": "2a00",
+            "properties": [Object
+            ],
+            "service": "1800"
+        },
+        {
+            "characteristic": "2a01",
+            "properties": [Object
+            ],
+            "service": "1800"
+        },
+        {
+            "characteristic": "2a02",
+            "properties": [Object
+            ],
+            "service": "1800"
+        },
+        {
+            "characteristic": "2a03",
+            "properties": [Object
+            ],
+            "service": "1800"
+        },
+        {
+            "characteristic": "2a04",
+            "properties": [Object
+            ],
+            "service": "1800"
+        },
+        {
+            "characteristic": "2a05",
+            "descriptors": [Array
+            ],
+            "properties": [Object
+            ],
+            "service": "1801"
+        },
+        {
+            "characteristic": "2a23",
+            "properties": [Object
+            ],
+            "service": "180a"
+        },
+        {
+            "characteristic": "2a24",
+            "properties": [Object
+            ],
+            "service": "180a"
+        },
+        {
+            "characteristic": "2a25",
+            "properties": [Object
+            ],
+            "service": "180a"
+        },
+        {
+            "characteristic": "2a26",
+            "properties": [Object
+            ],
+            "service": "180a"
+        },
+        {
+            "characteristic": "2a27",
+            "properties": [Object
+            ],
+            "service": "180a"
+        },
+        {
+            "characteristic": "2a28",
+            "properties": [Object
+            ],
+            "service": "180a"
+        },
+        {
+            "characteristic": "2a29",
+            "properties": [Object
+            ],
+            "service": "180a"
+        },
+        {
+            "characteristic": "2a2a",
+            "properties": [Object
+            ],
+            "service": "180a"
+        },
+        {
+            "characteristic": "2a50",
+            "properties": [Object
+            ],
+            "service": "180a"
+        },
+        {
+            "characteristic": "fff1",
+            "descriptors": [Array
+            ],
+            "properties": [Object
+            ],
+            "service": "ff27"
+        },
+        {
+            "characteristic": "fff2",
+            "descriptors": [Array
+            ],
+            "properties": [Object
+            ],
+            "service": "ff27"
+        },
+        {
+            "characteristic": "fff3",
+            "descriptors": [Array
+            ],
+            "properties": [Object
+            ],
+            "service": "ff27"
+        },
+        {
+            "characteristic": "fff4",
+            "descriptors": [Array
+            ],
+            "properties": [Object
+            ],
+            "service": "ff27"
+        },
+        {
+            "characteristic": "fff5",
+            "descriptors": [Array
+            ],
+            "properties": [Object
+            ],
+            "service": "ff27"
+        }
+    ],
+    "id": "60:64:05:93:7E:EC",
+    "name": "HC02-F27D9E",
+    "rssi": -60,
+    "services": [
+        {
+            "uuid": "1800"
+        },
+        {
+            "uuid": "1801"
+        },
+        {
+            "uuid": "180a"
+        },
+        {
+            "uuid": "ff27"
+        }
+    ]
+}
