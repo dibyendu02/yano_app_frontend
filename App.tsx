@@ -13,6 +13,7 @@ import DeviceConnection from './src/screens/DeviceConnection';
 import DeviceGetData from './src/screens/DeviceGetData';
 import {removeDataByKey, retrieveData} from './src/utils/Storage';
 import axios from 'axios';
+import HealthMonitorComponent from './src/screens/HealthMonitorComponent';
 
 export const BASE_URL = 'https://yano-backend.onrender.com';
 // export const BASE_URL = 'http://192.168.29.167:5000';
@@ -106,24 +107,25 @@ export default function App() {
   }, [isAuth, userType, userId]);
 
   return (
-    <NavigationContainer ref={navigationRef} theme={theme}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        translucent
-      />
-      <UserContext.Provider
-        value={{
-          login,
-          logout,
-          ProviderLogin,
-          PatientLogin,
-          isPatient,
-          userData, // Make userData available globally
-        }}>
-        {isLoggedIn ? <MainStack /> : <AuthStack />}
-      </UserContext.Provider>
-    </NavigationContainer>
+    // <NavigationContainer ref={navigationRef} theme={theme}>
+    //   <StatusBar
+    //     barStyle="dark-content"
+    //     backgroundColor="transparent"
+    //     translucent
+    //   />
+    //   <UserContext.Provider
+    //     value={{
+    //       login,
+    //       logout,
+    //       ProviderLogin,
+    //       PatientLogin,
+    //       isPatient,
+    //       userData, // Make userData available globally
+    //     }}>
+    //     {isLoggedIn ? <MainStack /> : <AuthStack />}
+    //   </UserContext.Provider>
+    // </NavigationContainer>
     // <DeviceGetData />
+    <HealthMonitorComponent />
   );
 }

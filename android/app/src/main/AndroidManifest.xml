@@ -16,6 +16,14 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
 
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 
     <application
       android:name=".MainApplication"
@@ -36,5 +44,13 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+
+      <!-- for health meter -->
+      <meta-data
+      android:name="appkey"
+      android:value="appkey obtained from the Linktop’s server document" />
+      <meta-data
+      android:name="appsecret"
+      android:value="appsecret obtained from the Linktop’s server document" />
     </application>
 </manifest>
