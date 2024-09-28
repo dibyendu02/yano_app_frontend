@@ -95,9 +95,9 @@ const ChooseDevice = () => {
             color=""
           />
           <PatientElements
-            name="Glucómetro"
+            name="YANO® Glucometer"
             onPress={() =>
-              navigate(AuthScreen.DeviceInfo, {devicename: 'glucometer'})
+              navigate('GlucometerInfo', {devicename: 'glucometer'})
             }
             element={
               <Image

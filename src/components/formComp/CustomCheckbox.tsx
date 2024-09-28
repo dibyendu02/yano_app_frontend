@@ -43,7 +43,12 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({
               ) : (
                 <Image
                   source={staticIcons.BlankCheckBoxIcon}
-                  style={{width: 20, height: 20, objectFit: 'contain'}}
+                  style={{
+                    width: 20,
+                    height: 20,
+                    objectFit: 'contain',
+                    tintColor: Colors.Grey,
+                  }}
                 />
               )}
             </>
@@ -66,22 +71,28 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
     backgroundColor: Colors.White,
-    height: 56,
+    // height: 56,
+    paddingVertical: 10,
+    paddingTop: 0,
     borderRadius: 8,
-    justifyContent: 'center',
-    paddingHorizontal: 20,
+    // justifyContent: 'center',
+    paddingHorizontal: 12,
     borderWidth: 1,
     borderColor: Colors.LightGray,
+    width: '100%',
+    // paddingRight: 24,
   },
   checkboxContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
+    paddingTop: 10,
+    // alignItems: 'center',
   },
   label: {
     marginLeft: 15,
     fontSize: 16,
     color: Colors.Blue,
-    fontWeight: 'bold',
+    marginTop: -3,
+    // fontWeight: 'bold',
   },
   errorText: {
     color: 'red',

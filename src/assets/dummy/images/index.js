@@ -17,6 +17,7 @@ export const DummyImage = {
   graph: require('./graph.png'),
   largeDevice: require('./large-device.png'),
   glucometer: require('./glucometer.png'),
+  glucometerBack: require('./glucometerBack.png'),
   glucoround: require('./gluco-round.png'),
   monitor: require('./monitor-device.png'),
   grid: require('./grid.png'),

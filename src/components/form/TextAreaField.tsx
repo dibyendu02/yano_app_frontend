@@ -1,14 +1,15 @@
-import {FC} from 'react';
+import React, {FC} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 import {Colors} from '../../constants/Colors';
 
 type inputProps = {
   label?: string;
-  name: string;
+  name?: string;
   value: string;
   icon?: string;
-  onchange: (name: string, e: string) => void;
   placeholder?: string;
+  description?: string; // New optional description prop
+  onchange: (name: string, e: string) => void;
 };
 
 export const TextArea: FC<inputProps> = ({
@@ -16,6 +17,7 @@ export const TextArea: FC<inputProps> = ({
   name,
   value,
   placeholder,
+  description, // Destructure the new prop
   onchange,
 }) => {
   return (
@@ -29,6 +31,7 @@ export const TextArea: FC<inputProps> = ({
         placeholder={placeholder}
         onChangeText={e => onchange(name, e)}
       />
+      {description && <Text style={styles.description}>{description}</Text>}
     </View>
   );
 };
@@ -53,4 +56,12 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     color: Colors.SteelBlue,
   },
+  description: {
+    marginTop: 8,
+    fontSize: 12,
+    color: Colors.SteelBlue,
+    // textAlign: 'center',
+  },
 });
+
+export default TextArea;

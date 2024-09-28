@@ -95,7 +95,7 @@ export default DeviceInfo;
 const styles = StyleSheet.create({
   addBtn: {
     position: 'absolute',
-    bottom:Platform.OS === 'ios' ? 10 :  0,
+    bottom: Platform.OS === 'ios' ? 10 : 0,
     left: 0,
     width: '100%',
     backgroundColor: Colors.White,

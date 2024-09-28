@@ -22,7 +22,7 @@ export async function fetchHistory(
       return result;
     } catch (parseError) {
       // If JSON parsing fails, it's likely an error message in plain text.
-      console.warn('Received non-JSON response:', result);
+      // console.warn('Received non-JSON response:', result);
       return result; // Return the raw response (which might be an error message)
     }
   } catch (err: any) {

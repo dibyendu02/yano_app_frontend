@@ -18,4 +18,10 @@ export const staticIcons = {
   CheckBoxIcon: require('./check_box.png'),
   BlankCheckBoxIcon: require('./blank_check_box.png'),
   checkCircle: require('./check_circle.png'),
+  foundIcon: require('./foundIcon.png'),
+  notfoundIcon: require('./notfoundIcon.png'),
+  bluetoohIcon: require('./bluetoothIcon.png'),
+  bloodGlucoseIcon: require('./bloodGlucoseIcon.png'),
+  stopIcon: require('./stopIcon.png'),
+  refreshIcon: require('./refreshIcon.png'),
 };

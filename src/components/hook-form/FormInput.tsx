@@ -1,5 +1,5 @@
-import React, { FC, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, {FC, useState} from 'react';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {
   Controller,
   FieldError,
@@ -7,20 +7,23 @@ import {
   RegisterOptions,
   useFormContext,
 } from 'react-hook-form';
-import { Colors } from '../../constants/Colors';
-import { TextInput, TextInputProps } from 'react-native-paper';
-import { FormInputType } from './types';
+import {Colors} from '../../constants/Colors';
+import {TextInput, TextInputProps} from 'react-native-paper';
+import {FormInputType} from './types';
+import Icons from 'react-native-vector-icons/MaterialIcons';
+
 interface FormInputProps extends TextInputProps {
   name: string;
   rules?:
-  | Omit<
-    RegisterOptions<FieldValues, string>,
-    'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
-  >
-  | undefined;
+    | Omit<
+        RegisterOptions<FieldValues, string>,
+        'disabled' | 'valueAsNumber' | 'valueAsDate' | 'setValueAs'
+      >
+    | undefined;
   label?: string;
   instruction?: string;
   type?: FormInputType;
+  onInfoPress?: () => void; // Callback function for info icon press
 }
 
 const FormInput: FC<FormInputProps> = ({
@@ -29,9 +32,10 @@ const FormInput: FC<FormInputProps> = ({
   rules = {},
   instruction,
   type = FormInputType.Default,
+  onInfoPress, // Destructure the onInfoPress prop
   ...inputProps
 }) => {
-  const { control } = useFormContext();
+  const {control} = useFormContext();
   const [showSecureValue, setShowSecureValue] = useState(
     type === FormInputType.Password,
   );
@@ -49,11 +53,11 @@ const FormInput: FC<FormInputProps> = ({
     <View style={styles.inputBox}>
       <Controller
         control={control}
-        rules={{ ...rules, ...defaultRules[type] }}
-        render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
+        rules={{...rules, ...defaultRules[type]}}
+        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
           <View>
             {label && (
-              <Text style={[styles.label, error && { color: Colors.Red }]}>
+              <Text style={[styles.label, error && {color: Colors.Red}]}>
                 {label}
               </Text>
             )}
@@ -71,19 +75,20 @@ const FormInput: FC<FormInputProps> = ({
               selectionColor={Colors.Blue}
               placeholderTextColor={Colors.SteelBlue}
               right={
-                type === FormInputType.Password ? (
+                onInfoPress && (
                   <TextInput.Icon
-                    icon={!showSecureValue ? 'eye' : 'eye-off'}
-                    onPress={() => setShowSecureValue(!showSecureValue)}
+                    icon="information-outline" // Icon for information
+                    onPress={onInfoPress} // Handle info icon press
                     size={25}
-                    color={Colors.Grey}
+                    color={Colors.LightBlack}
+                    style={styles.icon}
                   />
-                ) : null
+                )
               }
               {...inputProps}
             />
             {instruction && (
-              <Text style={{ color: Colors.SteelBlue }}>{instruction}</Text>
+              <Text style={{color: Colors.SteelBlue}}>{instruction}</Text>
             )}
             {error && (
               <Text style={styles.errorText}>
@@ -124,10 +129,14 @@ const styles = StyleSheet.create({
     height: 56,
     color: Colors.Blue,
     borderRadius: 10,
-
   },
   outline: {
     borderRadius: 10,
+  },
+  icon: {
+    position: 'absolute',
+    top: '50%', // Vertical center
+    transform: [{translateY: -25}], // Adjust the vertical alignment
   },
 });
 

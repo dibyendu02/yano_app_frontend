@@ -120,6 +120,11 @@ import AfterQR from '../../screens/main/add-patient/AfterQR';
 import PatientMonitoringProfileLocal from '../../screens/main/add-patient/PatientMonitoringProfileLocal';
 import VideoCallStart from '../../screens/VideoCallStartingScreen';
 import {Platform} from 'react-native';
+import GlucometerInfo from '../../screens/main/glucometer/GlucometerInfo';
+import RegisterGlucometer from '../../screens/main/glucometer/RegisterGlucometer';
+import SyncGlucometer from '../../screens/main/glucometer/SyncGlucometer';
+import GlucoseData from '../../screens/main/glucometer/GlucoseData';
+import BloodGlucoseStats from '../../screens/main/monitoring/health-stats/BloodGlucoseStats';
 
 const Tab = createBottomTabNavigator();
 
@@ -877,6 +882,15 @@ const MainStack = () => {
         }}
       />
       <Stack.Screen
+        name="BloodGlucoseStats"
+        component={BloodGlucoseStats}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
+      />
+      <Stack.Screen
         name="HealthThresholdHomeScreen"
         component={HealthThresholdHomeScreen}
         options={{
@@ -1233,6 +1247,42 @@ const MainStack = () => {
       <Stack.Screen
         name="PatientMonitoringProfileLocal"
         component={PatientMonitoringProfileLocal}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
+      />
+      <Stack.Screen
+        name="GlucometerInfo"
+        component={GlucometerInfo}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
+      />
+      <Stack.Screen
+        name="RegisterGlucometer"
+        component={RegisterGlucometer}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
+      />
+      <Stack.Screen
+        name="SyncGlucometer"
+        component={SyncGlucometer}
+        options={{
+          headerShown: false,
+          animationTypeForReplace: 'push',
+          animation: 'slide_from_right',
+        }}
+      />
+      <Stack.Screen
+        name="GlucoseData"
+        component={GlucoseData}
         options={{
           headerShown: false,
           animationTypeForReplace: 'push',

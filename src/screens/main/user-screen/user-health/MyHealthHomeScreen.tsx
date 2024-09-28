@@ -10,7 +10,10 @@ import {
   Text,
   TouchableOpacity,
   View,
+  PermissionsAndroid, // Import for Android permissions
+  Alert,
 } from 'react-native';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions'; // Import for handling permissions
 import CommonLayout from '../../../../components/CommonLayout';
 import Header from '../../../../components/header/Header';
 import {
@@ -32,7 +35,56 @@ import UserContext from '../../../../contexts/UserContext';
 import moment from 'moment';
 import {healthParameterDetailsN, HSDGN} from '../../../../test/HealthStatsData';
 import {useIsFocused} from '@react-navigation/native';
+const requestPermissions = async () => {
+  try {
+    // Request location and camera permissions for Android
+    if (Platform.OS === 'android') {
+      const granted = await PermissionsAndroid.requestMultiple([
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+      ]);
 
+      if (
+        granted['android.permission.ACCESS_FINE_LOCATION'] !==
+          PermissionsAndroid.RESULTS.GRANTED ||
+        granted['android.permission.CAMERA'] !==
+          PermissionsAndroid.RESULTS.GRANTED ||
+        granted['android.permission.RECORD_AUDIO'] !==
+          PermissionsAndroid.RESULTS.GRANTED
+      ) {
+        // Alert.alert(
+        //   'Permission Denied',
+        //   'All permissions are required to proceed.',
+        // );
+        return false;
+      }
+    } else if (Platform.OS === 'ios') {
+      // Request location and camera permissions for iOS
+      const locationPermission = await request(
+        PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
+      );
+      const cameraPermission = await request(PERMISSIONS.IOS.CAMERA);
+      const microphonePermission = await request(PERMISSIONS.IOS.MICROPHONE);
+
+      if (
+        locationPermission !== RESULTS.GRANTED ||
+        cameraPermission !== RESULTS.GRANTED ||
+        microphonePermission !== RESULTS.GRANTED
+      ) {
+        Alert.alert(
+          'Permission Denied',
+          'All permissions are required to proceed.',
+        );
+        return false;
+      }
+    }
+    return true;
+  } catch (err) {
+    console.warn(err);
+    return false;
+  }
+};
 const MyHealthHomeScreen = ({navigation}) => {
   const [show, setShow] = useState(false);
   const [selectedDiv, setSelectedDiv] = useState(null);
@@ -47,6 +99,21 @@ const MyHealthHomeScreen = ({navigation}) => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
+    const checkPermissions = async () => {
+      const permissionsGranted = await requestPermissions();
+      // if (!permissionsGranted) {
+      //   // If permissions are not granted, navigate back or show a message
+      //   Alert.alert(
+      //     'Permissions Required',
+      //     'Please enable all permissions to use this feature.',
+      //   );
+      // }
+    };
+
+    checkPermissions();
+  }, []);
+
+  useEffect(() => {
     console.log('it runs');
     if (Platform.OS === 'android') {
       if (isFocused) {
@@ -56,6 +123,7 @@ const MyHealthHomeScreen = ({navigation}) => {
       }
     }
   }, [isFocused]);
+
   useEffect(() => {
     console.log('it runs');
     if (Platform.OS === 'android') {
@@ -68,6 +136,7 @@ const MyHealthHomeScreen = ({navigation}) => {
       }
     }
   }, [show]);
+
   return (
     <View
       style={{
