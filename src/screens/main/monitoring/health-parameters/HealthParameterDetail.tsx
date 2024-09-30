@@ -129,7 +129,7 @@ const HealthParameterDetail = ({route}) => {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                   }}>
-                  <View style={{width: '50%'}}>
+                  <View style={{width: item.label === 'Note' ? '20%' : '50%'}}>
                     <Text
                       style={{
                         fontSize: 16,
@@ -141,27 +141,30 @@ const HealthParameterDetail = ({route}) => {
                       {item.label}
                     </Text>
                   </View>
-
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      fontFamily: 'Roboto',
-                      marginBottom: 4,
-                      fontWeight: Platform.OS === 'android' ? 'bold' : '600',
-                      color: Colors.Blue,
-                    }}
-                    key={item.unit}>
-                    {item.value}{' '}
+                  <View style={{width: item.label === 'Note' && '80%'}}>
                     <Text
                       style={{
-                        fontSize: 16,
+                        fontSize: 18,
                         fontFamily: 'Roboto',
-                        fontWeight: 'light',
-                        color: Colors.SteelBlue,
-                      }}>
-                      {item.unit}
+                        marginBottom: 4,
+                        fontWeight: Platform.OS === 'android' ? 'bold' : '600',
+                        color: Colors.Blue,
+                      }}
+                      key={item.unit}>
+                      {item.value}{' '}
+                      {item.unit && (
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            fontFamily: 'Roboto',
+                            fontWeight: 'light',
+                            color: Colors.SteelBlue,
+                          }}>
+                          {item.unit}
+                        </Text>
+                      )}
                     </Text>
-                  </Text>
+                  </View>
                 </View>
               )}
               ItemSeparatorComponent={() => (

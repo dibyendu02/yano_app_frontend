@@ -16,6 +16,7 @@ import CommonHeader from '../../healthCondition/components/CommonHeader';
 import Card from './components/Card';
 import {PERMISSIONS, request, RESULTS} from 'react-native-permissions'; // Import permissions
 import {fetchHistory} from '../../../core/BGMManager/BGMManager'; // Import fetchHistory function
+import {replace} from '../../../navigation/RootNavigation';
 
 const SyncGlucometer = ({navigation}: any) => {
   const route = useRoute();
@@ -175,7 +176,7 @@ const SyncGlucometer = ({navigation}: any) => {
         foodConsumed: 'Random',
         deviceName: route?.params?.Sn || 'Unknown Device', // Use passed serial number or fallback
       };
-      navigation.navigate('GlucoseData', {data: glucoseData});
+      replace('GlucoseData', {data: glucoseData});
     }
   };
 
@@ -312,7 +313,7 @@ const SyncGlucometer = ({navigation}: any) => {
             title={'Restart device'}
             children={'Do you want to restart your Yano® Glucometer?'}
             active={setIsClicked}
-            action={() => navigation.goBack()} // Restart the device search
+            action={() => replace('RegisterGlucometer')} // Restart the device search
           />
         </View>
       )}

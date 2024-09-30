@@ -36,7 +36,7 @@ const GlucoseData = ({navigation, route}: any) => {
     glucoseMeasurementValue: data.glucoseMeasurementValue || '',
     glucoseMeasurementUnit: data.glucoseMeasurementUnit || '',
     foodConsumed: data.foodConsumed || '',
-    note: '',
+    note: '', // Initialize the note field with an empty string
   });
 
   const methods = useForm({
@@ -44,7 +44,7 @@ const GlucoseData = ({navigation, route}: any) => {
     defaultValues: formData,
   });
 
-  const {handleSubmit, control} = methods;
+  const {handleSubmit, control, watch} = methods;
 
   const getUserData = async () => {
     const retrievedUserId = await retrieveData('userId');
@@ -85,7 +85,10 @@ const GlucoseData = ({navigation, route}: any) => {
     setIsClicked(true);
   };
 
-  console.log(formData.note);
+  // Watching formData.note to see changes in the console
+  useEffect(() => {
+    console.log('Note field updated:', formData.note);
+  }, [formData.note]);
 
   return (
     <TouchableWithoutFeedback
@@ -152,7 +155,7 @@ const GlucoseData = ({navigation, route}: any) => {
                 )}
               />
 
-              {/* Handle TextArea for the 'note' */}
+              {/* TextArea for the 'note' field */}
               <Controller
                 control={control}
                 name="note"
@@ -160,8 +163,11 @@ const GlucoseData = ({navigation, route}: any) => {
                   <TextArea
                     label="Note (optional)"
                     placeholder="Enter your notes here..."
-                    value={value}
-                    onchange={(name, e) => handleChange('note', e)}
+                    value={value} // Binds the current value of the note field
+                    onchange={(name, e) => {
+                      onChange(e); // Update the form's value
+                      handleChange('note', e); // Sync with local state
+                    }}
                     description="Describe your overall health status, including any symptoms, concerns, or changes you've noticed."
                   />
                 )}
@@ -175,7 +181,7 @@ const GlucoseData = ({navigation, route}: any) => {
               title={'Data has been synced'}
               children={'The YANO® Glucometer data sync has been completed.'}
               active={setIsClicked}
-              action={() => navigation.goBack()}
+              action={() => navigation.navigate('SyncGlucometer')}
             />
           </View>
         )}

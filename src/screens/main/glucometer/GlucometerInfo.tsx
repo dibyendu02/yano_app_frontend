@@ -15,6 +15,7 @@ import Header from '../../../components/header/Header';
 import {DummyImage} from '../../../assets/dummy/images';
 import FilledButton from '../../../components/buttons/FilledButton';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
+import {replace} from '../../../navigation/RootNavigation';
 
 const GlucometerInfo = ({navigation}: any) => {
   const route = useRoute();
@@ -33,9 +34,10 @@ const GlucometerInfo = ({navigation}: any) => {
 
       if (state !== 'PoweredOn') {
         // If Bluetooth is not enabled, show the custom modal
-        setIsBluetoothModalVisible(true);
+        // setIsBluetoothModalVisible(true);
+        handleEnableBluetooth();
       } else {
-        navigation.navigate('RegisterGlucometer', {devicename: devicename});
+        replace('RegisterGlucometer', {devicename: devicename});
       }
     } catch (error) {
       console.error('Error checking Bluetooth state:', error);

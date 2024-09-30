@@ -7,7 +7,7 @@ import FilledButton from '../../../components/buttons/FilledButton';
 import CustomCheckbox from '../../../components/formComp/CustomCheckbox';
 import {Colors} from '../../../constants/Colors';
 import BottomSheet from '../../../components/bottom-sheet/BottomSheet';
-import {navigate} from '../../../navigation/RootNavigation';
+import {navigate, replace} from '../../../navigation/RootNavigation';
 import {DummyImage} from '../../../assets/dummy/images';
 
 const RegisterGlucometer = ({navigation}: any) => {
@@ -27,7 +27,7 @@ const RegisterGlucometer = ({navigation}: any) => {
     console.log('Serial Number:', data.serialNumber);
     console.log('Save Serial State:', data.saveSerial);
 
-    navigate('SyncGlucometer', {Sn: data.serialNumber});
+    replace('SyncGlucometer', {Sn: data.serialNumber});
   };
 
   // Function to toggle the bottom sheet visibility

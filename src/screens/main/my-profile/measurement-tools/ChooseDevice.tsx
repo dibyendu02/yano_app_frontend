@@ -13,7 +13,7 @@ import {DummyImage} from '../../../../assets/dummy/images';
 import {Colors} from '../../../../constants/Colors';
 import PatientElements from '../../../../components/PatientElements';
 import OutlineButton from '../../../../components/buttons/OutlineButton';
-import {navigate} from '../../../../navigation/RootNavigation';
+import {navigate, replace} from '../../../../navigation/RootNavigation';
 import {AuthScreen} from '../../../../navigation/auth/AuthScreens';
 
 const devices = [
@@ -97,7 +97,7 @@ const ChooseDevice = () => {
           <PatientElements
             name="YANO® Glucometer"
             onPress={() =>
-              navigate('GlucometerInfo', {devicename: 'glucometer'})
+              replace('GlucometerInfo', {devicename: 'glucometer'})
             }
             element={
               <Image

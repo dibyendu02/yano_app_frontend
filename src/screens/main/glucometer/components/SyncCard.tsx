@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React, {ReactNode} from 'react';
 import {Colors} from '../../../../constants/Colors';
-import {navigate} from '../../../../navigation/RootNavigation';
+import {navigate, replace} from '../../../../navigation/RootNavigation';
 
 interface CardProps {
   title?: string;
@@ -37,7 +37,7 @@ const SyncCard: React.FC<CardProps> = ({
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigate('HealthParametersList')}>
+          onPress={() => replace('HealthParametersList')}>
           <Text style={styles.cancelButtonText}>See measurement history</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={action}>

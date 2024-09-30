@@ -61,6 +61,8 @@ const HealthParametersList = () => {
         measurement_time: item.measurement_time?.value || 'No Time Info', // Use measurement_time value
         timestamp: item.createdAt,
         isReviewed: false, // Set isReviewed based on your logic
+        foodConsumed: item.foodConsumed, // Add foodConsumed
+        note: item.note, // Add note
       });
       return acc;
     }, {});
@@ -110,11 +112,21 @@ const HealthParametersList = () => {
                       navigate('HealthParameterDetail', {
                         healthParameterDetail: {
                           ...healthParameterDetailsN[e.field], // Get the health parameter details from healthParameterDetailsN
-                          data: e.measurements.map(measurement => ({
-                            label: e.field_full,
-                            value: measurement.value,
-                            unit: measurement.unit,
-                          })),
+                          data: [
+                            ...e.measurements.map(measurement => ({
+                              label: e.field_full,
+                              value: measurement.value,
+                              unit: measurement.unit,
+                            })),
+                            {
+                              label: 'Food consumed',
+                              value: e.foodConsumed || 'N/A',
+                            },
+                            {
+                              label: 'Note',
+                              value: e.note || 'No notes available',
+                            },
+                          ],
                           testTiming: '2024-09-28T08:51:09.734Z', // Pass the test timing if available
                         },
                         timestamp: e.timestamp, // Pass the timestamp for dynamic date display

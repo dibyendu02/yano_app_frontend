@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
   Image,
-  SafeAreaView,
   ScrollView,
   Share,
   StyleSheet,
@@ -38,64 +37,23 @@ interface DataItem {
   value: number;
 }
 
-const dayData: DataItem[] = [
-  {label: '12 AM', value: 150},
-  {label: '6 AM', value: 160},
-  {label: '12 PM', value: 140},
-  {label: '6 PM', value: 170},
-];
-
-const weeklyData: DataItem[] = [
-  {label: 'S', value: 150},
-  {label: 'M', value: 160},
-  {label: 'T', value: 140},
-  {label: 'W', value: 170},
-  {label: 'T', value: 165},
-  {label: 'F', value: 180},
-  {label: 'S', value: 155},
-];
-
-const monthlyData: DataItem[] = [
-  {label: '1', value: 150},
-  {label: '5', value: 160},
-  {label: '10', value: 140},
-  {label: '15', value: 170},
-  {label: '20', value: 165},
-  {label: '25', value: 180},
-  {label: '30', value: 155},
-];
-
-const yearlyData: DataItem[] = [
-  {label: 'J', value: 150},
-  {label: 'F', value: 160},
-  {label: 'M', value: 140},
-  {label: 'A', value: 170},
-  {label: 'M', value: 165},
-  {label: 'J', value: 180},
-  {label: 'J', value: 155},
-  {label: 'A', value: 150},
-  {label: 'S', value: 160},
-  {label: 'O', value: 140},
-  {label: 'N', value: 170},
-  {label: 'D', value: 165},
-];
-
 const BloodGlucoseStats = () => {
+  const [statData, setStatData] = useState<DataItem[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [formattedText, setFormattedText] = useState('Today');
+  const [chartSpacing, setChartSpacing] = useState(90);
+  const [userId, setUserId] = useState('');
+  const [token, setToken] = useState('');
+  const [standardDeviation, setStandardDeviation] = useState(0);
+  const [average, setAverage] = useState(0);
+  const [highestValue, setHighestValue] = useState(0);
+  const [lowestValue, setLowestValue] = useState(0);
+
+  // States to track dates for navigation
   const [dayDate, setDayDate] = useState(moment());
   const [weekDate, setWeekDate] = useState(moment());
   const [monthDate, setMonthDate] = useState(moment());
   const [yearDate, setYearDate] = useState(moment());
-
-  const [statData, setStatData] = useState<DataItem[]>(dayData);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [formattedText, setFormattedText] = useState('Today');
-  const [chartSpacing, setChartSpacing] = useState(90);
-
-  const [userType, setUserType] = useState('patient');
-  const [userId, setUserId] = useState('');
-  const [token, setToken] = useState('');
-
-  const [standardDeviation, setStandardDeviation] = useState(0);
 
   const getUserDetails = async () => {
     const retrievedUserId = await retrieveData('userId');
@@ -104,22 +62,167 @@ const BloodGlucoseStats = () => {
     setToken(retrievedToken);
   };
 
-  const fetchBloodGlucoseData = async () => {
+  const fetchBloodGlucoseData = async (date?: moment.Moment) => {
     try {
       if (!userId || !token) return;
       const resData = await getBloodGlucoseDatabyUserId({userId, token});
       if (resData.length > 0) {
-        const formattedData = resData.map(item => ({
-          label: moment(item.createdAt).format('h A'), // Change label to time format
-          value: parseFloat(item.data), // Make sure value is a number
-        }));
-        setStatData(formattedData);
+        processDataForTimePeriod(resData, OPTIONS[selectedIndex], date);
       } else {
-        setStatData(dayData); // Default data if no API data available
+        setStatData([]); // No data available
       }
     } catch (error) {
       console.error('Error fetching blood glucose data:', error);
     }
+  };
+
+  const processDataForTimePeriod = (
+    data: any[],
+    period: TimePeriod,
+    date?: moment.Moment,
+  ) => {
+    const now = date || moment();
+    let filteredData: any[] = [];
+    let formattedData: DataItem[] = [];
+
+    switch (period) {
+      case TimePeriod.Day:
+        filteredData = data.filter(item =>
+          moment(item.createdAt).isSame(now, 'day'),
+        );
+        formattedData = filteredData.map(item => ({
+          label: moment(item.createdAt).format('h A'), // Label by hour
+          value: parseFloat(item.data),
+        }));
+        break;
+
+      case TimePeriod.Week:
+        filteredData = data.filter(item =>
+          moment(item.createdAt).isSame(now, 'week'),
+        );
+        formattedData = calculateAverageForWeek(filteredData);
+        break;
+
+      case TimePeriod.Month:
+        filteredData = data.filter(item =>
+          moment(item.createdAt).isSame(now, 'month'),
+        );
+        formattedData = calculateAverageForMonth(filteredData);
+        break;
+
+      case TimePeriod.Year:
+        filteredData = data.filter(item =>
+          moment(item.createdAt).isSame(now, 'year'),
+        );
+        formattedData = calculateAverageForYear(filteredData);
+        break;
+    }
+    setStatData(formattedData);
+    calculateMetrics(formattedData); // Calculate metrics after setting data
+  };
+
+  const calculateAverageForWeek = (data: any[]) => {
+    const days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    let weeklyData = days.map(day => ({
+      label: day,
+      value: 0,
+    }));
+    let groupedData = groupDataBy(data, 'day');
+
+    weeklyData = weeklyData.map((item, index) => {
+      const dayData = groupedData[index];
+      if (dayData) {
+        const avg =
+          dayData.reduce((sum, item) => sum + item.data, 0) / dayData.length;
+        return {label: item.label, value: avg};
+      }
+      return item;
+    });
+
+    return weeklyData.filter(item => item.value > 0);
+  };
+
+  const calculateAverageForMonth = (data: any[]) => {
+    const daysInMonth = moment().daysInMonth();
+    let monthlyData = Array.from({length: daysInMonth}, (_, i) => ({
+      label: (i + 1).toString(),
+      value: 0,
+    }));
+    let groupedData = groupDataBy(data, 'date');
+
+    monthlyData = monthlyData.map((item, index) => {
+      const dayData = groupedData[index];
+      if (dayData) {
+        const avg =
+          dayData.reduce((sum, item) => sum + item.data, 0) / dayData.length;
+        return {label: item.label, value: avg};
+      }
+      return item;
+    });
+
+    return monthlyData.filter(item => item.value > 0);
+  };
+
+  const calculateAverageForYear = (data: any[]) => {
+    const months = moment.monthsShort();
+    let yearlyData = months.map(month => ({
+      label: month.charAt(0).toUpperCase(),
+      value: 0,
+    }));
+    let groupedData = groupDataBy(data, 'month');
+
+    yearlyData = yearlyData.map((item, index) => {
+      const monthData = groupedData[index];
+      if (monthData) {
+        const avg =
+          monthData.reduce((sum, item) => sum + item.data, 0) /
+          monthData.length;
+        return {label: item.label, value: avg};
+      }
+      return item;
+    });
+
+    return yearlyData.filter(item => item.value > 0);
+  };
+
+  const groupDataBy = (data: any[], type: 'day' | 'date' | 'month') => {
+    return data.reduce((acc, item) => {
+      let key;
+      switch (type) {
+        case 'day':
+          key = moment(item.createdAt).weekday();
+          break;
+        case 'date':
+          key = moment(item.createdAt).date() - 1; // zero-based index
+          break;
+        case 'month':
+          key = moment(item.createdAt).month();
+          break;
+      }
+      if (!acc[key]) acc[key] = [];
+      acc[key].push(item);
+      return acc;
+    }, []);
+  };
+
+  const calculateMetrics = (data: DataItem[]) => {
+    if (data.length === 0) {
+      setAverage(0);
+      setStandardDeviation(0);
+      setHighestValue(0);
+      setLowestValue(0);
+      return;
+    }
+    const values = data.map(item => item.value);
+    const avg = values.reduce((sum, val) => sum + val, 0) / values.length;
+    const variance =
+      values.reduce((sum, val) => sum + Math.pow(val - avg, 2), 0) /
+      values.length;
+    const stdDev = Math.sqrt(variance);
+    setAverage(avg);
+    setStandardDeviation(stdDev);
+    setHighestValue(Math.max(...values));
+    setLowestValue(Math.min(...values));
   };
 
   useEffect(() => {
@@ -132,120 +235,60 @@ const BloodGlucoseStats = () => {
     }
   }, [userId, token]);
 
-  const calculateStandardDeviation = () => {
-    let aValues = statData.map(e => e.value);
-    const mean =
-      aValues.reduce((sum, value) => sum + value, 0) / aValues.length;
-    const variance =
-      aValues.reduce((sum, value) => sum + Math.pow(value - mean, 2), 0) /
-      aValues.length;
-    const _standardDeviation = Math.sqrt(variance);
-    setStandardDeviation(_standardDeviation);
+  useEffect(() => {
+    fetchBloodGlucoseData();
+  }, [selectedIndex]);
+
+  const handleOptionChange = (index: number) => {
+    setSelectedIndex(index);
+    let _formattedText = '';
+    switch (OPTIONS[index]) {
+      case TimePeriod.Day:
+        _formattedText = 'Today'; // Adjust text based on the selected day date if needed
+        break;
+      case TimePeriod.Week:
+        _formattedText = `This Week`; // Adjust text based on the selected week date if needed
+        break;
+      case TimePeriod.Month:
+        _formattedText = `This Month`; // Adjust text based on the selected month date if needed
+        break;
+      case TimePeriod.Year:
+        _formattedText = `This Year`; // Adjust text based on the selected year date if needed
+        break;
+    }
+    setFormattedText(_formattedText); // Update the formatted text
   };
 
-  useEffect(() => {
-    if (statData.length > 0) {
-      calculateStandardDeviation();
-    }
-  }, [statData]);
-
-  const getFormattedText = (value?: number): string => {
-    let newDate = moment();
+  const navigateDate = (direction: number) => {
+    let newDate;
     let _formattedText = '';
 
     switch (OPTIONS[selectedIndex]) {
       case TimePeriod.Day:
-        newDate =
-          value === -1
-            ? dayDate.subtract(1, 'day')
-            : value === 1
-            ? dayDate.add(1, 'day')
-            : dayDate;
+        newDate = dayDate.add(direction, 'day');
         setDayDate(newDate);
-
-        if (newDate.isSame(moment(), 'day')) {
-          _formattedText = 'Today';
-        } else if (newDate.isSame(moment().subtract(1, 'day'), 'day')) {
-          _formattedText = 'Yesterday';
-        } else if (newDate.isSame(moment().add(1, 'day'), 'day')) {
-          _formattedText = 'Tomorrow';
-        } else {
-          _formattedText = newDate.format('D MMMM');
-        }
+        _formattedText = newDate.format('D MMMM');
         break;
-
       case TimePeriod.Week:
-        newDate =
-          value === -1
-            ? weekDate.subtract(1, 'week')
-            : value === 1
-            ? weekDate.add(1, 'week')
-            : weekDate;
+        newDate = weekDate.add(direction, 'week');
         setWeekDate(newDate);
-
         const startOfWeek = newDate.startOf('week').format('D MMM');
         const endOfWeek = newDate.endOf('week').format('D MMM');
         _formattedText = `${startOfWeek} - ${endOfWeek}`;
         break;
-
       case TimePeriod.Month:
-        newDate =
-          value === -1
-            ? monthDate.subtract(1, 'month')
-            : value === 1
-            ? monthDate.add(1, 'month')
-            : monthDate;
+        newDate = monthDate.add(direction, 'month');
         setMonthDate(newDate);
-
         _formattedText = newDate.format('MMMM YYYY');
         break;
-
       case TimePeriod.Year:
-        newDate =
-          value === -1
-            ? yearDate.subtract(1, 'year')
-            : value === 1
-            ? yearDate.add(1, 'year')
-            : yearDate;
+        newDate = yearDate.add(direction, 'year');
         setYearDate(newDate);
-
         _formattedText = newDate.format('YYYY');
         break;
     }
-
-    if (value !== undefined) {
-      fetchBloodGlucoseData(); // Fetch data when date changes
-    }
-
     setFormattedText(_formattedText);
-    return _formattedText;
-  };
-
-  useEffect(() => {
-    getFormattedText();
-  }, [selectedIndex]);
-
-  const handleOptionChange = (index: number) => {
-    switch (OPTIONS[index]) {
-      case TimePeriod.Day:
-        setStatData(dayData); // Default data for Day Tab
-        setChartSpacing(60); // Adjust spacing for time intervals
-        break;
-      case TimePeriod.Week:
-        setStatData(weeklyData);
-        setChartSpacing(50);
-        break;
-      case TimePeriod.Month:
-        setStatData(monthlyData);
-        setChartSpacing(50);
-        break;
-      case TimePeriod.Year:
-        setStatData(yearlyData);
-        setChartSpacing(27);
-        break;
-    }
-    setSelectedIndex(index);
-    getFormattedText();
+    fetchBloodGlucoseData(newDate); // Fetch new data based on navigation
   };
 
   return (
@@ -326,7 +369,7 @@ const BloodGlucoseStats = () => {
                   name="navigate-before"
                   size={30}
                   color={Colors.Blue}
-                  onPress={() => getFormattedText(-1)}
+                  onPress={() => navigateDate(-1)}
                   suppressHighlighting
                 />
                 <Text
@@ -337,7 +380,7 @@ const BloodGlucoseStats = () => {
                   name="navigate-next"
                   size={30}
                   color={Colors.Blue}
-                  onPress={() => getFormattedText(1)}
+                  onPress={() => navigateDate(1)}
                   suppressHighlighting
                 />
               </View>
@@ -348,75 +391,52 @@ const BloodGlucoseStats = () => {
                   backgroundColor: Colors.LightGray,
                 }}
               />
-              <View
-                style={{
-                  width: '90%',
-                  overflow: 'hidden',
-                  marginVertical: 20,
-                }}>
-                <LineChart
-                  data={statData}
-                  color={Colors.LightBlue}
-                  thickness={2}
-                  spacing={chartSpacing}
-                  xAxisColor={Colors.White}
-                  yAxisColor={Colors.White}
-                  yAxisTextStyle={{color: Colors.Grey}}
-                  xAxisLabelTextStyle={{color: Colors.Grey}}
-                  yAxisLabelContainerStyle={{width: 30}}
-                  yAxisOffset={80}
-                  stepValue={40}
-                  maxValue={200} // Adjusted to 200
-                  //   minValue={120} // Adjusted to 120
-                  height={200}
-                  customDataPoint={(item: {value: number}, _index: number) => (
-                    <View
-                      style={{
-                        height: 10,
-                        width: 10,
-                        borderRadius: 10,
-                        borderColor: Colors.Blue,
-                        backgroundColor: Colors.White,
-                        borderWidth: 2,
-                        alignSelf: 'center',
-                      }}
-                    />
-                  )}
-                />
-              </View>
-              <View
-                style={{
-                  width: '100%',
-                  height: 1,
-                  backgroundColor: Colors.LightGray,
-                }}
-              />
-              <View
-                style={{
-                  flexDirection: 'row',
-                  paddingVertical: 16,
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  width: '100%',
-                  paddingHorizontal: 16,
-                }}>
+              {statData.length > 0 ? (
                 <View
                   style={{
-                    height: 3,
-                    width: 12,
-                    backgroundColor: Colors.LightBlue,
-                    marginHorizontal: 6,
-                  }}
-                />
-                <Text
-                  style={{
-                    color: Colors.Grey,
-                    fontSize: 12,
-                    fontWeight: 'bold',
+                    width: '90%',
+                    overflow: 'hidden',
+                    marginVertical: 20,
                   }}>
-                  BLOOD GLUCOSE
-                </Text>
-              </View>
+                  <LineChart
+                    data={statData}
+                    color={Colors.LightBlue}
+                    thickness={2}
+                    spacing={chartSpacing}
+                    xAxisColor={Colors.White}
+                    yAxisColor={Colors.White}
+                    yAxisTextStyle={{color: Colors.Grey}}
+                    xAxisLabelTextStyle={{color: Colors.Grey}}
+                    yAxisLabelContainerStyle={{width: 30}}
+                    yAxisOffset={80}
+                    stepValue={40}
+                    maxValue={200}
+                    height={200}
+                    customDataPoint={(
+                      item: {value: number},
+                      _index: number,
+                    ) => (
+                      <View
+                        style={{
+                          height: 10,
+                          width: 10,
+                          borderRadius: 10,
+                          borderColor: Colors.Blue,
+                          backgroundColor: Colors.White,
+                          borderWidth: 2,
+                          alignSelf: 'center',
+                        }}
+                      />
+                    )}
+                  />
+                </View>
+              ) : (
+                <View style={{padding: 20, alignItems: 'center'}}>
+                  <Text style={{color: Colors.Blue, fontSize: 16}}>
+                    No data available for the selected period.
+                  </Text>
+                </View>
+              )}
             </View>
             <View style={{width: '100%'}}>
               <Text
@@ -447,11 +467,7 @@ const BloodGlucoseStats = () => {
                     fontSize: 16,
                     fontWeight: 'bold',
                   }}>
-                  {(
-                    statData
-                      .map(e => e.value)
-                      .reduce((sum, value) => sum + value, 0) / statData.length
-                  ).toFixed(0) + ' '}
+                  {average.toFixed(0) + ' '}
                   <Text
                     style={{
                       fontWeight: 'normal',
@@ -531,7 +547,7 @@ const BloodGlucoseStats = () => {
                     fontSize: 16,
                     fontWeight: 'bold',
                   }}>
-                  {Math.max(...statData.map(e => e.value)) + ' '}
+                  {highestValue + ' '}
                   <Text
                     style={{
                       fontWeight: 'normal',
@@ -572,7 +588,7 @@ const BloodGlucoseStats = () => {
                     fontSize: 16,
                     fontWeight: 'bold',
                   }}>
-                  {Math.min(...statData.map(e => e.value)) + ' '}
+                  {lowestValue + ' '}
                   <Text
                     style={{
                       fontWeight: 'normal',
