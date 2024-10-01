@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "27382433897",
+    "project_id": "yano-b4596",
+    "storage_bucket": "yano-b4596.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27382433897:android:e603dd38e8c708ce5afaf8",
+        "android_client_info": {
+          "package_name": "com.yano_frontend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "27382433897-isnhjtq1pdae25mrthej7ut7fe2nli6b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yano_frontend",
+            "certificate_hash": "56cc069ffe6af4f47f32638ba63e3a0525963981"
+          }
+        },
+        {
+          "client_id": "27382433897-sol4o7a6ebn67t1vbad6udcgpra0jkj6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmmZxD8m5gnqM8NWfGVdlSOaKlkK1RVTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "27382433897-sol4o7a6ebn67t1vbad6udcgpra0jkj6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
