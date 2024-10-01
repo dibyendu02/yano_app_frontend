@@ -16,25 +16,57 @@ import {DummyImage} from '../../../assets/dummy/images';
 import FilledButton from '../../../components/buttons/FilledButton';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {replace} from '../../../navigation/RootNavigation';
+import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
 
 const GlucometerInfo = ({navigation}: any) => {
   const route = useRoute();
   const devicename = route?.params?.devicename;
   const [isBluetoothModalVisible, setIsBluetoothModalVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); // State to hold error message
 
-  // useEffect(() => {
-  //   // Check Bluetooth state on component mount
-  //   checkBluetoothState();
-  // }, []);
+  // Function to request permissions sequentially
+  const requestAllPermissions = async () => {
+    try {
+      if (Platform.OS === 'android' && Platform.Version >= 31) {
+        const permissions = [
+          PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION,
+          PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION,
+          PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
+          PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
+        ];
+
+        for (const permission of permissions) {
+          const status = await request(permission);
+          if (status !== RESULTS.GRANTED) {
+            console.warn(`${permission} permission not granted`);
+            setErrorMessage(`${permission} permission not granted`);
+            return false; // Exit if any permission is not granted
+          }
+        }
+      }
+      return true; // All permissions granted
+    } catch (err) {
+      console.error('Failed to request permissions:', err);
+      setErrorMessage('Failed to request permissions.');
+      return false;
+    }
+  };
 
   // Function to check and enable Bluetooth
   const checkBluetoothState = async () => {
     try {
+      // Request all required permissions
+      const hasPermissions = await requestAllPermissions();
+      if (!hasPermissions) {
+        console.warn('Permissions were not granted');
+        setErrorMessage('Permissions were not granted.');
+        return;
+      }
+
       const state = await BluetoothStateManager.getState();
 
       if (state !== 'PoweredOn') {
         // If Bluetooth is not enabled, show the custom modal
-        // setIsBluetoothModalVisible(true);
         handleEnableBluetooth();
       } else {
         replace('RegisterGlucometer', {devicename: devicename});
@@ -50,6 +82,7 @@ const GlucometerInfo = ({navigation}: any) => {
       .then(() => {
         console.log('Bluetooth enabled');
         setIsBluetoothModalVisible(false); // Close the modal after enabling
+        replace('RegisterGlucometer', {devicename: devicename});
       })
       .catch(error => {
         console.error('Failed to enable Bluetooth:', error);
@@ -112,10 +145,7 @@ const GlucometerInfo = ({navigation}: any) => {
         <FilledButton
           label="Connect to device"
           type="blue"
-          onPress={
-            () => checkBluetoothState()
-            // navigation.navigate('RegisterGlucometer', {devicename: devicename})
-          }
+          onPress={() => checkBluetoothState()}
         />
       </View>
 
@@ -170,9 +200,9 @@ const styles = StyleSheet.create({
     width: '80%',
     backgroundColor: '#333333',
     borderRadius: 10,
-    paddingBottom: 15, // Adjusted padding for bottom space
+    paddingBottom: 15,
     paddingHorizontal: 15,
-    justifyContent: 'center', // Center the content vertically
+    justifyContent: 'center',
   },
   modalHeader: {
     fontSize: 18,
@@ -184,8 +214,8 @@ const styles = StyleSheet.create({
   },
   modalButtonContainer: {
     flexDirection: 'row',
-    justifyContent: 'center', // Center align horizontally
-    alignItems: 'center', // Center align vertically
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalButton: {
     flex: 1,
@@ -202,11 +232,11 @@ const styles = StyleSheet.create({
   verticalSeparator: {
     width: 1,
     backgroundColor: '#555555',
-    height: 40, // Adjust the height as needed
+    height: 40,
   },
   buttonText: {
     fontSize: 16,
-    color: '#4285F4', // Blue color for buttons
+    color: '#4285F4',
     fontWeight: '600',
   },
 });
