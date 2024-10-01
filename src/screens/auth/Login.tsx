@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -9,7 +9,9 @@ import {
   Alert,
   ActivityIndicator,
 } from 'react-native';
-
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+// import { auth, signInWithCredential, GoogleAuthProvider } from '../../firebaseConfig';
+import auth, {signOut} from '@react-native-firebase/auth';
 import axios from 'axios';
 import Header from '../../components/header/Header';
 import {navigate} from '../../navigation/RootNavigation';
@@ -24,14 +26,13 @@ import UserContext from '../../contexts/UserContext';
 import {BASE_URL} from '../../../App';
 import {storeData} from '../../utils/Storage';
 
-const Login = ({navigation}: any) => {
+const Login = ({navigation}) => {
   const {login, PatientLogin, ProviderLogin} = useContext(UserContext);
   const [isClicked, setIsClicked] = useState(false);
   const methods = useForm({mode: 'onBlur'});
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async data => {
     const {email, password} = data;
-
     setIsClicked(true);
 
     try {
@@ -41,13 +42,11 @@ const Login = ({navigation}: any) => {
       });
 
       if (response.status === 200) {
-        // Store necessary data locally
         await storeData('token', response.data.token);
         await storeData('userId', response.data.userData._id);
         await storeData('isAuth', true);
         await storeData('userType', response.data.userData.userType);
 
-        // Update global userData
         login(response.data.userData);
 
         if (response.data.userData.userType === 'patient') {
@@ -73,6 +72,72 @@ const Login = ({navigation}: any) => {
       setIsClicked(false);
     }
   };
+
+  const handleGoogleLogin = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      // Create a Google credential with the token
+      // const googleCredential = auth.GoogleAuthProvider.credential(
+      //   userInfo.data?.idToken,
+      // );
+
+      // Sign in with credential from Google
+      // const {user} = await signInWithCredential(auth, googleCredential);
+
+      // Call your backend to check if the user exists
+      const response = await axios.post(`${BASE_URL}/api/google-login`, {
+        tokenId: userInfo.idToken,
+      });
+
+      if (response.status === 200) {
+        await storeData('token', response.data.token);
+        await storeData('userId', response.data.userData._id);
+        await storeData('isAuth', true);
+        await storeData('userType', response.data.userData.userType);
+
+        login(response.data.userData);
+
+        if (response.data.userData.userType === 'patient') {
+          PatientLogin();
+          navigation.navigate(AuthScreen.LoadingScreen);
+        } else {
+          ProviderLogin();
+          navigation.navigate(AuthScreen.LoadingScreen);
+        }
+      } else {
+        Alert.alert(
+          'Login Failed',
+          response.data.message || 'An error occurred',
+        );
+      }
+    } catch (error) {
+      console.error('Google Login Error:', error);
+      Alert.alert('Google Login Failed', 'An unexpected error occurred.');
+    }
+  };
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Firebase sign out
+
+      // Clear global user state (if you have a context or global state management)
+      // logout();
+
+      // Navigate to the login screen
+      navigation.navigate('LoginScreen'); // Change 'LoginScreen' to your login screen route
+    } catch (error) {
+      console.error('Logout error:', error);
+      Alert.alert('Logout Failed', 'An error occurred while logging out.');
+    }
+  };
+
+  useEffect(() => {
+    // Initialize Google Sign-In using your Web Client ID
+    GoogleSignin.configure({
+      webClientId:
+        '27382433897-sol4o7a6ebn67t1vbad6udcgpra0jkj6.apps.googleusercontent.com',
+    });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -167,6 +232,7 @@ const Login = ({navigation}: any) => {
             <Image source={StaticImage.GoogleLogo} style={styles.socialIcon} />
           }
           label="Log in with Google"
+          onPress={handleGoogleLogin}
         />
         <FilledButton
           type="white"
@@ -204,11 +270,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 10,
     paddingHorizontal: 15,
-  },
-  loginBtnText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
   },
   text: {
     fontSize: 18,

@@ -19,8 +19,7 @@ const FirebaseLogin = () => {
 
   const onGoogleButtonPress = async () => {
     try {
-      // Check if your device supports Google Play servicesnpm uninstall react-native-fbsdk-next
-
+      // Check if your device supports Google Play services
       await GoogleSignin.hasPlayServices();
 
       // Get the user's ID token
@@ -36,7 +35,7 @@ const FirebaseLogin = () => {
 
       // Successfully signed in
       Alert.alert('Success', 'Signed in with Google!');
-      //   navigation.replace(AuthScreen.Registration); // Navigate to Home screen on success
+      navigation.replace(AuthScreen.Registration); // Navigate to Home screen on success
     } catch (error: any) {
       console.error('Google sign-in error:', error);
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
