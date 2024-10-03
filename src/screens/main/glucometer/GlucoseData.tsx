@@ -85,11 +85,6 @@ const GlucoseData = ({navigation, route}: any) => {
     setIsClicked(true);
   };
 
-  // Watching formData.note to see changes in the console
-  useEffect(() => {
-    console.log('Note field updated:', formData.note);
-  }, [formData.note]);
-
   return (
     <TouchableWithoutFeedback
       onPress={() => setIsClicked(false)}
