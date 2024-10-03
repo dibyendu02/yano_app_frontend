@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   Image,
   Platform,
@@ -17,8 +17,11 @@ import FilledButton from '../../../components/buttons/FilledButton';
 import BluetoothStateManager from 'react-native-bluetooth-state-manager';
 import {replace} from '../../../navigation/RootNavigation';
 import {PERMISSIONS, request, RESULTS} from 'react-native-permissions';
+import UserContext from '../../../contexts/UserContext';
 
 const GlucometerInfo = ({navigation}: any) => {
+  // Access the user data from the context
+  const {userData} = useContext(UserContext);
   const route = useRoute();
   const devicename = route?.params?.devicename;
   const [isBluetoothModalVisible, setIsBluetoothModalVisible] = useState(false);
@@ -63,16 +66,29 @@ const GlucometerInfo = ({navigation}: any) => {
         return;
       }
 
+      // Check Bluetooth state
       const state = await BluetoothStateManager.getState();
 
       if (state !== 'PoweredOn') {
         // If Bluetooth is not enabled, show the custom modal
         handleEnableBluetooth();
       } else {
-        replace('RegisterGlucometer', {devicename: devicename});
+        // Check if the user already has a glucometer device
+        const glucometerDevice = userData?.devices?.find(
+          device => device.deviceType === 'glucometer',
+        );
+
+        if (glucometerDevice) {
+          // If a glucometer device exists, redirect with its serial number
+          replace('SyncGlucometer', {Sn: glucometerDevice.deviceSerialNumber});
+        } else {
+          // If no glucometer is found, redirect to RegisterGlucometer
+          replace('RegisterGlucometer', {devicename: devicename});
+        }
       }
     } catch (error) {
       console.error('Error checking Bluetooth state:', error);
+      setErrorMessage('Failed to check Bluetooth state.');
     }
   };
 
@@ -82,7 +98,7 @@ const GlucometerInfo = ({navigation}: any) => {
       .then(() => {
         console.log('Bluetooth enabled');
         setIsBluetoothModalVisible(false); // Close the modal after enabling
-        replace('RegisterGlucometer', {devicename: devicename});
+        // replace('RegisterGlucometer', {devicename: devicename});
       })
       .catch(error => {
         console.error('Failed to enable Bluetooth:', error);

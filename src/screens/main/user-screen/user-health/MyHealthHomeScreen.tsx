@@ -10,10 +10,10 @@ import {
   Text,
   TouchableOpacity,
   View,
-  PermissionsAndroid, // Import for Android permissions
+  PermissionsAndroid,
   Alert,
 } from 'react-native';
-import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions'; // Import for handling permissions
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import CommonLayout from '../../../../components/CommonLayout';
 import Header from '../../../../components/header/Header';
 import {
@@ -35,9 +35,9 @@ import UserContext from '../../../../contexts/UserContext';
 import moment from 'moment';
 import {healthParameterDetailsN, HSDGN} from '../../../../test/HealthStatsData';
 import {useIsFocused} from '@react-navigation/native';
+
 const requestPermissions = async () => {
   try {
-    // Request location and camera permissions for Android
     if (Platform.OS === 'android') {
       const granted = await PermissionsAndroid.requestMultiple([
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -53,14 +53,9 @@ const requestPermissions = async () => {
         granted['android.permission.RECORD_AUDIO'] !==
           PermissionsAndroid.RESULTS.GRANTED
       ) {
-        // Alert.alert(
-        //   'Permission Denied',
-        //   'All permissions are required to proceed.',
-        // );
         return false;
       }
     } else if (Platform.OS === 'ios') {
-      // Request location and camera permissions for iOS
       const locationPermission = await request(
         PERMISSIONS.IOS.LOCATION_WHEN_IN_USE,
       );
@@ -85,11 +80,12 @@ const requestPermissions = async () => {
     return false;
   }
 };
+
 const MyHealthHomeScreen = ({navigation}) => {
   const [show, setShow] = useState(false);
   const [selectedDiv, setSelectedDiv] = useState(null);
   const [isButtonVisible, setIsButtonVisible] = useState(true);
-  const {userData} = useContext(UserContext);
+  const {userData} = useContext(UserContext); // Get userData from context
   console.log(userData);
 
   const handleDivPress = div => {
@@ -101,13 +97,6 @@ const MyHealthHomeScreen = ({navigation}) => {
   useEffect(() => {
     const checkPermissions = async () => {
       const permissionsGranted = await requestPermissions();
-      // if (!permissionsGranted) {
-      //   // If permissions are not granted, navigate back or show a message
-      //   Alert.alert(
-      //     'Permissions Required',
-      //     'Please enable all permissions to use this feature.',
-      //   );
-      // }
     };
 
     checkPermissions();
@@ -136,6 +125,8 @@ const MyHealthHomeScreen = ({navigation}) => {
       }
     }
   }, [show]);
+
+  const hasDevices = userData?.devices?.length > 0; // Check if the user has devices
 
   return (
     <View
@@ -170,24 +161,29 @@ const MyHealthHomeScreen = ({navigation}) => {
         onScrollEndDrag={() => setIsButtonVisible(true)}
         style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
         <View>
-          <View style={styles.container}>
-            <Text style={styles.title}>Do you have one of our devices?</Text>
-            <Text style={styles.para}>
-              Connect your Yano device and start taking control of your health.
-            </Text>
-            <OutlineButton
-              type="blue"
-              icon={<PlusIcon size={16} color={Colors.Blue} />}
-              label="Connect device"
-              onPress={() => navigate('ChooseDevice')}
-              style={{
-                marginTop: 10,
-                width: '88%',
-                marginHorizontal: 'auto',
-                paddingVertical: 12,
-              }}
-            />
-          </View>
+          {/* Conditionally render the device connection section */}
+          {!hasDevices && (
+            <View style={styles.container}>
+              <Text style={styles.title}>Do you have one of our devices?</Text>
+              <Text style={styles.para}>
+                Connect your Yano device and start taking control of your
+                health.
+              </Text>
+              <OutlineButton
+                type="blue"
+                icon={<PlusIcon size={16} color={Colors.Blue} />}
+                label="Connect device"
+                onPress={() => navigate('ChooseDevice')}
+                style={{
+                  marginTop: 10,
+                  width: '88%',
+                  marginHorizontal: 'auto',
+                  paddingVertical: 12,
+                }}
+              />
+            </View>
+          )}
+
           <MeasuringYourVitalComp
             element={
               <View

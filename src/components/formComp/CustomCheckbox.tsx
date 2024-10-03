@@ -1,12 +1,9 @@
-// CustomCheckbox.tsx
 import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {Controller, Control, FieldValues, FieldError} from 'react-hook-form';
-import {Checkbox, CheckboxOutline} from '../../assets/icon/IconNames';
-import {Colors} from '../../constants/Colors';
 import {Pressable} from 'react-native';
-import {StaticImage} from '../../assets/images';
 import {staticIcons} from '../../assets/image';
+import {Colors} from '../../constants/Colors';
 
 interface CustomCheckboxProps {
   name: string;
@@ -71,28 +68,22 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 10,
     backgroundColor: Colors.White,
-    // height: 56,
     paddingVertical: 10,
-    paddingTop: 0,
-    borderRadius: 8,
-    // justifyContent: 'center',
     paddingHorizontal: 12,
+    borderRadius: 8,
     borderWidth: 1,
     borderColor: Colors.LightGray,
-    width: '100%',
-    // paddingRight: 24,
+    width: '100%', // Full width
   },
   checkboxContainer: {
     flexDirection: 'row',
-    paddingTop: 10,
-    // alignItems: 'center',
+    alignItems: 'flex-start', // Align items at the top to allow text wrapping
   },
   label: {
-    marginLeft: 15,
-    fontSize: 16,
+    flex: 1, // Take up remaining space and allow for text wrapping
+    marginLeft: 15, // Maintain gap between checkbox and label
+    fontSize: 14,
     color: Colors.Blue,
-    marginTop: -3,
-    // fontWeight: 'bold',
   },
   errorText: {
     color: 'red',

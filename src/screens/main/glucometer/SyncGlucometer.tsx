@@ -9,7 +9,6 @@ import {
   View,
 } from 'react-native';
 import {useFocusEffect, useRoute} from '@react-navigation/native';
-import {Colors} from '../../../constants/Colors';
 import {staticIcons} from '../../../assets/image';
 import FilledButton from '../../../components/buttons/FilledButton';
 import CommonHeader from '../../healthCondition/components/CommonHeader';
@@ -18,17 +17,59 @@ import {PERMISSIONS, request, RESULTS} from 'react-native-permissions'; // Impor
 import {fetchHistory} from '../../../core/BGMManager/BGMManager'; // Import fetchHistory function
 import {replace} from '../../../navigation/RootNavigation';
 
+import {retrieveData} from '../../../utils/Storage';
+import {Colors} from '../../../constants/Colors';
+import {getBloodGlucoseDatabyUserId} from '../../../api/GET/bloodGlucose'; // Import the function to fetch glucose data
+import Modal from 'react-native-modal'; // Import modal from react-native-modal
+import {CloseIcon} from '../../../assets/icon/IconNames'; // Import close icon if necessary
+
 const SyncGlucometer = ({navigation}: any) => {
   const route = useRoute();
   const [isSearching, setIsSearching] = useState(false);
   const [deviceFound, setDeviceFound] = useState<any>(null);
   const [isSyncing, setIsSyncing] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [retryCount, setRetryCount] = useState(0);
   const [value, setValue] = useState(null); // State to hold glucose measurement value
   const [historyData, setHistoryData] = useState(null); // State to hold history data
   const [isLoading, setIsLoading] = useState(false); // State to manage loading state
   const [errorMessage, setErrorMessage] = useState(''); // State to hold error message
+  const [latestGlucoseFromAPI, setLatestGlucoseFromAPI] = useState(null); // Store the latest glucose data from API
+  const [userId, setUserId] = useState('');
+  const [token, setToken] = useState('');
+
+  // State for modal
+  const [showModal, setShowModal] = useState(false); // Control modal visibility
+  const [modalMessage, setModalMessage] = useState(''); // Modal message
+
+  // Fetch user ID and token from storage
+  const getUserData = async () => {
+    const retrievedUserId = await retrieveData('userId');
+    const retrievedToken = await retrieveData('token');
+    setUserId(retrievedUserId);
+    setToken(retrievedToken);
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  // Fetch user's blood glucose data from the API
+  const getUserBloodGlucose = async () => {
+    try {
+      const resData = await getBloodGlucoseDatabyUserId({userId, token});
+      const lastGlucoseEntry = resData[resData.length - 1]; // Get the latest entry
+      setLatestGlucoseFromAPI(lastGlucoseEntry.data); // Set the latest glucose value
+      console.log('Latest Blood Glucose Data from API:', lastGlucoseEntry.data);
+    } catch (error) {
+      console.log('Error fetching blood glucose data:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (userId && token) {
+      getUserBloodGlucose(); // Fetch user's blood glucose data when userId and token are available
+    }
+  }, [userId, token]);
 
   // Function to get current date and time in a specific format
   const getCurrentDateTime = () => {
@@ -95,12 +136,14 @@ const SyncGlucometer = ({navigation}: any) => {
     return parsedObject;
   }
 
-  // Function to convert mg/dL to mmol/L with 2 decimal points
-  function convertToMmolL(valueInMgDl) {
-    return (valueInMgDl / 18).toFixed(2); // Converts to mmol/L and formats to 2 decimal places
-  }
+  // Function to reset states after modal is closed
+  const resetToInitialState = () => {
+    setIsClicked(false);
+    setIsSearching(false);
+    setDeviceFound(null); // Reset the deviceFound state
+  };
 
-  // Function to fetch history data
+  // Function to fetch history data from the device
   const getHistoryData = async () => {
     try {
       setIsLoading(true); // Set loading state
@@ -124,10 +167,24 @@ const SyncGlucometer = ({navigation}: any) => {
 
       // Check if data is available in the response
       if (parsedData.eventValue) {
-        // Set the values in the state
         setHistoryData(parsedData); // Set parsed data to state
         setValue(parsedData.eventValue); // Set the glucose measurement value
         setDeviceFound({Sn: route?.params?.Sn}); // Set device as found only if data is available
+
+        // Compare with the latest data from the API
+        if (
+          latestGlucoseFromAPI &&
+          parsedData.eventValue === latestGlucoseFromAPI
+        ) {
+          setModalMessage(
+            `Your YANO® Glucometer doesn't have any new readings to sync.`,
+          );
+          setShowModal(true); // Show the modal
+          setTimeout(() => {
+            setShowModal(false);
+            resetToInitialState();
+          }, 3000);
+        }
       } else {
         setDeviceFound(false); // Device found but no valid data
       }
@@ -184,6 +241,7 @@ const SyncGlucometer = ({navigation}: any) => {
     React.useCallback(() => {
       setIsSearching(false);
       setDeviceFound(null);
+      getUserBloodGlucose(); // Fetch user's latest glucose data on screen focus
     }, []),
   );
 
@@ -317,6 +375,35 @@ const SyncGlucometer = ({navigation}: any) => {
           />
         </View>
       )}
+
+      {/* Custom Modal */}
+      <Modal
+        isVisible={showModal}
+        onBackdropPress={() => setShowModal(false)}
+        onSwipeComplete={() => setShowModal(false)}
+        swipeDirection="down"
+        animationIn="slideInUp"
+        animationOut="slideOutDown"
+        backdropOpacity={0}
+        animationInTiming={1000}
+        animationOutTiming={3000}
+        style={styles.modal}>
+        <View style={styles.modalContent}>
+          <View style={{flexDirection: 'row', gap: 10}}>
+            <Image
+              source={staticIcons.errorIcon}
+              style={{
+                height: 20,
+                width: 20,
+                objectFit: 'contain',
+                tintColor: 'white',
+              }}
+            />
+            <Text style={styles.modalText}>{modalMessage}</Text>
+          </View>
+          <CloseIcon color="white" />
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -341,5 +428,28 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     paddingHorizontal: 12,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
+  modalContent: {
+    backgroundColor: Colors.Green,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 10,
+    width: '90%',
+    alignSelf: 'center',
+    marginBottom: 20,
+    // marginLeft: 60,
+  },
+  modalText: {
+    color: Colors.White,
+    fontSize: 14,
+    fontWeight: 'bold',
+    width: '80%',
   },
 });

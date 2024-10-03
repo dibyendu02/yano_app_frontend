@@ -1,17 +1,34 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import Header from '../../../components/header/Header';
-import {useForm, FormProvider} from 'react-hook-form';
+import React, {useContext, useEffect, useState} from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Platform,
+  ToastAndroid,
+  Alert,
+} from 'react-native';
+import {FormProvider, useForm} from 'react-hook-form';
 import FormInput from '../../../components/hook-form/FormInput';
 import FilledButton from '../../../components/buttons/FilledButton';
 import CustomCheckbox from '../../../components/formComp/CustomCheckbox';
 import {Colors} from '../../../constants/Colors';
 import BottomSheet from '../../../components/bottom-sheet/BottomSheet';
-import {navigate, replace} from '../../../navigation/RootNavigation';
+import {replace} from '../../../navigation/RootNavigation';
+import {updatePatient} from '../../../api/PUT/auth'; // Ensure this path is correct
+import moment from 'moment';
+import {retrieveData} from '../../../utils/Storage';
+import UserContext from '../../../contexts/UserContext';
 import {DummyImage} from '../../../assets/dummy/images';
+import Header from '../../../components/header/Header';
 
 const RegisterGlucometer = ({navigation}: any) => {
-  // Initializing useForm with the required options
+  // Access the user data from the context
+  const {userData, login} = useContext(UserContext);
+  const [token, setToken] = useState(''); // Ensure token is available
+  const [userId, setUserId] = useState(''); // Ensure userId is available
+
   const methods = useForm({
     mode: 'onChange',
   });
@@ -21,13 +38,113 @@ const RegisterGlucometer = ({navigation}: any) => {
   // State to control bottom sheet visibility
   const [showInfoSheet, setShowInfoSheet] = useState(false);
 
-  // Function to handle form submission
-  const onSubmit = (data: any) => {
-    // Log the form data, including serial number and checkbox state
-    console.log('Serial Number:', data.serialNumber);
-    console.log('Save Serial State:', data.saveSerial);
+  useEffect(() => {
+    // Fetch user data like token and userId from storage if necessary
+    const getUserData = async () => {
+      const retrievedToken = await retrieveData('token');
+      const retrievedUserId = await retrieveData('userId');
+      setToken(retrievedToken);
+      setUserId(retrievedUserId);
+    };
+    getUserData();
+  }, []);
 
-    replace('SyncGlucometer', {Sn: data.serialNumber});
+  console.log('user data is ', userData);
+
+  // Function to handle form submission and update profile
+  const onSubmit = async (data: any) => {
+    try {
+      if (data.saveSerial) {
+        // If the user checked the checkbox to save the device serial number
+        const existingGlucometerIndex = userData?.devices?.findIndex(
+          device => device.deviceType === 'glucometer',
+        );
+
+        let updatedDevices = [...(userData?.devices || [])]; // Clone the devices array
+
+        if (existingGlucometerIndex !== -1) {
+          // Update the serial number of the existing glucometer
+          updatedDevices[existingGlucometerIndex].deviceSerialNumber =
+            data.serialNumber;
+        } else {
+          // If no glucometer exists, create a new entry
+          const deviceData = {
+            deviceName: 'Glucometer',
+            deviceSerialNumber: data.serialNumber,
+            deviceType: 'glucometer',
+          };
+          updatedDevices.push(deviceData); // Add the new device to the list
+        }
+
+        let requestData = new FormData();
+
+        // Merge existing user data with the updated devices array
+        const payload = {
+          firstName: userData?.firstName,
+          lastName: userData?.lastName,
+          email: userData?.email,
+          phoneNumber: userData?.phoneNumber,
+          gender: userData?.gender,
+          dateOfBirth: new Date(userData?.dateOfBirth), // Ensure date format
+          devices: updatedDevices, // Updated devices array
+        };
+
+        // Append the payload to FormData
+        for (let key in payload) {
+          if (key === 'devices') {
+            // Properly append each device
+            payload[key].forEach((item, index) => {
+              requestData.append(
+                `${key}[${index}][deviceName]`,
+                item.deviceName,
+              );
+              requestData.append(
+                `${key}[${index}][deviceSerialNumber]`,
+                item.deviceSerialNumber,
+              );
+              requestData.append(
+                `${key}[${index}][deviceType]`,
+                item.deviceType,
+              );
+            });
+          } else {
+            requestData.append(key, payload[key]);
+          }
+        }
+
+        // Send the updated data to the backend
+        const res = await updatePatient({
+          data: requestData,
+          token,
+          userId,
+          type: 'media',
+        });
+
+        // Update the context with the new user data
+        // login(res?.userData);
+
+        // Redirect to the sync screen
+        replace('SyncGlucometer', {Sn: data.serialNumber});
+      } else {
+        // If the checkbox is not checked, just pass the serial number to the next page
+        replace('SyncGlucometer', {Sn: data.serialNumber});
+      }
+    } catch (error) {
+      console.error('Error updating patient profile with device data:', error);
+      showToast('Failed to register device. Please try again.');
+    }
+  };
+
+  const showToast = message => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.showWithGravity(
+        message,
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM,
+      );
+    } else {
+      Alert.alert('Notification', message);
+    }
   };
 
   // Function to toggle the bottom sheet visibility
@@ -39,7 +156,6 @@ const RegisterGlucometer = ({navigation}: any) => {
     <FormProvider {...methods}>
       <View style={styles.container}>
         <Header title="Register YANO® Glucometer" />
-
         <View style={styles.formContainer}>
           {/* Input field for Serial Number */}
           <FormInput
@@ -63,7 +179,7 @@ const RegisterGlucometer = ({navigation}: any) => {
           {/* Checkbox for saving serial number */}
           <View style={styles.checkboxContainer}>
             <CustomCheckbox
-              label="Keep the serial number of your device for future use"
+              label="Keep the serial number of your device for future use."
               name="saveSerial"
               control={control}
               onChange={(value: boolean) =>
@@ -76,28 +192,21 @@ const RegisterGlucometer = ({navigation}: any) => {
         {/* Bottom-aligned Submit Button */}
         <View style={styles.buttonContainer}>
           <View
-            style={[
-              {
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-              },
-            ]}>
+            style={[{flexDirection: 'row', justifyContent: 'space-between'}]}>
             <FilledButton
               label={'Cancel'}
               type={'lightGrey'}
-              style={{
-                width: '48%',
+              style={{width: '48%'}}
+              onPress={() => {
+                navigation.goBack();
               }}
-              onPress={() => {}}
               activeOpacity={0.8}
             />
             <FilledButton
               label={'Continue'}
               type={'blue'}
-              style={{
-                width: '48%',
-              }}
-              onPress={handleSubmit(onSubmit)} // Use handleSubmit here to capture form data
+              style={{width: '48%'}}
+              onPress={handleSubmit(onSubmit)} // Handle form submission
               activeOpacity={0.8}
             />
           </View>
@@ -110,7 +219,7 @@ const RegisterGlucometer = ({navigation}: any) => {
           <View style={styles.bottomSheetContent}>
             <Image
               source={DummyImage.glucometerBack}
-              style={{width: 300, height: 400, objectFit: 'contain'}}
+              style={{width: 300, height: 400, resizeMode: 'contain'}}
             />
             <Text style={styles.bottomSheetText}>
               The device serial number is located under the barcode.
@@ -135,36 +244,26 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.GhostWhite,
   },
   formContainer: {
-    flex: 1, // Takes remaining space
+    flex: 1,
     paddingVertical: 12,
     width: '94%',
     alignSelf: 'center',
-    justifyContent: 'flex-start', // Align content to the top
+    justifyContent: 'flex-start',
   },
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 8,
   },
-  checkbox: {
-    backgroundColor: Colors.White,
-    borderWidth: 0,
-    padding: 0,
-    margin: 0,
-  },
-  checkboxText: {
-    color: Colors.SteelBlue,
-  },
   buttonContainer: {
     padding: 10,
     width: '100%',
     backgroundColor: Colors.White,
-    position: 'absolute', // Fix position at bottom
+    position: 'absolute',
     bottom: 0,
   },
   bottomSheetContent: {
     padding: 20,
-    paddingBottom: 0,
     alignItems: 'center',
   },
   bottomSheetText: {

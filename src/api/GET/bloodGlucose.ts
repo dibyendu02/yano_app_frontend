@@ -8,9 +8,8 @@ export const getBloodGlucoseDatabyUserId = async ({
   token: string;
 }) => {
   try {
-    console.log(token, userId);
+    // console.log(token, userId);
     const response = await getData(`/blood-glucose/${userId}`, token);
-    console.log('response ', response);
     return response;
   } catch (error) {
     console.error(error);
