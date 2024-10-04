@@ -99,7 +99,6 @@ const MyDevices = () => {
       .then(() => {
         console.log('Bluetooth enabled');
         setIsBluetoothModalVisible(false); // Close the modal after enabling
-        // You can add any further actions if needed
       })
       .catch(error => {
         console.error('Failed to enable Bluetooth:', error);
@@ -129,18 +128,22 @@ const MyDevices = () => {
               customTextWidth={'65%'}
               isConnected={false}
             />
-            <CommonItem
-              name="YANO® Glucometer"
-              // onPress to check and enable Bluetooth, then navigate
-              onPress={() => checkBluetoothState('Glucómetro Yano')}
-              leftIcon={
-                <Image
-                  source={DummyImage.glucometer}
-                  style={{width: 65, height: 65}}
-                />
-              }
-              isConnected={true}
-            />
+            {/* Only show the glucometer if the user has a glucometer device */}
+            {userData?.devices?.some(
+              device => device.deviceType === 'glucometer',
+            ) && (
+              <CommonItem
+                name="YANO® Glucometer"
+                // onPress to check and enable Bluetooth, then navigate
+                onPress={() => checkBluetoothState('Glucómetro Yano')}
+                leftIcon={
+                  <Image
+                    source={DummyImage.glucometer}
+                    style={{width: 65, height: 65}}
+                  />
+                }
+              />
+            )}
           </View>
         </ScrollView>
       ) : (

@@ -1,5 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
+  Alert,
   Image,
   Platform,
   ScrollView,
@@ -22,9 +23,13 @@ import {Colors} from '../../../constants/Colors';
 import {getBloodGlucoseDatabyUserId} from '../../../api/GET/bloodGlucose'; // Import the function to fetch glucose data
 import Modal from 'react-native-modal'; // Import modal from react-native-modal
 import {CloseIcon} from '../../../assets/icon/IconNames'; // Import close icon if necessary
+import {deleteGlucometerData} from '../../../api/DELETE/bloodGlucose';
+import UserContext from '../../../contexts/UserContext';
 
 const SyncGlucometer = ({navigation}: any) => {
   const route = useRoute();
+  // Access the user data from the context
+  const {userData, login} = useContext(UserContext);
   const [isSearching, setIsSearching] = useState(false);
   const [deviceFound, setDeviceFound] = useState<any>(null);
   const [isSyncing, setIsSyncing] = useState(false);
@@ -59,7 +64,6 @@ const SyncGlucometer = ({navigation}: any) => {
       const resData = await getBloodGlucoseDatabyUserId({userId, token});
       const lastGlucoseEntry = resData[resData.length - 1]; // Get the latest entry
       setLatestGlucoseFromAPI(lastGlucoseEntry.data); // Set the latest glucose value
-      console.log('Latest Blood Glucose Data from API:', lastGlucoseEntry.data);
     } catch (error) {
       console.log('Error fetching blood glucose data:', error);
     }
@@ -193,6 +197,16 @@ const SyncGlucometer = ({navigation}: any) => {
       setDeviceFound(false); // Set device not found in case of error
     } finally {
       setIsLoading(false); // Stop loading after data is fetched or if an error occurs
+    }
+  };
+
+  const handleDeleteGlucometer = async () => {
+    try {
+      const response = await deleteGlucometerData({userId, token});
+      // console.log(response);
+      login(response.userData);
+    } catch (error: any) {
+      Alert.alert(error.message);
     }
   };
 
@@ -371,7 +385,10 @@ const SyncGlucometer = ({navigation}: any) => {
             title={'Restart device'}
             children={'Do you want to restart your Yano® Glucometer?'}
             active={setIsClicked}
-            action={() => replace('RegisterGlucometer')} // Restart the device search
+            action={async () => {
+              await handleDeleteGlucometer();
+              replace('RegisterGlucometer');
+            }} // Restart the device search
           />
         </View>
       )}

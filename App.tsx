@@ -14,8 +14,8 @@ import DeviceGetData from './src/screens/DeviceGetData';
 import {removeDataByKey, retrieveData} from './src/utils/Storage';
 import axios from 'axios';
 
-export const BASE_URL = 'https://yano-backend.onrender.com';
-// export const BASE_URL = 'http://192.168.29.167:5000';
+// export const BASE_URL = 'https://yano-backend.onrender.com';
+export const BASE_URL = 'http://192.168.29.167:5000';
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

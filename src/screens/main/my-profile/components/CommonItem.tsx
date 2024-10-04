@@ -21,7 +21,7 @@ const CommonItem: FC<props> = ({
   onPress,
   name,
   leftIcon,
-  isConnected = false,
+  isConnected,
   customTextWidth,
 }) => {
   return (
@@ -39,9 +39,9 @@ const CommonItem: FC<props> = ({
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            borderBottomWidth: 1,
+            borderBottomWidth: isConnected !== undefined ? 1 : 0,
             borderColor: Colors.LightGray,
-            paddingBottom: 20,
+            paddingBottom: isConnected !== undefined ? 20 : 0,
           }}>
           <View
             style={{
@@ -67,26 +67,27 @@ const CommonItem: FC<props> = ({
             />
           </View>
         </TouchableOpacity>
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            paddingTop: 20,
-          }}>
-          {!isConnected ? (
-            <TouchableOpacity
-              style={{
-                width: '100%',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: 10,
-              }}>
-              <BluetoothDisconnected />
-              <Text style={styles.textStyle}>Disconnected</Text>
-            </TouchableOpacity>
-          ) : (
-            <>
+        {/* Only show the connection status if isConnected is defined */}
+        {isConnected !== undefined && (
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingTop: 20,
+            }}>
+            {!isConnected ? (
+              <TouchableOpacity
+                style={{
+                  width: '100%',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: 10,
+                }}>
+                <BluetoothDisconnected />
+                <Text style={styles.textStyle}>Disconnected</Text>
+              </TouchableOpacity>
+            ) : (
               <TouchableOpacity
                 style={[
                   styles.connectBtn,
@@ -99,13 +100,9 @@ const CommonItem: FC<props> = ({
                 <BluetoothConnected />
                 <Text style={styles.textStyle}>Connected</Text>
               </TouchableOpacity>
-              {/* <View style={[styles.connectBtn]}>
-                <BatteryCharge />
-                <Text style={styles.textStyle}>83%</Text>
-              </View> */}
-            </>
-          )}
-        </View>
+            )}
+          </View>
+        )}
       </View>
     </>
   );

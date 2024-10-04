@@ -49,8 +49,6 @@ const RegisterGlucometer = ({navigation}: any) => {
     getUserData();
   }, []);
 
-  console.log('user data is ', userData);
-
   // Function to handle form submission and update profile
   const onSubmit = async (data: any) => {
     try {
