@@ -6,6 +6,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useContext, useEffect, useState} from 'react';
 import {Colors} from '../../constants/Colors';
@@ -18,26 +19,29 @@ import {useRoute} from '@react-navigation/native';
 import {FormProvider, useForm, useWatch} from 'react-hook-form';
 import FormInput from '../../components/hook-form/FormInput';
 import UserContext from '../../contexts/UserContext';
+import axios from 'axios';
+import {BASE_URL} from '../../../App';
 
 const AccountVerification = () => {
   const route = useRoute();
   //@ts-ignore
   const userType = route?.params?.userType;
-  console.log(route);
+  const userData = route?.params?.userData;
   const mode = route.params?.mode;
   const [selectedKey, setSelectedKey] = useState<string | null>('Email');
   const {control, ...methods} = useForm();
-  const {login, isPatient} = useContext(UserContext);
+  const {login} = useContext(UserContext);
+  const [email, setEmail] = useState(userData?.email);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  //console.log(userData);
 
   const Options = [
     {
       key: 'Email',
       label: 'Email verification',
-      description: `We will send you a 6-digit verification code to ${
-        userType === 'Patient'
-          ? 'patient.email@gmail.com'
-          : 'provider.email@gmail.com'
-      }`,
+      description: `We will send you a 6-digit verification code to ${email}`,
     },
     {
       key: 'Mobile',
@@ -47,47 +51,76 @@ const AccountVerification = () => {
   ];
 
   const code: string = useWatch({control, name: 'code'}) || '';
+
   useEffect(() => {
     if (code && code.length === 6) {
       verifyCode(code);
     }
-
-    // if (userType == 'Patient') {
-    //   setTimeout(() => {
-    //     navigate(AuthScreen.Welcome);
-    //   }, 1000);
-    // } else {
-    //   login();
-    //   navigate('tabs');
-    // }
   }, [code]);
 
+  const sendOTP = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/userpatient/send-otp`,
+        {
+          email,
+        },
+      );
+      console.log(response.data.message);
+      // Navigate to the verification screen
+      navigate(AuthScreen.AccountVerification, {
+        mode: 'Verification',
+        userType,
+        userData,
+      });
+    } catch (err) {
+      console.error(err);
+      setError('Failed to send OTP. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const verifyCode = async (_code: string) => {
-    if (code === '123456') {
+    setLoading(true);
+    setError('');
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/userpatient/verify-otp`,
+        {
+          email,
+          otp: _code,
+        },
+      );
+      console.log(response.data.message);
+      // Handle successful verification
       methods.clearErrors('code');
       if (userType == 'Patient') {
         setTimeout(() => {
           navigate(AuthScreen.Welcome);
         }, 1000);
       } else {
-        // login();
-        navigate(AuthScreen.LoadingScreen);
-        // navigate('tabs');
+        login();
+        navigate('tabs');
       }
-    } else {
+    } catch (err) {
+      console.error(err);
       methods.setError('code', {
         type: 'manual',
-        message: 'Incorrect verification code',
+        message: 'Incorrect or expired verification code',
       });
+    } finally {
+      setLoading(false);
     }
   };
 
   const resendCode = () => {
     methods.resetField('code', {defaultValue: ''});
     methods.clearErrors('code');
+    sendOTP();
   };
-
-  console.log('userType ', userType);
 
   return (
     <View style={styles.container}>
@@ -97,9 +130,7 @@ const AccountVerification = () => {
           {mode === 'Verification' ? (
             <>
               Please enter the 6-digit verification code that was sent to{' '}
-              <Text style={styles.boldText}>
-                {userType === 'Patient' ? '0412-6808909' : '+1234567890'}
-              </Text>
+              <Text style={styles.boldText}>{email}</Text>
             </>
           ) : (
             "For your safety, we want to make sure it's really you. Select a method to verify your account."
@@ -115,45 +146,49 @@ const AccountVerification = () => {
                 defaultValue=""
               />
             </FormProvider>
+            {loading && <ActivityIndicator size="large" color={Colors.Blue} />}
+            {error !== '' && <Text style={styles.errorText}>{error}</Text>}
           </View>
         ) : (
-          Options.map(item => (
-            <TouchableOpacity
-              key={item.key}
-              activeOpacity={0.8}
-              style={[
-                styles.optionContainer,
-                {
-                  borderColor:
-                    item.key === selectedKey
-                      ? Colors.LightGreen
-                      : Colors.Transparent,
-                },
-              ]}
-              onPress={() => setSelectedKey(item.key)}>
-              <View style={styles.optionContent}>
-                <RadioButton.Android
-                  value={item.key}
-                  status={item.key === selectedKey ? 'checked' : 'unchecked'}
-                  color={Colors.LightGreen}
-                  uncheckedColor={Colors.Grey}
-                  pointerEvents="none"
-                />
-                <Text style={styles.optionLabel}>{item.label}</Text>
-              </View>
-              <Text style={styles.optionDescription}>{item.description}</Text>
-            </TouchableOpacity>
-          ))
+          <>
+            {Options.map(item => (
+              <TouchableOpacity
+                key={item.key}
+                activeOpacity={0.8}
+                style={[
+                  styles.optionContainer,
+                  {
+                    borderColor:
+                      item.key === selectedKey
+                        ? Colors.LightGreen
+                        : Colors.Transparent,
+                  },
+                ]}
+                onPress={() => setSelectedKey(item.key)}>
+                <View style={styles.optionContent}>
+                  <RadioButton.Android
+                    value={item.key}
+                    status={item.key === selectedKey ? 'checked' : 'unchecked'}
+                    color={Colors.LightGreen}
+                    uncheckedColor={Colors.Grey}
+                    pointerEvents="none"
+                  />
+                  <Text style={styles.optionLabel}>{item.label}</Text>
+                </View>
+                <Text style={styles.optionDescription}>{item.description}</Text>
+              </TouchableOpacity>
+            ))}
+          </>
         )}
       </View>
       {mode === 'Verification' ? (
         <View style={styles.resendContainer}>
           <View style={styles.resendContent}>
             <Text style={styles.resendText}>
-              Didn't you receive the text message?
+              Didn't receive the verification code?
             </Text>
             <Text style={styles.resendLink} onPress={resendCode}>
-              Re-send code
+              Resend Code
             </Text>
           </View>
         </View>
@@ -162,12 +197,8 @@ const AccountVerification = () => {
           label="Send Code"
           type="blue"
           style={styles.sendButton}
-          onPress={() =>
-            navigate(AuthScreen.AccountVerification, {
-              mode: 'Verification',
-              userType,
-            })
-          }
+          onPress={sendOTP}
+          disabled={loading}
         />
       )}
     </View>
@@ -251,5 +282,17 @@ const styles = StyleSheet.create({
     width: '94%',
     alignSelf: 'center',
     marginVertical: 12,
+  },
+  loadingText: {
+    color: Colors.Blue,
+    fontSize: 16,
+    textAlign: 'center',
+    marginVertical: 10,
+  },
+  errorText: {
+    color: Colors.Red,
+    fontSize: 16,
+    textAlign: 'center',
+    marginVertical: 10,
   },
 });

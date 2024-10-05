@@ -31,6 +31,7 @@ import {registerPatient} from '../../services/Endpoints';
 import {signUPPatient, registerDoctor} from '../../api/POST/signup';
 import axios from 'axios';
 import {ActivityIndicator} from 'react-native-paper';
+import {userData} from '../../test/Data';
 
 const Gender = [
   {
@@ -197,13 +198,16 @@ const Registration: React.FC<AuthScreensProps> = ({route}) => {
         res = await registerDoctor(requestData);
       }
 
-      console.log(res);
+      console.log(res?.data?.userData);
 
       // Check for success response or errors
       if (res.status === 201) {
         // Success: Navigate to account verification page
         console.log('Navigating with userType:', userType);
-        navigate(AuthScreen.AccountVerification, {userType: userType});
+        navigate(AuthScreen.AccountVerification, {
+          userType: userType,
+          userData: res?.data?.userData,
+        });
       } else if (
         res.status === 400 &&
         res.error.message === 'User already exists'
