@@ -16,7 +16,11 @@ export const addBloodGlucoseData = async ({data, token}: any) => {
 
 export const addGlucometerData = async ({userId, data, token}: any) => {
   try {
-    const response = await postData(`/glucometer/${userId}`, data, token);
+    const response = await postData(
+      `/userpatient/glucometer/${userId}`,
+      data,
+      token,
+    );
 
     console.log(response);
     return response;

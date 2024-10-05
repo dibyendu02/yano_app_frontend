@@ -61,19 +61,27 @@ const SyncGlucometer = ({navigation}: any) => {
   // Fetch user's blood glucose data from the API
   const getUserBloodGlucose = async () => {
     try {
+      // console.log(' token is ', token);
+      // console.log('user id is ', userId);
       const resData = await getBloodGlucoseDatabyUserId({userId, token});
-      const lastGlucoseEntry = resData[resData.length - 1]; // Get the latest entry
-      setLatestGlucoseFromAPI(lastGlucoseEntry.data); // Set the latest glucose value
+      const lastGlucoseEntry = resData[resData?.length - 1]; // Get the latest entry
+      setLatestGlucoseFromAPI(lastGlucoseEntry?.data); // Set the latest glucose value
+      // console.log('latestGlucoseFromAPI ', latestGlucoseFromAPI);
     } catch (error) {
       console.log('Error fetching blood glucose data:', error);
     }
   };
 
   useEffect(() => {
-    if (userId && token) {
+    if (userId != '' && token != '') {
       getUserBloodGlucose(); // Fetch user's blood glucose data when userId and token are available
     }
   }, [userId, token]);
+
+  // If you want to monitor the state after it updates, use useEffect
+  useEffect(() => {
+    // console.log('Updated latestGlucoseFromAPI: ', latestGlucoseFromAPI);
+  }, [latestGlucoseFromAPI]);
 
   // Function to get current date and time in a specific format
   const getCurrentDateTime = () => {
@@ -166,8 +174,8 @@ const SyncGlucometer = ({navigation}: any) => {
 
       // Parse the response into a JavaScript object
       const parsedData = parseHistoryData(res);
-      console.log('Parsed History Data:', parsedData);
-      console.log('event value', parsedData.eventValue);
+      // console.log('Parsed History Data:', parsedData);
+      // console.log('event value', parsedData.eventValue);
 
       // Check if data is available in the response
       if (parsedData.eventValue) {
@@ -255,7 +263,6 @@ const SyncGlucometer = ({navigation}: any) => {
     React.useCallback(() => {
       setIsSearching(false);
       setDeviceFound(null);
-      getUserBloodGlucose(); // Fetch user's latest glucose data on screen focus
     }, []),
   );
 

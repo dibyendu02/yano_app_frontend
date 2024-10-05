@@ -22,6 +22,7 @@ import {retrieveData} from '../../../utils/Storage';
 import UserContext from '../../../contexts/UserContext';
 import {DummyImage} from '../../../assets/dummy/images';
 import Header from '../../../components/header/Header';
+import {addGlucometerData} from '../../../api/POST/bloodGlucose';
 
 const RegisterGlucometer = ({navigation}: any) => {
   // Access the user data from the context
@@ -53,78 +54,29 @@ const RegisterGlucometer = ({navigation}: any) => {
   const onSubmit = async (data: any) => {
     try {
       if (data.saveSerial) {
-        // If the user checked the checkbox to save the device serial number
-        const existingGlucometerIndex = userData?.devices?.findIndex(
-          device => device.deviceType === 'glucometer',
-        );
-
-        let updatedDevices = [...(userData?.devices || [])]; // Clone the devices array
-
-        if (existingGlucometerIndex !== -1) {
-          // Update the serial number of the existing glucometer
-          updatedDevices[existingGlucometerIndex].deviceSerialNumber =
-            data.serialNumber;
-        } else {
-          // If no glucometer exists, create a new entry
-          const deviceData = {
-            deviceName: 'Glucometer',
-            deviceSerialNumber: data.serialNumber,
-            deviceType: 'glucometer',
-          };
-          updatedDevices.push(deviceData); // Add the new device to the list
-        }
-
-        let requestData = new FormData();
-
-        // Merge existing user data with the updated devices array
-        const payload = {
-          firstName: userData?.firstName,
-          lastName: userData?.lastName,
-          email: userData?.email,
-          phoneNumber: userData?.phoneNumber,
-          gender: userData?.gender,
-          dateOfBirth: new Date(userData?.dateOfBirth), // Ensure date format
-          devices: updatedDevices, // Updated devices array
+        // Prepare glucometer device data
+        const glucometerData = {
+          deviceName: 'Glucometer',
+          deviceSerialNumber: data.serialNumber,
+          deviceType: 'glucometer',
         };
 
-        // Append the payload to FormData
-        for (let key in payload) {
-          if (key === 'devices') {
-            // Properly append each device
-            payload[key].forEach((item, index) => {
-              requestData.append(
-                `${key}[${index}][deviceName]`,
-                item.deviceName,
-              );
-              requestData.append(
-                `${key}[${index}][deviceSerialNumber]`,
-                item.deviceSerialNumber,
-              );
-              requestData.append(
-                `${key}[${index}][deviceType]`,
-                item.deviceType,
-              );
-            });
-          } else {
-            requestData.append(key, payload[key]);
-          }
-        }
-
-        // Send the updated data to the backend
-        const res = await updatePatient({
-          data: requestData,
-          token,
+        // Send the glucometer data to the backend
+        const res = await addGlucometerData({
+          data: glucometerData,
           userId,
-          type: 'media',
+          token,
         });
 
-        // Update the context with the new user data
-        // login(res?.userData);
+        console.log('Response of adding glucometer:', res);
 
-        // Redirect to the sync screen
+        // Update user context with the new data
+        login(res?.userData);
+
+        // Redirect to SyncGlucometer screen with the serial number
         replace('SyncGlucometer', {Sn: data.serialNumber});
       } else {
-        // If the checkbox is not checked, just pass the serial number to the next page
+        // If saveSerial is not checked, proceed to sync screen without saving device data
         replace('SyncGlucometer', {Sn: data.serialNumber});
       }
     } catch (error) {

@@ -103,7 +103,10 @@ const HealthParametersList = () => {
             <Card key={item.month} title={item.month}>
               <FlatList
                 scrollEnabled={false}
-                data={item.data}
+                data={item.data.sort(
+                  (a, b) =>
+                    moment(a.timestamp).isBefore(b.timestamp) ? 1 : -1, // Sort in ascending order by timestamp
+                )}
                 renderItem={({item: e, index: _i}) => (
                   <TouchableOpacity
                     activeOpacity={0.5}

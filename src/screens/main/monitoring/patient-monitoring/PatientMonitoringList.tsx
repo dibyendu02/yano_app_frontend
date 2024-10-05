@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   Animated,
+  Text,
 } from 'react-native';
 import Header from '../../../../components/header/Header';
 import {Colors} from '../../../../constants/Colors';
@@ -18,6 +19,7 @@ import {navigate} from '../../../../navigation/RootNavigation';
 import {retrieveData} from '../../../../utils/Storage';
 import {useFocusEffect} from '@react-navigation/native';
 import {getPatientsUnderDoctorData} from '../../../../api/GET/patientsUnderDoctor';
+import EmptyScreen from '../../../healthCondition/components/EmptyScreen';
 
 const PatientMonitoringList = () => {
   const [isScrolling, setIsScrolling] = useState(false);
@@ -50,6 +52,7 @@ const PatientMonitoringList = () => {
       getPatientsData();
     }, [getPatientsData]),
   );
+
   return (
     <View style={styles.container}>
       <Header
@@ -66,26 +69,34 @@ const PatientMonitoringList = () => {
         }
       />
       <View style={styles.contentContainer}>
-        <Card>
-          <FlatList
-            data={patientsData}
-            showsVerticalScrollIndicator={false}
-            renderItem={({item, index: _index}) => (
-              <PatientListItem
-                customStyle={{
-                  paddingTop: _index === 0 ? 0 : 16,
-                  paddingBottom: _index === patientsData.length - 1 ? 0 : 16,
-                }}
-                name={item?.firstName + ' ' + item?.lastName}
-                patientData={item}
-              />
-            )}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-            onScrollBeginDrag={() => setIsScrolling(true)}
-            onScrollEndDrag={() => setIsScrolling(false)}
-            onMomentumScrollEnd={() => setIsScrolling(false)}
+        {patientsData && patientsData.length > 0 ? (
+          <Card>
+            <FlatList
+              data={patientsData}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item, index: _index}) => (
+                <PatientListItem
+                  customStyle={{
+                    paddingTop: _index === 0 ? 0 : 16,
+                    paddingBottom: _index === patientsData.length - 1 ? 0 : 16,
+                  }}
+                  name={item?.firstName + ' ' + item?.lastName}
+                  patientData={item}
+                />
+              )}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
+              onScrollBeginDrag={() => setIsScrolling(true)}
+              onScrollEndDrag={() => setIsScrolling(false)}
+              onMomentumScrollEnd={() => setIsScrolling(false)}
+            />
+          </Card>
+        ) : (
+          <EmptyScreen
+            title="No monitored patients"
+            message="Add a patient and start monitoring their health."
           />
-        </Card>
+        )}
+
         {!isScrolling && (
           <FilledButton
             type="blue"

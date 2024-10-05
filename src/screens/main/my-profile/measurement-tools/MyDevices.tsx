@@ -72,7 +72,7 @@ const MyDevices = () => {
 
       if (state !== 'PoweredOn') {
         // If Bluetooth is not enabled, show the custom modal
-        setIsBluetoothModalVisible(true);
+        handleEnableBluetooth();
       } else {
         // Check if the user already has a glucometer device
         const glucometerDevice = userData?.devices?.find(
@@ -118,7 +118,7 @@ const MyDevices = () => {
           <View style={{paddingVertical: 12, width: '94%', margin: 'auto'}}>
             <CommonItem
               name="Yano Multi-parameter Monitor"
-              onPress={() => navigate('MeasurementMonitoring')}
+              onPress={() => replace('MeasurementMonitoring')}
               leftIcon={
                 <Image
                   source={DummyImage.largeDevice}
